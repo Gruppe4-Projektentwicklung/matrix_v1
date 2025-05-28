@@ -48,7 +48,6 @@ function App() {
   // CollectionSelector
   const handleIdeenSammlungChange = (dateiName: string) => {
     setAktuelleIdeensammlung(dateiName);
-    // TODO: Ideendaten aus der neuen Sammlung laden und setIdeen aufrufen
   };
 
   const handleIdeenUpload = (file: File) => {
@@ -99,13 +98,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa] font-inter flex flex-col">
+    <div className="min-h-screen bg-[#f4f7fb] font-inter flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-20">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between py-5 px-4">
+      <header className="bg-white/95 shadow-lg sticky top-0 z-20">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between py-4 px-4">
           <div className="flex items-center gap-3">
-            <img src="/logo192.png" alt="Logo" className="w-10 h-10" />
-            <span className="text-2xl font-bold tracking-tight text-primary-800">{t("title")}</span>
+            <img src="/logo192.png" alt="Logo" className="w-11 h-11 rounded-xl" />
+            <span className="text-2xl font-bold tracking-tight text-[#2b5ca0] drop-shadow-sm">
+              {t("title")}
+            </span>
           </div>
           <div className="flex items-center gap-2 mt-3 md:mt-0">
             <label htmlFor="lang-select" className="font-medium text-gray-600">
@@ -115,7 +116,7 @@ function App() {
               id="lang-select"
               value={language}
               onChange={handleLanguageChange}
-              className="border border-gray-300 rounded-lg px-3 py-1 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-400"
+              className="border border-gray-300 rounded-lg px-3 py-1 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#2b5ca0]"
             >
               <option value="de">Deutsch</option>
               <option value="en">English</option>
@@ -127,9 +128,9 @@ function App() {
 
       {/* Hauptbereich */}
       <main className="flex-1 flex justify-center">
-        <div className="w-full max-w-4xl px-4 py-8 space-y-6">
-          {/* Collection Auswahl */}
-          <section>
+        <div className="w-full max-w-4xl px-2 py-8 space-y-6">
+          {/* Cards für Abschnitte */}
+          <section className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
             <CollectionSelector
               sammlungTyp="ideen"
               aktuelleSammlungName={aktuelleIdeensammlung}
@@ -138,42 +139,39 @@ function App() {
               templateUrl="/templates/ideen-vorlage.xlsx"
             />
           </section>
-
-          {/* Ideen-Auswahl */}
-          <section>
+          <section className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
             <IdeenSelector
               ideen={ideen}
               sprache={language as "de" | "en" | "fr"}
               onUpdate={handleIdeenUpdate}
             />
           </section>
-
-          {/* Bewertungs- und Gewichtungsoptionen */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <BewertungsOptionen
-              runde1={runde1}
-              runde2={runde2}
-              appTester={appTester}
-              datenfreigabe={datenfreigabe}
-              onChange={handleBewertungsOptionenChange}
-            />
-            <WeightingSelector
-              kombinationen={gewichtungen}
-              onUpdate={handleGewichtungenUpdate}
-            />
+            <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
+              <BewertungsOptionen
+                runde1={runde1}
+                runde2={runde2}
+                appTester={appTester}
+                datenfreigabe={datenfreigabe}
+                onChange={handleBewertungsOptionenChange}
+              />
+            </div>
+            <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
+              <WeightingSelector
+                kombinationen={gewichtungen}
+                onUpdate={handleGewichtungenUpdate}
+              />
+            </div>
           </section>
-
-          {/* Ranking */}
-          <section>
+          <section className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
             <Ranking eintraege={rankingEintraege} />
           </section>
-
           {/* Export und Statistik */}
-          <section className="flex flex-col md:flex-row justify-between items-center gap-3">
+          <section className="flex flex-col md:flex-row justify-between items-center gap-3 bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
             <ExportRankingButton eintraege={rankingEintraege} />
             <button
               onClick={() => setStatistikFormOpen(true)}
-              className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-5 rounded-xl shadow"
+              className="bg-[#2b5ca0] hover:bg-[#22487d] transition text-white font-semibold py-2 px-5 rounded-xl shadow-lg mt-2 md:mt-0"
             >
               {t("saveRating")}
             </button>
@@ -195,7 +193,6 @@ function App() {
         }}
         onSaveSuccess={handleSaveSuccess}
       />
-
       <SaveRunSuccess
         open={saveRunSuccessOpen}
         message={saveRunMessage}
@@ -203,14 +200,12 @@ function App() {
         onClose={handleCloseSaveRunSuccess}
         isTester={appTester}
       />
-
       <KombiInfoModal
         open={kombiInfoModalOpen}
         kombi={kombiInfoPayload}
         sprache={language as "de" | "en" | "fr"}
         onClose={handleCloseKombiInfoModal}
       />
-
       <StatusToast
         open={statusToastOpen}
         message={statusToastMessage}
@@ -219,8 +214,8 @@ function App() {
       />
 
       {/* Footer */}
-      <footer className="bg-white text-xs text-gray-400 py-6 mt-10 text-center shadow-inner">
-        &copy; {new Date().getFullYear()} Gruppe 4 Projektentwicklung | matrix.gruppe4-projektentwicklung.de
+      <footer className="bg-white/90 text-xs text-[#2b5ca0] py-8 mt-10 text-center rounded-t-3xl shadow-inner tracking-wide">
+        &copy; {new Date().getFullYear()} Gruppe 4 Projektentwicklung &middot; matrix.gruppe4-projektentwicklung.de
       </footer>
     </div>
   );
