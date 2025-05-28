@@ -99,7 +99,7 @@ function App() {
 
   return (
   <div className="min-h-screen bg-gray-200 text-gray-900 font-inter flex justify-center">
-  <div className="w-full max-w-3xl bg-[#23272f] text-gray-100 rounded-2xl shadow-2xl p-8">
+  <div className="max-w-4xl w-full bg-gray-800 text-white shadow-xl rounded-2xl p-8 my-8">
       <div className="flex items-center gap-2">
         <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
         <select
