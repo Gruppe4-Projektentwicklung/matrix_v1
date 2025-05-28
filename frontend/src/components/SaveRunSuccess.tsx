@@ -38,7 +38,10 @@ export const SaveRunSuccess: React.FC<Props> = ({
         )}
         {isTester && (
           <div className="text-sm text-blue-600">
-            {t("testerModeNotice")}
+            {/* Hinweis mit fett formatiertem "keine" im i18n-Text */}
+            <span
+              dangerouslySetInnerHTML={{ __html: t("testerModeNotice") }}
+            />
           </div>
         )}
         <button
