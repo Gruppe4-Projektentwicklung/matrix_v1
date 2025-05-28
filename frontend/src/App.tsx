@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import "./i18n"; // i18n initialisieren
+import "./i18n";
 
 import { useTranslation } from "react-i18next";
 
@@ -19,16 +19,14 @@ function App() {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language || "de");
 
-  // Beispiel States für Props (müsstest du noch durch deine echten Daten ersetzen)
+  // States (je nach deinem Projekt ggf. anpassen)
   const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
-  //const [eigeneIdeensammlungen, setEigeneIdeensammlungen] = useState<string[]>([]);
-  const [ideen, setIdeen] = useState<any[]>([]); // Typ gerne genauer definieren
+  const [ideen, setIdeen] = useState<any[]>([]);
   const [runde1, setRunde1] = useState(true);
   const [runde2, setRunde2] = useState(true);
   const [appTester, setAppTester] = useState(false);
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
-  const [gewichtungen, setGewichtungen] = useState<any[]>([]); // Typ ebenfalls anpassen
-  //const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
+  const [gewichtungen, setGewichtungen] = useState<any[]>([]);
   const [rankingEintraege] = useState<any[]>([]);
   const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
   const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null);
@@ -47,25 +45,22 @@ function App() {
     i18n.changeLanguage(lang);
   };
 
-  // Beispiel-Handler für CollectionSelector
+  // CollectionSelector
   const handleIdeenSammlungChange = (dateiName: string) => {
     setAktuelleIdeensammlung(dateiName);
     // TODO: Ideendaten aus der neuen Sammlung laden und setIdeen aufrufen
   };
 
   const handleIdeenUpload = (file: File) => {
-    // TODO: Datei einlesen und eigeneSammlungen / ideen updaten
     setStatusToastMessage(t("uploadFile") + " " + file.name);
     setStatusToastType("success");
     setStatusToastOpen(true);
   };
 
-  // Beispiel-Handler für IdeenSelector
   const handleIdeenUpdate = (updatedIdeen: any[]) => {
     setIdeen(updatedIdeen);
   };
 
-  // Beispiel-Handler für BewertungsOptionen
   const handleBewertungsOptionenChange = (field: string, value: any) => {
     if (field === "runde1") setRunde1(value);
     if (field === "runde2") setRunde2(value);
@@ -73,25 +68,21 @@ function App() {
     if (field === "datenfreigabe") setDatenfreigabe(value);
   };
 
-  // Beispiel-Handler für WeightingSelector
   const handleGewichtungenUpdate = (updatedGewichtungen: any[]) => {
     setGewichtungen(updatedGewichtungen);
   };
 
-  // Beispiel-Handler für KombiInfoModal schließen
   const handleCloseKombiInfoModal = () => {
     setKombiInfoModalOpen(false);
     setKombiInfoPayload(null);
   };
 
-  // Beispiel-Handler für SaveRunSuccess schließen
   const handleCloseSaveRunSuccess = () => {
     setSaveRunSuccessOpen(false);
     setSaveRunMessage("");
     setSaveRunId(undefined);
   };
 
-  // Beispiel-Handler für StatistikForm schließen und Erfolg
   const handleCloseStatistikForm = () => {
     setStatistikFormOpen(false);
   };
@@ -102,30 +93,29 @@ function App() {
     setSaveRunSuccessOpen(true);
   };
 
-  // Beispiel-Handler für StatusToast schließen
   const handleCloseStatusToast = () => {
     setStatusToastOpen(false);
     setStatusToastMessage("");
   };
 
   return (
-
     <div className="min-h-screen bg-[#f5f7fa] font-inter flex flex-col">
-      {/* Top-Bar / Logo-Bereich */}
-      <header className="w-full shadow-sm bg-white/60 backdrop-blur z-20">
-        <div className="max-w-5xl mx-auto flex items-center justify-between py-4 px-6">
-          <span className="text-2xl font-extrabold text-[#162447] tracking-tight">
-            Gruppe 4 Projektentwicklung
-          </span>
-          <div className="flex gap-3 items-center">
-            <label htmlFor="lang-select" className="font-medium text-gray-700">
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-20">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between py-5 px-4">
+          <div className="flex items-center gap-3">
+            <img src="/logo192.png" alt="Logo" className="w-10 h-10" />
+            <span className="text-2xl font-bold tracking-tight text-primary-800">{t("title")}</span>
+          </div>
+          <div className="flex items-center gap-2 mt-3 md:mt-0">
+            <label htmlFor="lang-select" className="font-medium text-gray-600">
               {t("language")}
             </label>
             <select
               id="lang-select"
               value={language}
               onChange={handleLanguageChange}
-              className="rounded-lg border border-gray-200 py-1 px-2 bg-white shadow-inner focus:ring-2 focus:ring-blue-400 transition"
+              className="border border-gray-300 rounded-lg px-3 py-1 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-400"
             >
               <option value="de">Deutsch</option>
               <option value="en">English</option>
@@ -135,34 +125,31 @@ function App() {
         </div>
       </header>
 
-      {/* Haupt-Container */}
-      <main className="flex-grow flex flex-col items-center justify-center">
-        <section className="w-full max-w-3xl bg-white shadow-xl rounded-3xl p-8 my-10">
-          {/* Titel */}
-          <h1 className="text-center text-3xl md:text-4xl font-bold text-[#162447] mb-2 drop-shadow-sm">
-            {t("title")}
-          </h1>
-          <p className="text-center text-lg text-gray-500 mb-8">
-            Bewerten und vergleichen Sie innovative Ideen im nachhaltigen Bauen.
-          </p>
-
-          {/* Komponenten-GRID */}
-          <div className="space-y-8">
+      {/* Hauptbereich */}
+      <main className="flex-1 flex justify-center">
+        <div className="w-full max-w-4xl px-4 py-8 space-y-6">
+          {/* Collection Auswahl */}
+          <section>
             <CollectionSelector
               sammlungTyp="ideen"
               aktuelleSammlungName={aktuelleIdeensammlung}
-              //eigeneSammlungen={eigeneIdeensammlungen}
               onSammlungChange={handleIdeenSammlungChange}
               onUpload={handleIdeenUpload}
               templateUrl="/templates/ideen-vorlage.xlsx"
             />
+          </section>
 
+          {/* Ideen-Auswahl */}
+          <section>
             <IdeenSelector
               ideen={ideen}
               sprache={language as "de" | "en" | "fr"}
               onUpdate={handleIdeenUpdate}
             />
+          </section>
 
+          {/* Bewertungs- und Gewichtungsoptionen */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <BewertungsOptionen
               runde1={runde1}
               runde2={runde2}
@@ -170,27 +157,31 @@ function App() {
               datenfreigabe={datenfreigabe}
               onChange={handleBewertungsOptionenChange}
             />
-
             <WeightingSelector
               kombinationen={gewichtungen}
               onUpdate={handleGewichtungenUpdate}
             />
+          </section>
 
+          {/* Ranking */}
+          <section>
             <Ranking eintraege={rankingEintraege} />
+          </section>
 
-            <div className="flex flex-wrap gap-4 justify-end">
-              <ExportRankingButton eintraege={rankingEintraege} />
-            </div>
-          </div>
-        </section>
+          {/* Export und Statistik */}
+          <section className="flex flex-col md:flex-row justify-between items-center gap-3">
+            <ExportRankingButton eintraege={rankingEintraege} />
+            <button
+              onClick={() => setStatistikFormOpen(true)}
+              className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-5 rounded-xl shadow"
+            >
+              {t("saveRating")}
+            </button>
+          </section>
+        </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full bg-white/80 border-t text-center py-4 text-gray-500 text-sm">
-        © {new Date().getFullYear()} Gruppe 4 Projektentwicklung
-      </footer>
-
-      {/* Modals & Toaster */}
+      {/* Modals & Toasts */}
       <StatistikForm
         open={statistikFormOpen}
         onClose={handleCloseStatistikForm}
@@ -226,9 +217,13 @@ function App() {
         onClose={handleCloseStatusToast}
         type={statusToastType}
       />
+
+      {/* Footer */}
+      <footer className="bg-white text-xs text-gray-400 py-6 mt-10 text-center shadow-inner">
+        &copy; {new Date().getFullYear()} Gruppe 4 Projektentwicklung | matrix.gruppe4-projektentwicklung.de
+      </footer>
     </div>
   );
-
 }
 
 export default App;
