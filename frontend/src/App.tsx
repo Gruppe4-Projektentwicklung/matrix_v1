@@ -21,14 +21,15 @@ function App() {
 
   // Beispiel States für Props (müsstest du noch durch deine echten Daten ersetzen)
   const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
-  const [eigeneIdeensammlungen, setEigeneIdeensammlungen] = useState<string[]>([]);
+  //const [eigeneIdeensammlungen, setEigeneIdeensammlungen] = useState<string[]>([]);
   const [ideen, setIdeen] = useState<any[]>([]); // Typ gerne genauer definieren
   const [runde1, setRunde1] = useState(true);
   const [runde2, setRunde2] = useState(true);
   const [appTester, setAppTester] = useState(false);
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
   const [gewichtungen, setGewichtungen] = useState<any[]>([]); // Typ ebenfalls anpassen
-  const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
+  //const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
+  const [rankingEintraege] = useState<any[]>([]);
   const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
   const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null);
   const [saveRunSuccessOpen, setSaveRunSuccessOpen] = useState(false);
