@@ -5,16 +5,20 @@ type Idee = {
   id: string;
   aktiv: boolean;
   attribute: Record<string, string | number>;
-  [key: string]: any;
+  [key: string]: any; // für dynamische Sprachspalten wie '#t_de#1', '#t_en#1', etc.
 };
 
 type Props = {
-  ideen?: Idee[];
-  sprache: "de" | "en" | "fr";  // Kann bleiben, wird aber evtl. durch i18n ersetzt
+  ideen?: Idee[];  // optional für Robustheit
+  sprache: "de" | "en" | "fr";
   onUpdate: (updated: Idee[]) => void;
 };
 
-export const IdeenSelector: React.FC<Props> = ({ ideen = [], sprache, onUpdate }) => {
+export const IdeenSelector: React.FC<Props> = ({
+  ideen = [],
+  sprache,
+  onUpdate,
+}) => {
   const { t } = useTranslation();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -49,7 +53,9 @@ export const IdeenSelector: React.FC<Props> = ({ ideen = [], sprache, onUpdate }
             ? idee[`#t_${sprache}#3`]
             : t("noCategory");
         const attribute =
-          typeof idee.attribute === "object" && idee.attribute ? idee.attribute : {};
+          typeof idee.attribute === "object" && idee.attribute
+            ? idee.attribute
+            : {};
 
         return (
           <div key={idee.id} className="border rounded-xl p-4 bg-white shadow-sm">
@@ -57,7 +63,9 @@ export const IdeenSelector: React.FC<Props> = ({ ideen = [], sprache, onUpdate }
               <div>
                 <h2 className="font-semibold text-lg">{name}</h2>
                 <p className="text-sm text-gray-700">{beschreibung}</p>
-                <p className="text-xs text-gray-500 mt-1">{t("category")}: {kategorie}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {t("category")}: {kategorie}
+                </p>
               </div>
               <div className="flex flex-col items-end space-y-1">
                 <label className="text-sm">
@@ -89,18 +97,20 @@ export const IdeenSelector: React.FC<Props> = ({ ideen = [], sprache, onUpdate }
                     </tr>
                   </thead>
                   <tbody>
-                    {Object.keys(attribute).length > 0
-                      ? Object.entries(attribute).map(([key, value]) => (
-                          <tr key={key}>
-                            <td className="pr-4 text-gray-700">{key}</td>
-                            <td>{value}</td>
-                          </tr>
-                        ))
-                      : (
-                        <tr>
-                          <td colSpan={2} className="text-gray-400">{t("noAttributes")}</td>
+                    {Object.keys(attribute).length > 0 ? (
+                      Object.entries(attribute).map(([key, value]) => (
+                        <tr key={key}>
+                          <td className="pr-4 text-gray-700">{key}</td>
+                          <td>{value}</td>
                         </tr>
-                      )}
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={2} className="text-gray-400">
+                          {t("noAttributes")}
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
