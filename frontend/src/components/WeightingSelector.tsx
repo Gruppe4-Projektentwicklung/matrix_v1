@@ -9,7 +9,7 @@ type Combination = {
 };
 
 type Props = {
-  kombinationen: Combination[];
+  kombinationen?: Combination[]; // Optional für Robustheit!
   onUpdate: (updated: Combination[]) => void;
 };
 
@@ -22,36 +22,56 @@ const gewichtungLabels = [
   "Sehr wichtig",
 ];
 
-export const WeightingSelector: React.FC<Props> = ({ kombinationen, onUpdate }) => {
+export const WeightingSelector: React.FC<Props> = ({
+  kombinationen = [],
+  onUpdate,
+}) => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const handleGewichtungChange = (id: string, value: number) => {
-    const updated = kombinationen.map(kombi =>
+    const updated = (kombinationen || []).map((kombi) =>
       kombi.id === id ? { ...kombi, gewichtung: value, aktiv: value > 0 } : kombi
     );
     onUpdate(updated);
   };
 
   const toggleInfo = (id: string) => {
-    setExpandedId(prev => (prev === id ? null : id));
+    setExpandedId((prev) => (prev === id ? null : id));
   };
+
+  // Fallback: Wenn keine Kombinationen, kurze Meldung anzeigen
+  if (!Array.isArray(kombinationen) || kombinationen.length === 0) {
+    return (
+      <div className="text-gray-500">
+        Keine Bewertungskombinationen vorhanden.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      {kombinationen.map(kombi => (
-        <div key={kombi.id} className="border rounded-xl p-4 shadow-sm bg-white">
+      {(kombinationen || []).map((kombi) => (
+        <div
+          key={kombi.id}
+          className="border rounded-xl p-4 shadow-sm bg-white"
+        >
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-lg font-semibold">{kombi.name}</h2>
               {expandedId === kombi.id && (
-                <p className="text-sm mt-1 text-gray-700">{kombi.beschreibung}</p>
+                <p className="text-sm mt-1 text-gray-700">
+                  {kombi.beschreibung}
+                </p>
               )}
             </div>
             <button
               onClick={() => toggleInfo(kombi.id)}
               className="text-blue-600 text-sm underline"
+              type="button"
             >
-              {expandedId === kombi.id ? "Beschreibung ausblenden" : "i – Beschreibung anzeigen"}
+              {expandedId === kombi.id
+                ? "Beschreibung ausblenden"
+                : "i – Beschreibung anzeigen"}
             </button>
           </div>
 
@@ -87,3 +107,5 @@ export const WeightingSelector: React.FC<Props> = ({ kombinationen, onUpdate }) 
     </div>
   );
 };
+
+export default WeightingSelector;

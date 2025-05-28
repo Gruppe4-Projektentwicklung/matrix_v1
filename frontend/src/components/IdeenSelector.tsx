@@ -13,8 +13,6 @@ type Props = {
   onUpdate: (updated: Idee[]) => void;
 };
 
-const defaultAttrTable = <tr><td colSpan={2} className="text-gray-400">Keine Attribute vorhanden</td></tr>;
-
 export const IdeenSelector: React.FC<Props> = ({
   ideen = [],
   sprache,
@@ -23,7 +21,7 @@ export const IdeenSelector: React.FC<Props> = ({
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const toggleActive = (id: string) => {
-    const updated = ideen.map((idee) =>
+    const updated = (ideen || []).map((idee) =>
       idee.id === id ? { ...idee, aktiv: !idee.aktiv } : idee
     );
     onUpdate(updated);
@@ -39,7 +37,7 @@ export const IdeenSelector: React.FC<Props> = ({
 
   return (
     <div className="space-y-4">
-      {ideen.map((idee) => {
+      {(ideen || []).map((idee) => {
         const name =
           typeof idee[`#t_${sprache}#1`] === "string"
             ? idee[`#t_${sprache}#1`]
@@ -100,4 +98,24 @@ export const IdeenSelector: React.FC<Props> = ({
                     {Object.keys(attribute).length > 0
                       ? Object.entries(attribute).map(([key, value]) => (
                           <tr key={key}>
-                            <
+                            <td className="pr-4 text-gray-700">{key}</td>
+                            <td>{value}</td>
+                          </tr>
+                        ))
+                      : (
+                        <tr>
+                          <td colSpan={2} className="text-gray-400">Keine Attribute vorhanden</td>
+                        </tr>
+                      )}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default IdeenSelector;

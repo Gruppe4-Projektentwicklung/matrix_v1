@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 
 export interface BewertungsLaufPayload {
   tester: boolean; // true, wenn Tester-Modus aktiviert
@@ -19,8 +20,7 @@ export interface BewertungsLaufPayload {
 }
 
 import { saveRun } from "../api/saveRun";
-import type { BewertungsLaufPayload } from "../api/saveRun";
-
+import type { BewertungsLaufPayload as SaveRunPayload } from "../api/saveRun";
 
 type Props = {
   open: boolean;
@@ -29,7 +29,12 @@ type Props = {
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
 };
 
-export const StatistikForm: React.FC<Props> = ({ open, onClose, payload, onSaveSuccess }) => {
+export const StatistikForm: React.FC<Props> = ({
+  open,
+  onClose,
+  payload,
+  onSaveSuccess,
+}) => {
   const [alter, setAlter] = useState("");
   const [geschlecht, setGeschlecht] = useState("");
   const [branche, setBranche] = useState("");
@@ -154,3 +159,5 @@ export const StatistikForm: React.FC<Props> = ({ open, onClose, payload, onSaveS
     </div>
   );
 };
+
+export default StatistikForm;

@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 type Props = {
   sammlungTyp: "ideen" | "kombis";
   aktuelleSammlungName: string;
-  eigeneSammlungen?: string[]; // jetzt optional!
-  onSammlungChange: (dateiName: string) => void;
-  onUpload: (file: File) => void;
+  eigeneSammlungen?: string[];
+  onSammlungChange?: (dateiName: string) => void; // Optional!
+  onUpload?: (file: File) => void;                // Optional!
   templateUrl: string;
 };
 
@@ -13,13 +13,13 @@ export const CollectionSelector: React.FC<Props> = ({
   sammlungTyp,
   aktuelleSammlungName,
   eigeneSammlungen = [],
-  onSammlungChange,
-  onUpload,
+  onSammlungChange = () => {}, // Leerer Fallback
+  onUpload = () => {},         // Leerer Fallback
   templateUrl,
 }) => {
   const [auswahl, setAuswahl] = useState<string>(aktuelleSammlungName);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const [fileKey, setFileKey] = useState<number>(0); // For resetting input
+  const [fileKey, setFileKey] = useState<number>(0);
 
   useEffect(() => {
     setAuswahl(aktuelleSammlungName);
@@ -37,11 +37,11 @@ export const CollectionSelector: React.FC<Props> = ({
     const file = files[0];
     if (!file.name.endsWith(".xlsx")) {
       setUploadError("Bitte eine Excel-Datei (.xlsx) hochladen.");
-      setFileKey((k) => k + 1); // Reset input
+      setFileKey((k) => k + 1);
       return;
     }
     onUpload(file);
-    setFileKey((k) => k + 1); // Reset input
+    setFileKey((k) => k + 1);
   };
 
   return (
@@ -98,3 +98,5 @@ export const CollectionSelector: React.FC<Props> = ({
     </div>
   );
 };
+
+export default CollectionSelector;
