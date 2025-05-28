@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Erklärung Bewertungsmodul</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 900px;
+            margin: 2em auto;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #004080;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f9f9f9;
+            padding: 1em;
+            border-left: 4px solid #ccc;
+            overflow-x: auto;
+        }
+        ul {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bewertungsmodul – Erklärung der Berechnung und Gewichtung</h1>
+
+    <p>Dieses Modul berechnet anhand der beiden Bewertungsrunden für jede Idee eine <strong>Gesamtbewertung</strong> und ein <strong>Ranking</strong>.
+        Ziel ist es, die Vielzahl sehr unterschiedlicher Ideen vergleichbar zu machen.</p>
+
+    <h2>🔍 Überblick</h2>
+
+    <h3>Runde 1: Ja/Nein-Kriterien</h3>
+    <ul>
+        <li>Jedes Kriterium: <strong>„ja“ (1 Punkt)</strong> oder <strong>„nein“ (0 Punkte)</strong></li>
+        <li>Beispiele:
+            <ul>
+                <li>Technisch machbar?</li>
+                <li>Moralisch vertretbar?</li>
+                <li>Passt es zum Projektfokus?</li>
+            </ul>
+        </li>
+    </ul>
+    <p>→ Diese Kriterien befinden sich in Spalten mit IDs wie <code>#1#1</code>, <code>#1#2</code>, ...</p>
+
+    <h3>Runde 2: Bewertung 1 bis 10</h3>
+    <ul>
+        <li>Jedes Kriterium: Skala <strong>1 (schlecht) bis 10 (sehr gut)</strong></li>
+        <li>Beispiele:
+            <ul>
+                <li>Marktpotenzial</li>
+                <li>Innovationsgrad</li>
+                <li>Langlebigkeit</li>
+            </ul>
+        </li>
+    </ul>
+    <p>→ Diese Kriterien haben IDs wie <code>#2#1</code>, <code>#2#2</code>, ...</p>
+
+    <h2>🧮 Berechnungslogik</h2>
+
+    <h3>Ohne Gewichtung</h3>
+    <p>Standardmäßig wird einfach der Durchschnitt gebildet.</p>
+
+    <pre><strong>Runde 1:</strong>
+ja, nein, ja → 1 + 0 + 1 = 2 → Ø = 2 / 3 = 0.666…</pre>
+
+    <pre><strong>Runde 2:</strong>
+8, 9, 6 → Ø = (8 + 9 + 6) / 3 = 7.67</pre>
+
+    <h3>Mit Gewichtung</h3>
+    <p>Der Nutzer kann bestimmte Kriterien stärker gewichten.</p>
+    <pre>
+Kriterium 1 (#1#1): Gewicht 0.6 → Antwort: ja (1)
+Kriterium 2 (#1#2): Gewicht 0.4 → Antwort: nein (0)
+
+→ Bewertung = 1 × 0.6 + 0 × 0.4 = 0.6
+    </pre>
+
+    <h2>🏁 Ranking</h2>
+    <p>Nach der Bewertung:</p>
+    <ul>
+        <li>Bester Wert → Platz 1</li>
+        <li>Zweitbester → Platz 2</li>
+        <li>usw.</li>
+    </ul>
+
+    <h2>💡 Ziel</h2>
+    <p>Diese Vorbewertung kann in die spätere Matrix-Berechnung einfließen – oder auf Wunsch ignoriert werden.</p>
+
+    <h2>📌 Technischer Hintergrund</h2>
+    <ul>
+        <li>Bewertungs-IDs aus Runde 1: <code>#1#x</code> (Gesamtnote: <code>#1#0</code>)</li>
+        <li>Bewertun
