@@ -26,9 +26,9 @@ function App() {
   const [appTester, setAppTester] = useState(false);
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
-  const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
-  const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
-  const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null);
+  const [rankingEintraege/*, setRankingEintraege*/] = useState<any[]>([]);
+  /* const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
+  const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null); */
   const [saveRunSuccessOpen, setSaveRunSuccessOpen] = useState(false);
   const [saveRunMessage, setSaveRunMessage] = useState("");
   const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
@@ -68,10 +68,10 @@ function App() {
     setGewichtungen(updatedGewichtungen);
   };
 
-  const handleCloseKombiInfoModal = () => {
+  /* const handleCloseKombiInfoModal = () => {
     setKombiInfoModalOpen(false);
     setKombiInfoPayload(null);
-  };
+  }; */
 
   const handleCloseSaveRunSuccess = () => {
     setSaveRunSuccessOpen(false);
@@ -182,12 +182,12 @@ function App() {
         isTester={appTester}
       />
 
-      <KombiInfoModal
+      {/* <KombiInfoModal
         open={kombiInfoModalOpen}
         kombi={kombiInfoPayload}
         sprache={language as "de" | "en" | "fr"}
         onClose={handleCloseKombiInfoModal}
-      />
+      /> */}
 
       <StatusToast
         open={statusToastOpen}
