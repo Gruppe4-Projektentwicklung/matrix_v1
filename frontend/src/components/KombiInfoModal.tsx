@@ -27,25 +27,33 @@ export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose 
 
   if (!open || !kombi) return null;
 
-  // Je nach Sprache die passenden Inhalte auswählen (Fallback auf Deutsch)
+  // Je nach Sprache anzeigen
   const name =
     sprache === "en"
-      ? kombi.name_en ?? kombi.name_de
+      ? kombi.name_en
       : sprache === "fr"
-      ? kombi.name_fr ?? kombi.name_de
+      ? kombi.name_fr
       : kombi.name_de;
   const erklaerung =
     sprache === "en"
-      ? kombi.erklaerung_en ?? kombi.erklaerung_de
+      ? kombi.erklaerung_en
       : sprache === "fr"
-      ? kombi.erklaerung_fr ?? kombi.erklaerung_de
+      ? kombi.erklaerung_fr
       : kombi.erklaerung_de;
   const formeltext =
     sprache === "en"
-      ? kombi.formeltext_en ?? kombi.formeltext_de
+      ? kombi.formeltext_en
       : sprache === "fr"
-      ? kombi.formeltext_fr ?? kombi.formeltext_de
+      ? kombi.formeltext_fr
       : kombi.formeltext_de;
+
+  // Bewertungsrichtung übersetzen
+  const bewertungsrichtung =
+    kombi.richtung === "high"
+      ? t("higherIsBetter")
+      : kombi.richtung === "low"
+      ? t("lowerIsBetter")
+      : "";
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
@@ -68,12 +76,7 @@ export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose 
         )}
         {kombi.richtung && (
           <div className="mb-2">
-            <b>{t("evaluationDirection")}:</b>{" "}
-            <span>
-              {kombi.richtung === "high"
-                ? t("higherIsBetter")
-                : t("lowerIsBetter")}
-            </span>
+            <b>{t("evaluationDirection")}:</b> <span>{bewertungsrichtung}</span>
           </div>
         )}
         <button
