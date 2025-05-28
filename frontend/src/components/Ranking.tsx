@@ -11,10 +11,12 @@ type RankingEintrag = {
 
 type Props = {
   eintraege?: RankingEintrag[];
-  sprache: "de" | "en" | "fr";
+ // sprache: "de" | "en" | "fr";
 };
 
-export const Ranking: React.FC<Props> = ({ eintraege = [], sprache }) => {
+//export const Ranking: React.FC<Props> = ({ eintraege = [], sprache }) 
+  export const Ranking = ({ eintraege }: Props) => {
+    void sprache; //
   const [openId, setOpenId] = useState<string | null>(null);
   const { t } = useTranslation();
 
