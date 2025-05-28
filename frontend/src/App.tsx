@@ -98,9 +98,8 @@ function App() {
   };
 
   return (
-  <div className="min-h-screen bg-[#f4f6fa] text-gray-900 font-inter px-4">
-    {/* Sprachumschalter oben rechts */}
-    <div className="w-full flex justify-end items-center p-4">
+  <div className="min-h-screen w-full bg-gradient-to-r from-[#1d2c5b] via-[#23272f] to-[#1d2c5b] flex justify-center items-start py-12">
+  <div className="w-full max-w-3xl bg-[#23272f] text-gray-100 rounded-2xl shadow-2xl p-8">
       <div className="flex items-center gap-2">
         <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
         <select
