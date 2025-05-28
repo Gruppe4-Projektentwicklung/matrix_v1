@@ -20,39 +20,42 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
 
   return (
     <div className="border rounded-xl p-4 space-y-4 bg-white shadow-sm">
-      <h2 className="text-lg font-semibold">{t("optionsTitle")}</h2>
+      <h2 className="text-lg font-semibold mb-4">{t("optionsTitle")}</h2>
 
-      <label className="block">
-        <input
-          type="checkbox"
-          checked={runde1}
-          onChange={(e) => onChange("runde1", e.target.checked)}
-          className="mr-2"
-        />
-        {t("optionConsiderRound1")}
-      </label>
+      {/* Hier die Checkboxen nebeneinander */}
+      <div className="flex flex-row gap-8 flex-wrap">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={runde1}
+            onChange={(e) => onChange("runde1", e.target.checked)}
+            className="accent-[#1d2c5b]"
+          />
+          {t("optionConsiderRound1")}
+        </label>
 
-      <label className="block">
-        <input
-          type="checkbox"
-          checked={runde2}
-          onChange={(e) => onChange("runde2", e.target.checked)}
-          className="mr-2"
-        />
-        {t("optionConsiderRound2")}
-      </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={runde2}
+            onChange={(e) => onChange("runde2", e.target.checked)}
+            className="accent-[#1d2c5b]"
+          />
+          {t("optionConsiderRound2")}
+        </label>
 
-      <label className="block">
-        <input
-          type="checkbox"
-          checked={appTester}
-          onChange={(e) => onChange("appTester", e.target.checked)}
-          className="mr-2"
-        />
-        {t("optionAppTester")}
-      </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={appTester}
+            onChange={(e) => onChange("appTester", e.target.checked)}
+            className="accent-[#1d2c5b]"
+          />
+          {t("optionAppTester")}
+        </label>
+      </div>
 
-      <div>
+      <div className="mt-4">
         <label className="block mb-1 font-medium">{t("optionDataRelease")}</label>
         <select
           value={datenfreigabe}
