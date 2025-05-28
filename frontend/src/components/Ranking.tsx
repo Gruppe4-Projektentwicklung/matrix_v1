@@ -16,7 +16,7 @@ type Props = {
 
 //export const Ranking: React.FC<Props> = ({ eintraege = [], sprache }) 
   export const Ranking = ({ eintraege }: Props) => {
-    void sprache; //
+    // void sprache; //
   const [openId, setOpenId] = useState<string | null>(null);
   const { t } = useTranslation();
 
