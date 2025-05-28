@@ -21,7 +21,6 @@ export const WeightingSelector: React.FC<Props> = ({
   const { t } = useTranslation();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // Übersetzte Labels für Gewichtungen, index entspricht Wert 0-5
   const gewichtungLabels = [
     t("disabled"),
     t("notImportantAtAll"),
@@ -44,26 +43,19 @@ export const WeightingSelector: React.FC<Props> = ({
 
   if (!Array.isArray(kombinationen) || kombinationen.length === 0) {
     return (
-      <div className="text-gray-500">
-        {t("noWeightingCombinationsAvailable")}
-      </div>
+      <div className="text-gray-500">{t("noWeightingCombinationsAvailable")}</div>
     );
   }
 
   return (
     <div className="space-y-6">
       {(kombinationen || []).map((kombi) => (
-        <div
-          key={kombi.id}
-          className="border rounded-xl p-4 shadow-sm bg-white"
-        >
+        <div key={kombi.id} className="border rounded-xl p-4 shadow-sm bg-white">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-lg font-semibold">{kombi.name}</h2>
               {expandedId === kombi.id && (
-                <p className="text-sm mt-1 text-gray-700">
-                  {kombi.beschreibung}
-                </p>
+                <p className="text-sm mt-1 text-gray-700">{kombi.beschreibung}</p>
               )}
             </div>
             <button
@@ -78,7 +70,6 @@ export const WeightingSelector: React.FC<Props> = ({
           </div>
 
           <div className="mt-4 flex flex-wrap gap-4 items-center">
-            {/* Deaktiviert separat darstellen */}
             <label className="cursor-pointer border-r pr-4 mr-4 border-gray-300">
               <input
                 type="radio"
@@ -87,10 +78,9 @@ export const WeightingSelector: React.FC<Props> = ({
                 onChange={() => handleGewichtungChange(kombi.id, 0)}
                 className="mr-1"
               />
-              {t("disabled")}
+              {gewichtungLabels[0]}
             </label>
 
-            {/* Restliche Gewichtungen */}
             {gewichtungLabels.slice(1).map((label, i) => (
               <label key={i + 1} className="cursor-pointer">
                 <input
