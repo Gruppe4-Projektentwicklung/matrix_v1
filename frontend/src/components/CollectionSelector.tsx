@@ -95,9 +95,7 @@ export const CollectionSelector: React.FC<Props> = ({
         </a>
       </div>
 
-      {uploadError && (
-        <p className="text-red-600 mt-1">{uploadError}</p>
-      )}
+      {uploadError && <p className="text-red-600 mt-1">{uploadError}</p>}
     </div>
   );
 };
