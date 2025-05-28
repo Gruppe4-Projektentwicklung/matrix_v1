@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export interface BewertungsLaufPayload {
-  tester: boolean; // true, wenn Tester-Modus aktiviert
+  tester: boolean;
   userData?: {
     alter?: string;
     geschlecht?: string;
@@ -68,7 +68,7 @@ export const StatistikForm: React.FC<Props> = ({
     try {
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
-    } catch (err) {
+    } catch {
       setFehler(t("submitError"));
     } finally {
       setSending(false);
@@ -90,9 +90,10 @@ export const StatistikForm: React.FC<Props> = ({
           ×
         </button>
         <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
-        <p className="text-gray-700 text-sm mb-4">
-          {t("infoVoluntary")}
-        </p>
+        <p
+          className="text-gray-700 text-sm mb-4"
+          dangerouslySetInnerHTML={{ __html: t("infoVoluntary") }}
+        />
 
         <label className="block mb-2 font-semibold">
           <input
