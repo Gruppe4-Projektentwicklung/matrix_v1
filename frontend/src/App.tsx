@@ -109,63 +109,97 @@ function App() {
   };
 
   return (
-    <div className="app-wrapper">
-      {/* Sprachumschalter */}
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", marginBottom: 16 }}>
-        <label htmlFor="lang-select" className="font-semibold">{t("language")}</label>
-        <select id="lang-select" value={language} onChange={handleLanguageChange}>
-          <option value="de">Deutsch</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-        </select>
-      </div>
 
-      <h1>{t("title")}</h1>
+    <div className="min-h-screen bg-[#f5f7fa] font-inter flex flex-col">
+      {/* Top-Bar / Logo-Bereich */}
+      <header className="w-full shadow-sm bg-white/60 backdrop-blur z-20">
+        <div className="max-w-5xl mx-auto flex items-center justify-between py-4 px-6">
+          <span className="text-2xl font-extrabold text-[#162447] tracking-tight">
+            Gruppe 4 Projektentwicklung
+          </span>
+          <div className="flex gap-3 items-center">
+            <label htmlFor="lang-select" className="font-medium text-gray-700">
+              {t("language")}
+            </label>
+            <select
+              id="lang-select"
+              value={language}
+              onChange={handleLanguageChange}
+              className="rounded-lg border border-gray-200 py-1 px-2 bg-white shadow-inner focus:ring-2 focus:ring-blue-400 transition"
+            >
+              <option value="de">Deutsch</option>
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+            </select>
+          </div>
+        </div>
+      </header>
 
-      <CollectionSelector
-        sammlungTyp="ideen"
-        aktuelleSammlungName={aktuelleIdeensammlung}
-        //eigeneSammlungen={eigeneIdeensammlungen}
-        onSammlungChange={handleIdeenSammlungChange}
-        onUpload={handleIdeenUpload}
-        templateUrl="/templates/ideen-vorlage.xlsx"
-      />
+      {/* Haupt-Container */}
+      <main className="flex-grow flex flex-col items-center justify-center">
+        <section className="w-full max-w-3xl bg-white shadow-xl rounded-3xl p-8 my-10">
+          {/* Titel */}
+          <h1 className="text-center text-3xl md:text-4xl font-bold text-[#162447] mb-2 drop-shadow-sm">
+            {t("title")}
+          </h1>
+          <p className="text-center text-lg text-gray-500 mb-8">
+            Bewerten und vergleichen Sie innovative Ideen im nachhaltigen Bauen.
+          </p>
 
-      <IdeenSelector
-        ideen={ideen}
-        sprache={language as "de" | "en" | "fr"}
-        onUpdate={handleIdeenUpdate}
-      />
+          {/* Komponenten-GRID */}
+          <div className="space-y-8">
+            <CollectionSelector
+              sammlungTyp="ideen"
+              aktuelleSammlungName={aktuelleIdeensammlung}
+              //eigeneSammlungen={eigeneIdeensammlungen}
+              onSammlungChange={handleIdeenSammlungChange}
+              onUpload={handleIdeenUpload}
+              templateUrl="/templates/ideen-vorlage.xlsx"
+            />
 
-      <BewertungsOptionen
-        runde1={runde1}
-        runde2={runde2}
-        appTester={appTester}
-        datenfreigabe={datenfreigabe}
-        onChange={handleBewertungsOptionenChange}
-      />
+            <IdeenSelector
+              ideen={ideen}
+              sprache={language as "de" | "en" | "fr"}
+              onUpdate={handleIdeenUpdate}
+            />
 
-      <WeightingSelector
-        kombinationen={gewichtungen}
-        onUpdate={handleGewichtungenUpdate}
-      />
+            <BewertungsOptionen
+              runde1={runde1}
+              runde2={runde2}
+              appTester={appTester}
+              datenfreigabe={datenfreigabe}
+              onChange={handleBewertungsOptionenChange}
+            />
 
-      <Ranking
-        eintraege={rankingEintraege}
-       // sprache={language as "de" | "en" | "fr"}
-      />
+            <WeightingSelector
+              kombinationen={gewichtungen}
+              onUpdate={handleGewichtungenUpdate}
+            />
 
-      <ExportRankingButton eintraege={rankingEintraege} />
+            <Ranking eintraege={rankingEintraege} />
 
+            <div className="flex flex-wrap gap-4 justify-end">
+              <ExportRankingButton eintraege={rankingEintraege} />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full bg-white/80 border-t text-center py-4 text-gray-500 text-sm">
+        © {new Date().getFullYear()} Gruppe 4 Projektentwicklung
+      </footer>
+
+      {/* Modals & Toaster */}
       <StatistikForm
         open={statistikFormOpen}
         onClose={handleCloseStatistikForm}
         payload={{
           ideenSammlung: aktuelleIdeensammlung,
-          kombiSammlung: "", // TODO: Kombisammlung state ergänzen
+          kombiSammlung: "",
           gewaehlteIdeen: ideen.filter(i => i.aktiv).map(i => i.id),
           deaktivierteIdeen: ideen.filter(i => !i.aktiv).map(i => i.id),
-          gewichtungen: {}, // TODO: richtiges Mapping ergänzen
+          gewichtungen: {},
           ergebnisRanking: rankingEintraege,
         }}
         onSaveSuccess={handleSaveSuccess}
@@ -194,6 +228,7 @@ function App() {
       />
     </div>
   );
+
 }
 
 export default App;
