@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import "./i18n"; // Damit i18n initialisiert wird
+import "./i18n"; // i18n initialisieren
 
 import { useTranslation } from "react-i18next";
 
@@ -17,7 +17,7 @@ import { WeightingSelector } from "./components/WeightingSelector";
 
 function App() {
   const { t, i18n } = useTranslation();
-  const [language, setLanguage] = useState("de");
+  const [language, setLanguage] = useState(i18n.language || "de");
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
@@ -33,7 +33,7 @@ function App() {
         <select id="lang-select" value={language} onChange={handleLanguageChange}>
           <option value="de">Deutsch</option>
           <option value="en">English</option>
-          <option value="fr">Française</option>
+          <option value="fr">Français</option>
         </select>
       </div>
 
