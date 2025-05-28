@@ -96,7 +96,7 @@ function App() {
 
   return (
     <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10">
-      <div className="w-full max-w-7xl bg-gray-800 text-white shadow-xl rounded-2xl p-8">
+      <div className="w-full max-w-7xl bg-gray-800 text-white shadow-xl rounded-2xl p-8 relative">
         <div className="absolute top-4 right-4 flex items-center gap-2">
           <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
           <select
