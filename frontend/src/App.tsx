@@ -47,9 +47,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
+    <div className="min-h-screen bg-gray-200 flex flex-col items-center px-4 py-10">
       {/* Sprachumschalter oben rechts */}
-      <div className="w-full max-w-5xl flex justify-end mb-4">
+      <div className="w-full max-w-5xl px-4 flex justify-end mb-4">
         <label className="mr-2 font-semibold">{t("language")}</label>
         <select
           id="lang-select"
@@ -64,7 +64,7 @@ function App() {
       </div>
 
       {/* Hauptcontainer */}
-      <div className="max-w-5xl w-full bg-white shadow-xl rounded-2xl p-8">
+      <div className="max-w-8xl w-full bg-white shadow-xl rounded-2xl p-10">
         <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
           {t("title")}
         </h1>
