@@ -19,11 +19,11 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="border rounded-xl p-4 space-y-4 bg-white shadow-sm">
-      <h2 className="text-lg font-semibold mb-4">{t("optionsTitle")}</h2>
+    <div className="border rounded-xl p-4 space-y-6 bg-white shadow-sm">
+      <h2 className="text-lg font-semibold text-center">{t("optionsTitle")}</h2>
 
-      {/* Hier die Checkboxen nebeneinander */}
-      <div className="flex flex-row gap-8 flex-wrap">
+      {/* Zentrierte Checkboxen */}
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-6 text-center">
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -55,12 +55,12 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
         </label>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-2 text-center">
         <label className="block mb-1 font-medium">{t("optionDataRelease")}</label>
         <select
           value={datenfreigabe}
           onChange={(e) => onChange("datenfreigabe", e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full max-w-xs mx-auto"
         >
           <option value="offen">{t("optionDataReleaseOpen")}</option>
           <option value="anonym">{t("optionDataReleaseAnonym")}</option>
