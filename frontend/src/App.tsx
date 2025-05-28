@@ -98,7 +98,7 @@ function App() {
   };
 
   return (
-  <div className="min-h-screen bg-[#f4f6fa] text-gray-900 font-inter">
+  <div className="min-h-screen bg-[#f4f6fa] text-gray-900 font-inter px-4">
     {/* Sprachumschalter oben rechts */}
     <div className="w-full flex justify-end items-center p-4">
       <div className="flex items-center gap-2">
@@ -118,8 +118,11 @@ function App() {
     </div>
 
     {/* Hauptcontainer */}
-    <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-8 my-8">
-      <h1 className="text-3xl font-bold mb-8 text-[#1d2c5b] text-center">{t("title")}</h1>
+    <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+
+      <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] text-center tracking-tight drop-shadow">
+  {t("title")}
+</h1>
 
       <CollectionSelector
         sammlungTyp="ideen"
@@ -137,7 +140,7 @@ function App() {
         />
       </div>
 
-      <div className="mt-6">
+      <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
         <BewertungsOptionen
           runde1={runde1}
           runde2={runde2}
