@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type BewertungsOptionenProps = {
   runde1: boolean;
@@ -15,9 +16,11 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
   datenfreigabe,
   onChange,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="border rounded-xl p-4 space-y-4 bg-white shadow-sm">
-      <h2 className="text-lg font-semibold">Bewertungsoptionen</h2>
+      <h2 className="text-lg font-semibold">{t("optionsTitle")}</h2>
 
       <label className="block">
         <input
@@ -26,7 +29,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
           onChange={(e) => onChange("runde1", e.target.checked)}
           className="mr-2"
         />
-        Runde 1 berücksichtigen
+        {t("optionConsiderRound1")}
       </label>
 
       <label className="block">
@@ -36,7 +39,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
           onChange={(e) => onChange("runde2", e.target.checked)}
           className="mr-2"
         />
-        Runde 2 berücksichtigen
+        {t("optionConsiderRound2")}
       </label>
 
       <label className="block">
@@ -46,19 +49,19 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
           onChange={(e) => onChange("appTester", e.target.checked)}
           className="mr-2"
         />
-        App-Tester (kein Logging, keine Datenabfrage)
+        {t("optionAppTester")}
       </label>
 
       <div>
-        <label className="block mb-1 font-medium">Datenfreigabe für Statistiken</label>
+        <label className="block mb-1 font-medium">{t("optionDataRelease")}</label>
         <select
           value={datenfreigabe}
           onChange={(e) => onChange("datenfreigabe", e.target.value)}
           className="border p-2 rounded w-full"
         >
-          <option value="offen">Daten eingeben (anonym)</option>
-          <option value="anonym">Nur Nutzungsverhalten speichern</option>
-          <option value="keine">Gar nichts speichern</option>
+          <option value="offen">{t("optionDataReleaseOpen")}</option>
+          <option value="anonym">{t("optionDataReleaseAnonym")}</option>
+          <option value="keine">{t("optionDataReleaseNone")}</option>
         </select>
       </div>
     </div>

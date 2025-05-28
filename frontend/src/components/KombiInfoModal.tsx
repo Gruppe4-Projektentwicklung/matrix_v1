@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type KombiInfo = {
   id: string;
@@ -22,26 +23,28 @@ type Props = {
 };
 
 export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose }) => {
+  const { t } = useTranslation();
+
   if (!open || !kombi) return null;
 
-  // Je nach Sprache anzeigen
+  // Je nach Sprache die passenden Inhalte auswählen (Fallback auf Deutsch)
   const name =
     sprache === "en"
-      ? kombi.name_en
+      ? kombi.name_en ?? kombi.name_de
       : sprache === "fr"
-      ? kombi.name_fr
+      ? kombi.name_fr ?? kombi.name_de
       : kombi.name_de;
   const erklaerung =
     sprache === "en"
-      ? kombi.erklaerung_en
+      ? kombi.erklaerung_en ?? kombi.erklaerung_de
       : sprache === "fr"
-      ? kombi.erklaerung_fr
+      ? kombi.erklaerung_fr ?? kombi.erklaerung_de
       : kombi.erklaerung_de;
   const formeltext =
     sprache === "en"
-      ? kombi.formeltext_en
+      ? kombi.formeltext_en ?? kombi.formeltext_de
       : sprache === "fr"
-      ? kombi.formeltext_fr
+      ? kombi.formeltext_fr ?? kombi.formeltext_de
       : kombi.formeltext_de;
 
   return (
@@ -50,34 +53,26 @@ export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose 
         <button
           className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
           onClick={onClose}
-          aria-label="Schließen"
+          aria-label={t("close")}
         >
           ×
         </button>
         <h2 className="font-bold text-lg mb-3">{name}</h2>
         <div className="mb-2">
-          <b>Erklärung:</b> {erklaerung}
+          <b>{t("explanation")}:</b> {erklaerung}
         </div>
         {formeltext && (
           <div className="mb-2">
-            <b>Formel:</b> <span className="font-mono">{formeltext}</span>
+            <b>{t("formula")}:</b> <span className="font-mono">{formeltext}</span>
           </div>
         )}
         {kombi.richtung && (
           <div className="mb-2">
-            <b>Bewertungsrichtung:</b>{" "}
+            <b>{t("evaluationDirection")}:</b>{" "}
             <span>
               {kombi.richtung === "high"
-                ? sprache === "en"
-                  ? "Higher is better"
-                  : sprache === "fr"
-                  ? "Plus élevé = mieux"
-                  : "Höher ist besser"
-                : sprache === "en"
-                ? "Lower is better"
-                : sprache === "fr"
-                ? "Plus bas = mieux"
-                : "Niedriger ist besser"}
+                ? t("higherIsBetter")
+                : t("lowerIsBetter")}
             </span>
           </div>
         )}
@@ -85,7 +80,7 @@ export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose 
           className="mt-4 bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
           onClick={onClose}
         >
-          Schließen
+          {t("close")}
         </button>
       </div>
     </div>

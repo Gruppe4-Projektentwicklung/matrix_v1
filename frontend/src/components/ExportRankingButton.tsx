@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type RankingEintrag = {
   id: string;
@@ -14,8 +15,7 @@ type Props = {
 };
 
 function toCSV(eintraege: RankingEintrag[]): string {
-  const headers = ["Platz", "ID", "Name", "Score", "Beschreibung"];
-  // Alle Kombi-Keys aus allen Details sammeln
+  const headers = ["rank", "id", "name", "score", "description"];
   const allKombiKeys = Array.from(
     new Set(
       eintraege.flatMap(e =>
@@ -35,13 +35,19 @@ function toCSV(eintraege: RankingEintrag[]): string {
   ]);
 
   const csv = [
-    allHeaders.join(";"),
+    allHeaders.map(h => h === "rank" ? t("rank") :
+                     h === "id" ? "ID" :
+                     h === "name" ? t("name") :
+                     h === "score" ? t("score") :
+                     h === "description" ? t("description") : h).join(";"),
     ...rows.map(row => row.join(";"))
   ].join("\r\n");
   return csv;
 }
 
 export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName = "ranking.csv" }) => {
+  const { t } = useTranslation();
+
   const handleExport = () => {
     const csv = toCSV(eintraege);
     const blob = new Blob([csv], { type: "text/csv" });
@@ -58,7 +64,7 @@ export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName = "ra
       onClick={handleExport}
       className="bg-green-600 text-white rounded px-4 py-2 font-semibold hover:bg-green-700 mt-3"
     >
-      Ranking als CSV exportieren
+      {t("exportRankingCSV")}
     </button>
   );
 };

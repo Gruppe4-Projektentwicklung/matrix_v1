@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface BewertungsLaufPayload {
   tester: boolean; // true, wenn Tester-Modus aktiviert
@@ -9,18 +10,16 @@ export interface BewertungsLaufPayload {
     berufsrolle?: string;
     [key: string]: any;
   };
-  ideenSammlung: string; // Dateiname oder ID der verwendeten Ideensammlung
-  kombiSammlung: string; // Dateiname oder ID der verwendeten Kombisammlung
-  gewaehlteIdeen: string[]; // IDs der aktiven Ideen
-  deaktivierteIdeen: string[]; // IDs der deaktivierten Ideen
-  gewichtungen: Record<string, number>; // Kombi-ID -> Gewichtung (0-5)
-  ergebnisRanking: any[]; // Die berechnete Ranking-Liste (z.B. [{id, score, ...}, ...])
+  ideenSammlung: string;
+  kombiSammlung: string;
+  gewaehlteIdeen: string[];
+  deaktivierteIdeen: string[];
+  gewichtungen: Record<string, number>;
+  ergebnisRanking: any[];
   zeitstempel?: string;
-  // ...weitere gewünschte Felder
 }
 
 import { saveRun } from "../api/saveRun";
-import type { BewertungsLaufPayload as SaveRunPayload } from "../api/saveRun";
 
 type Props = {
   open: boolean;
@@ -35,6 +34,8 @@ export const StatistikForm: React.FC<Props> = ({
   payload,
   onSaveSuccess,
 }) => {
+  const { t } = useTranslation();
+
   const [alter, setAlter] = useState("");
   const [geschlecht, setGeschlecht] = useState("");
   const [branche, setBranche] = useState("");
@@ -68,7 +69,7 @@ export const StatistikForm: React.FC<Props> = ({
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
     } catch (err) {
-      setFehler("Fehler beim Senden der Bewertung. Bitte erneut versuchen.");
+      setFehler(t("submitError"));
     } finally {
       setSending(false);
     }
@@ -84,13 +85,13 @@ export const StatistikForm: React.FC<Props> = ({
           type="button"
           onClick={onClose}
           className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
-          aria-label="Schließen"
+          aria-label={t("close")}
         >
           ×
         </button>
-        <h2 className="font-bold text-lg mb-2">Bitte helfen Sie uns, die Statistik zu verbessern</h2>
+        <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
         <p className="text-gray-700 text-sm mb-4">
-          Ihre Angaben sind <b>freiwillig</b>, anonym und werden nur für Auswertungen gespeichert. Sie können auch als App-Tester fortfahren, dann wird <b>gar nichts</b> gespeichert.
+          {t("infoVoluntary")}
         </p>
 
         <label className="block mb-2 font-semibold">
@@ -100,7 +101,7 @@ export const StatistikForm: React.FC<Props> = ({
             onChange={() => setTester((v) => !v)}
             className="mr-2"
           />
-          App-Tester: Keine Daten speichern und keine Angaben machen
+          {t("appTesterMode")}
         </label>
 
         {!tester && (
@@ -108,28 +109,28 @@ export const StatistikForm: React.FC<Props> = ({
             <input
               className="border p-2 rounded w-full"
               type="text"
-              placeholder="Alter"
+              placeholder={t("age")}
               value={alter}
               onChange={(e) => setAlter(e.target.value)}
             />
             <input
               className="border p-2 rounded w-full"
               type="text"
-              placeholder="Geschlecht"
+              placeholder={t("gender")}
               value={geschlecht}
               onChange={(e) => setGeschlecht(e.target.value)}
             />
             <input
               className="border p-2 rounded w-full"
               type="text"
-              placeholder="Branche"
+              placeholder={t("industry")}
               value={branche}
               onChange={(e) => setBranche(e.target.value)}
             />
             <input
               className="border p-2 rounded w-full"
               type="text"
-              placeholder="Berufsrolle"
+              placeholder={t("jobRole")}
               value={berufsrolle}
               onChange={(e) => setBerufsrolle(e.target.value)}
             />
@@ -144,7 +145,7 @@ export const StatistikForm: React.FC<Props> = ({
             disabled={sending}
             className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
           >
-            {tester ? "Ohne Angaben abschicken" : "Bewertung speichern"}
+            {tester ? t("submitWithoutData") : t("saveRating")}
           </button>
           <button
             type="button"
@@ -152,7 +153,7 @@ export const StatistikForm: React.FC<Props> = ({
             disabled={sending}
             className="bg-gray-200 rounded px-4 py-2"
           >
-            Abbrechen
+            {t("cancel")}
           </button>
         </div>
       </form>

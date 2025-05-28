@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type Combination = {
   id: string;
@@ -13,20 +14,22 @@ type Props = {
   onUpdate: (updated: Combination[]) => void;
 };
 
-const gewichtungLabels = [
-  "Deaktiviert",
-  "Überhaupt nicht wichtig",
-  "Wenig wichtig",
-  "Neutral",
-  "Wichtig",
-  "Sehr wichtig",
-];
-
 export const WeightingSelector: React.FC<Props> = ({
   kombinationen = [],
   onUpdate,
 }) => {
+  const { t } = useTranslation();
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  // Übersetzte Labels für Gewichtungen, index entspricht Wert 0-5
+  const gewichtungLabels = [
+    t("disabled"),
+    t("notImportantAtAll"),
+    t("slightlyImportant"),
+    t("neutral"),
+    t("important"),
+    t("veryImportant"),
+  ];
 
   const handleGewichtungChange = (id: string, value: number) => {
     const updated = (kombinationen || []).map((kombi) =>
@@ -39,11 +42,10 @@ export const WeightingSelector: React.FC<Props> = ({
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  // Fallback: Wenn keine Kombinationen, kurze Meldung anzeigen
   if (!Array.isArray(kombinationen) || kombinationen.length === 0) {
     return (
       <div className="text-gray-500">
-        Keine Bewertungskombinationen vorhanden.
+        {t("noWeightingCombinationsAvailable")}
       </div>
     );
   }
@@ -70,8 +72,8 @@ export const WeightingSelector: React.FC<Props> = ({
               type="button"
             >
               {expandedId === kombi.id
-                ? "Beschreibung ausblenden"
-                : "i – Beschreibung anzeigen"}
+                ? t("hideDescription")
+                : t("showDescription")}
             </button>
           </div>
 
@@ -85,7 +87,7 @@ export const WeightingSelector: React.FC<Props> = ({
                 onChange={() => handleGewichtungChange(kombi.id, 0)}
                 className="mr-1"
               />
-              Deaktiviert
+              {t("disabled")}
             </label>
 
             {/* Restliche Gewichtungen */}

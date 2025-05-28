@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   open: boolean;
@@ -15,6 +16,8 @@ export const StatusToast: React.FC<Props> = ({
   onClose,
   duration = 3500,
 }) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (!open) return;
     const timer = setTimeout(onClose, duration);
@@ -38,7 +41,11 @@ export const StatusToast: React.FC<Props> = ({
         {type === "error" && <span>❌</span>}
         {type === "info" && <span>ℹ️</span>}
         <span>{message}</span>
-        <button onClick={onClose} className="ml-2 text-xl" aria-label="Schließen">
+        <button
+          onClick={onClose}
+          className="ml-2 text-xl"
+          aria-label={t("close")}
+        >
           ×
         </button>
       </div>

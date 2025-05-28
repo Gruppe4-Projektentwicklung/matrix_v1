@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   sammlungTyp: "ideen" | "kombis";
   aktuelleSammlungName: string;
   eigeneSammlungen?: string[];
-  onSammlungChange?: (dateiName: string) => void; // Optional!
-  onUpload?: (file: File) => void;                // Optional!
+  onSammlungChange?: (dateiName: string) => void;
+  onUpload?: (file: File) => void;
   templateUrl: string;
 };
 
@@ -13,10 +14,12 @@ export const CollectionSelector: React.FC<Props> = ({
   sammlungTyp,
   aktuelleSammlungName,
   eigeneSammlungen = [],
-  onSammlungChange = () => {}, // Leerer Fallback
-  onUpload = () => {},         // Leerer Fallback
+  onSammlungChange = () => {},
+  onUpload = () => {},
   templateUrl,
 }) => {
+  const { t } = useTranslation();
+
   const [auswahl, setAuswahl] = useState<string>(aktuelleSammlungName);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [fileKey, setFileKey] = useState<number>(0);
@@ -36,7 +39,7 @@ export const CollectionSelector: React.FC<Props> = ({
 
     const file = files[0];
     if (!file.name.endsWith(".xlsx")) {
-      setUploadError("Bitte eine Excel-Datei (.xlsx) hochladen.");
+      setUploadError(t("uploadErrorInvalidFile"));
       setFileKey((k) => k + 1);
       return;
     }
@@ -48,8 +51,8 @@ export const CollectionSelector: React.FC<Props> = ({
     <div className="mb-4">
       <label className="block font-semibold mb-1">
         {sammlungTyp === "ideen"
-          ? "Ideensammlung auswählen"
-          : "Kombinationssammlung auswählen"}
+          ? t("selectIdeaCollection")
+          : t("selectCombinationCollection")}
       </label>
 
       <select
@@ -60,8 +63,8 @@ export const CollectionSelector: React.FC<Props> = ({
       >
         <option value={aktuelleSammlungName}>
           {sammlungTyp === "ideen"
-            ? "Aktuelle Ideensammlung"
-            : "Aktuelle Kombinationssammlung"}
+            ? t("currentIdeaCollection")
+            : t("currentCombinationCollection")}
         </option>
         {(eigeneSammlungen || []).map((datei) => (
           <option key={datei} value={datei}>
@@ -72,7 +75,7 @@ export const CollectionSelector: React.FC<Props> = ({
 
       <div className="mt-2 flex items-center space-x-4">
         <label className="cursor-pointer text-blue-600 underline">
-          Datei hochladen
+          {t("uploadFile")}
           <input
             type="file"
             accept=".xlsx"
@@ -88,7 +91,7 @@ export const CollectionSelector: React.FC<Props> = ({
           target="_blank"
           rel="noreferrer"
         >
-          Vorlage herunterladen
+          {t("downloadTemplate")}
         </a>
       </div>
 

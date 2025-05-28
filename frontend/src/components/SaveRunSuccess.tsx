@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   open: boolean;
@@ -15,6 +16,8 @@ export const SaveRunSuccess: React.FC<Props> = ({
   onClose,
   isTester,
 }) => {
+  const { t } = useTranslation();
+
   if (!open) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
@@ -22,27 +25,27 @@ export const SaveRunSuccess: React.FC<Props> = ({
         <button
           className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
           onClick={onClose}
-          aria-label="Schließen"
+          aria-label={t("close")}
         >
           ×
         </button>
-        <h2 className="font-bold text-lg mb-2">Danke für Ihre Bewertung!</h2>
+        <h2 className="font-bold text-lg mb-2">{t("thankYouForRating")}</h2>
         <div className="mb-3 text-gray-700">{message}</div>
         {runId && !isTester && (
           <div className="text-xs text-gray-500 mb-2">
-            Bewertungs-ID: <span className="font-mono">{runId}</span>
+            {t("evaluationId")}: <span className="font-mono">{runId}</span>
           </div>
         )}
         {isTester && (
           <div className="text-sm text-blue-600">
-            Hinweis: Im App-Tester-Modus wird <b>keine</b> Speicherung vorgenommen.
+            {t("testerModeNotice")}
           </div>
         )}
         <button
           className="mt-4 bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
           onClick={onClose}
         >
-          Schließen
+          {t("close")}
         </button>
       </div>
     </div>
