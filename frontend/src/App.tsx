@@ -98,127 +98,110 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f7fb] font-inter flex flex-col">
-      {/* Header */}
-      <header className="bg-white/95 shadow-lg sticky top-0 z-20">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between py-4 px-4">
-          <div className="flex items-center gap-3">
-            <img src="/logo192.png" alt="Logo" className="w-11 h-11 rounded-xl" />
-            <span className="text-2xl font-bold tracking-tight text-[#2b5ca0] drop-shadow-sm">
-              {t("title")}
-            </span>
-          </div>
-          <div className="flex items-center gap-2 mt-3 md:mt-0">
-            <label htmlFor="lang-select" className="font-medium text-gray-600">
-              {t("language")}
-            </label>
-            <select
-              id="lang-select"
-              value={language}
-              onChange={handleLanguageChange}
-              className="border border-gray-300 rounded-lg px-3 py-1 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#2b5ca0]"
-            >
-              <option value="de">Deutsch</option>
-              <option value="en">English</option>
-              <option value="fr">Français</option>
-            </select>
-          </div>
-        </div>
-      </header>
-
-      {/* Hauptbereich */}
-      <main className="flex-1 flex justify-center">
-        <div className="w-full max-w-4xl px-2 py-8 space-y-6">
-          {/* Cards für Abschnitte */}
-          <section className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
-            <CollectionSelector
-              sammlungTyp="ideen"
-              aktuelleSammlungName={aktuelleIdeensammlung}
-              onSammlungChange={handleIdeenSammlungChange}
-              onUpload={handleIdeenUpload}
-              templateUrl="/templates/ideen-vorlage.xlsx"
-            />
-          </section>
-          <section className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
-            <IdeenSelector
-              ideen={ideen}
-              sprache={language as "de" | "en" | "fr"}
-              onUpdate={handleIdeenUpdate}
-            />
-          </section>
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
-              <BewertungsOptionen
-                runde1={runde1}
-                runde2={runde2}
-                appTester={appTester}
-                datenfreigabe={datenfreigabe}
-                onChange={handleBewertungsOptionenChange}
-              />
-            </div>
-            <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
-              <WeightingSelector
-                kombinationen={gewichtungen}
-                onUpdate={handleGewichtungenUpdate}
-              />
-            </div>
-          </section>
-          <section className="bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
-            <Ranking eintraege={rankingEintraege} />
-          </section>
-          {/* Export und Statistik */}
-          <section className="flex flex-col md:flex-row justify-between items-center gap-3 bg-white rounded-3xl shadow-xl p-6 md:p-8 mb-4">
-            <ExportRankingButton eintraege={rankingEintraege} />
-            <button
-              onClick={() => setStatistikFormOpen(true)}
-              className="bg-[#2b5ca0] hover:bg-[#22487d] transition text-white font-semibold py-2 px-5 rounded-xl shadow-lg mt-2 md:mt-0"
-            >
-              {t("saveRating")}
-            </button>
-          </section>
-        </div>
-      </main>
-
-      {/* Modals & Toasts */}
-      <StatistikForm
-        open={statistikFormOpen}
-        onClose={handleCloseStatistikForm}
-        payload={{
-          ideenSammlung: aktuelleIdeensammlung,
-          kombiSammlung: "",
-          gewaehlteIdeen: ideen.filter(i => i.aktiv).map(i => i.id),
-          deaktivierteIdeen: ideen.filter(i => !i.aktiv).map(i => i.id),
-          gewichtungen: {},
-          ergebnisRanking: rankingEintraege,
-        }}
-        onSaveSuccess={handleSaveSuccess}
-      />
-      <SaveRunSuccess
-        open={saveRunSuccessOpen}
-        message={saveRunMessage}
-        runId={saveRunId}
-        onClose={handleCloseSaveRunSuccess}
-        isTester={appTester}
-      />
-      <KombiInfoModal
-        open={kombiInfoModalOpen}
-        kombi={kombiInfoPayload}
-        sprache={language as "de" | "en" | "fr"}
-        onClose={handleCloseKombiInfoModal}
-      />
-      <StatusToast
-        open={statusToastOpen}
-        message={statusToastMessage}
-        onClose={handleCloseStatusToast}
-        type={statusToastType}
-      />
-
-      {/* Footer */}
-      <footer className="bg-white/90 text-xs text-[#2b5ca0] py-8 mt-10 text-center rounded-t-3xl shadow-inner tracking-wide">
-        &copy; {new Date().getFullYear()} Gruppe 4 Projektentwicklung &middot; matrix.gruppe4-projektentwicklung.de
-      </footer>
+  <div className="min-h-screen bg-[#f4f6fa] text-gray-900 font-inter">
+    {/* Sprachumschalter oben rechts */}
+    <div className="w-full flex justify-end items-center p-4">
+      <div className="flex items-center gap-2">
+        <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
+        <select
+          id="lang-select"
+          value={language}
+          onChange={handleLanguageChange}
+          className="px-2 py-1 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
+          style={{ minWidth: 80 }}
+        >
+          <option value="de">Deutsch</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
     </div>
-  );
+
+    {/* Hauptcontainer */}
+    <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-8 my-8">
+      <h1 className="text-3xl font-bold mb-8 text-[#1d2c5b] text-center">{t("title")}</h1>
+
+      <CollectionSelector
+        sammlungTyp="ideen"
+        aktuelleSammlungName={aktuelleIdeensammlung}
+        onSammlungChange={handleIdeenSammlungChange}
+        onUpload={handleIdeenUpload}
+        templateUrl="/templates/ideen-vorlage.xlsx"
+      />
+
+      <div className="mt-6">
+        <IdeenSelector
+          ideen={ideen}
+          sprache={language as "de" | "en" | "fr"}
+          onUpdate={handleIdeenUpdate}
+        />
+      </div>
+
+      <div className="mt-6">
+        <BewertungsOptionen
+          runde1={runde1}
+          runde2={runde2}
+          appTester={appTester}
+          datenfreigabe={datenfreigabe}
+          onChange={handleBewertungsOptionenChange}
+        />
+      </div>
+
+      <div className="mt-6">
+        <WeightingSelector
+          kombinationen={gewichtungen}
+          onUpdate={handleGewichtungenUpdate}
+        />
+      </div>
+
+      <div className="mt-6">
+        <Ranking eintraege={rankingEintraege} />
+      </div>
+
+      <div className="mt-6 flex flex-col items-center gap-4">
+        <ExportRankingButton eintraege={rankingEintraege} />
+      </div>
+    </div>
+
+    {/* Modals, Toasts usw. */}
+    <StatistikForm
+      open={statistikFormOpen}
+      onClose={handleCloseStatistikForm}
+      payload={{
+        ideenSammlung: aktuelleIdeensammlung,
+        kombiSammlung: "",
+        gewaehlteIdeen: ideen.filter(i => i.aktiv).map(i => i.id),
+        deaktivierteIdeen: ideen.filter(i => !i.aktiv).map(i => i.id),
+        gewichtungen: {},
+        ergebnisRanking: rankingEintraege,
+      }}
+      onSaveSuccess={handleSaveSuccess}
+    />
+
+    <SaveRunSuccess
+      open={saveRunSuccessOpen}
+      message={saveRunMessage}
+      runId={saveRunId}
+      onClose={handleCloseSaveRunSuccess}
+      isTester={appTester}
+    />
+
+    <KombiInfoModal
+      open={kombiInfoModalOpen}
+      kombi={kombiInfoPayload}
+      sprache={language as "de" | "en" | "fr"}
+      onClose={handleCloseKombiInfoModal}
+    />
+
+    <StatusToast
+      open={statusToastOpen}
+      message={statusToastMessage}
+      onClose={handleCloseStatusToast}
+      type={statusToastType}
+    />
+  </div>
+);
+
 }
 
 export default App;
