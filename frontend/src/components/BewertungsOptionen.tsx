@@ -22,8 +22,8 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
     <div className="border rounded-xl p-4 space-y-6 bg-white shadow-sm">
       <h2 className="text-lg font-semibold text-center">{t("optionsTitle")}</h2>
 
-      {/* Zentrierte Checkboxen */}
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-6 text-center">
+      {/* Checkboxen nebeneinander und zentriert */}
+      <div className="flex justify-center gap-8 flex-wrap text-center">
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -67,6 +67,3 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
           <option value="keine">{t("optionDataReleaseNone")}</option>
         </select>
       </div>
-    </div>
-  );
-};
