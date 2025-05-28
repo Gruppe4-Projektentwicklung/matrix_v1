@@ -23,14 +23,14 @@ export const StatusToast: React.FC<Props> = ({
 
   if (!open) return null;
 
-  const colors = {
+  const colors: Record<string, string> = {
     success: "bg-green-600",
     error: "bg-red-600",
     info: "bg-blue-600",
   };
 
   return (
-    <div className={`fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50`}>
+    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
       <div
         className={`px-5 py-3 rounded-xl shadow-lg text-white font-semibold ${colors[type]} flex items-center space-x-2`}
       >

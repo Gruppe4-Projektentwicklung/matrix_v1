@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 type Props = {
-  sammlungTyp: "ideen" | "kombis"; // entscheidet, ob Ideen oder Kombis verwaltet werden
+  sammlungTyp: "ideen" | "kombis";
   aktuelleSammlungName: string;
-  eigeneSammlungen: string[]; // Dateinamen eigener Uploads
+  eigeneSammlungen?: string[]; // jetzt optional!
   onSammlungChange: (dateiName: string) => void;
   onUpload: (file: File) => void;
   templateUrl: string;
@@ -12,16 +12,20 @@ type Props = {
 export const CollectionSelector: React.FC<Props> = ({
   sammlungTyp,
   aktuelleSammlungName,
-  eigeneSammlungen,
+  eigeneSammlungen = [],
   onSammlungChange,
   onUpload,
   templateUrl,
 }) => {
   const [auswahl, setAuswahl] = useState<string>(aktuelleSammlungName);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [fileKey, setFileKey] = useState<number>(0); // For resetting input
 
   useEffect(() => {
-    // Wenn sich Auswahl ändert, callback triggern
+    setAuswahl(aktuelleSammlungName);
+  }, [aktuelleSammlungName]);
+
+  useEffect(() => {
     onSammlungChange(auswahl);
   }, [auswahl, onSammlungChange]);
 
@@ -31,29 +35,35 @@ export const CollectionSelector: React.FC<Props> = ({
     if (!files || files.length === 0) return;
 
     const file = files[0];
-    // Optional: hier Dateityp/Name prüfen
     if (!file.name.endsWith(".xlsx")) {
       setUploadError("Bitte eine Excel-Datei (.xlsx) hochladen.");
+      setFileKey((k) => k + 1); // Reset input
       return;
     }
     onUpload(file);
+    setFileKey((k) => k + 1); // Reset input
   };
 
   return (
     <div className="mb-4">
       <label className="block font-semibold mb-1">
-        {sammlungTyp === "ideen" ? "Ideensammlung auswählen" : "Kombinationssammlung auswählen"}
+        {sammlungTyp === "ideen"
+          ? "Ideensammlung auswählen"
+          : "Kombinationssammlung auswählen"}
       </label>
 
       <select
         className="border p-2 rounded w-full max-w-xs"
         value={auswahl}
         onChange={(e) => setAuswahl(e.target.value)}
+        disabled={eigeneSammlungen.length === 0 && !aktuelleSammlungName}
       >
         <option value={aktuelleSammlungName}>
-          {sammlungTyp === "ideen" ? "Aktuelle Ideensammlung" : "Aktuelle Kombinationssammlung"}
+          {sammlungTyp === "ideen"
+            ? "Aktuelle Ideensammlung"
+            : "Aktuelle Kombinationssammlung"}
         </option>
-        {eigeneSammlungen.map((datei) => (
+        {(eigeneSammlungen || []).map((datei) => (
           <option key={datei} value={datei}>
             {datei}
           </option>
@@ -68,10 +78,9 @@ export const CollectionSelector: React.FC<Props> = ({
             accept=".xlsx"
             onChange={handleUpload}
             className="hidden"
-            key={eigeneSammlungen.length} // reset input nach Upload
+            key={fileKey}
           />
         </label>
-
         <a
           href={templateUrl}
           download
@@ -83,7 +92,9 @@ export const CollectionSelector: React.FC<Props> = ({
         </a>
       </div>
 
-      {uploadError && <p className="text-red-600 mt-1">{uploadError}</p>}
+      {uploadError && (
+        <p className="text-red-600 mt-1">{uploadError}</p>
+      )}
     </div>
   );
 };

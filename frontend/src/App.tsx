@@ -8,7 +8,8 @@ import { KombiInfoModal } from './components/KombiInfoModal'
 import { Ranking } from './components/Ranking'
 import { SaveRunSuccess } from './components/SaveRunSuccess'
 import { StatistikForm } from './components/StatistikForm'
-import StatusToast from './components/StatusToast' // <-- Einziger default export!
+
+import { StatusToast } from './components/StatusToast'
 import { WeightingSelector } from './components/WeightingSelector'
 
 function App() {

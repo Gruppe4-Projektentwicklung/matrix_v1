@@ -1,5 +1,26 @@
-import React, { useState } from "react";
-import { saveRun, BewertungsLaufPayload } from "../api/saveRun";
+
+export interface BewertungsLaufPayload {
+  tester: boolean; // true, wenn Tester-Modus aktiviert
+  userData?: {
+    alter?: string;
+    geschlecht?: string;
+    branche?: string;
+    berufsrolle?: string;
+    [key: string]: any;
+  };
+  ideenSammlung: string; // Dateiname oder ID der verwendeten Ideensammlung
+  kombiSammlung: string; // Dateiname oder ID der verwendeten Kombisammlung
+  gewaehlteIdeen: string[]; // IDs der aktiven Ideen
+  deaktivierteIdeen: string[]; // IDs der deaktivierten Ideen
+  gewichtungen: Record<string, number>; // Kombi-ID -> Gewichtung (0-5)
+  ergebnisRanking: any[]; // Die berechnete Ranking-Liste (z.B. [{id, score, ...}, ...])
+  zeitstempel?: string;
+  // ...weitere gewünschte Felder
+}
+
+import { saveRun } from "../api/saveRun";
+import type { BewertungsLaufPayload } from "../api/saveRun";
+
 
 type Props = {
   open: boolean;
