@@ -2,8 +2,9 @@ import pandas as pd
 from pathlib import Path
 
 class ExcelLoader:
-    def __init__(self, dateipfad: str):
+    def __init__(self, dateipfad: str, sprache: str = "de"):
         self.dateipfad = Path(dateipfad).resolve()
+        self.sprache = sprache.lower()
         self.id_zeile = 0       # erste Zeile mit IDs
         self.spaltenname_zeile = 1  # zweite Zeile mit sichtbaren Spaltennamen
         self.data_start_zeile = 2    # Daten ab dritter Zeile (Index 2)
@@ -11,8 +12,7 @@ class ExcelLoader:
         self.spalten_ids = {}
 
     def lade_excel(self) -> pd.DataFrame:
-        # Lese die erste Zeile als Header mit IDs
-        # Wir lesen ohne Header und verarbeiten selbst
+        # Excel ohne Header laden
         raw = pd.read_excel(
             self.dateipfad,
             header=None,
@@ -20,39 +20,36 @@ class ExcelLoader:
             keep_default_na=False,
         )
 
-        # Prüfen ob Datei mindestens 3 Zeilen hat
         if raw.shape[0] < 3:
             raise ValueError("Excel-Datei hat nicht genug Zeilen (mindestens 3 erforderlich)")
 
-        # IDs aus Zeile 1 (Index 0)
+        # IDs aus Zeile 1
         self.spalten_ids = {idx: val.strip() for idx, val in enumerate(raw.iloc[self.id_zeile])}
 
-        # Sichtbare Spaltennamen aus Zeile 2 (Index 1)
+        # Sichtbare Namen aus Zeile 2
         spalten_namen = [val.strip() for val in raw.iloc[self.spaltenname_zeile]]
 
-        # Daten ab Zeile 3 (Index 2)
+        # Daten ab Zeile 3
         daten = raw.iloc[self.data_start_zeile :].reset_index(drop=True)
 
-        # Spalten den IDs als Header zuweisen
+        # IDs als Spaltennamen verwenden
         daten.columns = [self.spalten_ids.get(i, f"Unbekannt_{i}") for i in range(len(spalten_namen))]
 
-        # Grundlegende Validierung auf wichtige Spalten (Beispiel)
-        erforderliche_ids = ['#t_de#1', '#-#1', '#1#1']  # anpassen je nach Nutzung
-        fehlende = [eid for eid in erforderliche_ids if eid not in daten.columns]
-        if fehlende:
-            raise ValueError(f"Erforderliche Spalten fehlen: {fehlende}")
+        # Sprachbezogene Spalten extrahieren (z. B. #t_de#1 etc.)
+        sprachfelder = {
+            "titel": f"#t_{self.sprache}#1",
+            "beschreibung": f"#t_{self.sprache}#2",
+            "formeltext": f"#t_{self.sprache}#3"
+        }
+
+        for key, spalten_id in sprachfelder.items():
+            if spalten_id in daten.columns:
+                daten[key] = daten[spalten_id]
+            else:
+                daten[key] = ""  # Leere Spalte, falls nicht vorhanden
 
         self.df = daten
         return daten
 
     def gib_spalten_ids(self) -> dict:
-        """Gibt das Mapping Index → ID aus der ersten Zeile zurück."""
         return self.spalten_ids
-
-
-if __name__ == "__main__":
-    # Beispielnutzung
-    loader = ExcelLoader("ideen_template.xlsx")
-    df = loader.lade_excel()
-    print("Spalten IDs:", loader.gib_spalten_ids())
-    print(df.head())
