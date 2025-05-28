@@ -8,7 +8,7 @@ import { BewertungsOptionen } from "./components/BewertungsOptionen";
 import { CollectionSelector } from "./components/CollectionSelector";
 import { ExportRankingButton } from "./components/ExportRankingButton";
 import { IdeenSelector } from "./components/IdeenSelector";
-import { KombiInfoModal } from "./components/KombiInfoModal";
+// import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { Ranking } from "./components/Ranking";
 import { SaveRunSuccess } from "./components/SaveRunSuccess";
 import { StatistikForm } from "./components/StatistikForm";
