@@ -98,8 +98,11 @@ function App() {
   };
 
   return (
-  <div className="min-h-screen bg-gray-200 text-gray-900 font-inter flex justify-center">
-  <div className="max-w-4xl w-full bg-gray-800 text-white shadow-xl rounded-2xl p-8 my-8">
+<div className="min-h-screen w-full bg-gray-100 text-gray-900 font-inter flex justify-center py-10">
+
+<div className="w-full max-w-7xl bg-gray-800 text-white shadow-xl rounded-2xl p-8 mx-4">
+
+
       <div className="flex items-center gap-2">
         <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
         <select
