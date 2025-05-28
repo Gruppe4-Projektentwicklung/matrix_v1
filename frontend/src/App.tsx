@@ -125,7 +125,7 @@ function App() {
       <CollectionSelector
         sammlungTyp="ideen"
         aktuelleSammlungName={aktuelleIdeensammlung}
-        eigeneSammlungen={eigeneIdeensammlungen}
+        //eigeneSammlungen={eigeneIdeensammlungen}
         onSammlungChange={handleIdeenSammlungChange}
         onUpload={handleIdeenUpload}
         templateUrl="/templates/ideen-vorlage.xlsx"
@@ -152,7 +152,7 @@ function App() {
 
       <Ranking
         eintraege={rankingEintraege}
-        sprache={language as "de" | "en" | "fr"}
+       // sprache={language as "de" | "en" | "fr"}
       />
 
       <ExportRankingButton eintraege={rankingEintraege} />
