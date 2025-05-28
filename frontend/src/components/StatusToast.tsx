@@ -18,7 +18,7 @@ export const StatusToast: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!open) return;
     const timer = setTimeout(onClose, duration);
     return () => clearTimeout(timer);
@@ -31,6 +31,8 @@ export const StatusToast: React.FC<Props> = ({
     error: "bg-red-600",
     info: "bg-blue-600",
   };
+
+  // Optional: Könnte hier noch übersetzte Icons verwenden, falls gewünscht.
 
   return (
     <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -52,3 +54,5 @@ export const StatusToast: React.FC<Props> = ({
     </div>
   );
 };
+
+export default StatusToast;
