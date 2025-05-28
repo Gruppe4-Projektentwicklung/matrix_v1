@@ -15,12 +15,10 @@ type Props = {
 };
 
 function toCSV(eintraege: RankingEintrag[]): string {
-  const headers = ["rank", "id", "name", "score", "description"];
+  const headers = ["Platz", "ID", "Name", "Score", "Beschreibung"];
   const allKombiKeys = Array.from(
     new Set(
-      eintraege.flatMap(e =>
-        e.details ? Object.keys(e.details) : []
-      )
+      eintraege.flatMap(e => (e.details ? Object.keys(e.details) : []))
     )
   );
   const allHeaders = [...headers, ...allKombiKeys];
@@ -34,18 +32,10 @@ function toCSV(eintraege: RankingEintrag[]): string {
     ...allKombiKeys.map(k => (eintrag.details && eintrag.details[k] !== undefined ? eintrag.details[k] : ""))
   ]);
 
-  const csv = [
-    allHeaders.map(h => h === "rank" ? t("rank") :
-                     h === "id" ? "ID" :
-                     h === "name" ? t("name") :
-                     h === "score" ? t("score") :
-                     h === "description" ? t("description") : h).join(";"),
-    ...rows.map(row => row.join(";"))
-  ].join("\r\n");
-  return csv;
+  return [allHeaders.join(";"), ...rows.map(row => row.join(";"))].join("\r\n");
 }
 
-export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName = "ranking.csv" }) => {
+export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName }) => {
   const { t } = useTranslation();
 
   const handleExport = () => {
@@ -54,7 +44,7 @@ export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName = "ra
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = fileName;
+    a.download = fileName ?? "ranking.csv";
     a.click();
     window.URL.revokeObjectURL(url);
   };
@@ -68,3 +58,5 @@ export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName = "ra
     </button>
   );
 };
+
+export default ExportRankingButton;
