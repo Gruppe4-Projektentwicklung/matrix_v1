@@ -19,7 +19,6 @@ function App() {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language || "de");
 
-  // States (ggf. weiter anpassen)
   const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
   const [ideen, setIdeen] = useState<any[]>([]);
   const [runde1, setRunde1] = useState(true);
@@ -28,8 +27,6 @@ function App() {
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
   const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
-
-  // Weitere States für Modals und Toasts
   const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
   const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null);
   const [saveRunSuccessOpen, setSaveRunSuccessOpen] = useState(false);
@@ -46,89 +43,156 @@ function App() {
     i18n.changeLanguage(lang);
   };
 
+  const handleIdeenSammlungChange = (dateiName: string) => {
+    setAktuelleIdeensammlung(dateiName);
+  };
+
+  const handleIdeenUpload = (file: File) => {
+    setStatusToastMessage(t("uploadFile") + " " + file.name);
+    setStatusToastType("success");
+    setStatusToastOpen(true);
+  };
+
+  const handleIdeenUpdate = (updatedIdeen: any[]) => {
+    setIdeen(updatedIdeen);
+  };
+
+  const handleBewertungsOptionenChange = (field: string, value: any) => {
+    if (field === "runde1") setRunde1(value);
+    if (field === "runde2") setRunde2(value);
+    if (field === "appTester") setAppTester(value);
+    if (field === "datenfreigabe") setDatenfreigabe(value);
+  };
+
+  const handleGewichtungenUpdate = (updatedGewichtungen: any[]) => {
+    setGewichtungen(updatedGewichtungen);
+  };
+
+  const handleCloseKombiInfoModal = () => {
+    setKombiInfoModalOpen(false);
+    setKombiInfoPayload(null);
+  };
+
+  const handleCloseSaveRunSuccess = () => {
+    setSaveRunSuccessOpen(false);
+    setSaveRunMessage("");
+    setSaveRunId(undefined);
+  };
+
+  const handleCloseStatistikForm = () => {
+    setStatistikFormOpen(false);
+  };
+
+  const handleSaveSuccess = (result: { run_id?: string; message: string }) => {
+    setSaveRunId(result.run_id);
+    setSaveRunMessage(result.message);
+    setSaveRunSuccessOpen(true);
+  };
+
+  const handleCloseStatusToast = () => {
+    setStatusToastOpen(false);
+    setStatusToastMessage("");
+  };
+
   return (
-    <div className="min-h-screen bg-gray-200 flex flex-col items-center px-4 py-10">
-      {/* Sprachumschalter oben rechts */}
-      <div className="w-full max-w-5xl px-4 flex justify-end mb-4">
-        <label className="mr-2 font-semibold">{t("language")}</label>
-        <select
-          id="lang-select"
-          value={language}
-          onChange={handleLanguageChange}
-          className="px-2 py-1 border rounded shadow-sm"
-        >
-          <option value="de">Deutsch</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-        </select>
+    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10">
+      <div className="w-full max-w-7xl bg-gray-800 text-white shadow-xl rounded-2xl p-8">
+        <div className="absolute top-4 right-4 flex items-center gap-2">
+          <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
+          <select
+            id="lang-select"
+            value={language}
+            onChange={handleLanguageChange}
+            className="px-2 py-1 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
+            style={{ minWidth: 80 }}
+          >
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+          </select>
+        </div>
       </div>
 
-      {/* Hauptcontainer */}
-      <div className="max-w-8xl w-full bg-white shadow-xl rounded-2xl p-10">
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
+      <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+        <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] text-center tracking-tight drop-shadow">
           {t("title")}
         </h1>
 
         <CollectionSelector
           sammlungTyp="ideen"
           aktuelleSammlungName={aktuelleIdeensammlung}
-          onSammlungChange={setAktuelleIdeensammlung}
-          onUpload={(file) => {
-            setStatusToastMessage(t("uploadFile") + " " + file.name);
-            setStatusToastType("success");
-            setStatusToastOpen(true);
-          }}
+          onSammlungChange={handleIdeenSammlungChange}
+          onUpload={handleIdeenUpload}
           templateUrl="/templates/ideen-vorlage.xlsx"
         />
 
-        <IdeenSelector ideen={ideen} sprache={language as "de" | "en" | "fr"} onUpdate={setIdeen} />
+        <div className="mt-6">
+          <IdeenSelector
+            ideen={ideen}
+            sprache={language as "de" | "en" | "fr"}
+            onUpdate={handleIdeenUpdate}
+          />
+        </div>
 
-        <BewertungsOptionen
-          runde1={runde1}
-          runde2={runde2}
-          appTester={appTester}
-          datenfreigabe={datenfreigabe}
-          onChange={(field, value) => {
-            switch (field) {
-              case "runde1": setRunde1(value); break;
-              case "runde2": setRunde2(value); break;
-              case "appTester": setAppTester(value); break;
-              case "datenfreigabe": setDatenfreigabe(value); break;
-            }
-          }}
-        />
+        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
+          <BewertungsOptionen
+            runde1={runde1}
+            runde2={runde2}
+            appTester={appTester}
+            datenfreigabe={datenfreigabe}
+            onChange={handleBewertungsOptionenChange}
+          />
+        </div>
 
-        <WeightingSelector kombinationen={gewichtungen} onUpdate={setGewichtungen} />
+        <div className="mt-6">
+          <WeightingSelector
+            kombinationen={gewichtungen}
+            onUpdate={handleGewichtungenUpdate}
+          />
+        </div>
 
-        <Ranking eintraege={rankingEintraege} />
+        <div className="mt-6">
+          <Ranking eintraege={rankingEintraege} />
+        </div>
 
-        <ExportRankingButton eintraege={rankingEintraege} />
+        <div className="mt-6 flex flex-col items-center gap-4">
+          <ExportRankingButton eintraege={rankingEintraege} />
+        </div>
       </div>
 
-      {/* Modals und Toasts */}
       <StatistikForm
         open={statistikFormOpen}
-        onClose={() => setStatistikFormOpen(false)}
-        payload={{ ideenSammlung: aktuelleIdeensammlung, kombiSammlung: "", gewaehlteIdeen: [], deaktivierteIdeen: [], gewichtungen: {}, ergebnisRanking: rankingEintraege }}
-        onSaveSuccess={(result) => {
-          setSaveRunId(result.run_id);
-          setSaveRunMessage(result.message);
-          setSaveRunSuccessOpen(true);
+        onClose={handleCloseStatistikForm}
+        payload={{
+          ideenSammlung: aktuelleIdeensammlung,
+          kombiSammlung: "",
+          gewaehlteIdeen: ideen.filter(i => i.aktiv).map(i => i.id),
+          deaktivierteIdeen: ideen.filter(i => !i.aktiv).map(i => i.id),
+          gewichtungen: {},
+          ergebnisRanking: rankingEintraege,
         }}
+        onSaveSuccess={handleSaveSuccess}
       />
 
       <SaveRunSuccess
         open={saveRunSuccessOpen}
         message={saveRunMessage}
         runId={saveRunId}
-        onClose={() => setSaveRunSuccessOpen(false)}
+        onClose={handleCloseSaveRunSuccess}
         isTester={appTester}
+      />
+
+      <KombiInfoModal
+        open={kombiInfoModalOpen}
+        kombi={kombiInfoPayload}
+        sprache={language as "de" | "en" | "fr"}
+        onClose={handleCloseKombiInfoModal}
       />
 
       <StatusToast
         open={statusToastOpen}
         message={statusToastMessage}
-        onClose={() => setStatusToastOpen(false)}
+        onClose={handleCloseStatusToast}
         type={statusToastType}
       />
     </div>
