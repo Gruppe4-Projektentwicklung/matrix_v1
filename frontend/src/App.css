@@ -1,13 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-<div className="min-h-screen bg-[#f4f6fa] text-gray-900 font-inter">
-  <div className="w-full flex justify-end items-center p-4">
-    {/* Sprachumschalter */}
-    ...
-  </div>
-  <div className="max-w-4xl w-full mx-auto bg-white shadow-xl rounded-2xl p-8 my-8">
-    {/* Deine Komponenten */}
-  </div>
-  {/* Modals, Toasts usw. */}
-</div>
+
+/* Optional eigene Styles: */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
