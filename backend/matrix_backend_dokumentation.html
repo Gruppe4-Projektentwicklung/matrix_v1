@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrix v1 – Backend Dokumentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #1d2c5b;
+        }
+        pre {
+            background-color: #eee;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📦 Projekt: Matrix v1 – Backend-Architektur, Status und Umsetzungsplan</h1>
+
+    <h2>🎯 Ziel des Systems</h2>
+    <p>Ein webbasiertes Tool zur Bewertung von Produktideen im Bereich nachhaltiges Bauen, bei dem Nutzer Kriterien gewichten, Ideen bewerten und ein Ranking berechnen können.
+    Das Frontend ist in React/Vite gebaut und auf <strong>Netlify</strong> gehostet, das Backend ist ein <strong>Flask-Server auf Render.com</strong>. Die Schnittstelle zwischen beiden Komponenten erfolgt über eine REST-API.</p>
+
+    <h2>🧭 Aktueller technischer Stand</h2>
+    <h3>📁 Backend-Verzeichnisstruktur</h3>
+    <pre><code>backend/
+├── app.py
+├── config.py
+├── matrixconfig.ini
+├── loader/
+│   ├── excel_loader.py
+│   └── sprach_utils.py
+├── api/
+│   └── ...
+├── models/
+│   └── ...
+└── uploads/
+    ├── ideen/
+    ├── kombis/
+    └── sessions/</code></pre>
+    <p>Die wichtigsten Module:</p>
+    <ul>
+        <li><strong>app.py</strong>: aktueller Flask-Einstiegspunkt (wird ggf. durch main.py ersetzt)</li>
+        <li><strong>config.py</strong>: neues zentrales Konfigurationsmodul</li>
+        <li><strong>matrixconfig.ini</strong>: aktuelle Konfigurationswerte inkl. Datei- und Feature-Definition</li>
+        <li><strong>loader/</strong>: Excel-Verarbeitung (strukturorientiertes Parsen mit ID-Zeilen und Sprachsupport)</li>
+        <li><strong>uploads/</strong>: eingereichte Ideen-/Kombinationsdateien werden hier abgelegt</li>
+    </ul>
+
+    <h2>📐 Geplante Systemlogik (Backend)</h2>
+    <ul>
+        <li>Session-ID wird beim ersten Öffnen vom Frontend erzeugt und bei Uploads mitgegeben</li>
+        <li>Temporäre Dateien pro Session landen in <code>uploads/sessions/&lt;session_id&gt;/temp.xlsx</code></li>
+        <li>Beim Klick auf „Berechnen“ werden die Daten aus der Datei in die Datenbank geschrieben</li>
+        <li>Excel-Datei wird danach optional gelöscht</li>
+        <li>Statistische Auswertung erfolgt getrennt (Datenbankeinträge können später ausgewertet werden)</li>
+    </ul>
+
+    <h2>🗃️ Geplante Datenbankstruktur</h2>
+    <h3>🔸 Tabelle: berechnungen</h3>
+    <pre><code>id              UUID        // Berechnungs-ID
+session_id      UUID        // Session-ID
+timestamp       DATETIME    // Zeitstempel
+sprache         TEXT        // "de", "en", "fr"
+datenfreigabe   TEXT        // "offen", "anonym", "keine"
+ideen_json      JSON        // aktive/deaktivierte Ideen
+gewichtung_json JSON        // Gewichtungen
+ranking_json    JSON        // berechnetes Ranking
+nutzerdaten_json JSON       // anonymisierte Statistikdaten</code></pre>
+
+    <h2>📡 API-Kommunikation</h2>
+    <h3>➕ /api/berechnen (POST)</h3>
+    <p>Dient zur Übertragung der finalen Daten in die Datenbank.</p>
+    <p>Body:</p>
+    <pre><code>{
+  "session_id": "abc-123",
+  "gewichtung": {...},
+  "ideen": [...],
+  "ranking": [...],
+  "sprache": "de",
+  "datenfreigabe": "anonym",
+  "nutzerdaten": {...}
+}</code></pre>
+    <p>Antwort:</p>
+    <pre><code>{
+  "message": "Berechnung gespeichert",
+  "berechnung_id": "xyz-789"
+}</code></pre>
+
+    <h2>🔜 Nächste Entwicklungsschritte</h2>
+    <ol>
+        <li><strong>Datenbankmodell aufsetzen</strong> (z. B. SQLite/SQLAlchemy)</li>
+        <li><strong>Sessionhandling verbessern</strong> (z. B. Inaktivitäts-Timeout)</li>
+        <li><strong>API-Routen erweitern</strong> für Berechnung & Logging</li>
+        <li><strong>Statistik-Speicherung strukturieren</strong></li>
+    </ol>
+
+    <h2>📝 Hinweise zur Weiterentwicklung</h2>
+    <ul>
+        <li>Die aktuelle Sprachlogik basiert auf ID-Spalten wie <code>#t_de#1</code>, <code>#t_en#1</code>, <code>#t_fr#1</code></li>
+        <li>Diese IDs müssen dynamisch je nach Sprachwahl im Frontend ausgewählt werden</li>
+        <li>Die `config.py` lädt Werte wie die aktuelle Ideensammlung oder Dev-Modus-Schalter zentral</li>
+    </ul>
+</body>
+</html>

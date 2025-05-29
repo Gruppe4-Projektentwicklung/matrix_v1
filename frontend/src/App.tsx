@@ -15,7 +15,11 @@ import { StatistikForm } from "./components/StatistikForm";
 import { StatusToast } from "./components/StatusToast";
 import { WeightingSelector } from "./components/WeightingSelector";
 
+import { getSessionId } from "./utils/session";
+
 function App() {
+	
+	const sessionId = getSessionId();
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language || "de");
 
@@ -47,11 +51,38 @@ function App() {
     setAktuelleIdeensammlung(dateiName);
   };
 
-  const handleIdeenUpload = (file: File) => {
-    setStatusToastMessage(t("uploadFile") + " " + file.name);
-    setStatusToastType("success");
+  const handleIdeenUpload = async (file: File, sessionId: string) => {
+  setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
+  setStatusToastType("info");
+  setStatusToastOpen(true);
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/upload/ideen?session=${sessionId}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
+      setStatusToastType("success");
+    } else {
+      setStatusToastMessage(t("uploadError") + ": " + result.error);
+      setStatusToastType("error");
+    }
+  } catch (error) {
+    console.error("Fehler beim Hochladen:", error);
+    setStatusToastMessage(t("uploadError") + ": " + (error as any).message);
+    setStatusToastType("error");
+  } finally {
     setStatusToastOpen(true);
-  };
+  }
+};
+
 
   const handleIdeenUpdate = (updatedIdeen: any[]) => {
     setIdeen(updatedIdeen);
@@ -120,12 +151,12 @@ function App() {
         </h1>
 
         <CollectionSelector
-          sammlungTyp="ideen"
-          aktuelleSammlungName={aktuelleIdeensammlung}
-          onSammlungChange={handleIdeenSammlungChange}
-          onUpload={handleIdeenUpload}
-          templateUrl="/templates/ideen-vorlage.xlsx"
-        />
+		sammlungTyp="ideen"
+		aktuelleSammlungName={aktuelleIdeensammlung}
+		onSammlungChange={handleIdeenSammlungChange}
+		onUpload={(file) => handleIdeenUpload(file, sessionId)}
+		templateUrl="/templates/ideen-vorlage.xlsx"
+		/>
 
         <div className="mt-6">
           <IdeenSelector

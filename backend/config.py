@@ -1,6 +1,6 @@
-# backend/config.py
 import configparser
 import os
+from pathlib import Path
 
 class Config:
     def __init__(self, filepath="matrixconfig.ini"):
@@ -55,7 +55,22 @@ class Config:
     def upload_dir(self):
         return self.config["Dateien"].get("upload_dir", "uploads/")
 
-    # --- Features & Verhalten ---
+    @property
+    def template_dir(self):
+        # Pfad relativ zur Projektstruktur (z. B. "templates" → ../templates)
+        raw_path = self.config["Dateien"].get("templatedir", "templates")
+        return (Path(__file__).resolve().parent.parent / raw_path).resolve()
+
+    def template_path(self, sammlung_typ):
+        if sammlung_typ == "ideen":
+            fname = self.ideen_template_path
+        elif sammlung_typ == "kombis":
+            fname = self.kombi_template_path
+        else:
+            raise ValueError("Ungültiger Sammlungstyp")
+        return self.template_dir / fname
+
+    # --- Feature-Schalter ---
     def _feature(self, key, default="off"):
         return self.config["Features"].get(key, default).lower() in ["on", "true", "1"]
 
@@ -103,5 +118,17 @@ class Config:
         raw = self.config["Features"].get("available_languages", "de,en,fr")
         return [lang.strip() for lang in raw.split(",")]
 
+from pathlib import Path
+
+def template_path(self, sammlung_typ):
+    tmpl_dir = Path(self.config["Dateien"].get("templatedir", "templates"))
+    fname = None
+    if sammlung_typ == "ideen":
+        fname = self.config["Dateien"].get("ideentemplate")
+    elif sammlung_typ == "kombis":
+        fname = self.config["Dateien"].get("kombitemplate")
+    if not fname:
+        raise ValueError(f"Kein Template definiert für Sammlungstyp: {sammlung_typ}")
+    return Path(tmpl_dir) / fname
 # Globale Instanz
 config = Config()

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { getSessionId } from "@/utils/session";
 
 type Props = {
   sammlungTyp: "ideen" | "kombis";
@@ -23,6 +24,13 @@ export const CollectionSelector: React.FC<Props> = ({
   const [auswahl, setAuswahl] = useState<string>(aktuelleSammlungName);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [fileKey, setFileKey] = useState<number>(0);
+  const [eigeneSammlungenState, setEigeneSammlungen] = useState<string[]>(eigeneSammlungen);
+  const sessionId = getSessionId();
+
+  // Kombinierte Liste aus aktueller Sammlung und eigenen Uploads
+  const sammlungListe = Array.from(
+    new Set([aktuelleSammlungName, ...eigeneSammlungenState])
+  );
 
   useEffect(() => {
     setAuswahl(aktuelleSammlungName);
@@ -31,6 +39,23 @@ export const CollectionSelector: React.FC<Props> = ({
   useEffect(() => {
     onSammlungChange(auswahl);
   }, [auswahl, onSammlungChange]);
+
+  useEffect(() => {
+    if (!sessionId) return;
+
+    fetch(`/session_files?session=${sessionId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const relevant = sammlungTyp === "ideen" ? data.ideen : data.kombis;
+        if (relevant && relevant.length > 0) {
+          const uniqueList = Array.from(new Set([...eigeneSammlungen, ...relevant]));
+          setEigeneSammlungen(uniqueList);
+        }
+      })
+      .catch((err) => {
+        console.error("Fehler beim Abrufen der Dateiliste:", err);
+      });
+  }, [sessionId, sammlungTyp]);
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadError(null);
@@ -43,7 +68,39 @@ export const CollectionSelector: React.FC<Props> = ({
       setFileKey((k) => k + 1);
       return;
     }
-    onUpload(file);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    const uploadUrl = `/upload/${sammlungTyp}?session=${sessionId}`;
+
+    fetch(uploadUrl, {
+      method: "POST",
+      body: formData,
+    })
+      .then(async (res) => {
+        const text = await res.text();
+        let result: any = {};
+        try {
+          result = JSON.parse(text);
+        } catch (e) {
+          throw new Error("Ungültige Serverantwort");
+        }
+
+        if (!res.ok) {
+          throw new Error(result?.error || "Upload fehlgeschlagen");
+        }
+
+        console.log("Upload erfolgreich:", result);
+        setEigeneSammlungen((prev) =>
+          prev.includes(result.filename) ? prev : [...prev, result.filename]
+        );
+        setAuswahl(result.filename);
+      })
+      .catch((err) => {
+        console.error("Upload fehlgeschlagen:", err);
+        setUploadError(err.message || "Upload fehlgeschlagen");
+      });
+
     setFileKey((k) => k + 1);
   };
 
@@ -59,14 +116,9 @@ export const CollectionSelector: React.FC<Props> = ({
         className="border p-2 rounded w-full max-w-xs"
         value={auswahl}
         onChange={(e) => setAuswahl(e.target.value)}
-        disabled={eigeneSammlungen.length === 0 && !aktuelleSammlungName}
+        disabled={sammlungListe.length === 0}
       >
-        <option value={aktuelleSammlungName}>
-          {sammlungTyp === "ideen"
-            ? t("currentIdeaCollection")
-            : t("currentCombinationCollection")}
-        </option>
-        {(eigeneSammlungen || []).map((datei) => (
+        {sammlungListe.map((datei) => (
           <option key={datei} value={datei}>
             {datei}
           </option>
@@ -84,15 +136,15 @@ export const CollectionSelector: React.FC<Props> = ({
             key={fileKey}
           />
         </label>
-        <a
-          href={templateUrl}
-          download
-          className="text-blue-600 underline"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {t("downloadTemplate")}
-        </a>
+       <a
+		  href={`/download/template/${sammlungTyp}`}
+		  download
+		  className="text-blue-600 underline"
+		  target="_blank"
+		  rel="noreferrer"
+			>
+		  {t("downloadTemplate")}
+		</a>
       </div>
 
       {uploadError && <p className="text-red-600 mt-1">{uploadError}</p>}

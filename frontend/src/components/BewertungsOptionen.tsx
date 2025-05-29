@@ -67,3 +67,9 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
           <option value="keine">{t("optionDataReleaseNone")}</option>
         </select>
       </div>
+   
+    </div>
+  );
+};
+
+export default BewertungsOptionen;
