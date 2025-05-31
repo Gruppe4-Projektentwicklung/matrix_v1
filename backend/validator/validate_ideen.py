@@ -4,16 +4,16 @@ REQUIRED_TEXT_SPALTEN = ['#t#1', '#t#2']
 REQUIRED_ATTRIBUT_PREFIX = '#-#'
 REQUIRED_EINHEIT_PREFIX = '#+#'
 
-def validate_ideen_excel(path: str) -> list[str]:
+def validate_ideen_excel(path: str, template_path: str = None) -> list[str]:
+    errors = []
+
     try:
         raw = pd.read_excel(path, header=None, dtype=str, keep_default_na=False)
     except Exception as e:
         return [f"Excel konnte nicht geladen werden: {e}"]
 
-    errors = []
-
     if raw.shape[0] < 3:
-        return ["Die Excel-Datei muss mindestens drei Zeilen haben (IDs, Labels, Daten)."]
+        errors.append("Die Excel-Datei muss mindestens drei Zeilen haben (IDs, Labels, Daten).")
 
     spalten_ids = [str(val).strip() for val in raw.iloc[0]]
     daten = raw.iloc[2:].copy()
@@ -31,5 +31,22 @@ def validate_ideen_excel(path: str) -> list[str]:
         einheit_col = f"{REQUIRED_EINHEIT_PREFIX}{id_nr}"
         if einheit_col not in daten.columns:
             errors.append(f"Einheitsspalte {einheit_col} fehlt zu Attribut {col}.")
+
+    # Optional: Template-Check, falls angegeben
+    if template_path:
+        try:
+            raw_template = pd.read_excel(template_path, header=None, dtype=str, keep_default_na=False)
+            spalten_template = [str(val).strip() for val in raw_template.iloc[0]]
+            # Fehlende Spalten laut Template
+            missing_in_upload = [col for col in spalten_template if col not in spalten_ids]
+            # Zusätzliche unbekannte Spalten im Upload
+            extra_in_upload = [col for col in spalten_ids if col not in spalten_template]
+
+            if missing_in_upload:
+                errors.append(f"Fehlende Spalten laut Template: {', '.join(missing_in_upload)}")
+            if extra_in_upload:
+                errors.append(f"Unbekannte zusätzliche Spalten: {', '.join(extra_in_upload)}")
+        except Exception as e:
+            errors.append(f"Template konnte nicht geladen werden: {e}")
 
     return errors

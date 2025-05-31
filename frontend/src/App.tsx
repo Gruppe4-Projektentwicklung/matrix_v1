@@ -5,7 +5,8 @@ import "./i18n";
 import { useTranslation } from "react-i18next";
 
 import { BewertungsOptionen } from "./components/BewertungsOptionen";
-import { CollectionSelector } from "./components/CollectionSelector";
+import { CollectionSelectorIdeas } from "./components/CollectionSelectorIdeas";
+import { CollectionSelectorKombis } from "./components/CollectionSelectorKombis";
 import { ExportRankingButton } from "./components/ExportRankingButton";
 import { IdeenSelector } from "./components/IdeenSelector";
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
@@ -23,7 +24,7 @@ function App() {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language || "de");
 
-  const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
+ 
   const [ideen, setIdeen] = useState<any[]>([]);
   const [runde1, setRunde1] = useState(true);
   const [runde2, setRunde2] = useState(true);
@@ -41,6 +42,10 @@ function App() {
   const [statusToastMessage, setStatusToastMessage] = useState("");
   const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
 
+const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
+const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_kombi.xlsx");
+
+
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
     setLanguage(lang);
@@ -50,6 +55,41 @@ function App() {
   const handleIdeenSammlungChange = (dateiName: string) => {
     setAktuelleIdeensammlung(dateiName);
   };
+const handleKombiUpload = async (file: File, sessionId: string) => {
+  setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
+  setStatusToastType("info");
+  setStatusToastOpen(true);
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/upload/kombis?session=${sessionId}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
+      setStatusToastType("success");
+    } else {
+      setStatusToastMessage(t("uploadError") + ": " + result.error);
+      setStatusToastType("error");
+    }
+  } catch (error) {
+    console.error("Fehler beim Hochladen:", error);
+    setStatusToastMessage(t("uploadError") + ": " + (error as any).message);
+    setStatusToastType("error");
+  } finally {
+    setStatusToastOpen(true);
+  }
+};
+
+const handleKombiSammlungChange = (dateiName: string) => {
+  setAktuelleKombiSammlung(dateiName);
+};
 
   const handleIdeenUpload = async (file: File, sessionId: string) => {
   setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
@@ -150,14 +190,17 @@ function App() {
           {t("title")}
         </h1>
 
-        <CollectionSelector
-		sammlungTyp="ideen"
-		aktuelleSammlungName={aktuelleIdeensammlung}
-		onSammlungChange={handleIdeenSammlungChange}
-		onUpload={(file) => handleIdeenUpload(file, sessionId)}
-		templateUrl="/templates/ideen-vorlage.xlsx"
-		/>
+        <CollectionSelectorIdeas
+  aktuelleSammlungName={aktuelleIdeensammlung}
+  onSammlungChange={handleIdeenSammlungChange}
+  onUpload={(file) => handleIdeenUpload(file, sessionId)}
+/>
 
+<CollectionSelectorKombis
+  aktuelleSammlungName={aktuelleKombiSammlung}
+  onSammlungChange={handleKombiSammlungChange}
+  onUpload={(file) => handleKombiUpload(file, sessionId)}
+/>
         <div className="mt-6">
           <IdeenSelector
             ideen={ideen}

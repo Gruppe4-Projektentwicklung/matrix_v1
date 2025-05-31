@@ -1,82 +1,86 @@
+// src/components/CollectionSelectorKombis.tsx
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getSessionId } from "@/utils/session";
 
 type Props = {
-  sammlungTyp: "ideen" | "kombis";
   aktuelleSammlungName: string;
   eigeneSammlungen?: string[];
   onSammlungChange?: (dateiName: string) => void;
   onUpload?: (file: File) => void;
-  templateUrl: string;
 };
 
-export const CollectionSelector: React.FC<Props> = ({
-  sammlungTyp,
+export const CollectionSelectorKombis: React.FC<Props> = ({
   aktuelleSammlungName,
   eigeneSammlungen = [],
   onSammlungChange = () => {},
   onUpload = () => {},
-  templateUrl,
 }) => {
   const { t } = useTranslation();
-
   const [auswahl, setAuswahl] = useState<string>(aktuelleSammlungName);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [fileKey, setFileKey] = useState<number>(0);
   const [eigeneSammlungenState, setEigeneSammlungen] = useState<string[]>(eigeneSammlungen);
   const sessionId = getSessionId();
 
-  // Kombinierte Liste aus aktueller Sammlung und eigenen Uploads
-  const sammlungListe = Array.from(
-    new Set([aktuelleSammlungName, ...eigeneSammlungenState])
-  );
+  // sammlungListe ist die kombinierte Liste aller verfügbaren Dateien (global + Session)
+  const sammlungListe = eigeneSammlungenState;
 
+  // Sync Auswahl mit Prop
   useEffect(() => {
     setAuswahl(aktuelleSammlungName);
   }, [aktuelleSammlungName]);
 
+  // Wenn Auswahl sich ändert, Callback feuern
   useEffect(() => {
     onSammlungChange(auswahl);
   }, [auswahl, onSammlungChange]);
 
+  // Dateien aus Backend laden: globale + Session-Dateien
   useEffect(() => {
     if (!sessionId) return;
 
-    fetch(`/session_files?session=${sessionId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/selection/kombis?session=${sessionId}`)
       .then((res) => res.json())
       .then((data) => {
-        const relevant = sammlungTyp === "ideen" ? data.ideen : data.kombis;
-        if (relevant && relevant.length > 0) {
-          const uniqueList = Array.from(new Set([...eigeneSammlungen, ...relevant]));
-          setEigeneSammlungen(uniqueList);
+        if (data.files && data.files.length > 0) {
+          setEigeneSammlungen(data.files);
+          // Falls aktuelle Auswahl nicht mehr in der Liste ist, wähle Default vom Backend oder erstes Element
+          if (!data.files.includes(auswahl)) {
+            const neueAuswahl = data.default || data.files[0];
+            setAuswahl(neueAuswahl);
+            onSammlungChange(neueAuswahl);
+          }
         }
       })
       .catch((err) => {
         console.error("Fehler beim Abrufen der Dateiliste:", err);
       });
-  }, [sessionId, sammlungTyp]);
+  }, [sessionId]);
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUploadError(null);
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+  // Datei-Upload Handler
+const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setUploadError(null);
+  const files = e.target.files;
+  if (!files || files.length === 0) return;
 
-    const file = files[0];
-    if (!file.name.endsWith(".xlsx")) {
-      setUploadError(t("uploadErrorInvalidFile"));
-      setFileKey((k) => k + 1);
-      return;
-    }
+  const file = files[0];
+  if (!file.name.endsWith(".xlsx")) {
+    setUploadError(t("uploadErrorInvalidFile"));
+    setFileKey((k) => k + 1);
+    return;
+  }
 
-    const formData = new FormData();
-    formData.append("file", file);
-    const uploadUrl = `/upload/${sammlungTyp}?session=${sessionId}`;
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("session", sessionId); // <-- session hier mit anhängen
 
-    fetch(uploadUrl, {
-      method: "POST",
-      body: formData,
-    })
+  const uploadUrl = `${import.meta.env.VITE_API_URL}/upload/kombis`; // ohne session in URL
+
+  fetch(uploadUrl, {
+    method: "POST",
+    body: formData,
+  })
       .then(async (res) => {
         const text = await res.text();
         let result: any = {};
@@ -90,14 +94,12 @@ export const CollectionSelector: React.FC<Props> = ({
           throw new Error(result?.error || "Upload fehlgeschlagen");
         }
 
-        console.log("Upload erfolgreich:", result);
         setEigeneSammlungen((prev) =>
           prev.includes(result.filename) ? prev : [...prev, result.filename]
         );
         setAuswahl(result.filename);
       })
       .catch((err) => {
-        console.error("Upload fehlgeschlagen:", err);
         setUploadError(err.message || "Upload fehlgeschlagen");
       });
 
@@ -106,12 +108,7 @@ export const CollectionSelector: React.FC<Props> = ({
 
   return (
     <div className="mb-4">
-      <label className="block font-semibold mb-1">
-        {sammlungTyp === "ideen"
-          ? t("selectIdeaCollection")
-          : t("selectCombinationCollection")}
-      </label>
-
+      <label className="block font-semibold mb-1">{t("selectCombinationCollection")}</label>
       <select
         className="border p-2 rounded w-full max-w-xs"
         value={auswahl}
@@ -124,7 +121,6 @@ export const CollectionSelector: React.FC<Props> = ({
           </option>
         ))}
       </select>
-
       <div className="mt-2 flex items-center space-x-4">
         <label className="cursor-pointer text-blue-600 underline">
           {t("uploadFile")}
@@ -136,20 +132,19 @@ export const CollectionSelector: React.FC<Props> = ({
             key={fileKey}
           />
         </label>
-       <a
-		  href={`/download/template/${sammlungTyp}`}
-		  download
-		  className="text-blue-600 underline"
-		  target="_blank"
-		  rel="noreferrer"
-			>
-		  {t("downloadTemplate")}
-		</a>
+        <a
+          href={`${import.meta.env.VITE_API_URL}/download_template?type=kombi`}
+          download
+          className="text-blue-600 underline"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t("downloadCombinationTemplate")}
+        </a>
       </div>
-
       {uploadError && <p className="text-red-600 mt-1">{uploadError}</p>}
     </div>
   );
 };
 
-export default CollectionSelector;
+export default CollectionSelectorKombis;

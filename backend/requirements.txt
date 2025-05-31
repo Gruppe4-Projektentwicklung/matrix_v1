@@ -1,7 +1,6 @@
-Flask
-flask-session
-flask-cors
+fastapi
+uvicorn
 pandas
 openpyxl
-gunicorn
-uuid
+python-multipart
+configparser

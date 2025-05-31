@@ -1,9 +1,9 @@
 // src/utils/session.ts
 export function getSessionId(): string {
-  let sessionId = localStorage.getItem("session_id");
+  let sessionId = sessionStorage.getItem("sessionId");
   if (!sessionId) {
     sessionId = crypto.randomUUID();
-    localStorage.setItem("session_id", sessionId);
+    sessionStorage.setItem("sessionId", sessionId);
   }
   return sessionId;
 }

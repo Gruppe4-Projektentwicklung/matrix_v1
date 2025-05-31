@@ -11,10 +11,10 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: {
-      '/session_files': 'http://localhost:5000',
-      '/upload': 'http://localhost:5000',
-      '/api': 'http://localhost:5000',
-    }
-  }
+  proxy: {
+    '/session_files': 'http://localhost:8000',
+    '/upload': 'http://localhost:8000',
+    '/api': 'http://localhost:8000',
+	 '/download_template': 'http://localhost:8000', // ergänzen!
+  }}
 });

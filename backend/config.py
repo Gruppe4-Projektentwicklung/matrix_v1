@@ -14,34 +14,47 @@ class Config:
         if "Dateien" not in self.config or "Features" not in self.config:
             raise ValueError("Fehlende Pflichtsektionen [Dateien] oder [Features]")
 
-        for key in ["currentidealist", "currentcombinationlist"]:
+        # Hier auf die neuen Keys prüfen – KEINE alten Namen mehr wie "currentidealist"!
+        required_keys = [
+            "selectionideas_dir",
+            "selectioncombis_dir",
+            "default_ideen",
+            "default_kombi",
+            "ideentemplate",
+            "kombitemplate",
+            "templatedir",
+            "logfile",
+            "autosave_dir",
+            "upload_dir"
+        ]
+        for key in required_keys:
             if key not in self.config["Dateien"]:
                 raise ValueError(f"Fehlender Schlüssel in [Dateien]: {key}")
 
     # --- Dateipfade ---
     @property
-    def ideen_dir(self):
-        return self.config["Dateien"].get("datenverzeichnis", "ideacollection")
-
-    def _fullpath(self, key, fallback=None):
-        fname = self.config["Dateien"].get(key, fallback)
-        return os.path.join(self.ideen_dir, fname) if fname else None
+    def selectionideas_dir(self):
+        return self.config["Dateien"]["selectionideas_dir"]
 
     @property
-    def current_ideen_path(self):
-        return self._fullpath("currentidealist")
+    def selectioncombis_dir(self):
+        return self.config["Dateien"]["selectioncombis_dir"]
 
     @property
-    def current_kombi_path(self):
-        return self._fullpath("currentcombinationlist")
+    def default_ideen(self):
+        return self.config["Dateien"]["default_ideen"]
+
+    @property
+    def default_kombi(self):
+        return self.config["Dateien"]["default_kombi"]
 
     @property
     def ideen_template_path(self):
-        return self.config["Dateien"].get("ideentemplate")
+        return self.config["Dateien"]["ideentemplate"]
 
     @property
     def kombi_template_path(self):
-        return self.config["Dateien"].get("kombitemplate")
+        return self.config["Dateien"]["kombitemplate"]
 
     @property
     def logfile_path(self):
@@ -49,17 +62,18 @@ class Config:
 
     @property
     def autosave_dir(self):
-        return self.config["Dateien"].get("autosave_dir", "saves/")
+        return self.config["Dateien"]["autosave_dir"]
 
     @property
     def upload_dir(self):
-        return self.config["Dateien"].get("upload_dir", "uploads/")
+        return self.config["Dateien"]["upload_dir"]
 
     @property
     def template_dir(self):
         # Pfad relativ zur Projektstruktur (z. B. "templates" → ../templates)
-        raw_path = self.config["Dateien"].get("templatedir", "templates")
-        return (Path(__file__).resolve().parent.parent / raw_path).resolve()
+        raw_path = self.config["Dateien"]["templatedir"]
+        # Passe das ggf. an deinen tatsächlichen Projektpfad an!
+        return (Path(__file__).parent.parent / raw_path).resolve()
 
     def template_path(self, sammlung_typ):
         if sammlung_typ == "ideen":
@@ -117,18 +131,16 @@ class Config:
     def supported_languages(self):
         raw = self.config["Features"].get("available_languages", "de,en,fr")
         return [lang.strip() for lang in raw.split(",")]
+    @property
+    def valid_ideen_template(self):
+        path = self.config["Dateien"].get("valid_ideen_template", None)
+        return os.path.abspath(path) if path else None
 
-from pathlib import Path
+    @property
+    def valid_kombi_template(self):
+        path = self.config["Dateien"].get("valid_kombi_template", None)
+        return os.path.abspath(path) if path else None
 
-def template_path(self, sammlung_typ):
-    tmpl_dir = Path(self.config["Dateien"].get("templatedir", "templates"))
-    fname = None
-    if sammlung_typ == "ideen":
-        fname = self.config["Dateien"].get("ideentemplate")
-    elif sammlung_typ == "kombis":
-        fname = self.config["Dateien"].get("kombitemplate")
-    if not fname:
-        raise ValueError(f"Kein Template definiert für Sammlungstyp: {sammlung_typ}")
-    return Path(tmpl_dir) / fname
+
 # Globale Instanz
 config = Config()
