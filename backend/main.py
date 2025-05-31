@@ -9,7 +9,11 @@ from loader.excel_loader import ExcelLoader
 from flask import send_from_directory
 import pandas as pd
 import os
+import configparser
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import FileResponse
 
+app = FastAPI()
 app = Flask(__name__)
 app.register_blueprint(upload_routes)
 
@@ -180,22 +184,30 @@ def list_session_files():
     
 # ------------------- Dowload Template -------------------
 
-@app.route("/download/template/<sammlung_typ>")
-def download_template(sammlung_typ):
-    try:
-        # Pfad zur Datei aus der Konfiguration holen
-        path = config.template_path(sammlung_typ)
-        if not path.exists():
-            abort(404, f"Template nicht gefunden: {path.name}")
-        return send_from_directory(
-            directory=path.parent,
-            path=path.name,
-            as_attachment=True,
-            download_name=path.name,
-            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-    except Exception as e:
-        return {"error": str(e)}, 500
+@app.get("/download_template")
+async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$")):
+    config = configparser.ConfigParser()
+    config.read("matrixconfig.ini")
+
+    templatedir = config["Dateien"]["templatedir"]
+
+    if type == "ideen":
+        templatefile = config["Dateien"]["ideentemplate"]
+    elif type == "kombi":
+        templatefile = config["Dateien"]["kombitemplate"]
+    else:
+        raise HTTPException(status_code=400, detail="Ungültiger Template-Typ")
+
+    filepath = os.path.join(templatedir, templatefile)
+
+    if not os.path.isfile(filepath):
+        raise HTTPException(status_code=404, detail="Datei nicht gefunden")
+
+    return FileResponse(
+        path=filepath,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        filename=templatefile
+    )
 # ------------------- Startpunkt -------------------
 if __name__ == "__main__":
     app.run(debug=config.dev_mode)
