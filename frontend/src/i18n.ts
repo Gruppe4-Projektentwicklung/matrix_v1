@@ -1,296 +1,288 @@
-import React, { useState } from "react";
-import "./App.css";
-import "./i18n";
+// src/i18n.ts
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
-import { useTranslation } from "react-i18next";
+i18n.use(initReactI18next).init({
+  lng: "de", // Standard-Sprache: Deutsch
+  fallbackLng: "de",
+  debug: true,
+  interpolation: {
+    escapeValue: false,
+  },
+  resources: {
+    de: {
+      translation: {
+        title: "Matrix Bewertungstool",
+        selectCollection: "Ideensammlung auswählen",
+        selectCombination: "Kombinationssammlung auswählen",
+        uploadFile: "Datei hochladen",
+        downloadTemplate: "Vorlage herunterladen",
+        calculate: "Berechnen",
+        score: "Score",
+        info: "Info",
+        details: "Details",
+        rank: "Platz",
+        name: "Name",
+        noEntries: "Keine Ranking-Einträge vorhanden.",
+        description: "Beschreibung",
+        combiValues: "Kombinationswerte",
+        close: "Schließen",
+        rankingTitle: "Ranking der Ideen",
+        noName: "Kein Name",
+        combination: "Kombination",
+        value: "Wert",
+        noDetails: "Keine Details vorhanden",
 
-import { BewertungsOptionen } from "./components/BewertungsOptionen";
-import { CollectionSelectorIdeas } from "./components/CollectionSelectorIdeas";
-import { CollectionSelectorKombis } from "./components/CollectionSelectorKombis";
-import { ExportRankingButton } from "./components/ExportRankingButton";
-import { IdeenSelector } from "./components/IdeenSelector";
-// import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
-import { Ranking } from "./components/Ranking";
-import { SaveRunSuccess } from "./components/SaveRunSuccess";
-import { StatistikForm } from "./components/StatistikForm";
-import { StatusToast } from "./components/StatusToast";
-import { WeightingSelector } from "./components/WeightingSelector";
+        optionsTitle: "Bewertungsoptionen",
+        optionConsiderRound1: "Runde 1 berücksichtigen",
+        optionConsiderRound2: "Runde 2 berücksichtigen",
+        optionAppTester: "App-Tester (kein Logging, keine Datenabfrage)",
+        optionDataRelease: "Datenfreigabe für Statistiken",
+        optionDataReleaseOpen: "Bitte geben Sie Ihre Daten ein (anonym)",
+        optionDataReleaseAnonym: "Nur Ihr Nutzungsverhalten wird gespeichert",
+        optionDataReleaseNone: "Es werden keine Daten gespeichert",
 
-import { getSessionId } from "./utils/session";
+        currentIdeaCollection: "Aktuelle Ideensammlung",
+        currentCombinationCollection: "Aktuelle Kombinationssammlung",
+        uploadErrorInvalidFile: "Bitte laden Sie eine Excel-Datei (.xlsx) hoch.",
+        exportRankingCSV: "Ranking als CSV exportieren",
 
-function App() {
+        noIdeasLoaded: "Keine Ideen geladen.",
+        noDescription: "Keine Beschreibung",
+        noCategory: "Keine Kategorie",
+        category: "Kategorie",
+        active: "Aktiv",
+        showAttributes: "Attribute anzeigen",
+        hideAttributes: "Attribute ausblenden",
+        attribute: "Attribut",
+        noAttributes: "Keine Attribute vorhanden",
 
-  const sessionId = getSessionId();
-  const { t, i18n } = useTranslation();
-  const [language, setLanguage] = useState(i18n.language || "de");
+        explanation: "Erklärung",
+        formula: "Formel",
+        evaluationDirection: "Bewertungsrichtung",
+        higherIsBetter: "Höher ist besser",
+        lowerIsBetter: "Niedriger ist besser",
 
-  const [ideen, setIdeen] = useState<any[]>([]);
-  const [runde1, setRunde1] = useState(true);
-  const [runde2, setRunde2] = useState(true);
-  const [appTester, setAppTester] = useState(false);
-  const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
-  const [gewichtungen, setGewichtungen] = useState<any[]>([]);
-  const [rankingEintraege/*, setRankingEintraege*/] = useState<any[]>([]);
-  /* const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
-  const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null); */
-  const [saveRunSuccessOpen, setSaveRunSuccessOpen] = useState(false);
-  const [saveRunMessage, setSaveRunMessage] = useState("");
-  const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
-  const [statistikFormOpen, setStatistikFormOpen] = useState(false);
-  const [statusToastOpen, setStatusToastOpen] = useState(false);
-  const [statusToastMessage, setStatusToastMessage] = useState("");
-  const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
+        thankYouForRating: "Danke für Ihre Bewertung!",
+        evaluationId: "Bewertungs-ID",
+        testerModeNotice: "Hinweis: Im App-Tester-Modus wird <b>keine</b> Speicherung vorgenommen.",
 
-  const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
-  const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_kombi.xlsx");
+        helpImproveStats: "Bitte helfen Sie uns, die Statistik zu verbessern",
+        infoVoluntary: "Ihre Angaben sind <b>freiwillig</b>, anonym und werden nur für Auswertungen gespeichert. Sie können auch als App-Tester fortfahren, dann wird <b>gar nichts</b> gespeichert.",
+        appTesterMode: "App-Tester: Keine Daten speichern und keine Angaben machen",
+        age: "Alter",
+        gender: "Geschlecht",
+        industry: "Branche",
+        jobRole: "Berufsrolle",
+        submitWithoutData: "Ohne Angaben abschicken",
+        saveRating: "Bewertung speichern",
+        cancel: "Abbrechen",
+        submitError: "Fehler beim Senden der Bewertung. Bitte erneut versuchen.",
 
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const lang = e.target.value;
-    setLanguage(lang);
-    i18n.changeLanguage(lang);
-  };
+        disabled: "Deaktiviert",
+        notImportantAtAll: "Überhaupt nicht wichtig",
+        slightlyImportant: "Wenig wichtig",
+        neutral: "Neutral",
+        important: "Wichtig",
+        veryImportant: "Sehr wichtig",
 
-  const handleIdeenSammlungChange = (dateiName: string) => {
-    setAktuelleIdeensammlung(dateiName);
-  };
+        noWeightingCombinationsAvailable: "Keine Bewertungskombinationen vorhanden.",
+        hideDescription: "Beschreibung ausblenden",
+        showDescription: "i – Beschreibung anzeigen",
 
-  // KORREKTE Fehlerbehandlung und Übersetzung:
-  const handleKombiUpload = async (file: File, sessionId: string) => {
-    setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
-    setStatusToastType("info");
-    setStatusToastOpen(true);
+        downloadIdeaTemplate: "Ideen-Vorlage herunterladen",
+        downloadKombiTemplate: "Kombinations-Vorlage herunterladen",
+        selectCombinationCollection: "Kombinationssammlung auswählen",
+        downloadCombinationTemplate: "Kombinationsvorlage herunterladen",
 
-    const formData = new FormData();
-    formData.append("file", file);
+        uploadError: "Upload fehlgeschlagen",
+        uploadnotvalid: "Hochgeladene Datei muss der Struktur der Vorlage entsprechen.",
+        uploadSuccess: "Upload erfolgreich",
+      },
+    },
+    en: {
+      translation: {
+        title: "Matrix Evaluation Tool",
+        selectCollection: "Select idea collection",
+        selectCombination: "Select combination collection",
+        uploadFile: "Upload file",
+        downloadTemplate: "Download template",
+        calculate: "Calculate",
+        score: "Score",
+        info: "Info",
+        details: "Details",
+        rank: "Rank",
+        name: "Name",
+        noEntries: "No ranking entries available.",
+        description: "Description",
+        combiValues: "Combination values",
+        close: "Close",
+        rankingTitle: "Ranking of ideas",
+        noName: "No name",
+        combination: "Combination",
+        value: "Value",
+        noDetails: "No details available",
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/upload/kombis?session=${sessionId}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+        optionsTitle: "Evaluation options",
+        optionConsiderRound1: "Consider round 1",
+        optionConsiderRound2: "Consider round 2",
+        optionAppTester: "App tester (no logging, no data collection)",
+        optionDataRelease: "Data release for statistics",
+        optionDataReleaseOpen: "Please enter your data (anonymous)",
+        optionDataReleaseAnonym: "Only your usage behavior will be saved",
+        optionDataReleaseNone: "No data will be saved",
 
-      const result = await response.json();
+        currentIdeaCollection: "Current idea collection",
+        currentCombinationCollection: "Current combination collection",
+        uploadErrorInvalidFile: "Please upload an Excel file (.xlsx).",
+        exportRankingCSV: "Export ranking as CSV",
 
-      if (response.ok) {
-        setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
-        setStatusToastType("success");
-      } else {
-        setStatusToastMessage(
-          t("uploadError") + ": " +
-          (result.error ? t(result.error) : (result.message ? t(result.message) : ""))
-        );
-        setStatusToastType("error");
-      }
-    } catch (error) {
-      console.error("Fehler beim Hochladen:", error);
-      setStatusToastMessage(
-        t("uploadError") + ": " +
-        (error instanceof Error ? error.message : String(error))
-      );
-      setStatusToastType("error");
-    } finally {
-      setStatusToastOpen(true);
-    }
-  };
+        noIdeasLoaded: "No ideas loaded.",
+        noDescription: "No description",
+        noCategory: "No category",
+        category: "Category",
+        active: "Active",
+        showAttributes: "Show attributes",
+        hideAttributes: "Hide attributes",
+        attribute: "Attribute",
+        noAttributes: "No attributes available",
 
-  const handleKombiSammlungChange = (dateiName: string) => {
-    setAktuelleKombiSammlung(dateiName);
-  };
+        explanation: "Explanation",
+        formula: "Formula",
+        evaluationDirection: "Evaluation direction",
+        higherIsBetter: "Higher is better",
+        lowerIsBetter: "Lower is better",
 
-  // KORREKTE Fehlerbehandlung und Übersetzung:
-  const handleIdeenUpload = async (file: File, sessionId: string) => {
-    setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
-    setStatusToastType("info");
-    setStatusToastOpen(true);
+        thankYouForRating: "Thank you for your rating!",
+        evaluationId: "Evaluation ID",
+        testerModeNotice: "Note: In app tester mode, <b>no</b> data is saved.",
 
-    const formData = new FormData();
-    formData.append("file", file);
+        helpImproveStats: "Please help us improve the statistics",
+        infoVoluntary: "Your information is <b>voluntary</b>, anonymous, and used only for evaluations. You can also continue as an app tester; then <b>no</b> data is saved.",
+        appTesterMode: "App tester: Do not save data or provide info",
+        age: "Age",
+        gender: "Gender",
+        industry: "Industry",
+        jobRole: "Job role",
+        submitWithoutData: "Submit without info",
+        saveRating: "Save rating",
+        cancel: "Cancel",
+        submitError: "Error sending rating. Please try again.",
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/upload/ideen?session=${sessionId}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+        disabled: "Disabled",
+        notImportantAtAll: "Not important at all",
+        slightlyImportant: "Slightly important",
+        neutral: "Neutral",
+        important: "Important",
+        veryImportant: "Very important",
 
-      const result = await response.json();
+        noWeightingCombinationsAvailable: "No weighting combinations available.",
+        hideDescription: "Hide description",
+        showDescription: "i – Show description",
 
-      if (response.ok) {
-        setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
-        setStatusToastType("success");
-      } else {
-        setStatusToastMessage(
-          t("uploadError") + ": " +
-          (result.error ? t(result.error) : (result.message ? t(result.message) : ""))
-        );
-        setStatusToastType("error");
-      }
-    } catch (error) {
-      console.error("Fehler beim Hochladen:", error);
-      setStatusToastMessage(
-        t("uploadError") + ": " +
-        (error instanceof Error ? error.message : String(error))
-      );
-      setStatusToastType("error");
-    } finally {
-      setStatusToastOpen(true);
-    }
-  };
+        downloadIdeaTemplate: "Download idea template",
+        downloadKombiTemplate: "Download combination template",
+        selectCombinationCollection: "Select combination collection",
+        downloadCombinationTemplate: "Download combination template",
 
-  const handleIdeenUpdate = (updatedIdeen: any[]) => {
-    setIdeen(updatedIdeen);
-  };
+        uploadError: "Upload failed",
+        uploadnotvalid: "Uploaded file must match the template structure.",
+        uploadSuccess: "Upload successful",
+      },
+    },
+    fr: {
+      translation: {
+        title: "Outil d'évaluation de la matrice",
+        selectCollection: "Sélectionnez une collection d'idées",
+        selectCombination: "Sélectionnez une collection de combinaisons",
+        uploadFile: "Téléversez un fichier",
+        downloadTemplate: "Téléchargez le modèle",
+        calculate: "Calculez",
+        score: "Score",
+        info: "Info",
+        details: "Détails",
+        rank: "Rang",
+        name: "Nom",
+        noEntries: "Aucune entrée de classement disponible.",
+        description: "Description",
+        combiValues: "Valeurs de combinaison",
+        close: "Fermez",
+        rankingTitle: "Classement des idées",
+        noName: "Pas de nom",
+        combination: "Combinaison",
+        value: "Valeur",
+        noDetails: "Aucun détail disponible",
 
-  const handleBewertungsOptionenChange = (field: string, value: any) => {
-    if (field === "runde1") setRunde1(value);
-    if (field === "runde2") setRunde2(value);
-    if (field === "appTester") setAppTester(value);
-    if (field === "datenfreigabe") setDatenfreigabe(value);
-  };
+        optionsTitle: "Options d'évaluation",
+        optionConsiderRound1: "Prenez en compte le tour 1",
+        optionConsiderRound2: "Prenez en compte le tour 2",
+        optionAppTester: "Testeur d'app (pas de journalisation, pas de collecte de données)",
+        optionDataRelease: "Partage de données pour les statistiques",
+        optionDataReleaseOpen: "Veuillez entrer vos données (anonymes)",
+        optionDataReleaseAnonym: "Seul votre comportement d'utilisation sera enregistré",
+        optionDataReleaseNone: "Aucune donnée ne sera enregistrée",
 
-  const handleGewichtungenUpdate = (updatedGewichtungen: any[]) => {
-    setGewichtungen(updatedGewichtungen);
-  };
+        currentIdeaCollection: "Collection d'idées actuelle",
+        currentCombinationCollection: "Collection de combinaisons actuelle",
+        uploadErrorInvalidFile: "Veuillez téléverser un fichier Excel (.xlsx).",
+        exportRankingCSV: "Exporter le classement en CSV",
 
-  /* const handleCloseKombiInfoModal = () => {
-    setKombiInfoModalOpen(false);
-    setKombiInfoPayload(null);
-  }; */
+        noIdeasLoaded: "Aucune idée chargée.",
+        noDescription: "Pas de description",
+        noCategory: "Pas de catégorie",
+        category: "Catégorie",
+        active: "Actif",
+        showAttributes: "Afficher les attributs",
+        hideAttributes: "Masquer les attributs",
+        attribute: "Attribut",
+        noAttributes: "Aucun attribut disponible",
 
-  const handleCloseSaveRunSuccess = () => {
-    setSaveRunSuccessOpen(false);
-    setSaveRunMessage("");
-    setSaveRunId(undefined);
-  };
+        explanation: "Explication",
+        formula: "Formule",
+        evaluationDirection: "Direction de l'évaluation",
+        higherIsBetter: "Plus élevé = mieux",
+        lowerIsBetter: "Plus bas = mieux",
 
-  const handleCloseStatistikForm = () => {
-    setStatistikFormOpen(false);
-  };
+        thankYouForRating: "Merci pour votre évaluation !",
+        evaluationId: "ID d'évaluation",
+        testerModeNotice: "Remarque : En mode testeur d'application, <b>aucune</b> donnée n'est enregistrée.",
 
-  const handleSaveSuccess = (result: { run_id?: string; message: string }) => {
-    setSaveRunId(result.run_id);
-    setSaveRunMessage(result.message);
-    setSaveRunSuccessOpen(true);
-  };
+        helpImproveStats: "Aidez-nous à améliorer les statistiques",
+        infoVoluntary: "Vos informations sont <b>volontaires</b>, anonymes et utilisées uniquement pour des évaluations. Vous pouvez également continuer en tant que testeur d'application ; alors <b>aucune</b> donnée n'est enregistrée.",
+        appTesterMode: "Testeur d'app : ne pas enregistrer les données ni fournir d'informations",
 
-  const handleCloseStatusToast = () => {
-    setStatusToastOpen(false);
-    setStatusToastMessage("");
-  };
+        age: "Âge",
+        gender: "Sexe",
+        industry: "Secteur",
+        jobRole: "Rôle professionnel",
 
-  return (
-    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10">
-      <div className="w-full max-w-7xl bg-gray-800 text-white shadow-xl rounded-2xl p-8 relative">
-        <div className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/90 px-3 py-2 rounded-xl shadow border">
+        submitWithoutData: "Envoyez sans information",
+        saveRating: "Enregistrez l'évaluation",
+        cancel: "Annulez",
+        submitError: "Erreur lors de l'envoi de l'évaluation. Veuillez réessayer.",
 
-          <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
-          <select
-            id="lang-select"
-            value={language}
-            onChange={handleLanguageChange}
-            className="px-2 py-1 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
-            style={{ minWidth: 80 }}
-          >
-            <option value="de">Deutsch</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-          </select>
-        </div>
-      </div>
+        disabled: "Désactivé",
+        notImportantAtAll: "Pas du tout important",
+        slightlyImportant: "Peu important",
+        neutral: "Neutre",
+        important: "Important",
+        veryImportant: "Très important",
 
-      <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
-        <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] text-center tracking-tight drop-shadow">
-          {t("title")}
-        </h1>
+        noWeightingCombinationsAvailable: "Aucune combinaison de pondération disponible.",
+        hideDescription: "Masquer la description",
+        showDescription: "i – Afficher la description",
 
-        <CollectionSelectorIdeas
-          aktuelleSammlungName={aktuelleIdeensammlung}
-          onSammlungChange={handleIdeenSammlungChange}
-          onUpload={(file) => handleIdeenUpload(file, sessionId)}
-        />
+        downloadIdeaTemplate: "Téléchargez le modèle d'idées",
+        downloadKombiTemplate: "Téléchargez le modèle de combinaison",
+        selectCombinationCollection: "Sélectionnez une collection de combinaisons",
+        downloadCombinationTemplate: "Téléchargez le modèle de combinaison",
 
-        <CollectionSelectorKombis
-          aktuelleSammlungName={aktuelleKombiSammlung}
-          onSammlungChange={handleKombiSammlungChange}
-          onUpload={(file) => handleKombiUpload(file, sessionId)}
-        />
+        uploadError: "Échec du téléchargement",
+        uploadnotvalid: "Le fichier téléchargé doit respecter la structure du modèle.",
+        uploadSuccess: "Téléversement réussi",
+      },
+    },
+  },
+});
 
-        <div className="mt-6">
-          <IdeenSelector
-            ideen={ideen}
-            sprache={language as "de" | "en" | "fr"}
-            onUpdate={handleIdeenUpdate}
-          />
-        </div>
-
-        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
-          <BewertungsOptionen
-            runde1={runde1}
-            runde2={runde2}
-            appTester={appTester}
-            datenfreigabe={datenfreigabe}
-            onChange={handleBewertungsOptionenChange}
-          />
-        </div>
-
-        <div className="mt-6">
-          <WeightingSelector
-            kombinationen={gewichtungen}
-            onUpdate={handleGewichtungenUpdate}
-          />
-        </div>
-
-        <div className="mt-6">
-          <Ranking eintraege={rankingEintraege} />
-        </div>
-
-        <div className="mt-6 flex flex-col items-center gap-4">
-          <ExportRankingButton eintraege={rankingEintraege} />
-        </div>
-      </div>
-
-      <StatistikForm
-        open={statistikFormOpen}
-        onClose={handleCloseStatistikForm}
-        payload={{
-          ideenSammlung: aktuelleIdeensammlung,
-          kombiSammlung: "",
-          gewaehlteIdeen: ideen.filter(i => i.aktiv).map(i => i.id),
-          deaktivierteIdeen: ideen.filter(i => !i.aktiv).map(i => i.id),
-          gewichtungen: {},
-          ergebnisRanking: rankingEintraege,
-        }}
-        onSaveSuccess={handleSaveSuccess}
-      />
-
-      <SaveRunSuccess
-        open={saveRunSuccessOpen}
-        message={saveRunMessage}
-        runId={saveRunId}
-        onClose={handleCloseSaveRunSuccess}
-        isTester={appTester}
-      />
-
-      {/* <KombiInfoModal
-        open={kombiInfoModalOpen}
-        kombi={kombiInfoPayload}
-        sprache={language as "de" | "en" | "fr"}
-        onClose={handleCloseKombiInfoModal}
-      /> */}
-
-      <StatusToast
-        open={statusToastOpen}
-        message={statusToastMessage}
-        onClose={handleCloseStatusToast}
-        type={statusToastType}
-      />
-    </div>
-  );
-}
-
-export default App;
+export default i18n;
