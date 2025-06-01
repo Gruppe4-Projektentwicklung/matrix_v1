@@ -1,4 +1,3 @@
-// src/components/CollectionSelectorIdeas.tsx
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getSessionId } from "@/utils/session";
@@ -16,36 +15,33 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
   onSammlungChange = () => {},
   onUpload = () => {},
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [auswahl, setAuswahl] = useState<string>(aktuelleSammlungName);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [fileKey, setFileKey] = useState<number>(0);
   const [eigeneSammlungenState, setEigeneSammlungen] = useState<string[]>(eigeneSammlungen);
   const sessionId = getSessionId();
 
-  // sammlungListe ist jetzt die Liste aller verfügbaren Dateien (global + user)
+  const backendUrl = import.meta.env.VITE_API_URL;
+
   const sammlungListe = eigeneSammlungenState;
 
-  // Sync Auswahl mit Prop
   useEffect(() => {
     setAuswahl(aktuelleSammlungName);
   }, [aktuelleSammlungName]);
 
-  // Wenn Auswahl sich ändert, Callback feuern
   useEffect(() => {
     onSammlungChange(auswahl);
   }, [auswahl, onSammlungChange]);
 
-  // Dateien aus Backend laden: globale + Session-Dateien
   useEffect(() => {
     if (!sessionId) return;
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/selection/ideen?session=${sessionId}`)
+    fetch(`${backendUrl}/api/selection/ideen?session=${sessionId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.files && data.files.length > 0) {
           setEigeneSammlungen(data.files);
-          // Falls aktuelle Auswahl nicht mehr in der Liste ist, wähle Default vom Backend oder erstes Element
           if (!data.files.includes(auswahl)) {
             const neueAuswahl = data.default || data.files[0];
             setAuswahl(neueAuswahl);
@@ -58,29 +54,28 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
       });
   }, [sessionId]);
 
-  // Datei-Upload Handler
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setUploadError(null);
-  const files = e.target.files;
-  if (!files || files.length === 0) return;
+    setUploadError(null);
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-  const file = files[0];
-  if (!file.name.endsWith(".xlsx")) {
-    setUploadError(t("uploadErrorInvalidFile"));
-    setFileKey((k) => k + 1);
-    return;
-  }
+    const file = files[0];
+    if (!file.name.endsWith(".xlsx")) {
+      setUploadError(t("uploadErrorInvalidFile"));
+      setFileKey((k) => k + 1);
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("session", sessionId); // session im FormData senden
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("session", sessionId);
 
-  const uploadUrl = `${import.meta.env.VITE_API_URL}/upload/ideen`; // ohne session in URL
+    const uploadUrl = `${backendUrl}/upload/ideen`;
 
-  fetch(uploadUrl, {
-    method: "POST",
-    body: formData,
-  })
+    fetch(uploadUrl, {
+      method: "POST",
+      body: formData,
+    })
       .then(async (res) => {
         const text = await res.text();
         let result: any = {};
@@ -133,7 +128,7 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
           />
         </label>
         <a
-          href={`${import.meta.env.VITE_API_URL}/download_template?type=ideen`}
+          href={`${backendUrl}/download_template?type=ideen`}
           download
           className="text-blue-600 underline"
           target="_blank"
