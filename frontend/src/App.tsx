@@ -111,7 +111,7 @@ const handleKombiSammlungChange = (dateiName: string) => {
       setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
       setStatusToastType("success");
     } else {
-      setStatusToastMessage(t("uploadError") + ": " + result.error);
+      setStatusToastMessage(t("uploadError") + ": " + t(result.error));
       setStatusToastType("error");
     }
   } catch (error) {
