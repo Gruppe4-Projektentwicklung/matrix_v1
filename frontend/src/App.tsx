@@ -111,12 +111,14 @@ const handleKombiSammlungChange = (dateiName: string) => {
       setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
       setStatusToastType("success");
     } else {
-      setStatusToastMessage(t("uploadError") + ": " + t(result.error));
+      setStatusToastMessage(t("uploadError") + ": " + (error instanceof Error ? error.message : String(error)));
+
       setStatusToastType("error");
     }
   } catch (error) {
     console.error("Fehler beim Hochladen:", error);
-    setStatusToastMessage(t("uploadError") + ": " + (error as any).message);
+    setStatusToastMessage(t("uploadError") + ": " + (error instanceof Error ? error.message : String(error)));
+
     setStatusToastType("error");
   } finally {
     setStatusToastOpen(true);
