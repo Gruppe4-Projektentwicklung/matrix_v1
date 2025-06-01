@@ -227,6 +227,8 @@ async def list_session_files(session: str, lang: str = Query("de")):
 # ---- Download Template ----
 @app.get("/download_template")
 async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), lang: str = Query("de")):
+    import os  # Innerhalb der Funktion ist okay zum Debuggen
+
     configparser_ = configparser.ConfigParser()
     configparser_.read("matrixconfig.ini")
 
@@ -241,6 +243,11 @@ async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), l
 
     filepath = os.path.join(templatedir, templatefile)
     filepath = os.path.abspath(filepath)
+
+    # >>> Hier kommt das Debugging <<<
+    print("CWD:", os.getcwd())
+    print("[DEBUG] Suche Datei:", filepath)
+    print("[DEBUG] Existiert:", os.path.isfile(filepath))
 
     if not os.path.isfile(filepath):
         raise HTTPException(status_code=404, detail=t("file_not_found", lang))
