@@ -86,8 +86,7 @@ async def upload_file(
 
         if validation_errors:
             return JSONResponse(status_code=400, content={
-                "message": t("upload_validation_warning", lang),
-                "filename": file.filename,
+                "error": "uploadnotvalid",   # <<<< HIER nur der KEY
                 "validation_errors": validation_errors
             })
 

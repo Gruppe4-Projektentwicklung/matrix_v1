@@ -82,11 +82,29 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
         try {
           result = JSON.parse(text);
         } catch (e) {
-          throw new Error("Ungültige Serverantwort");
+          setUploadError(t("uploadError") || "Upload fehlgeschlagen");
+          setFileKey((k) => k + 1);
+          return;
         }
 
         if (!res.ok) {
-          throw new Error(result?.error || "Upload fehlgeschlagen");
+          let meldung = "";
+          // Strukturfehler
+          if (result.error === "uploadnotvalid") {
+            meldung = t("uploadnotvalid");
+            if (result.validation_errors && result.validation_errors.length) {
+              meldung += "\n" + result.validation_errors.map((err: string) => `• ${err}`).join("\n");
+            }
+          } else {
+            // Allgemeiner Fehler
+            meldung = t("uploadError") || "Upload fehlgeschlagen";
+            if (result.error && typeof result.error === "string") {
+              meldung += ": " + result.error;
+            }
+          }
+          setUploadError(meldung.trim());
+          setFileKey((k) => k + 1);
+          return;
         }
 
         setEigeneSammlungen((prev) =>
@@ -95,7 +113,7 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
         setAuswahl(result.filename);
       })
       .catch((err) => {
-        setUploadError(err.message || "Upload fehlgeschlagen");
+        setUploadError(t("uploadError") || "Upload fehlgeschlagen");
       });
 
     setFileKey((k) => k + 1);
@@ -137,7 +155,9 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
           {t("downloadIdeaTemplate")}
         </a>
       </div>
-      {uploadError && <p className="text-red-600 mt-1">{uploadError}</p>}
+      {uploadError && (
+        <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
+      )}
     </div>
   );
 };

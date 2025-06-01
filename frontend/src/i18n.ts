@@ -94,6 +94,12 @@ i18n.use(initReactI18next).init({
         downloadKombiTemplate: "Kombinations-Vorlage herunterladen",
         selectCombinationCollection: "Kombinationssammlung auswählen",
 		downloadCombinationTemplate: "Kombinationsvorlage herunterladen",
+		
+		uploadError: "Upload fehlgeschlagen",
+        uploadnotvalid: "Hochgeladene Datei muss der Struktur der Vorlage entsprechen.",
+        uploadErrorInvalidFile: "Bitte laden Sie eine Excel-Datei (.xlsx) hoch.",
+        uploadSuccess: "Upload erfolgreich",
+
       },
     },
     en: {
@@ -180,6 +186,11 @@ i18n.use(initReactI18next).init({
         downloadKombiTemplate: "Download combination template",
         selectCombinationCollection: "Select combination collection",
 		downloadCombinationTemplate: "Download combination template",
+		
+		 uploadError: "Upload failed",
+        uploadnotvalid: "Uploaded file must match the template structure.",
+        uploadErrorInvalidFile: "Please upload an Excel file (.xlsx).",
+        uploadSuccess: "Upload successful",
 		
       },
     },
@@ -269,6 +280,11 @@ i18n.use(initReactI18next).init({
         downloadKombiTemplate: "Téléchargez le modèle de combinaison",
         selectCombinationCollection: "Sélectionnez une collection de combinaisons",
 		downloadCombinationTemplate: "Téléchargez le modèle de combinaison",
+		
+		uploadError: "Échec du téléchargement",
+        uploadnotvalid: "Le fichier téléchargé doit respecter la structure du modèle.",
+        uploadErrorInvalidFile: "Veuillez téléverser un fichier Excel (.xlsx).",
+        uploadSuccess: "Téléversement réussi",
       },
     },
   },

@@ -75,12 +75,12 @@ const handleKombiUpload = async (file: File, sessionId: string) => {
       setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
       setStatusToastType("success");
     } else {
-      setStatusToastMessage(t("uploadError") + ": " + result.error);
+      setStatusToastMessage(t("uploadError") + ": " + t(result.error));
       setStatusToastType("error");
     }
   } catch (error) {
     console.error("Fehler beim Hochladen:", error);
-    setStatusToastMessage(t("uploadError") + ": " + (error as any).message);
+    setStatusToastMessage(t("uploadError") + ": " + t(result.error));
     setStatusToastType("error");
   } finally {
     setStatusToastOpen(true);
