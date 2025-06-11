@@ -16,7 +16,8 @@ def lade_frontend_konfiguration(kombis_df: pd.DataFrame) -> dict:
             "gewichtung": 3,  # Standardgewichtung "neutral"
             "aktiv": True,
             "einheit": row.get("Einheit", ""),
-            "richtung": row.get("Richtung", "hoch")
+            # Manche Dateien nutzen "Direction" als Spaltenname
+            "richtung": row.get("Richtung", row.get("Direction", "hoch"))
         }
         kombinationen.append(kombi)
 
