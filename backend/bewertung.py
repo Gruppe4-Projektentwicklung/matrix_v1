@@ -24,7 +24,8 @@ class Bewertung:
 
         for idx, kombi in self.kombis.iterrows():
             formel = kombi['Formel_ID']  # z.B. '#-#2 + (#-#1 * #-#3)'
-            richtung = kombi['Richtung'].lower()  # 'high' oder 'low'
+            # Manche Dateien benutzen "Direction" statt "Richtung"
+            richtung = kombi.get('Richtung', kombi.get('Direction', 'high')).lower()
             kombi_id = kombi.get('Kombi_ID', idx)
 
             # Berechnung der Werte pro Idee
