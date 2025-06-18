@@ -5,7 +5,7 @@ import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted } from '../utils/session';
 
 interface Props {
-  onOpenStatistikForm: () => void;
+  onOpenStatistikForm: (inline?: boolean) => void;
   onCloseStatistikForm: () => void;
 }
 
@@ -16,7 +16,7 @@ export const PersonalDataPage = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   useEffect(() => {
-    onOpenStatistikForm();
+    onOpenStatistikForm(true);
     return onCloseStatistikForm;
   }, [onOpenStatistikForm, onCloseStatistikForm]);
 

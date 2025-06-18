@@ -27,6 +27,7 @@ type Props = {
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
+  inline?: boolean;
 };
 
 export const StatistikForm: React.FC<Props> = ({
@@ -35,6 +36,7 @@ export const StatistikForm: React.FC<Props> = ({
   tester,
   payload,
   onSaveSuccess,
+  inline = false,
 }) => {
   const { t } = useTranslation();
 
@@ -44,8 +46,6 @@ export const StatistikForm: React.FC<Props> = ({
   const [berufsrolle, setBerufsrolle] = useState("");
   const [sending, setSending] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
-
-  if (!open) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,6 +81,85 @@ export const StatistikForm: React.FC<Props> = ({
       setSending(false);
     }
   };
+
+  if (!open) return null;
+
+  if (inline) {
+    return (
+      <div className="flex justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
+        >
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+            aria-label={t("close")}
+          >
+            ×
+          </button>
+          <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
+          <p
+            className="text-gray-700 text-sm mb-4"
+            dangerouslySetInnerHTML={{ __html: t("infoVoluntary") }}
+          />
+          {!tester && (
+            <div className="space-y-2 mb-3">
+              <input
+                className="border p-2 rounded w-full"
+                type="text"
+                placeholder={t("age")}
+                value={alter}
+                onChange={(e) => setAlter(e.target.value)}
+              />
+              <input
+                className="border p-2 rounded w-full"
+                type="text"
+                placeholder={t("gender")}
+                value={geschlecht}
+                onChange={(e) => setGeschlecht(e.target.value)}
+              />
+              <input
+                className="border p-2 rounded w-full"
+                type="text"
+                placeholder={t("industry")}
+                value={branche}
+                onChange={(e) => setBranche(e.target.value)}
+              />
+              <input
+                className="border p-2 rounded w-full"
+                type="text"
+                placeholder={t("jobRole")}
+                value={berufsrolle}
+                onChange={(e) => setBerufsrolle(e.target.value)}
+              />
+            </div>
+          )}
+
+          {fehler && <div className="text-red-600 text-sm mb-2">{fehler}</div>}
+
+          <div className="flex gap-3 mt-4">
+            <button
+              type="submit"
+              disabled={sending}
+              className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
+            >
+              {tester ? t("submitWithoutData") : t("saveRating")}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={sending}
+              className="bg-gray-200 rounded px-4 py-2"
+            >
+              {t("cancel")}
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">

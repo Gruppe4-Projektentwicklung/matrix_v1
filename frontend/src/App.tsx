@@ -45,6 +45,7 @@ function App() {
   const [saveRunMessage, setSaveRunMessage] = useState("");
   const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
   const [statistikFormOpen, setStatistikFormOpen] = useState(false);
+  const [statistikFormInline, setStatistikFormInline] = useState(false);
   const [statusToastOpen, setStatusToastOpen] = useState(false);
   const [statusToastMessage, setStatusToastMessage] = useState("");
   const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
@@ -246,12 +247,14 @@ const handleKombiSammlungChange = (dateiName: string) => {
     setSaveRunId(undefined);
   };
 
-  const openStatistikForm = () => {
+  const openStatistikForm = (inline: boolean = false) => {
+    setStatistikFormInline(inline);
     setStatistikFormOpen(true);
   };
 
   const handleCloseStatistikForm = () => {
     setStatistikFormOpen(false);
+    setStatistikFormInline(false);
   };
 
   const handleSaveSuccess = (result: { run_id?: string; message: string }) => {
@@ -342,7 +345,7 @@ return (
           element={(
             <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
               <PersonalDataPage
-                onOpenStatistikForm={openStatistikForm}
+                onOpenStatistikForm={() => openStatistikForm(true)}
                 onCloseStatistikForm={handleCloseStatistikForm}
               />
             </div>
@@ -373,6 +376,7 @@ return (
 
       <StatistikForm
         open={statistikFormOpen}
+        inline={statistikFormInline}
         onClose={handleCloseStatistikForm}
         tester={appTester}
         payload={{
