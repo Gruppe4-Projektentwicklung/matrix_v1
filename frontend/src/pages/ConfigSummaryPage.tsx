@@ -19,7 +19,7 @@ export const ConfigSummaryPage = ({
 }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const disabled = ideenCount === 0 || kombiCount === 0;
+  const disabled = activeIdeen === 0 || activeKombis === 0;
 
   const handleCalculate = () => {
     if (disabled) {

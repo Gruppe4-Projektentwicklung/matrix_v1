@@ -16,7 +16,7 @@ interface Props {
   onIdeenUpdate: (ideen: any[]) => void;
   onBewertungsOptionenChange: (field: string, value: any) => void;
   onGewichtungenUpdate: (g: any[]) => void;
-  onOpenStatistikForm?: () => void;
+  onOpenStatistikForm?: (inline?: boolean) => void;
 }
 
 export const ConfigPage = ({
@@ -50,7 +50,7 @@ export const ConfigPage = ({
       <div className="mt-6 text-center">
         <button
           onClick={() => {
-            onOpenStatistikForm();
+            onOpenStatistikForm && onOpenStatistikForm(false);
             navigate('/results');
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded"
