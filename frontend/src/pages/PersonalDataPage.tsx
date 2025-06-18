@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted } from '../utils/session';
-import { StatistikForm, BewertungsLaufPayload } from '../components/StatistikForm';
+import { StatistikForm } from '../components/StatistikForm';
+import type { BewertungsLaufPayload } from '../components/StatistikForm';
 
 interface Props {
-
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, 'tester' | 'userData'>;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
@@ -14,7 +14,13 @@ interface Props {
   onCloseStatistikForm: () => void;
 }
 
-export const PersonalDataPage = ({ tester, payload, onSaveSuccess }: Props) => {
+export const PersonalDataPage = ({
+  tester,
+  payload,
+  onSaveSuccess,
+  onOpenStatistikForm,
+  onCloseStatistikForm,
+}: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -26,12 +32,12 @@ export const PersonalDataPage = ({ tester, payload, onSaveSuccess }: Props) => {
     return onCloseStatistikForm;
   }, [onOpenStatistikForm, onCloseStatistikForm]);
 
-
   useEffect(() => {
     if (!hasSessionStarted()) {
       navigate('/', { replace: true });
     }
   }, [navigate]);
+
   const handleSaveSuccess = (result: { run_id?: string; message: string; error?: string }) => {
     setSaved(true);
     setFormOpen(false);
@@ -67,7 +73,6 @@ export const PersonalDataPage = ({ tester, payload, onSaveSuccess }: Props) => {
           <button onClick={() => navigate('/combinations')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-
           <button onClick={handleNext} className="px-4 py-2 bg-blue-600 text-white rounded">
             {t('next')}
           </button>
