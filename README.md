@@ -31,6 +31,14 @@ cd frontend
 npm run dev
 ```
 
+The i18next library's debug output is disabled by default. You can enable it by
+setting the `VITE_I18N_DEBUG` environment variable to `true` before starting the
+frontend:
+
+```bash
+VITE_I18N_DEBUG=true npm run dev
+```
+
 ## Linting and type checking (offline)
 
 After the frontend dependencies have been installed once, the following commands
