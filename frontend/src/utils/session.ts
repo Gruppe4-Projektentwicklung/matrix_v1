@@ -13,3 +13,19 @@ export function resetSessionId(): string {
   sessionStorage.setItem("sessionId", newId);
   return newId;
 }
+<<<<<<< HEAD
+
+export function markSessionStarted() {
+  sessionStorage.setItem("sessionStarted", "true");
+}
+
+export function hasSessionStarted(): boolean {
+  return sessionStorage.getItem("sessionStarted") === "true";
+}
+
+export function clearSession() {
+  sessionStorage.removeItem("sessionStarted");
+  resetSessionId();
+}
+=======
+>>>>>>> origin/main

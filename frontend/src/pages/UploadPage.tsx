@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CollectionSelectorIdeas } from '../components/CollectionSelectorIdeas';
 import { CollectionSelectorKombis } from '../components/CollectionSelectorKombis';
-import { Link, useNavigate } from 'react-router-dom';
-import { ResetButton } from '../components/ResetButton';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { hasSessionStarted } from '../utils/session';
 
 interface Props {
   aktuelleIdeensammlung: string;
@@ -15,7 +13,7 @@ interface Props {
   onKombiUpload: (file: File) => void;
 }
 
-export const SelectDataPage = ({
+export const UploadPage = ({
   aktuelleIdeensammlung,
   aktuelleKombiSammlung,
   onIdeenSammlungChange,
@@ -24,14 +22,6 @@ export const SelectDataPage = ({
   onKombiUpload,
 }: Props) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!hasSessionStarted()) {
-      navigate('/', { replace: true });
-    }
-  }, [navigate]);
-
   return (
     <div>
       <CollectionSelectorIdeas
@@ -44,23 +34,10 @@ export const SelectDataPage = ({
         onSammlungChange={onKombiSammlungChange}
         onUpload={onKombiUpload}
       />
-
-      <div className="mt-6 flex justify-between">
-        <ResetButton />
-
-        <Link to="/" className="px-4 py-2 bg-gray-300 rounded">
-          {t('reset')}
+      <div className="mt-6 text-center">
+        <Link to="/config" className="px-4 py-2 bg-blue-600 text-white rounded">
+          {t('next')}
         </Link>
-
-        <div className="flex gap-4">
-          <Link to="/" className="px-4 py-2 bg-gray-300 rounded">
-            {t('back')}
-          </Link>
-
-          <Link to="/ideas" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
-            {t('next')}
-          </Link>
-        </div>
       </div>
     </div>
   );

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { WeightingSelector } from '../components/WeightingSelector';
 import { BewertungsOptionen } from '../components/BewertungsOptionen';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
+<<<<<<< HEAD
+import { hasSessionStarted } from '../utils/session';
+=======
+>>>>>>> origin/main
 
 interface Props {
   gewichtungen: any[];
@@ -25,8 +29,26 @@ export const CombinationSelectionPage = ({
   onOptionsChange,
 }: Props) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!hasSessionStarted()) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
   return (
     <div>
+      <div className="mb-6 flex justify-between">
+        <ResetButton />
+        <div className="flex gap-4">
+          <Link to="/ideas" className="px-4 py-2 bg-gray-300 rounded">
+            {t('back')}
+          </Link>
+          <Link to="/personal" className="px-4 py-2 bg-blue-600 text-white rounded">
+            {t('next')}
+          </Link>
+        </div>
+      </div>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
         <BewertungsOptionen
@@ -37,6 +59,8 @@ export const CombinationSelectionPage = ({
           onChange={onOptionsChange}
         />
       </div>
+<<<<<<< HEAD
+=======
       <div className="mt-6 flex justify-between">
 
         <ResetButton />
@@ -55,6 +79,7 @@ export const CombinationSelectionPage = ({
           </Link>
         </div>
       </div>
+>>>>>>> origin/main
     </div>
   );
 };

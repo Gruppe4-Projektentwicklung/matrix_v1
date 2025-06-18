@@ -86,7 +86,8 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
         Object.keys(row).forEach((k) => {
           if (k.startsWith("#-#") || k.startsWith("#+#")) attrs[k] = row[k];
         });
-        return { id: row.id || row.ID || String(idx + 1), aktiv: true, attribute: attrs, ...row };
+        const rowId = row.ID || row.id || row["#ID#"] || String(idx + 1);
+        return { id: rowId, aktiv: true, attribute: attrs, ...row };
       });
       setIdeen(parsed);
     },
@@ -279,6 +280,7 @@ const handleKombiSammlungChange = (dateiName: string) => {
    
 
       <div className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/90 px-3 py-2 rounded-xl shadow border">
+
 
           <select
             id="lang-select"

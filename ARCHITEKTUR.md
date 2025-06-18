@@ -14,6 +14,27 @@ Durch Kombination von Attributen (aus einer Excel-Tabelle) sollen vergleichbare 
 ## 📁 Projektstruktur
 
 /backend/
+
+main.py ← Haupt‑API für Upload, Bewertung und Session
+loader/excel_loader.py ← Excel‑Import & Validierung
+config_loader.py ← lädt `matrixconfig.ini`
+bewertung.py ← Bewertungslogik der Kombinationen
+api/ ← Routen (z. B. `/save_run`)
+uploads/selectionideas/ und uploads/selectioncombis/ ← persistente Uploads
+
+/frontend/src/
+components/
+IdeenSelector.tsx ← Ideenliste mit Aktivierung
+CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Auswahl & Upload
+WeightingSelector.tsx ← Kombinationsgewichtung
+BewertungsOptionen.tsx ← Optionen (Runden, Tester‑Modus)
+Ranking.tsx ← Ranking‑Anzeige
+StatistikForm.tsx ← Formular für Demografiedaten
+StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
+ResetButton.tsx ← Session zurücksetzen
+pages/
+StartPage.tsx, SelectDataPage.tsx, UploadPage.tsx,
+=======
 main.py ← Haupt-API für Upload, Bewertung, Statistik und Session
 loader/excel_loader.py ← Einlesen & Validieren von Excel-Dateien
 config_loader.py ← Laden der Konfiguration (`matrixconfig.ini`)
@@ -31,10 +52,15 @@ StatistikForm.tsx ← Formular für Demografie/Statistikdaten
 StatusToast.tsx / SaveRunSuccess.tsx ← Rückmeldungen
 pages/
 StartPage.tsx, SelectDataPage.tsx,
+
 IdeaSelectionPage.tsx, CombinationSelectionPage.tsx,
 PersonalDataPage.tsx, ConfigSummaryPage.tsx,
 CalcResultsPage.tsx ← Einzelseiten der App
 i18n/
+
+index.ts ← Initialisiert i18next
+common.ts ← Übersetzungstexte (de/en/fr)
+=======
 index.ts ← Initialisiert die Übersetzungen
 common.ts ← Sprachdateien (de/en/fr)
 
@@ -42,10 +68,9 @@ common.ts ← Sprachdateien (de/en/fr)
 ideen_template.xlsx ← Vorlage für Ideensammlung (IDs, Sprachen, Attribute)
 kombis_template.xlsx ← Vorlage für Kombinationen (IDs, Sprachen, Formeltext)
 
-/storage/
-ideen/ ← Persistente User-Uploads (für Statistik, mit eindeutiger ID im Namen)
-kombis/ ← Persistente Kombi-Uploads
-runs/ ← Persistente Bewertungsläufe als JSON (inkl. User-Eingaben, Metadaten)
+/backend/uploads/
+selectionideas/ ← hochgeladene Ideensammlungen
+selectioncombis/ ← hochgeladene Kombinationssammlungen
 
 DOKUMENTATION.md ← Ausführliche Beschreibung der Funktionsweise und Tabellenstruktur
 ARCHITEKTUR.md ← Dieses Architektur-Dokument
@@ -56,6 +81,23 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 ## **2. Ablauf & Datenfluss**
 
 1. **Start & Datenauswahl**
+
+   - Die `StartPage` erzeugt eine Session und führt zur `SelectDataPage`.
+   - Dort wählt der Nutzer Ideensammlung und Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Uploads bleiben zuerst in der Session und werden – sofern kein App‑Tester‑Modus aktiv ist – in `backend/uploads/` gespeichert.
+
+2. **Ideen und Kombinationen festlegen**
+   - In der `IdeaSelectionPage` lassen sich Ideen ein‑ oder ausblenden.
+   - Die `CombinationSelectionPage` ermöglicht das Gewichtung der Kombinationen. `BewertungsOptionen.tsx` stellt Zusatzoptionen bereit.
+   - Sämtliche Texte kommen aus `src/i18n/common.ts` und werden über `src/i18n/index.ts` geladen.
+
+3. **Persönliche Angaben & Zusammenfassung**
+   - Die `PersonalDataPage` fragt auf Wunsch Statistikdaten ab.
+   - Danach zeigt die `ConfigSummaryPage` eine Zusammenfassung aller Einstellungen.
+
+4. **Berechnung & Ergebnisse**
+   - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Lauf über die Route `save_run`.
+   - Die `CalcResultsPage` zeigt das Ranking der Ideen mit Export‑Möglichkeit.
+=======
    - Die `StartPage` leitet auf die `SelectDataPage` weiter.
    - Dort wählt der Nutzer Ideensammlung und Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Uploads bleiben zunächst in der Session und werden – sofern kein App-Tester-Modus aktiv ist – im Ordner `storage` gespeichert.
 
@@ -71,6 +113,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 4. **Berechnung & Ergebnisse**
    - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Lauf über die Route `save_run`.
    - Die `CalcResultsPage` präsentiert das Ranking der Ideen.
+
 
 
 ## ⚙️ Backend-Komponenten (FastAPI)
@@ -157,5 +200,4 @@ Alle Dateien befinden sich unter:
 ---
 
 
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:14:55)*
-
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:15:30)*
