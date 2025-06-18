@@ -23,7 +23,6 @@ import { saveRun } from "../api/saveRun";
 
 type Props = {
   open: boolean;
-  onClose?: () => void;
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
@@ -32,7 +31,6 @@ type Props = {
 
 export const StatistikForm: React.FC<Props> = ({
   open,
-  onClose,
   tester,
   payload,
   onSaveSuccess,
@@ -91,6 +89,7 @@ export const StatistikForm: React.FC<Props> = ({
           onSubmit={handleSubmit}
           className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
         >
+
           {onClose && (
             <button
               type="button"
@@ -224,16 +223,6 @@ export const StatistikForm: React.FC<Props> = ({
           >
             {tester ? t("submitWithoutData") : t("saveRating")}
           </button>
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={sending}
-              className="bg-gray-200 rounded px-4 py-2"
-            >
-              {t("cancel")}
-            </button>
-          )}
         </div>
       </form>
     </div>
