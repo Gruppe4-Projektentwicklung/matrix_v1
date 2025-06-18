@@ -43,13 +43,6 @@ export const StatusToast: React.FC<Props> = ({
         {type === "error" && <span>❌</span>}
         {type === "info" && <span>ℹ️</span>}
         <span>{message}</span>
-        <button
-          onClick={onClose}
-          className="ml-2 text-xl"
-          aria-label={t("close")}
-        >
-          ×
-        </button>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getSessionId } from "@/utils/session";
 
@@ -19,6 +19,7 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
   const [auswahl, setAuswahl] = useState<string>(aktuelleSammlungName);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [fileKey, setFileKey] = useState<number>(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [eigeneSammlungenState, setEigeneSammlungen] = useState<string[]>(eigeneSammlungen);
   const sessionId = getSessionId();
 
@@ -53,6 +54,10 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
         console.error("Fehler beim Abrufen der Dateiliste:", err);
       });
   }, [sessionId]);
+
+  const handleUploadButtonClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadError(null);
@@ -135,25 +140,28 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
         ))}
       </select>
       <div className="mt-2 flex items-center space-x-4">
-        <label className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded inline-block">
+        <button
+          type="button"
+          onClick={handleUploadButtonClick}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
           {t("uploadFile")}
-          <input
-            type="file"
-            accept=".xlsx"
-            onChange={handleUpload}
-            className="hidden"
-            key={fileKey}
-          />
-        </label>
-        <a
-          href={`${backendUrl}/download_template?type=ideen`}
-          download
-          className="px-4 py-2 bg-gray-300 rounded inline-block"
-          target="_blank"
-          rel="noreferrer"
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".xlsx"
+          onChange={handleUpload}
+          className="hidden"
+          key={fileKey}
+        />
+        <button
+          type="button"
+          onClick={() => window.open(`${backendUrl}/download_template?type=ideen`, '_blank')}
+          className="px-4 py-2 bg-gray-300 rounded"
         >
           {t("downloadIdeaTemplate")}
-        </a>
+        </button>
       </div>
       {uploadError && (
         <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
