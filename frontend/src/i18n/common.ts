@@ -38,6 +38,7 @@ const common = {
         introText: "Mit diesem Tool können Sie Ideen bewerten und kombinieren.",
         fieldsRequired: "Bitte alle Felder ausfüllen.",
         invalidAge: "Bitte ein realistisches Alter eingeben (0-120).",
+
         resetWarning: "Warnung! Durch Zur\u00fccksetzen werden alle eingegebenen Daten gel\u00f6scht. Zur\u00fccksetzen oder abbrechen?",
 
         currentIdeaCollection: "Aktuelle Ideensammlung",
