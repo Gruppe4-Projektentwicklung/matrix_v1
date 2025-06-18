@@ -22,6 +22,8 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
   }, [navigate]);
   return (
     <div>
+      <div className="mb-6 flex justify-between">
+        <ResetButton />
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
 
       <div className="mt-6 flex justify-between">
@@ -30,7 +32,6 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
         <Link to="/" className="px-4 py-2 bg-gray-300 rounded">
           {t('reset')}
         </Link>
-
 
         <div className="flex gap-4">
           <Link to="/select-data" className="px-4 py-2 bg-gray-300 rounded">

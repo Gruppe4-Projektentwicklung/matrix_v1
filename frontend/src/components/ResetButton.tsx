@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { clearSession } from '../utils/session';
-
 import { resetSessionId } from '../utils/session';
 
 
@@ -13,7 +12,6 @@ export const ResetButton: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-
 
     clearSession();
 

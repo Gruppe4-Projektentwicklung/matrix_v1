@@ -15,6 +15,45 @@ Durch Kombination von Attributen (aus einer Excel-Tabelle) sollen vergleichbare 
 
 
 **/backend/**
+- main.py ← Haupt‑API für Upload, Bewertung und Sessions
+- loader/excel_loader.py ← Excel‑Import & Validierung
+- config_loader.py ← lädt `matrixconfig.ini`
+- bewertung.py ← Bewertungslogik der Kombinationen
+- api/ ← Routen (z. B. `/save_run`)
+- uploads/selectionideas/ und uploads/selectioncombis/ ← persistente Uploads
+- templates/ ← Excel‑Vorlagen
+
+**/frontend/src/**
+components/
+  IdeenSelector.tsx ← Ideenliste mit Aktivierung
+  CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Auswahl & Upload
+  WeightingSelector.tsx ← Kombinationsgewichtung
+  BewertungsOptionen.tsx ← Optionen (Runden, Tester‑Modus)
+  Ranking.tsx ← Ranking‑Anzeige
+  StatistikForm.tsx ← Formular für Demografiedaten
+  StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
+  ResetButton.tsx ← Session zurücksetzen
+pages/
+  StartPage.tsx – Einstieg und Sessionstart
+  SelectDataPage.tsx – Daten auswählen oder hochladen
+  IdeaSelectionPage.tsx – Ideen aktivieren/deaktivieren
+  CombinationSelectionPage.tsx – Kombinationen gewichten
+  PersonalDataPage.tsx – optionale Angaben
+  ConfigSummaryPage.tsx – Zusammenfassung vor Berechnung
+  CalcResultsPage.tsx – Ergebnisse und Export
+  UploadPage.tsx – separate Upload-Seite
+i18n/
+  index.ts – initialisiert i18n
+  common.ts – Übersetzungstexte (de/en/fr)
+
+/backend/templates/ ← Excel-Vorlagen
+/backend/uploads/
+  selectionideas/ ← hochgeladene Ideensammlungen
+  selectioncombis/ ← hochgeladene Kombinationssammlungen
+
+DOKUMENTATION.md ← Ausführliche Beschreibung
+
+**/backend/**
 /backend/
 
 
@@ -102,13 +141,28 @@ selectionideas/ ← hochgeladene Ideensammlungen
 selectioncombis/ ← hochgeladene Kombinationssammlungen
 
 DOKUMENTATION.md ← Ausführliche Beschreibung der Funktionsweise und Tabellenstruktur
-ARCHITEKTUR.md ← Dieses Architektur-Dokument
-README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 
----
+ARCHITEKTUR.md ← Dieses Architektur-Dokument
+README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise
 
 ## **2. Ablauf & Datenfluss**
 
+1. **Start**
+   - Die `StartPage` startet eine neue Session und zeigt eine kurze Einführung.
+   - Auf der `SelectDataPage` wählt der Nutzer bestehende Sammlungen oder öffnet die `UploadPage` für eigene Dateien. Uploads werden sessionspezifisch in `backend/uploads/` gespeichert.
+
+2. **Ideen und Kombinationen**
+   - Auf der `IdeaSelectionPage` lassen sich Ideen aktivieren oder deaktivieren.
+   - Danach legt die `CombinationSelectionPage` die Gewichtung der Kombinationen fest; weitere Optionen bietet `BewertungsOptionen.tsx`.
+   - Alle Texte werden aus `src/i18n/common.ts` geladen und in `src/i18n/index.ts` initialisiert.
+
+3. **Persönliche Angaben & Zusammenfassung**
+   - Optional erfasst die `PersonalDataPage` statistische Informationen.
+   - Anschließend fasst die `ConfigSummaryPage` alle Einstellungen zusammen.
+
+4. **Berechnung & Ergebnis**
+   - Das Backend berechnet über `bewertung.py` das Ranking und speichert den Durchlauf via `save_run`.
+   - Die `CalcResultsPage` präsentiert das Ergebnis und bietet Exportfunktionen.
 1. **Start & Datenauswahl**
    - Die `StartPage` legt eine Session-ID an und leitet zur `SelectDataPage` weiter.
    - Dort wählt der Nutzer eine Ideensammlung und eine Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Dateien werden zunächst sessionspezifisch gespeichert und – sofern kein App‑Tester-Modus aktiv ist – dauerhaft unter `backend/uploads/` abgelegt.
@@ -158,7 +212,6 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 4. **Berechnung & Ergebnisse**
    - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Lauf über die Route `save_run`.
    - Die `CalcResultsPage` präsentiert das Ranking der Ideen.
-
 
 
 
@@ -245,4 +298,4 @@ Alle Dateien befinden sich unter:
 
 ---
 
-
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:16:45)*

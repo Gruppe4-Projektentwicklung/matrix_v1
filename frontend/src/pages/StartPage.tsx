@@ -14,7 +14,6 @@ export const StartPage = () => {
         {t('title')}
       </h1>
       <p className="mb-6 text-gray-700">{t('introText')}</p>
-
       <Link to="/select-data" className="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded">
         {t('start')}
       </Link>
