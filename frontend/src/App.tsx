@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import "./i18n";
 
@@ -45,6 +45,65 @@ function App() {
 const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
 const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_kombi.xlsx");
 
+  const fetchCollectionContent = useCallback(
+    async (typ: "ideen" | "kombis", filename: string) => {
+      try {
+        const url = `${import.meta.env.VITE_API_URL}/api/uploads/${typ}/content?session=${sessionId}&filename=${encodeURIComponent(
+          filename,
+        )}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text || `HTTP ${response.status}`);
+        }
+        return await response.json();
+      } catch (err) {
+        setStatusToastMessage(
+          `${t("uploadError")}: ${err instanceof Error ? err.message : String(err)}`,
+        );
+        setStatusToastType("error");
+        setStatusToastOpen(true);
+        return null;
+      }
+    },
+    [sessionId, t],
+  );
+
+  const loadIdeen = useCallback(
+    async (filename: string) => {
+      const data = await fetchCollectionContent("ideen", filename);
+      if (!data) return;
+      const rows = Array.isArray(data.rows) ? data.rows : [];
+      const parsed = rows.map((row: any, idx: number) => {
+        const attrs: Record<string, any> = {};
+        Object.keys(row).forEach((k) => {
+          if (k.startsWith("#-#") || k.startsWith("#+#")) attrs[k] = row[k];
+        });
+        return { id: row.id || row.ID || String(idx + 1), aktiv: true, attribute: attrs, ...row };
+      });
+      setIdeen(parsed);
+    },
+    [fetchCollectionContent],
+  );
+
+  const loadKombis = useCallback(
+    async (filename: string) => {
+      const data = await fetchCollectionContent("kombis", filename);
+      if (!data) return;
+      const rows = Array.isArray(data.rows) ? data.rows : [];
+      const parsed = rows.map((row: any, idx: number) => ({
+        id: row.Kombi_ID || row.id || String(idx + 1),
+        name: row["#t_de#1"] || row.name || "",
+        beschreibung: row["#t_de#2"] || row.beschreibung || "",
+        gewichtung: 0,
+        aktiv: false,
+        ...row,
+      }));
+      setGewichtungen(parsed);
+    },
+    [fetchCollectionContent],
+  );
+
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
@@ -54,6 +113,7 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
 
   const handleIdeenSammlungChange = (dateiName: string) => {
     setAktuelleIdeensammlung(dateiName);
+    loadIdeen(dateiName);
   };
 const handleKombiUpload = async (file: File, sessionId: string) => {
   setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
@@ -89,6 +149,7 @@ const handleKombiUpload = async (file: File, sessionId: string) => {
 
 const handleKombiSammlungChange = (dateiName: string) => {
   setAktuelleKombiSammlung(dateiName);
+  loadKombis(dateiName);
 };
 
   const handleIdeenUpload = async (file: File, sessionId: string) => {
@@ -166,6 +227,11 @@ const handleKombiSammlungChange = (dateiName: string) => {
     setStatusToastOpen(false);
     setStatusToastMessage("");
   };
+
+  useEffect(() => {
+    loadIdeen(aktuelleIdeensammlung);
+    loadKombis(aktuelleKombiSammlung);
+  }, [loadIdeen, loadKombis]);
 
   return (
     <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10">
