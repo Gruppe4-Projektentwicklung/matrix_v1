@@ -3,6 +3,7 @@ import { IdeenSelector } from '../components/IdeenSelector';
 import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { WeightingSelector } from '../components/WeightingSelector';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   ideen: any[];
@@ -29,6 +30,7 @@ export const ConfigPage = ({
   onBewertungsOptionenChange,
   onGewichtungenUpdate,
 }: Props) => {
+  const { t } = useTranslation();
   return (
     <div>
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
@@ -44,7 +46,7 @@ export const ConfigPage = ({
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       <div className="mt-6 text-center">
         <Link to="/results" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
-          Weiter
+          {t('next')}
         </Link>
       </div>
     </div>

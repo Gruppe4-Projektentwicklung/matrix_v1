@@ -2,6 +2,7 @@ import React from 'react';
 import { CollectionSelectorIdeas } from '../components/CollectionSelectorIdeas';
 import { CollectionSelectorKombis } from '../components/CollectionSelectorKombis';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   aktuelleIdeensammlung: string;
@@ -20,6 +21,7 @@ export const UploadPage = ({
   onIdeenUpload,
   onKombiUpload,
 }: Props) => {
+  const { t } = useTranslation();
   return (
     <div>
       <CollectionSelectorIdeas
@@ -34,7 +36,7 @@ export const UploadPage = ({
       />
       <div className="mt-6 text-center">
         <Link to="/config" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
-          Weiter
+          {t('next')}
         </Link>
       </div>
     </div>
