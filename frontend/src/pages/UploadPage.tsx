@@ -1,0 +1,42 @@
+import React from 'react';
+import { CollectionSelectorIdeas } from '../components/CollectionSelectorIdeas';
+import { CollectionSelectorKombis } from '../components/CollectionSelectorKombis';
+import { Link } from 'react-router-dom';
+
+interface Props {
+  aktuelleIdeensammlung: string;
+  aktuelleKombiSammlung: string;
+  onIdeenSammlungChange: (name: string) => void;
+  onKombiSammlungChange: (name: string) => void;
+  onIdeenUpload: (file: File) => void;
+  onKombiUpload: (file: File) => void;
+}
+
+export const UploadPage = ({
+  aktuelleIdeensammlung,
+  aktuelleKombiSammlung,
+  onIdeenSammlungChange,
+  onKombiSammlungChange,
+  onIdeenUpload,
+  onKombiUpload,
+}: Props) => {
+  return (
+    <div>
+      <CollectionSelectorIdeas
+        aktuelleSammlungName={aktuelleIdeensammlung}
+        onSammlungChange={onIdeenSammlungChange}
+        onUpload={onIdeenUpload}
+      />
+      <CollectionSelectorKombis
+        aktuelleSammlungName={aktuelleKombiSammlung}
+        onSammlungChange={onKombiSammlungChange}
+        onUpload={onKombiUpload}
+      />
+      <div className="mt-6 text-center">
+        <Link to="/config" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
+          Weiter
+        </Link>
+      </div>
+    </div>
+  );
+};
