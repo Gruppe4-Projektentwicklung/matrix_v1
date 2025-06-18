@@ -10,7 +10,7 @@ export const StartPage = () => {
     markSessionStarted();
   }, []);
   return (
-    <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 text-center">
+    <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 text-center min-h-[80vh]">
       <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] tracking-tight drop-shadow">
         {t('title')}
       </h1>
