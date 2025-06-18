@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { saveRun } from "../api/saveRun";
 
 export interface BewertungsLaufPayload {
   tester: boolean;
@@ -19,13 +20,12 @@ export interface BewertungsLaufPayload {
   zeitstempel?: string;
 }
 
-import { saveRun } from "../api/saveRun";
-
 type Props = {
   open: boolean;
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
+  onClose?: () => void;    // <---- Das ergänzt!
   inline?: boolean;
 };
 
@@ -34,6 +34,7 @@ export const StatistikForm: React.FC<Props> = ({
   tester,
   payload,
   onSaveSuccess,
+  onClose,          // <--- und das hier!
   inline = false,
 }) => {
   const { t } = useTranslation();
@@ -73,6 +74,7 @@ export const StatistikForm: React.FC<Props> = ({
     try {
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
+      if (onClose) onClose();    // <--- Callback nach Erfolg, falls übergeben
     } catch {
       setFehler(t("submitError"));
     } finally {
@@ -89,7 +91,6 @@ export const StatistikForm: React.FC<Props> = ({
           onSubmit={handleSubmit}
           className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
         >
-
           {onClose && (
             <button
               type="button"
@@ -100,7 +101,6 @@ export const StatistikForm: React.FC<Props> = ({
               ×
             </button>
           )}
-
 
           <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
           <p
@@ -142,7 +142,6 @@ export const StatistikForm: React.FC<Props> = ({
 
           {fehler && <div className="text-red-600 text-sm mb-2">{fehler}</div>}
 
-
           <div className="flex gap-3 mt-4">
             <button
               type="submit"
@@ -162,7 +161,6 @@ export const StatistikForm: React.FC<Props> = ({
               </button>
             )}
           </div>
-
         </form>
       </div>
     );
@@ -174,6 +172,16 @@ export const StatistikForm: React.FC<Props> = ({
         onSubmit={handleSubmit}
         className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
       >
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+            aria-label={t("close")}
+          >
+            ×
+          </button>
+        )}
         <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
         <p
           className="text-gray-700 text-sm mb-4"
@@ -223,10 +231,20 @@ export const StatistikForm: React.FC<Props> = ({
           >
             {tester ? t("submitWithoutData") : t("saveRating")}
           </button>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={sending}
+              className="bg-gray-200 rounded px-4 py-2"
+            >
+              {t("cancel")}
+            </button>
+          )}
         </div>
       </form>
     </div>
   );
 };
 
-export default StatistikForm;
+// KEIN weiteres export default – das ist hier nicht mehr nötig!
