@@ -24,6 +24,7 @@ import { saveRun } from "../api/saveRun";
 type Props = {
   open: boolean;
   onClose: () => void;
+  tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
 };
@@ -31,6 +32,7 @@ type Props = {
 export const StatistikForm: React.FC<Props> = ({
   open,
   onClose,
+  tester,
   payload,
   onSaveSuccess,
 }) => {
@@ -40,7 +42,6 @@ export const StatistikForm: React.FC<Props> = ({
   const [geschlecht, setGeschlecht] = useState("");
   const [branche, setBranche] = useState("");
   const [berufsrolle, setBerufsrolle] = useState("");
-  const [tester, setTester] = useState(false);
   const [sending, setSending] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
 
@@ -50,6 +51,12 @@ export const StatistikForm: React.FC<Props> = ({
     e.preventDefault();
     setSending(true);
     setFehler(null);
+
+    if (!tester && (!alter || !geschlecht || !branche || !berufsrolle)) {
+      setFehler(t('fieldsRequired'));
+      setSending(false);
+      return;
+    }
 
     const fullPayload: BewertungsLaufPayload = {
       ...payload,
@@ -94,16 +101,6 @@ export const StatistikForm: React.FC<Props> = ({
           className="text-gray-700 text-sm mb-4"
           dangerouslySetInnerHTML={{ __html: t("infoVoluntary") }}
         />
-
-        <label className="block mb-2 font-semibold">
-          <input
-            type="checkbox"
-            checked={tester}
-            onChange={() => setTester((v) => !v)}
-            className="mr-2"
-          />
-          {t("appTesterMode")}
-        </label>
 
         {!tester && (
           <div className="space-y-2 mb-3">
