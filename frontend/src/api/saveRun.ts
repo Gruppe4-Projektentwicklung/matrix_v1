@@ -19,6 +19,22 @@ export interface BewertungsLaufPayload {
   // ...weitere gewünschte Felder
 }
 
+export async function saveRun(
+  payload: BewertungsLaufPayload
+): Promise<{ run_id?: string; message: string; error?: string }> {
+  let response: Response;
+  try {
+    response = await fetch("/save_run", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    throw new Error("Network error");
+  }
+
 export async function saveRun(payload: BewertungsLaufPayload): Promise<{run_id?: string, message: string, error?: string}> {
   const response = await fetch("/save_run", {
     method: "POST",
@@ -27,11 +43,13 @@ export async function saveRun(payload: BewertungsLaufPayload): Promise<{run_id?:
     },
     body: JSON.stringify(payload)
   });
+
   if (!response.ok) {
     let msg = "Unknown error";
     try {
       const err = await response.json();
-      msg = err.error || msg;
+
+      msg = err.error || err.detail || msg;
     } catch {
       // ignore json parse errors
     }
