@@ -2,9 +2,11 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+const defaultLanguage = import.meta.env.VITE_DEFAULT_LANGUAGE || "en";
+
 i18n.use(initReactI18next).init({
-  lng: "de", // Standard-Sprache: Deutsch
-  fallbackLng: "de",
+  lng: defaultLanguage,
+  fallbackLng: defaultLanguage,
   debug: true,
   interpolation: {
     escapeValue: false,
