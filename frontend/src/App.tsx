@@ -66,7 +66,7 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
         return await response.json();
       } catch (err) {
         setStatusToastMessage(
-          `${t("uploadError")}: ${err instanceof Error ? err.message : String(err)}`,
+          `${t("loadError")}: ${err instanceof Error ? err.message : String(err)}`,
         );
         setStatusToastType("error");
         setStatusToastOpen(true);
@@ -272,10 +272,10 @@ const handleKombiSammlungChange = (dateiName: string) => {
 
   return (
 
-    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10 relative">
-      <header className="w-full bg-[#1d2c5b] text-white shadow-md mb-8">
+    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pt-24 pb-10 relative">
+      <header className="fixed top-0 left-0 w-full bg-[#1d2c5b] text-white shadow-md z-10">
         <div className="max-w-5xl mx-auto flex justify-between items-center p-3">
-          <div className="text-xs font-mono">Session ID: {sessionId}</div>
+          <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">Session ID: {sessionId}</div>
           <select
             id="lang-select"
             value={language}

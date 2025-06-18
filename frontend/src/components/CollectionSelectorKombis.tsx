@@ -135,7 +135,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
         ))}
       </select>
       <div className="mt-2 flex items-center space-x-4">
-        <label className="cursor-pointer text-blue-600 underline">
+        <label className="cursor-pointer px-4 py-2 bg-blue-600 text-white rounded inline-block">
           {t("uploadFile")}
           <input
             type="file"
@@ -148,7 +148,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
         <a
           href={`${backendUrl}/download_template?type=kombi`}
           download
-          className="text-blue-600 underline"
+          className="px-4 py-2 bg-gray-300 rounded inline-block"
           target="_blank"
           rel="noreferrer"
         >

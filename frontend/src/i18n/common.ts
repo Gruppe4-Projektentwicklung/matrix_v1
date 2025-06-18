@@ -95,6 +95,8 @@ const common = {
         uploadError: "Upload fehlgeschlagen",
         uploadnotvalid: "Hochgeladene Datei muss der Struktur der Vorlage entsprechen.",
         uploadSuccess: "Upload erfolgreich",
+        loadError: "Laden fehlgeschlagen",
+        noDataLoaded: "Keine Daten geladen",
       },
     },
     en: {
@@ -193,6 +195,8 @@ const common = {
         uploadError: "Upload failed",
         uploadnotvalid: "Uploaded file must match the template structure.",
         uploadSuccess: "Upload successful",
+        loadError: "Loading failed",
+        noDataLoaded: "No data loaded",
       },
     },
     fr: {
@@ -293,7 +297,9 @@ const common = {
         uploadError: "Échec du téléchargement",
         uploadnotvalid: "Le fichier téléchargé doit respecter la structure du modèle.",
         uploadSuccess: "Téléversement réussi",
+        loadError: "Échec du chargement",
+        noDataLoaded: "Aucune donnée chargée",
       },
     },
-};
+  };
 export default common;
