@@ -4,7 +4,10 @@ import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
+<<<<<<< HEAD
 import { hasSessionStarted } from '../utils/session';
+=======
+>>>>>>> origin/main
 
 interface Props {
   gewichtungen: any[];
@@ -56,6 +59,27 @@ export const CombinationSelectionPage = ({
           onChange={onOptionsChange}
         />
       </div>
+<<<<<<< HEAD
+=======
+      <div className="mt-6 flex justify-between">
+
+        <ResetButton />
+
+        
+
+        <div className="flex gap-4">
+          <Link to="/ideas" className="px-4 py-2 bg-gray-300 rounded">
+            {t('back')}
+          </Link>
+
+      
+          <Link to="/personal" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
+
+            {t('next')}
+          </Link>
+        </div>
+      </div>
+>>>>>>> origin/main
     </div>
   );
 };
