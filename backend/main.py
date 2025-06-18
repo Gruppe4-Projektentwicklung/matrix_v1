@@ -5,6 +5,8 @@ from pathlib import Path
 import pandas as pd
 import os
 import configparser
+import json
+import uuid
 from config import config  # Deine eigene Configklasse!
 from loader.excel_loader import ExcelLoader
 from validator.validate_ideen import validate_ideen_excel
@@ -256,3 +258,26 @@ async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), l
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         filename=templatefile
     )
+
+
+# ---- Bewertungslauf speichern ----
+STORAGE_FOLDER = Path(__file__).parent.parent / "storage" / "runs"
+STORAGE_FOLDER.mkdir(parents=True, exist_ok=True)
+
+
+@app.post("/save_run")
+async def save_run(data: dict):
+    """Speichert einen Bewertungslauf als JSON-Datei."""
+    if not data or "tester" not in data:
+        raise HTTPException(status_code=400, detail="Ung\u00fcltige Daten")
+
+    if data.get("tester"):
+        return {"message": "Tester-Modus: Bewertungslauf NICHT gespeichert."}
+
+    run_id = str(uuid.uuid4())
+    filepath = STORAGE_FOLDER / f"{run_id}.json"
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+    return {"message": "Bewertungslauf gespeichert", "run_id": run_id}
