@@ -35,7 +35,7 @@ export const UploadPage = ({
         onUpload={onKombiUpload}
       />
       <div className="mt-6 text-center">
-        <Link to="/config" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
+        <Link to="/config" className="px-4 py-2 bg-blue-600 text-white rounded">
           {t('next')}
         </Link>
       </div>

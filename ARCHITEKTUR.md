@@ -13,30 +13,45 @@ Durch Kombination von Attributen (aus einer Excel-Tabelle) sollen vergleichbare 
 
 ## 📁 Projektstruktur
 
-/backend/
-server.py ← Haupt-API: Upload, Bewertung, Statistik, Session
-excel_loader.py ← Einlesen & Validieren von Excel-Dateien (mehrsprachig, IDs)
-config_loader.py ← Einlesen Konfigurationsdateien (matrixconfig etc.)
-bewertung.py ← Bewertungslogik: Kombinationen, Gewichtungen, Richtung
-save_run.py ← (Blueprint) Speichern der Bewertungsläufe/Statistiken
+**/backend/**
+main.py ← Haupt‑API für Upload, Bewertung und Session
+loader/excel_loader.py ← Excel‑Import & Validierung
+config_loader.py ← lädt `matrixconfig.ini`
+bewertung.py ← Bewertungslogik der Kombinationen
+api/ ← Routen (z. B. `/save_run`)
+uploads/selectionideas/ und uploads/selectioncombis/ ← persistente Uploads
+templates/ ← Excel‑Vorlagen
 
-/frontend/
+**/frontend/src/**
 components/
-IdeenSelector.tsx ← Anzeige und Auswahl der Ideen, Attribut-Details, Mehrsprachigkeit
-CollectionSelector.tsx ← Dropdown & Upload für Ideensammlungen / Kombis
-WeightingSelector.tsx ← Gewichtung der Kombinationen
-BewertungsOptionen.tsx ← Optionen, z. B. Runden-Auswahl, Aktivieren/Deaktivieren
-Ranking.tsx ← (noch offen) Ranking- und Ergebnisanzeige
-StatistikForm.tsx ← (offen) Formular für Demografie/Statistikdaten
+IdeenSelector.tsx ← Ideenliste mit Aktivierung
+CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Auswahl & Upload
+WeightingSelector.tsx ← Kombinationsgewichtung
+BewertungsOptionen.tsx ← Optionen (Runden, Tester‑Modus)
+Ranking.tsx ← Ranking‑Anzeige
+StatistikForm.tsx ← Formular für Demografiedaten
+StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
+ResetButton.tsx ← Session zurücksetzen
+pages/
+StartPage.tsx,
+SelectDataPage.tsx,
+IdeaSelectionPage.tsx,
+CombinationSelectionPage.tsx,
+PersonalDataPage.tsx,
+ConfigSummaryPage.tsx,
+CalcResultsPage.tsx,
+UploadPage.tsx
+i18n/
+index.ts ← i18n-Initialisierung
+common.ts ← Übersetzungstexte (de/en/fr)
 
 /templates/
 ideen_template.xlsx ← Vorlage für Ideensammlung (IDs, Sprachen, Attribute)
 kombis_template.xlsx ← Vorlage für Kombinationen (IDs, Sprachen, Formeltext)
 
-/storage/
-ideen/ ← Persistente User-Uploads (für Statistik, mit eindeutiger ID im Namen)
-kombis/ ← Persistente Kombi-Uploads
-runs/ ← Persistente Bewertungsläufe als JSON (inkl. User-Eingaben, Metadaten)
+/backend/uploads/
+selectionideas/ ← hochgeladene Ideensammlungen
+selectioncombis/ ← hochgeladene Kombinationssammlungen
 
 DOKUMENTATION.md ← Ausführliche Beschreibung der Funktionsweise und Tabellenstruktur
 ARCHITEKTUR.md ← Dieses Architektur-Dokument
@@ -46,22 +61,28 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 
 ## **2. Ablauf & Datenfluss**
 
-1. **Upload**
-   - Nutzer wählt aktuelle oder eigene Ideensammlung/Kombisammlung aus (Excel, Templates).
-   - Uploads werden **in der Session** zwischengespeichert (Dropdown-Auswahl) UND, wenn **kein Tester-Modus** aktiv, persistent im `storage`-Ordner mit UUID gespeichert.
+1. **Start & Datenauswahl**
+   - Die `StartPage` legt eine Session-ID an und leitet zur `SelectDataPage` weiter.
+   - Dort wählt der Nutzer eine Ideensammlung und eine Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Dateien werden zunächst sessionspezifisch gespeichert und – sofern kein App‑Tester-Modus aktiv ist – dauerhaft unter `backend/uploads/` abgelegt.
 
-2. **Konfiguration & Bewertung**
-   - User gewichtet Kombinationen, aktiviert/deaktiviert Attribute, wählt Sprache etc.
-   - Bewertungslogik (`bewertung.py`) liest Excel, wertet Formeln aus, berechnet Scores, berücksichtigt Richtung (high/low).
+2. **Ideen und Kombinationen festlegen**
+   - In der `IdeaSelectionPage` können Ideen aktiviert oder deaktiviert werden.
+   - Die `CombinationSelectionPage` dient zum Gewichten der Kombinationen. Zusätzliche Optionen bringt `BewertungsOptionen.tsx` mit.
+   - Alle Texte stammen aus `src/i18n/common.ts` und werden von `src/i18n/index.ts` geladen.
 
-3. **Ranking**
-   - Zeigt sortierte Ergebnisliste nach Score (Platz 1
+3. **Persönliche Angaben & Zusammenfassung**
+   - Optional erfasst die `PersonalDataPage` statistische Daten.
+   - Anschließend fasst die `ConfigSummaryPage` alle Einstellungen zusammen.
+
+4. **Berechnung & Ergebnisse**
+   - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Durchlauf über die Route `save_run`.
+   - Die `CalcResultsPage` zeigt das Ranking samt Exportmöglichkeit.
 
 
 ## ⚙️ Backend-Komponenten (FastAPI)
 
 ### 1. **Excel-Verarbeitung**
-- Liest eine Ideensammlung und eine Kombinationssammlung (aus `AktuelleSammlung/` oder Upload)
+- Liest eine Ideensammlung und eine Kombinationssammlung (aus `backend/templates/` oder Upload)
 - Jede Kombination enthält eine Formel (z. B. `CO2/Jahr * Lebensdauer + Produktion`)
 - Formel wird dynamisch ausgewertet
 - Einheiten werden automatisch kombiniert
@@ -122,7 +143,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 
 ## 📝 Upload-Handling
 
-- Eigene Dateien (Ideen / Kombinationen) werden unter `/uploads/ideen/` bzw. `/uploads/kombis/` gespeichert
+- Eigene Dateien (Ideen / Kombinationen) werden unter `backend/uploads/selectionideas/` bzw. `backend/uploads/selectioncombis/` gespeichert
 - Dateiname basiert auf UUID
 - Diese UUID wird beim Bewertungsdurchlauf mitgeloggt
 
@@ -141,4 +162,4 @@ Alle Dateien befinden sich unter:
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (28.05.2025:13:03)*
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:16:15)*

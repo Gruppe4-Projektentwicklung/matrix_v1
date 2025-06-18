@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Ranking } from '../components/Ranking';
 import { ExportRankingButton } from '../components/ExportRankingButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { hasSessionStarted } from '../utils/session';
 
 interface Props {
   rankingEintraege: any[];
@@ -10,6 +11,13 @@ interface Props {
 
 export const CalcResultsPage = ({ rankingEintraege }: Props) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!hasSessionStarted()) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
   return (
     <div>
       <Ranking eintraege={rankingEintraege} />

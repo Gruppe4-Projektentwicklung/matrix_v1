@@ -86,7 +86,8 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
         Object.keys(row).forEach((k) => {
           if (k.startsWith("#-#") || k.startsWith("#+#")) attrs[k] = row[k];
         });
-        return { id: row.id || row.ID || String(idx + 1), aktiv: true, attribute: attrs, ...row };
+        const rowId = row.ID || row.id || row["#ID#"] || String(idx + 1);
+        return { id: rowId, aktiv: true, attribute: attrs, ...row };
       });
       setIdeen(parsed);
     },
@@ -270,11 +271,12 @@ const handleKombiSammlungChange = (dateiName: string) => {
   }, [loadIdeen, loadKombis]);
 
   return (
-    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10">
-      <div className="w-full max-w-7xl bg-gray-800 text-white shadow-xl rounded-2xl p-8 relative">
-        <div className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/90 px-3 py-2 rounded-xl shadow border">
+    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center justify-center py-10">
+      <div className="fixed top-4 left-4 z-50 bg-white/90 px-3 py-2 rounded-xl shadow border text-sm font-mono">
+        Session ID: {sessionId}
+      </div>
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/90 px-3 py-2 rounded-xl shadow border">
 
-          <label htmlFor="lang-select" className="font-semibold text-sm">{t("language")}</label>
           <select
             id="lang-select"
             value={language}
@@ -287,7 +289,6 @@ const handleKombiSammlungChange = (dateiName: string) => {
             <option value="fr">Français</option>
           </select>
         </div>
-      </div>
 
       <Routes>
         <Route path="/" element={<StartPage />} />
@@ -338,7 +339,10 @@ const handleKombiSammlungChange = (dateiName: string) => {
           path="/personal"
           element={(
             <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
-              <PersonalDataPage onOpenStatistikForm={openStatistikForm} />
+              <PersonalDataPage
+                onOpenStatistikForm={openStatistikForm}
+                onCloseStatistikForm={handleCloseStatistikForm}
+              />
             </div>
           )}
         />
@@ -368,6 +372,7 @@ const handleKombiSammlungChange = (dateiName: string) => {
       <StatistikForm
         open={statistikFormOpen}
         onClose={handleCloseStatistikForm}
+        tester={appTester}
         payload={{
           ideenSammlung: aktuelleIdeensammlung,
           kombiSammlung: "",
