@@ -231,7 +231,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise
   - `backend_logging = on/off`
   - `standardeinstellung_runde1 = einbezogen/ausgeschlossen`
   - `exportformat = csv/pdf/excel`
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:15:58)*
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:23:25)*
 
 ### 3. **Bewertungslogik**
 - Bewertet alle aktiven Ideen mit den aktiven Kombinationen
@@ -244,6 +244,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise
 - Als CSV, JSON oder Excel – konfigurierbar
 - Wenn `App-Tester` aktiv → kein Logging
 - Wenn `datapopup = on` → anonyme Datenabfrage vor Berechnung
+- Zusätzlich protokolliert `/log_step` jeden Schritt einer Session im Ordner `archive/`
 
 ---
 
@@ -298,4 +299,4 @@ Alle Dateien befinden sich unter:
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:16:45)*
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:23:25)*
