@@ -27,13 +27,13 @@ export const PersonalDataPage = ({
   }, [navigate]);
   return (
     <div className="text-center">
-      <div className="mb-6 flex justify-between">
+      <div className="mt-8 mb-6 flex justify-between">
         <ResetButton />
         <div className="flex gap-4">
           <button onClick={() => navigate('/combinations')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button onClick={() => navigate('/summary')} className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
+          <button onClick={() => navigate('/summary')} className="px-4 py-2 bg-gray-300 rounded">
             {t('next')}
           </button>
         </div>

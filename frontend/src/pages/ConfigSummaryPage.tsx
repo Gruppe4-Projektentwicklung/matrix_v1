@@ -19,6 +19,15 @@ export const ConfigSummaryPage = ({
 }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const disabled = ideenCount === 0 || kombiCount === 0;
+
+  const handleCalculate = () => {
+    if (disabled) {
+      alert(t('noDataLoaded'));
+      return;
+    }
+    navigate('/results');
+  };
 
   useEffect(() => {
     if (!hasSessionStarted()) {
@@ -27,13 +36,21 @@ export const ConfigSummaryPage = ({
   }, [navigate]);
   return (
     <div>
-      <div className="mb-6 flex justify-between">
+      <div className="mt-8 mb-6 flex justify-between">
         <ResetButton />
         <div className="flex gap-4">
           <button onClick={() => navigate('/personal')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button onClick={() => navigate('/results')} className="px-4 py-2 bg-blue-600 text-white rounded">
+          <button
+            onClick={handleCalculate}
+            disabled={disabled}
+            className={
+              disabled
+                ? 'px-4 py-2 bg-gray-300 rounded cursor-not-allowed'
+                : 'px-4 py-2 bg-blue-600 text-white rounded'
+            }
+          >
             {t('calculate')}
           </button>
         </div>
