@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-import { hasSessionStarted } from '../utils/session';
+import { hasSessionStarted, getSessionId } from '../utils/session';
+import { logEvent } from '../api/logEvent';
 
 interface Props {
   ideenCount: number;
@@ -26,6 +27,12 @@ export const ConfigSummaryPage = ({
       alert(t('noDataLoaded'));
       return;
     }
+    logEvent(getSessionId(), 'summary', {
+      ideenCount,
+      activeIdeen,
+      kombiCount,
+      activeKombis,
+    });
     navigate('/results');
   };
 

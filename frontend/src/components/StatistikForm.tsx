@@ -46,6 +46,11 @@ export const StatistikForm: React.FC<Props> = ({
   const [sending, setSending] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
 
+  const isValidAge = (value: string) => {
+    const num = Number(value);
+    return Number.isInteger(num) && num >= 0 && num <= 120;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
@@ -53,6 +58,11 @@ export const StatistikForm: React.FC<Props> = ({
 
     if (!tester && (!alter || !geschlecht || !branche || !berufsrolle)) {
       setFehler(t('fieldsRequired'));
+      setSending(false);
+      return;
+    }
+    if (!tester && !isValidAge(alter)) {
+      setFehler(t('invalidAge'));
       setSending(false);
       return;
     }
@@ -75,8 +85,8 @@ export const StatistikForm: React.FC<Props> = ({
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
       if (onClose) onClose();    // <--- Callback nach Erfolg, falls übergeben
-    } catch {
-      setFehler(t("submitError"));
+    } catch (e: any) {
+      setFehler(e.message || t("submitError"));
     } finally {
       setSending(false);
     }
@@ -111,7 +121,9 @@ export const StatistikForm: React.FC<Props> = ({
             <div className="space-y-2 mb-3">
               <input
                 className="border p-2 rounded w-full"
-                type="text"
+                type="number"
+                min="0"
+                max="120"
                 placeholder={t("age")}
                 value={alter}
                 onChange={(e) => setAlter(e.target.value)}
@@ -145,7 +157,11 @@ export const StatistikForm: React.FC<Props> = ({
           <div className="flex gap-3 mt-4">
             <button
               type="submit"
-              disabled={sending || (!tester && (!alter || !geschlecht || !branche || !berufsrolle))}
+              disabled={
+                sending ||
+                (!tester &&
+                  (!alter || !geschlecht || !branche || !berufsrolle || !isValidAge(alter)))
+              }
               className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
             >
               {tester ? t("submitWithoutData") : t("saveRating")}
@@ -192,7 +208,9 @@ export const StatistikForm: React.FC<Props> = ({
           <div className="space-y-2 mb-3">
             <input
               className="border p-2 rounded w-full"
-              type="text"
+              type="number"
+              min="0"
+              max="120"
               placeholder={t("age")}
               value={alter}
               onChange={(e) => setAlter(e.target.value)}
@@ -226,7 +244,11 @@ export const StatistikForm: React.FC<Props> = ({
         <div className="flex gap-3 mt-4">
           <button
             type="submit"
-            disabled={sending || (!tester && (!alter || !geschlecht || !branche || !berufsrolle))}
+            disabled={
+              sending ||
+              (!tester &&
+                (!alter || !geschlecht || !branche || !berufsrolle || !isValidAge(alter)))
+            }
             className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
           >
             {tester ? t("submitWithoutData") : t("saveRating")}
