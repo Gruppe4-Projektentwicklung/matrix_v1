@@ -161,8 +161,19 @@ async def delete_uploaded_file(sammlung_typ: str, session: str, filename: str, l
 # ---- Dateiinhalt anzeigen (Excel als JSON) ----
 @app.get("/api/uploads/{sammlung_typ}/content")
 async def read_uploaded_file(sammlung_typ: str, session: str, filename: str, lang: str = Query("de")):
-    file_path = UPLOAD_BASE / session / sammlung_typ / filename
-    if not file_path.exists():
+    user_path = UPLOAD_BASE / session / sammlung_typ / filename
+    if sammlung_typ == "ideen":
+        global_path = Path(config.selectionideas_dir) / filename
+    elif sammlung_typ == "kombis":
+        global_path = Path(config.selectioncombis_dir) / filename
+    else:
+        global_path = None
+
+    if user_path.exists():
+        file_path = user_path
+    elif global_path and global_path.exists():
+        file_path = global_path
+    else:
         return JSONResponse(status_code=404, content={"error": t("file_not_found", lang)})
 
     try:
