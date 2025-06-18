@@ -75,8 +75,8 @@ export const StatistikForm: React.FC<Props> = ({
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
       if (onClose) onClose();    // <--- Callback nach Erfolg, falls übergeben
-    } catch {
-      setFehler(t("submitError"));
+    } catch (e: any) {
+      setFehler(e.message || t("submitError"));
     } finally {
       setSending(false);
     }

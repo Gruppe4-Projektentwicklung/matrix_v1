@@ -4,7 +4,8 @@ import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-import { hasSessionStarted } from '../utils/session';
+import { hasSessionStarted, getSessionId } from '../utils/session';
+import { logEvent } from '../api/logEvent';
 
 interface Props {
   gewichtungen: any[];
@@ -41,7 +42,19 @@ export const CombinationSelectionPage = ({
           <button onClick={() => navigate('/ideas')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button onClick={() => navigate('/personal')} className="px-4 py-2 bg-blue-600 text-white rounded">
+          <button
+            onClick={() => {
+              logEvent(getSessionId(), 'combinations', {
+                gewichtungen,
+                runde1,
+                runde2,
+                appTester,
+                datenfreigabe,
+              });
+              navigate('/personal');
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
             {t('next')}
           </button>
         </div>
