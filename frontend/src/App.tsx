@@ -4,17 +4,17 @@ import "./i18n";
 
 import { useTranslation } from "react-i18next";
 
-import { BewertungsOptionen } from "./components/BewertungsOptionen";
-import { CollectionSelectorIdeas } from "./components/CollectionSelectorIdeas";
-import { CollectionSelectorKombis } from "./components/CollectionSelectorKombis";
-import { ExportRankingButton } from "./components/ExportRankingButton";
-import { IdeenSelector } from "./components/IdeenSelector";
+import { Routes, Route } from "react-router-dom";
+
+import { StartPage } from "./pages/StartPage";
+import { UploadPage } from "./pages/UploadPage";
+import { ConfigPage } from "./pages/ConfigPage";
+import { ResultsPage } from "./pages/ResultsPage";
+
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
-import { Ranking } from "./components/Ranking";
 import { SaveRunSuccess } from "./components/SaveRunSuccess";
 import { StatistikForm } from "./components/StatistikForm";
 import { StatusToast } from "./components/StatusToast";
-import { WeightingSelector } from "./components/WeightingSelector";
 
 import { getSessionId } from "./utils/session";
 
@@ -187,55 +187,51 @@ const handleKombiSammlungChange = (dateiName: string) => {
         </div>
       </div>
 
-      <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
-        <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] text-center tracking-tight drop-shadow">
-          {t("title")}
-        </h1>
-
-        <CollectionSelectorIdeas
-  aktuelleSammlungName={aktuelleIdeensammlung}
-  onSammlungChange={handleIdeenSammlungChange}
-  onUpload={(file) => handleIdeenUpload(file, sessionId)}
-/>
-
-<CollectionSelectorKombis
-  aktuelleSammlungName={aktuelleKombiSammlung}
-  onSammlungChange={handleKombiSammlungChange}
-  onUpload={(file) => handleKombiUpload(file, sessionId)}
-/>
-        <div className="mt-6">
-          <IdeenSelector
-            ideen={ideen}
-            sprache={language as "de" | "en" | "fr"}
-            onUpdate={handleIdeenUpdate}
-          />
-        </div>
-
-        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
-          <BewertungsOptionen
-            runde1={runde1}
-            runde2={runde2}
-            appTester={appTester}
-            datenfreigabe={datenfreigabe}
-            onChange={handleBewertungsOptionenChange}
-          />
-        </div>
-
-        <div className="mt-6">
-          <WeightingSelector
-            kombinationen={gewichtungen}
-            onUpdate={handleGewichtungenUpdate}
-          />
-        </div>
-
-        <div className="mt-6">
-          <Ranking eintraege={rankingEintraege} />
-        </div>
-
-        <div className="mt-6 flex flex-col items-center gap-4">
-          <ExportRankingButton eintraege={rankingEintraege} />
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route
+          path="/upload"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <UploadPage
+                aktuelleIdeensammlung={aktuelleIdeensammlung}
+                aktuelleKombiSammlung={aktuelleKombiSammlung}
+                onIdeenSammlungChange={handleIdeenSammlungChange}
+                onKombiSammlungChange={handleKombiSammlungChange}
+                onIdeenUpload={(file) => handleIdeenUpload(file, sessionId)}
+                onKombiUpload={(file) => handleKombiUpload(file, sessionId)}
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/config"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <ConfigPage
+                ideen={ideen}
+                sprache={language as "de" | "en" | "fr"}
+                runde1={runde1}
+                runde2={runde2}
+                appTester={appTester}
+                datenfreigabe={datenfreigabe}
+                gewichtungen={gewichtungen}
+                onIdeenUpdate={handleIdeenUpdate}
+                onBewertungsOptionenChange={handleBewertungsOptionenChange}
+                onGewichtungenUpdate={handleGewichtungenUpdate}
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/results"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <ResultsPage rankingEintraege={rankingEintraege} />
+            </div>
+          )}
+        />
+      </Routes>
 
       <StatistikForm
         open={statistikFormOpen}
