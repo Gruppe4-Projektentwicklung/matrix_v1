@@ -170,9 +170,11 @@ async def read_uploaded_file(sammlung_typ: str, session: str, filename: str, lan
         if df.shape[0] < 3:
             return JSONResponse(status_code=400, content={"error": t("not_enough_rows", lang)})
 
-        spalten_ids = [str(val).strip() for val in df.iloc[0]]
+        spalten_ids = ["ID" if str(val).strip() == "#ID#" else str(val).strip() for val in df.iloc[0]]
         daten = df.iloc[2:].copy()
         daten.columns = spalten_ids
+        if "#ID#" in daten.columns:
+            daten = daten.rename(columns={"#ID#": "ID"})
         return {
             "columns": spalten_ids,
             "rows": daten.to_dict(orient="records")

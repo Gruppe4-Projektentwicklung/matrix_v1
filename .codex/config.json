@@ -1,0 +1,5 @@
+{
+  "setup": "./codex-setup.sh",
+  "test": "pytest -q",
+  "lint": "cd frontend && npm run lint"
+}

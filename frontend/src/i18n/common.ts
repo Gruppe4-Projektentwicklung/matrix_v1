@@ -35,6 +35,8 @@ const common = {
         optionDataReleaseOpen: "Bitte geben Sie Ihre Daten ein (anonym)",
         optionDataReleaseAnonym: "Nur Ihr Nutzungsverhalten wird gespeichert",
         optionDataReleaseNone: "Es werden keine Daten gespeichert",
+        introText: "Mit diesem Tool können Sie Ideen bewerten und kombinieren.",
+        fieldsRequired: "Bitte alle Felder ausfüllen.",
 
         currentIdeaCollection: "Aktuelle Ideensammlung",
         currentCombinationCollection: "Aktuelle Kombinationssammlung",
@@ -131,6 +133,8 @@ const common = {
         optionDataReleaseOpen: "Please enter your data (anonymous)",
         optionDataReleaseAnonym: "Only your usage behavior will be saved",
         optionDataReleaseNone: "No data will be saved",
+        introText: "This tool lets you rate and combine ideas.",
+        fieldsRequired: "Please fill in all fields.",
 
         currentIdeaCollection: "Current idea collection",
         currentCombinationCollection: "Current combination collection",
@@ -227,6 +231,8 @@ const common = {
         optionDataReleaseOpen: "Veuillez entrer vos données (anonymes)",
         optionDataReleaseAnonym: "Seul votre comportement d'utilisation sera enregistré",
         optionDataReleaseNone: "Aucune donnée ne sera enregistrée",
+        introText: "Cet outil vous permet d'évaluer et de combiner des idées.",
+        fieldsRequired: "Veuillez remplir tous les champs.",
 
         currentIdeaCollection: "Collection d'idées actuelle",
         currentCombinationCollection: "Collection de combinaisons actuelle",
