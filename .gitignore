@@ -1,0 +1,6 @@
+# Ignore user upload directories and installation scripts
+backend/uploads/
+backend/get-pip.py
+
+# Node modules and other environment files
+node_modules/
