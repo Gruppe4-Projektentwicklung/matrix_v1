@@ -6,9 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 
 import { hasSessionStarted } from '../utils/session';
-=======
-
-
 interface Props {
   gewichtungen: any[];
   runde1: boolean;
