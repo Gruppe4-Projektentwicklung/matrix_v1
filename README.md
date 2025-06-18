@@ -41,10 +41,11 @@ VITE_I18N_DEBUG=true npm run dev
 
 ## Linting and type checking (offline)
 
-After the frontend dependencies have been installed once, the following commands
-can be executed without additional downloads:
+After the frontend dependencies have been installed once, run the lint and type
+checking commands from within the `frontend/` directory. Example:
 
 ```bash
+cd frontend
 npm run lint       # runs eslint on the frontend source
 npm run typecheck  # runs TypeScript type checking
 ```
