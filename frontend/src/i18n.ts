@@ -2,9 +2,11 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+const defaultLanguage = import.meta.env.VITE_DEFAULT_LANGUAGE || "en";
+
 i18n.use(initReactI18next).init({
-  lng: "de", // Standard-Sprache: Deutsch
-  fallbackLng: "de",
+  lng: defaultLanguage,
+  fallbackLng: defaultLanguage,
   debug: true,
   interpolation: {
     escapeValue: false,
@@ -25,6 +27,7 @@ i18n.use(initReactI18next).init({
         details: "Details",
         rank: "Platz",
         name: "Name",
+        language: "Sprache",
         noEntries: "Keine Ranking-Einträge vorhanden.",
         description: "Beschreibung",
         combiValues: "Kombinationswerte",
@@ -117,6 +120,7 @@ i18n.use(initReactI18next).init({
         details: "Details",
         rank: "Rank",
         name: "Name",
+        language: "Language",
         noEntries: "No ranking entries available.",
         description: "Description",
         combiValues: "Combination values",
@@ -209,6 +213,7 @@ i18n.use(initReactI18next).init({
         details: "Détails",
         rank: "Rang",
         name: "Nom",
+        language: "Langue",
         noEntries: "Aucune entrée de classement disponible.",
         description: "Description",
         combiValues: "Valeurs de combinaison",

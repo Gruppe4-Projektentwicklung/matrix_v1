@@ -24,7 +24,9 @@ function App() {
 	
 	const sessionId = getSessionId();
   const { t, i18n } = useTranslation();
-  const [language, setLanguage] = useState(i18n.language || "de");
+  const [language, setLanguage] = useState(
+    i18n.language || (import.meta.env.VITE_DEFAULT_LANGUAGE || "en"),
+  );
 
  
   const [ideen, setIdeen] = useState<any[]>([]);
@@ -137,12 +139,13 @@ const handleKombiUpload = async (file: File, sessionId: string) => {
       setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
       setStatusToastType("success");
     } else {
-      setStatusToastMessage(t("uploadError") + ": " + t(result.error));
+      const errMsg = result.error ?? "unknown error";
+      setStatusToastMessage(t("uploadError") + ": " + t(errMsg));
       setStatusToastType("error");
     }
   } catch (error) {
     console.error("Fehler beim Hochladen:", error);
-    setStatusToastMessage(t("uploadError") + ": " + t(result.error));
+    setStatusToastMessage(t("uploadError"));
     setStatusToastType("error");
   } finally {
     setStatusToastOpen(true);
@@ -197,13 +200,14 @@ const handleKombiSammlungChange = (dateiName: string) => {
       setStatusToastMessage(t("uploadSuccess") + ": " + result.filename);
       setStatusToastType("success");
     } else {
-      setStatusToastMessage(t("uploadError") + ": " + (error instanceof Error ? error.message : String(error)));
+      const errMsg = result.error ?? "unknown error";
+      setStatusToastMessage(t("uploadError") + ": " + t(errMsg));
 
       setStatusToastType("error");
     }
   } catch (error) {
     console.error("Fehler beim Hochladen:", error);
-    setStatusToastMessage(t("uploadError") + ": " + (error instanceof Error ? error.message : String(error)));
+    setStatusToastMessage(t("uploadError"));
 
     setStatusToastType("error");
   } finally {
@@ -236,6 +240,10 @@ const handleKombiSammlungChange = (dateiName: string) => {
     setSaveRunSuccessOpen(false);
     setSaveRunMessage("");
     setSaveRunId(undefined);
+  };
+
+  const openStatistikForm = () => {
+    setStatistikFormOpen(true);
   };
 
   const handleCloseStatistikForm = () => {
@@ -310,6 +318,7 @@ const handleKombiSammlungChange = (dateiName: string) => {
                 onIdeenUpdate={handleIdeenUpdate}
                 onBewertungsOptionenChange={handleBewertungsOptionenChange}
                 onGewichtungenUpdate={handleGewichtungenUpdate}
+                onOpenStatistikForm={openStatistikForm}
               />
             </div>
           )}

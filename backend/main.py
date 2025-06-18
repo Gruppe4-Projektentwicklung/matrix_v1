@@ -272,10 +272,11 @@ async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), l
     filepath = os.path.join(templatedir, templatefile)
     filepath = os.path.abspath(filepath)
 
-    # >>> Hier kommt das Debugging <<<
-    print("CWD:", os.getcwd())
-    print("[DEBUG] Suche Datei:", filepath)
-    print("[DEBUG] Existiert:", os.path.isfile(filepath))
+    # Debugging nur im Entwicklungsmodus
+    if config.dev_mode:
+        print("CWD:", os.getcwd())
+        print("[DEBUG] Suche Datei:", filepath)
+        print("[DEBUG] Existiert:", os.path.isfile(filepath))
 
     if not os.path.isfile(filepath):
         raise HTTPException(status_code=404, detail=t("file_not_found", lang))

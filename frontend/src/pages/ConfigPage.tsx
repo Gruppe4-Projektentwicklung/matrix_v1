@@ -16,6 +16,7 @@ interface Props {
   onIdeenUpdate: (ideen: any[]) => void;
   onBewertungsOptionenChange: (field: string, value: any) => void;
   onGewichtungenUpdate: (g: any[]) => void;
+  onOpenStatistikForm?: () => void;
 }
 
 export const ConfigPage = ({
@@ -29,6 +30,7 @@ export const ConfigPage = ({
   onIdeenUpdate,
   onBewertungsOptionenChange,
   onGewichtungenUpdate,
+  onOpenStatistikForm = () => {},
 }: Props) => {
   const { t } = useTranslation();
   return (
@@ -45,8 +47,17 @@ export const ConfigPage = ({
       </div>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       <div className="mt-6 text-center">
+
         <Link to="/results" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
           {t('next')}
+
+        <Link
+          to="/results"
+          onClick={onOpenStatistikForm}
+          className="px-4 py-2 bg-[#1d2c5b] text-white rounded"
+        >
+          
+
         </Link>
       </div>
     </div>
