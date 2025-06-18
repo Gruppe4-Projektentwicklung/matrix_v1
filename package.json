@@ -1,5 +1,11 @@
 {
   "dependencies": {
     "react-router-dom": "^7.6.2"
+  },
+  "scripts": {
+    "start:backend": "uvicorn backend.main:app --reload",
+    "start:frontend": "npm --prefix frontend run dev",
+    "lint": "npm --prefix frontend run lint",
+    "typecheck": "npm --prefix frontend run typecheck"
   }
 }
