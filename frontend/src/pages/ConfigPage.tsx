@@ -2,7 +2,7 @@ import React from 'react';
 import { IdeenSelector } from '../components/IdeenSelector';
 import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { WeightingSelector } from '../components/WeightingSelector';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -33,6 +33,7 @@ export const ConfigPage = ({
   onOpenStatistikForm = () => {},
 }: Props) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <div>
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
@@ -47,13 +48,15 @@ export const ConfigPage = ({
       </div>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       <div className="mt-6 text-center">
-        <Link
-          to="/results"
-          onClick={onOpenStatistikForm}
+        <button
+          onClick={() => {
+            onOpenStatistikForm();
+            navigate('/results');
+          }}
           className="px-4 py-2 bg-blue-600 text-white rounded"
         >
           {t('next')}
-        </Link>
+        </button>
       </div>
     </div>
   );

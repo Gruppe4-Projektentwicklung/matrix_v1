@@ -1,7 +1,7 @@
 import React from 'react';
 import { CollectionSelectorIdeas } from '../components/CollectionSelectorIdeas';
 import { CollectionSelectorKombis } from '../components/CollectionSelectorKombis';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -22,6 +22,7 @@ export const UploadPage = ({
   onKombiUpload,
 }: Props) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <div>
       <CollectionSelectorIdeas
@@ -35,9 +36,12 @@ export const UploadPage = ({
         onUpload={onKombiUpload}
       />
       <div className="mt-6 text-center">
-        <Link to="/config" className="px-4 py-2 bg-blue-600 text-white rounded">
+        <button
+          onClick={() => navigate('/config')}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
           {t('next')}
-        </Link>
+        </button>
       </div>
     </div>
   );
