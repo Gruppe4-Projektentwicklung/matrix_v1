@@ -23,7 +23,7 @@ import { saveRun } from "../api/saveRun";
 
 type Props = {
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
@@ -91,7 +91,6 @@ export const StatistikForm: React.FC<Props> = ({
           onSubmit={handleSubmit}
           className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
         >
-
           <button
             type="button"
             onClick={onClose}
@@ -100,6 +99,7 @@ export const StatistikForm: React.FC<Props> = ({
           >
             ×
           </button>
+
 
           <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
           <p
@@ -141,6 +141,16 @@ export const StatistikForm: React.FC<Props> = ({
 
           {fehler && <div className="text-red-600 text-sm mb-2">{fehler}</div>}
 
+
+          <div className="flex gap-3 mt-4">
+            <button
+              type="submit"
+              disabled={sending || (!tester && (!alter || !geschlecht || !branche || !berufsrolle))}
+              className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
+            >
+              {tester ? t("submitWithoutData") : t("saveRating")}
+            </button>
+          </div>
        <div className="flex gap-3 mt-4">
   <button
     type="submit"
@@ -219,14 +229,16 @@ export const StatistikForm: React.FC<Props> = ({
           >
             {tester ? t("submitWithoutData") : t("saveRating")}
           </button>
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={sending}
-            className="bg-gray-200 rounded px-4 py-2"
-          >
-            {t("cancel")}
-          </button>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={sending}
+              className="bg-gray-200 rounded px-4 py-2"
+            >
+              {t("cancel")}
+            </button>
+          )}
         </div>
       </form>
     </div>
