@@ -10,6 +10,7 @@ from loader.excel_loader import ExcelLoader
 from validator.validate_ideen import validate_ideen_excel
 from validator.validate_kombis import validate_kombi_excel
 from i18n_backend import t
+from frontend_config import lade_frontend_konfiguration
 
 import tempfile
 
@@ -185,6 +186,28 @@ async def read_uploaded_file(sammlung_typ: str, session: str, filename: str, lan
         }
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": f"{t('read_error', lang)} {e}"})
+
+
+# ---- Frontend-Konfiguration für Kombis laden ----
+@app.get("/api/kombi_config")
+async def get_kombi_config(session: str, filename: str, lang: str = Query("de")):
+    """Liest eine Kombi-Datei ein und liefert die Frontend-Konfiguration."""
+    user_path = UPLOAD_BASE / session / "kombis" / filename
+    global_path = Path(config.selectioncombis_dir) / filename
+    if user_path.exists():
+        file_path = user_path
+    elif global_path.exists():
+        file_path = global_path
+    else:
+        return JSONResponse(status_code=404, content={"error": t("file_not_found", lang)})
+
+    try:
+        loader = ExcelLoader(str(file_path), sprache=lang)
+        kombis_df = loader.lade_excel()
+        config_data = lade_frontend_konfiguration(kombis_df)
+        return config_data
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 
 
