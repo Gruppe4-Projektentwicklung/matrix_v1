@@ -29,12 +29,22 @@ export const ConfigSummaryPage = ({
         </li>
       </ul>
       <div className="mt-6 flex justify-between">
+
         <ResetButton />
+
+        <Link to="/" className="px-4 py-2 bg-gray-300 rounded">
+          {t('reset')}
+        </Link>
+
         <div className="flex gap-4">
           <Link to="/personal" className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </Link>
-          <Link to="/results" className="px-4 py-2 bg-blue-600 text-white rounded">
+
+        
+
+          <Link to="/results" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
+
             {t('calculate')}
           </Link>
         </div>
