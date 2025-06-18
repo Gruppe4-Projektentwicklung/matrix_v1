@@ -35,7 +35,7 @@ export const CombinationSelectionPage = ({
   }, [navigate]);
   return (
     <div>
-      <div className="mb-6 flex justify-between">
+      <div className="mt-8 mb-6 flex justify-between">
         <ResetButton />
         <div className="flex gap-4">
           <button onClick={() => navigate('/ideas')} className="px-4 py-2 bg-gray-300 rounded">

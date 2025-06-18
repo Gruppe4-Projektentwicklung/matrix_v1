@@ -33,7 +33,7 @@ export const SelectDataPage = ({
   }, [navigate]);
   return (
     <div>
-      <div className="mb-6 flex justify-between">
+      <div className="mt-8 mb-6 flex justify-between">
         <ResetButton />
         <div className="flex gap-4">
           <button

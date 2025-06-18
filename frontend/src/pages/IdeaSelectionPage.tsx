@@ -22,7 +22,7 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
   }, [navigate]);
   return (
     <div>
-      <div className="mb-6 flex justify-between">
+      <div className="mt-8 mb-6 flex justify-between">
         <ResetButton />
         <div className="flex gap-4">
           <button onClick={() => navigate('/select-data')} className="px-4 py-2 bg-gray-300 rounded">
