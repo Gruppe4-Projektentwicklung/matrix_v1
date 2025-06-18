@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-
 import { hasSessionStarted } from '../utils/session';
 
 interface Props {
@@ -26,7 +25,6 @@ export const ConfigSummaryPage = ({
       navigate('/', { replace: true });
     }
   }, [navigate]);
-
   return (
     <div>
       <div className="mb-6 flex justify-between">
@@ -49,7 +47,6 @@ export const ConfigSummaryPage = ({
           {t('currentCombinationCollection')}: {activeKombis} / {kombiCount}
         </li>
       </ul>
-
       <div className="mt-6 flex justify-between">
         <ResetButton />
 

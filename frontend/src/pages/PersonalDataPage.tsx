@@ -15,7 +15,6 @@ export const PersonalDataPage = ({
 }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   useEffect(() => {
     onOpenStatistikForm();
     return onCloseStatistikForm;
@@ -26,7 +25,6 @@ export const PersonalDataPage = ({
       navigate('/', { replace: true });
     }
   }, [navigate]);
-
   return (
     <div className="text-center">
       <div className="mt-6 flex justify-between">

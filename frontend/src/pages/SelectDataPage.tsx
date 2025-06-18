@@ -31,9 +31,19 @@ export const SelectDataPage = ({
       navigate('/', { replace: true });
     }
   }, [navigate]);
-
   return (
     <div>
+      <div className="mb-6 flex justify-between">
+        <ResetButton />
+        <div className="flex gap-4">
+          <Link to="/" className="px-4 py-2 bg-gray-300 rounded">
+            {t('back')}
+          </Link>
+          <Link to="/ideas" className="px-4 py-2 bg-blue-600 text-white rounded">
+            {t('next')}
+          </Link>
+        </div>
+      </div>
       <CollectionSelectorIdeas
         aktuelleSammlungName={aktuelleIdeensammlung}
         onSammlungChange={onIdeenSammlungChange}
@@ -44,7 +54,6 @@ export const SelectDataPage = ({
         onSammlungChange={onKombiSammlungChange}
         onUpload={onKombiUpload}
       />
-
       <div className="mt-6 flex justify-between">
         <ResetButton />
 

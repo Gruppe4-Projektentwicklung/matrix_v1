@@ -20,7 +20,6 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
       navigate('/', { replace: true });
     }
   }, [navigate]);
-
   return (
     <div>
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
@@ -32,6 +31,7 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
           {t('reset')}
         </Link>
 
+
         <div className="flex gap-4">
           <Link to="/select-data" className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
@@ -41,6 +41,7 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
           </Link>
         </div>
       </div>
+      <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
     </div>
   );
 };

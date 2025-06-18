@@ -13,7 +13,10 @@ Durch Kombination von Attributen (aus einer Excel-Tabelle) sollen vergleichbare 
 
 ## 📁 Projektstruktur
 
+
+**/backend/**
 /backend/
+
 
 main.py ← Haupt‑API für Upload, Bewertung und Session
 loader/excel_loader.py ← Excel‑Import & Validierung
@@ -21,6 +24,31 @@ config_loader.py ← lädt `matrixconfig.ini`
 bewertung.py ← Bewertungslogik der Kombinationen
 api/ ← Routen (z. B. `/save_run`)
 uploads/selectionideas/ und uploads/selectioncombis/ ← persistente Uploads
+
+templates/ ← Excel‑Vorlagen
+
+**/frontend/src/**
+components/
+IdeenSelector.tsx ← Ideenliste mit Aktivierung
+CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Auswahl & Upload
+WeightingSelector.tsx ← Kombinationsgewichtung
+BewertungsOptionen.tsx ← Optionen (Runden, Tester‑Modus)
+Ranking.tsx ← Ranking‑Anzeige
+StatistikForm.tsx ← Formular für Demografiedaten
+StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
+ResetButton.tsx ← Session zurücksetzen
+pages/
+StartPage.tsx,
+SelectDataPage.tsx,
+IdeaSelectionPage.tsx,
+CombinationSelectionPage.tsx,
+PersonalDataPage.tsx,
+ConfigSummaryPage.tsx,
+CalcResultsPage.tsx,
+UploadPage.tsx
+i18n/
+index.ts ← i18n-Initialisierung
+common.ts ← Übersetzungstexte (de/en/fr)
 
 /frontend/src/
 components/
@@ -34,7 +62,7 @@ StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
 ResetButton.tsx ← Session zurücksetzen
 pages/
 StartPage.tsx, SelectDataPage.tsx, UploadPage.tsx,
-=======
+
 main.py ← Haupt-API für Upload, Bewertung, Statistik und Session
 loader/excel_loader.py ← Einlesen & Validieren von Excel-Dateien
 config_loader.py ← Laden der Konfiguration (`matrixconfig.ini`)
@@ -60,9 +88,10 @@ i18n/
 
 index.ts ← Initialisiert i18next
 common.ts ← Übersetzungstexte (de/en/fr)
-=======
+
 index.ts ← Initialisiert die Übersetzungen
 common.ts ← Sprachdateien (de/en/fr)
+
 
 /templates/
 ideen_template.xlsx ← Vorlage für Ideensammlung (IDs, Sprachen, Attribute)
@@ -81,6 +110,22 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 ## **2. Ablauf & Datenfluss**
 
 1. **Start & Datenauswahl**
+   - Die `StartPage` legt eine Session-ID an und leitet zur `SelectDataPage` weiter.
+   - Dort wählt der Nutzer eine Ideensammlung und eine Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Dateien werden zunächst sessionspezifisch gespeichert und – sofern kein App‑Tester-Modus aktiv ist – dauerhaft unter `backend/uploads/` abgelegt.
+
+2. **Ideen und Kombinationen festlegen**
+   - In der `IdeaSelectionPage` können Ideen aktiviert oder deaktiviert werden.
+   - Die `CombinationSelectionPage` dient zum Gewichten der Kombinationen. Zusätzliche Optionen bringt `BewertungsOptionen.tsx` mit.
+   - Alle Texte stammen aus `src/i18n/common.ts` und werden von `src/i18n/index.ts` geladen.
+
+3. **Persönliche Angaben & Zusammenfassung**
+   - Optional erfasst die `PersonalDataPage` statistische Daten.
+   - Anschließend fasst die `ConfigSummaryPage` alle Einstellungen zusammen.
+
+4. **Berechnung & Ergebnisse**
+   - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Durchlauf über die Route `save_run`.
+   - Die `CalcResultsPage` zeigt das Ranking samt Exportmöglichkeit.
+
 
    - Die `StartPage` erzeugt eine Session und führt zur `SelectDataPage`.
    - Dort wählt der Nutzer Ideensammlung und Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Uploads bleiben zuerst in der Session und werden – sofern kein App‑Tester‑Modus aktiv ist – in `backend/uploads/` gespeichert.
@@ -97,7 +142,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 4. **Berechnung & Ergebnisse**
    - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Lauf über die Route `save_run`.
    - Die `CalcResultsPage` zeigt das Ranking der Ideen mit Export‑Möglichkeit.
-=======
+
    - Die `StartPage` leitet auf die `SelectDataPage` weiter.
    - Dort wählt der Nutzer Ideensammlung und Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Uploads bleiben zunächst in der Session und werden – sofern kein App-Tester-Modus aktiv ist – im Ordner `storage` gespeichert.
 
@@ -116,10 +161,11 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 
 
 
+
 ## ⚙️ Backend-Komponenten (FastAPI)
 
 ### 1. **Excel-Verarbeitung**
-- Liest eine Ideensammlung und eine Kombinationssammlung (aus `AktuelleSammlung/` oder Upload)
+- Liest eine Ideensammlung und eine Kombinationssammlung (aus `backend/templates/` oder Upload)
 - Jede Kombination enthält eine Formel (z. B. `CO2/Jahr * Lebensdauer + Produktion`)
 - Formel wird dynamisch ausgewertet
 - Einheiten werden automatisch kombiniert
@@ -180,7 +226,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 
 ## 📝 Upload-Handling
 
-- Eigene Dateien (Ideen / Kombinationen) werden unter `/uploads/ideen/` bzw. `/uploads/kombis/` gespeichert
+- Eigene Dateien (Ideen / Kombinationen) werden unter `backend/uploads/selectionideas/` bzw. `backend/uploads/selectioncombis/` gespeichert
 - Dateiname basiert auf UUID
 - Diese UUID wird beim Bewertungsdurchlauf mitgeloggt
 
@@ -200,4 +246,3 @@ Alle Dateien befinden sich unter:
 ---
 
 
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:15:30)*
