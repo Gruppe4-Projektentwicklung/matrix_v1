@@ -90,6 +90,17 @@ export const StatistikForm: React.FC<Props> = ({
           className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
         >
 
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+              aria-label={t("close")}
+            >
+              ×
+            </button>
+          )}
+
 
           <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
           <p
@@ -140,6 +151,16 @@ export const StatistikForm: React.FC<Props> = ({
             >
               {tester ? t("submitWithoutData") : t("saveRating")}
             </button>
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={sending}
+                className="bg-gray-200 rounded px-4 py-2"
+              >
+                {t("cancel")}
+              </button>
+            )}
           </div>
 
         </form>
