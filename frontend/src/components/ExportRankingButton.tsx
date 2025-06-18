@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 type RankingEintrag = {
@@ -35,7 +35,7 @@ function toCSV(eintraege: RankingEintrag[]): string {
   return [allHeaders.join(";"), ...rows.map(row => row.join(";"))].join("\r\n");
 }
 
-export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName }) => {
+export const ExportRankingButton: FC<Props> = ({ eintraege, fileName }) => {
   const { t } = useTranslation();
 
   const handleExport = () => {

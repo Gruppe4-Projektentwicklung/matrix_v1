@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, type FC, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 export interface BewertungsLaufPayload {
@@ -29,7 +29,7 @@ type Props = {
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
 };
 
-export const StatistikForm: React.FC<Props> = ({
+export const StatistikForm: FC<Props> = ({
   open,
   onClose,
   tester,
@@ -47,7 +47,7 @@ export const StatistikForm: React.FC<Props> = ({
 
   if (!open) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSending(true);
     setFehler(null);

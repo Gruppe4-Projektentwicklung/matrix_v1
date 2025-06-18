@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { IdeenSelector } from '../components/IdeenSelector';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

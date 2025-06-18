@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, type FC } from "react";
 import { useTranslation } from "react-i18next";
 
 type Idee = {
@@ -14,7 +14,7 @@ type Props = {
   onUpdate: (updated: Idee[]) => void;
 };
 
-export const IdeenSelector: React.FC<Props> = ({
+export const IdeenSelector: FC<Props> = ({
   ideen = [],
   sprache,
   onUpdate,

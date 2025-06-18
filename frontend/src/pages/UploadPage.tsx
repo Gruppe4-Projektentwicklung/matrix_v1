@@ -1,4 +1,3 @@
-import React from 'react';
 import { CollectionSelectorIdeas } from '../components/CollectionSelectorIdeas';
 import { CollectionSelectorKombis } from '../components/CollectionSelectorKombis';
 import { useNavigate } from 'react-router-dom';

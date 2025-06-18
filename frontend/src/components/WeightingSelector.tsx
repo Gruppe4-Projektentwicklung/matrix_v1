@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, type FC } from "react";
 import { useTranslation } from "react-i18next";
 
 type Combination = {
@@ -14,7 +14,7 @@ type Props = {
   onUpdate: (updated: Combination[]) => void;
 };
 
-export const WeightingSelector: React.FC<Props> = ({
+export const WeightingSelector: FC<Props> = ({
   kombinationen = [],
   onUpdate,
 }) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 type KombiInfo = {
@@ -22,7 +22,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose }) => {
+export const KombiInfoModal: FC<Props> = ({ open, kombi, sprache, onClose }) => {
   const { t } = useTranslation();
 
   if (!open || !kombi) return null;

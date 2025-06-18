@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
 type RankingEintrag = {
@@ -41,7 +41,7 @@ type Props = {
         </div>
       )}
       {sorted.map((eintrag, idx) => (
-        <React.Fragment key={eintrag.id}>
+        <Fragment key={eintrag.id}>
           <div
             className={`grid grid-cols-12 px-4 py-2 items-center bg-white border-b ${
               idx === 0 ? "rounded-t-lg" : ""
@@ -116,7 +116,7 @@ type Props = {
               )}
             </div>
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

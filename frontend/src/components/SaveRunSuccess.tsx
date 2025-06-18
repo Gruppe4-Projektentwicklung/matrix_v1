@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   isTester?: boolean;
 };
 
-export const SaveRunSuccess: React.FC<Props> = ({
+export const SaveRunSuccess: FC<Props> = ({
   open,
   message,
   runId,

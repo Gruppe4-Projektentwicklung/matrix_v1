@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 type BewertungsOptionenProps = {
@@ -9,7 +9,7 @@ type BewertungsOptionenProps = {
   onChange: (field: string, value: any) => void;
 };
 
-export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
+export const BewertungsOptionen: FC<BewertungsOptionenProps> = ({
   runde1,
   runde2,
   appTester,

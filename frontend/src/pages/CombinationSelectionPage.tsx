@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { WeightingSelector } from '../components/WeightingSelector';
 import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { useNavigate } from 'react-router-dom';

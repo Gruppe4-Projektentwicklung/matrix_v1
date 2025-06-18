@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ import { resetSessionId } from '../utils/session';
 
 
 
-export const ResetButton: React.FC = () => {
+export const ResetButton: FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 

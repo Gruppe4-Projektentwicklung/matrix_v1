@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, type FC } from "react";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   duration?: number; // ms
 };
 
-export const StatusToast: React.FC<Props> = ({
+export const StatusToast: FC<Props> = ({
   open,
   type = "info",
   message,
@@ -18,7 +18,7 @@ export const StatusToast: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!open) return;
     const timer = setTimeout(onClose, duration);
     return () => clearTimeout(timer);

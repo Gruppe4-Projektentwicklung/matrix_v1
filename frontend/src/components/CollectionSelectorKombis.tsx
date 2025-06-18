@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, type ChangeEvent, type FC } from "react";
 import { useTranslation } from "react-i18next";
 import { getSessionId } from "@/utils/session";
 
@@ -9,7 +9,7 @@ type Props = {
   onUpload?: (file: File) => void;
 };
 
-export const CollectionSelectorKombis: React.FC<Props> = ({
+export const CollectionSelectorKombis: FC<Props> = ({
   aktuelleSammlungName,
   eigeneSammlungen = [],
   onSammlungChange = () => {},
@@ -55,7 +55,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
       });
   }, [sessionId]);
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
     setUploadError(null);
     const files = e.target.files;
     if (!files || files.length === 0) return;

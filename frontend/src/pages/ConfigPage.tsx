@@ -1,4 +1,3 @@
-import React from 'react';
 import { IdeenSelector } from '../components/IdeenSelector';
 import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { WeightingSelector } from '../components/WeightingSelector';

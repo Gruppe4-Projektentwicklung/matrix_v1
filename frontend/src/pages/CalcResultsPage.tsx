@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Ranking } from '../components/Ranking';
 import { ExportRankingButton } from '../components/ExportRankingButton';
 import { useNavigate } from 'react-router-dom';
