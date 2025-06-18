@@ -270,30 +270,28 @@ const handleKombiSammlungChange = (dateiName: string) => {
     loadKombis(aktuelleKombiSammlung);
   }, [loadIdeen, loadKombis]);
 
-  return (
-
-der className="w-full bg-blue-300 text-gray-900 shadow-md mb-8">
-
-    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pt-24 pb-10 relative">
-      <header className="fixed top-0 left-0 w-full bg-[#1d2c5b] text-white shadow-md z-10">
-
-        <div className="max-w-5xl mx-auto flex justify-between items-center p-3">
-          <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">Session ID: {sessionId}</div>
-          <select
-            id="lang-select"
-            value={language}
-            onChange={handleLanguageChange}
-            className="px-2 py-1 rounded border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
-            style={{ minWidth: 80 }}
-          >
-            <option value="de">Deutsch</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-          </select>
+return (
+  <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pt-24 pb-10 relative">
+    <header className="fixed top-0 left-0 w-full bg-[#1d2c5b] text-white shadow-md z-10">
+      <div className="max-w-5xl mx-auto flex justify-between items-center p-3">
+        <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">
+          Session ID: {sessionId}
         </div>
-      </header>
+        <select
+          id="lang-select"
+          value={language}
+          onChange={handleLanguageChange}
+          className="px-2 py-1 rounded border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
+          style={{ minWidth: 80 }}
+        >
+          <option value="de">Deutsch</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+    </header>
 
-      <main className="flex-grow w-full">
+    <main className="flex-grow w-full">
       <Routes>
         <Route path="/" element={<StartPage />} />
         <Route
@@ -409,9 +407,9 @@ der className="w-full bg-blue-300 text-gray-900 shadow-md mb-8">
         onClose={handleCloseStatusToast}
         type={statusToastType}
       />
-      </main>
-    </div>
-  );
-}
+    </main>
+  </div>
+);
+
 
 export default App;
