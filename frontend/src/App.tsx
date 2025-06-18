@@ -24,7 +24,9 @@ function App() {
 	
 	const sessionId = getSessionId();
   const { t, i18n } = useTranslation();
-  const [language, setLanguage] = useState(i18n.language || "de");
+  const [language, setLanguage] = useState(
+    i18n.language || (import.meta.env.VITE_DEFAULT_LANGUAGE || "en"),
+  );
 
  
   const [ideen, setIdeen] = useState<any[]>([]);
