@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 import common from "./common";
 
 const defaultLanguage = import.meta.env.VITE_DEFAULT_LANGUAGE || "en";
+const debugMode = import.meta.env.VITE_I18N_DEBUG === "true";
 
 const resources = {
   de: { translation: { ...common.de.translation } },
@@ -13,7 +14,7 @@ const resources = {
 i18n.use(initReactI18next).init({
   lng: defaultLanguage,
   fallbackLng: defaultLanguage,
-  debug: true,
+  debug: debugMode,
   interpolation: { escapeValue: false },
   resources,
 });
