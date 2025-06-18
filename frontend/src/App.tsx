@@ -18,7 +18,6 @@ import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { SaveRunSuccess } from "./components/SaveRunSuccess";
-import { StatistikForm } from "./components/StatistikForm";
 import { StatusToast } from "./components/StatusToast";
 
 import { getSessionId } from "./utils/session";
@@ -44,8 +43,6 @@ function App() {
   const [saveRunSuccessOpen, setSaveRunSuccessOpen] = useState(false);
   const [saveRunMessage, setSaveRunMessage] = useState("");
   const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
-  const [statistikFormOpen, setStatistikFormOpen] = useState(false);
-  const [statistikFormInline, setStatistikFormInline] = useState(false);
   const [statusToastOpen, setStatusToastOpen] = useState(false);
   const [statusToastMessage, setStatusToastMessage] = useState("");
   const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
@@ -247,15 +244,6 @@ const handleKombiSammlungChange = (dateiName: string) => {
     setSaveRunId(undefined);
   };
 
-  const openStatistikForm = (inline: boolean = false) => {
-    setStatistikFormInline(inline);
-    setStatistikFormOpen(true);
-  };
-
-  const handleCloseStatistikForm = () => {
-    setStatistikFormOpen(false);
-    setStatistikFormInline(false);
-  };
 
   const handleSaveSuccess = (result: { run_id?: string; message: string }) => {
     setSaveRunId(result.run_id);
@@ -355,10 +343,6 @@ return (
                   ergebnisRanking: [],
                 }}
                 onSaveSuccess={handleSaveSuccess}
-
-                onOpenStatistikForm={() => openStatistikForm(true)}
-                onCloseStatistikForm={handleCloseStatistikForm}
-
               />
             </div>
           )}
@@ -386,21 +370,6 @@ return (
         />
       </Routes>
 
-      <StatistikForm
-        open={statistikFormOpen}
-        inline={statistikFormInline}
-        onClose={handleCloseStatistikForm}
-        tester={appTester}
-        payload={{
-          ideenSammlung: aktuelleIdeensammlung,
-          kombiSammlung: "",
-          gewaehlteIdeen: ideen.filter(i => i.aktiv).map(i => i.id),
-          deaktivierteIdeen: ideen.filter(i => !i.aktiv).map(i => i.id),
-          gewichtungen: {},
-          ergebnisRanking: rankingEintraege,
-        }}
-        onSaveSuccess={handleSaveSuccess}
-      />
 
       <SaveRunSuccess
         open={saveRunSuccessOpen}
