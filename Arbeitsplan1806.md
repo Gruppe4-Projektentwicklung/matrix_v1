@@ -4,15 +4,15 @@ Dieser Plan fasst die notwendigen Schritte zusammen, um die bestehende React-App
 in ein mehrseitiges Tool umzubauen. Abgeschlossene Punkte können wir im Verlauf
 ausklammern oder abhaken.
 
-1. [ ] **React Router installieren und Grundsetup einrichten**
+1. [x] **React Router installieren und Grundsetup einrichten**
    - `npm install react-router-dom`
    - `<BrowserRouter>` in `main.tsx` bzw. `App.tsx` einbinden
 
-2. [ ] **Seitenstruktur anlegen**
+2. [x] **Seitenstruktur anlegen**
    - Ordner `src/pages/` erstellen
    - Einzelseiten: `Home.tsx`, `Upload.tsx`, `Bewertung.tsx`, `Ranking.tsx`, evtl. `Statistik.tsx`
 
-3. [ ] **Routen konfigurieren**
+3. [x] **Routen konfigurieren**
    - In `App.tsx` die `<Routes>` definieren
    - Jede neue Seite als `<Route path=\"...\" element={<.../>} />` einbinden
 
