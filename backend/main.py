@@ -134,15 +134,6 @@ async def get_selection_files(
     # Dateien zusammenführen (global + user ohne Duplikate)
     files = global_files + [f for f in user_files if f not in global_files]
 
-    # Debug-Ausgaben NACH Variablen-Definitionen
-    print(f"[DEBUG][/api/selection/{sammlung_typ}]")
-    print(f"  base_dir: {base_dir.resolve()}")
-    print(f"  global_files: {global_files}")
-    print(f"  user_folder: {user_folder.resolve() if user_folder.exists() else 'Nicht vorhanden'}")
-    print(f"  user_files: {user_files}")
-    print(f"  final files: {files}")
-    print(f"  default_file: {default_file}\n")
-
     return {
         "files": files,
         "default": default_file
@@ -272,11 +263,6 @@ async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), l
     filepath = os.path.join(templatedir, templatefile)
     filepath = os.path.abspath(filepath)
 
-    # Debugging nur im Entwicklungsmodus
-    if config.dev_mode:
-        print("CWD:", os.getcwd())
-        print("[DEBUG] Suche Datei:", filepath)
-        print("[DEBUG] Existiert:", os.path.isfile(filepath))
 
     if not os.path.isfile(filepath):
         raise HTTPException(status_code=404, detail=t("file_not_found", lang))

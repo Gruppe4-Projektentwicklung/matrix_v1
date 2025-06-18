@@ -9,9 +9,12 @@ import { useTranslation } from "react-i18next";
 import { Routes, Route } from "react-router-dom";
 
 import { StartPage } from "./pages/StartPage";
-import { UploadPage } from "./pages/UploadPage";
-import { ConfigPage } from "./pages/ConfigPage";
-import { ResultsPage } from "./pages/ResultsPage";
+import { SelectDataPage } from "./pages/SelectDataPage";
+import { IdeaSelectionPage } from "./pages/IdeaSelectionPage";
+import { CombinationSelectionPage } from "./pages/CombinationSelectionPage";
+import { PersonalDataPage } from "./pages/PersonalDataPage";
+import { ConfigSummaryPage } from "./pages/ConfigSummaryPage";
+import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { SaveRunSuccess } from "./components/SaveRunSuccess";
@@ -289,10 +292,10 @@ const handleKombiSammlungChange = (dateiName: string) => {
       <Routes>
         <Route path="/" element={<StartPage />} />
         <Route
-          path="/upload"
+          path="/select-data"
           element={(
             <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
-              <UploadPage
+              <SelectDataPage
                 aktuelleIdeensammlung={aktuelleIdeensammlung}
                 aktuelleKombiSammlung={aktuelleKombiSammlung}
                 onIdeenSammlungChange={handleIdeenSammlungChange}
@@ -304,21 +307,50 @@ const handleKombiSammlungChange = (dateiName: string) => {
           )}
         />
         <Route
-          path="/config"
+          path="/ideas"
           element={(
             <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
-              <ConfigPage
+              <IdeaSelectionPage
                 ideen={ideen}
                 sprache={language as "de" | "en" | "fr"}
+                onIdeenUpdate={handleIdeenUpdate}
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/combinations"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <CombinationSelectionPage
+                gewichtungen={gewichtungen}
                 runde1={runde1}
                 runde2={runde2}
                 appTester={appTester}
                 datenfreigabe={datenfreigabe}
-                gewichtungen={gewichtungen}
-                onIdeenUpdate={handleIdeenUpdate}
-                onBewertungsOptionenChange={handleBewertungsOptionenChange}
                 onGewichtungenUpdate={handleGewichtungenUpdate}
-                onOpenStatistikForm={openStatistikForm}
+                onOptionsChange={handleBewertungsOptionenChange}
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/personal"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <PersonalDataPage onOpenStatistikForm={openStatistikForm} />
+            </div>
+          )}
+        />
+        <Route
+          path="/summary"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <ConfigSummaryPage
+                ideenCount={ideen.length}
+                activeIdeen={ideen.filter((i) => i.aktiv).length}
+                kombiCount={gewichtungen.length}
+                activeKombis={gewichtungen.filter((k) => k.aktiv).length}
               />
             </div>
           )}
@@ -327,7 +359,7 @@ const handleKombiSammlungChange = (dateiName: string) => {
           path="/results"
           element={(
             <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
-              <ResultsPage rankingEintraege={rankingEintraege} />
+              <CalcResultsPage rankingEintraege={rankingEintraege} />
             </div>
           )}
         />
