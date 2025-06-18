@@ -200,8 +200,12 @@ async def read_uploaded_file(sammlung_typ: str, session: str, filename: str, lan
 # ---- Beispiel: Ranking-Endpoint (optional, je nach App-Logik) ----
 @app.get("/api/ranking")
 async def get_ranking(lang: str = Query(default=config.default_language)):
+    ideen_path = Path(config.current_ideen_path)
+    if not ideen_path.exists():
+        return JSONResponse(status_code=404, content={"error": t("file_not_found", lang)})
+
     try:
-        loader = ExcelLoader(config.current_ideen_path, sprache=lang)
+        loader = ExcelLoader(ideen_path, sprache=lang)
         df = loader.lade_excel()
         ideen = df[["titel", "beschreibung"]].fillna("").to_dict(orient="records")
         return {
