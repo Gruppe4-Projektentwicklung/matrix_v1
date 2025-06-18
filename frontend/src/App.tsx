@@ -238,6 +238,10 @@ const handleKombiSammlungChange = (dateiName: string) => {
     setSaveRunId(undefined);
   };
 
+  const openStatistikForm = () => {
+    setStatistikFormOpen(true);
+  };
+
   const handleCloseStatistikForm = () => {
     setStatistikFormOpen(false);
   };
@@ -310,6 +314,7 @@ const handleKombiSammlungChange = (dateiName: string) => {
                 onIdeenUpdate={handleIdeenUpdate}
                 onBewertungsOptionenChange={handleBewertungsOptionenChange}
                 onGewichtungenUpdate={handleGewichtungenUpdate}
+                onOpenStatistikForm={openStatistikForm}
               />
             </div>
           )}
