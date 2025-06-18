@@ -17,6 +17,7 @@ export const StartPage = () => {
       <Link to="/select-data" className="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded">
         {t('start')}
       </Link>
+  
     </div>
   );
 };

@@ -13,7 +13,6 @@ export function resetSessionId(): string {
   sessionStorage.setItem("sessionId", newId);
   return newId;
 }
-
 export function markSessionStarted() {
   sessionStorage.setItem("sessionStarted", "true");
 }
