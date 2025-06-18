@@ -137,7 +137,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 
 ## 📝 Upload-Handling
 
-- Eigene Dateien (Ideen / Kombinationen) werden unter `/uploads/ideen/` bzw. `/uploads/kombis/` gespeichert
+- Eigene Dateien (Ideen / Kombinationen) werden unter `backend/uploads/selectionideas/` bzw. `backend/uploads/selectioncombis/` gespeichert
 - Dateiname basiert auf UUID
 - Diese UUID wird beim Bewertungsdurchlauf mitgeloggt
 
