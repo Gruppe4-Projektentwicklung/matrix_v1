@@ -44,6 +44,8 @@ Neu hinzugekommen sind:
 - Aufsplittung der Sprachdatei in `src/i18n/` mit einem zentralen `index.ts`.
 - Erste Aufteilung des Frontends in mehrere Seiten (`SelectDataPage`, `IdeaSelectionPage`, `CombinationSelectionPage`, `PersonalDataPage`, `ConfigSummaryPage`, `CalcResultsPage`).
 - Navigation zwischen den Seiten über "Weiter"/"Zurück" Buttons.
+- Standardsprache wurde auf Englisch gestellt und fehlende Übersetzungen ergänzt.
+- Fehlerbehandlung beim Upload überarbeitet und Statistikformular lässt sich jetzt öffnen.
 
 ### Nächste Schritte
 - Inhalte der neuen Seiten weiter ausbauen (Beschreibungstexte, Validierung).
@@ -74,4 +76,4 @@ Dann kannst du sofort am nächsten Schritt weiterarbeiten.
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:13:24)*
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:13:27)*

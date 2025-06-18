@@ -9,7 +9,7 @@ export const StartPage = () => {
       <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] tracking-tight drop-shadow">
         {t('title')}
       </h1>
-      <Link to="/upload" className="mt-4 inline-block px-4 py-2 bg-[#1d2c5b] text-white rounded">
+      <Link to="/select-data" className="mt-4 inline-block px-4 py-2 bg-[#1d2c5b] text-white rounded">
         {t('start')}
       </Link>
     </div>
