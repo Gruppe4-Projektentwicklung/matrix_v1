@@ -142,8 +142,10 @@ export const StatistikForm: React.FC<Props> = ({
           <div className="flex gap-3 mt-4">
             <button
               type="submit"
-              disabled={sending}
-              className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
+
+              disabled={sending || (!tester && (!alter || !geschlecht || !branche || !berufsrolle))}
+              className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
+
             >
               {tester ? t("submitWithoutData") : t("saveRating")}
             </button>
@@ -219,8 +221,8 @@ export const StatistikForm: React.FC<Props> = ({
         <div className="flex gap-3 mt-4">
           <button
             type="submit"
-            disabled={sending}
-            className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
+            disabled={sending || (!tester && (!alter || !geschlecht || !branche || !berufsrolle))}
+            className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
           >
             {tester ? t("submitWithoutData") : t("saveRating")}
           </button>

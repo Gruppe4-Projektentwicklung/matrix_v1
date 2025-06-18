@@ -345,8 +345,19 @@ return (
           element={(
             <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
               <PersonalDataPage
+                tester={appTester}
+                payload={{
+                  ideenSammlung: aktuelleIdeensammlung,
+                  kombiSammlung: aktuelleKombiSammlung,
+                  gewaehlteIdeen: ideen.filter((i) => i.aktiv).map((i) => i.id),
+                  deaktivierteIdeen: ideen.filter((i) => !i.aktiv).map((i) => i.id),
+                  gewichtungen: {},
+                  ergebnisRanking: [],
+                }}
+                onSaveSuccess={handleSaveSuccess}
                 onOpenStatistikForm={() => openStatistikForm(true)}
                 onCloseStatistikForm={handleCloseStatistikForm}
+
               />
             </div>
           )}
