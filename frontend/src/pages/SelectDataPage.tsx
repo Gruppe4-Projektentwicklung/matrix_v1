@@ -37,12 +37,6 @@ export const SelectDataPage = ({
         <ResetButton />
         <div className="flex gap-4">
           <button
-            onClick={() => navigate('/')}
-            className="px-4 py-2 bg-gray-300 rounded"
-          >
-            {t('back')}
-          </button>
-          <button
             onClick={() => navigate('/ideas')}
             className="px-4 py-2 bg-blue-600 text-white rounded"
           >
