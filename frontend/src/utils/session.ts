@@ -12,7 +12,7 @@ export function resetSessionId(): string {
   const newId = crypto.randomUUID();
   sessionStorage.setItem("sessionId", newId);
   return newId;
-
+}
 export function markSessionStarted() {
   sessionStorage.setItem("sessionStarted", "true");
 }
