@@ -1,17 +1,4 @@
-// src/i18n.ts
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-
-const defaultLanguage = import.meta.env.VITE_DEFAULT_LANGUAGE || "en";
-
-i18n.use(initReactI18next).init({
-  lng: defaultLanguage,
-  fallbackLng: defaultLanguage,
-  debug: true,
-  interpolation: {
-    escapeValue: false,
-  },
-  resources: {
+const common = {
     de: {
       translation: {
         title: "Matrix Bewertungstool",
@@ -21,6 +8,8 @@ i18n.use(initReactI18next).init({
         downloadTemplate: "Vorlage herunterladen",
         start: "Start",
         next: "Weiter",
+        back: "Zurück",
+        reset: "Zurücksetzen",
         calculate: "Berechnen",
         score: "Score",
         info: "Info",
@@ -51,6 +40,7 @@ i18n.use(initReactI18next).init({
         currentCombinationCollection: "Aktuelle Kombinationssammlung",
         uploadErrorInvalidFile: "Bitte laden Sie eine Excel-Datei (.xlsx) hoch.",
         exportRankingCSV: "Ranking als CSV exportieren",
+        summary: "Zusammenfassung",
 
         noIdeasLoaded: "Keine Ideen geladen.",
         noDescription: "Keine Beschreibung",
@@ -114,6 +104,8 @@ i18n.use(initReactI18next).init({
         downloadTemplate: "Download template",
         start: "Start",
         next: "Next",
+        back: "Back",
+        reset: "Reset",
         calculate: "Calculate",
         score: "Score",
         info: "Info",
@@ -144,6 +136,7 @@ i18n.use(initReactI18next).init({
         currentCombinationCollection: "Current combination collection",
         uploadErrorInvalidFile: "Please upload an Excel file (.xlsx).",
         exportRankingCSV: "Export ranking as CSV",
+        summary: "Summary",
 
         noIdeasLoaded: "No ideas loaded.",
         noDescription: "No description",
@@ -207,6 +200,8 @@ i18n.use(initReactI18next).init({
         downloadTemplate: "Téléchargez le modèle",
         start: "Démarrer",
         next: "Suivant",
+        back: "Retour",
+        reset: "Réinitialiser",
         calculate: "Calculez",
         score: "Score",
         info: "Info",
@@ -237,6 +232,7 @@ i18n.use(initReactI18next).init({
         currentCombinationCollection: "Collection de combinaisons actuelle",
         uploadErrorInvalidFile: "Veuillez téléverser un fichier Excel (.xlsx).",
         exportRankingCSV: "Exporter le classement en CSV",
+        summary: "Résumé",
 
         noIdeasLoaded: "Aucune idée chargée.",
         noDescription: "Pas de description",
@@ -293,7 +289,5 @@ i18n.use(initReactI18next).init({
         uploadSuccess: "Téléversement réussi",
       },
     },
-  },
-});
-
-export default i18n;
+};
+export default common;

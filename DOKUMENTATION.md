@@ -38,21 +38,17 @@ Deshalb wird dieses Projekt **schrittweise** aufgebaut und der Quellcode immer d
 
 ## 🛠 Nächste Aufgaben
 
-### 🔜 Schritt 2: Backend-Grundgerüst erstellen
-- Ordner `backend/` anlegen
-- FastAPI-Projekt mit `main.py`
-- Routen:
-  - `/api/konfiguration` → lädt `matrixconfig.ini`
-  - `/api/vorlage/ideen` → lädt leeres Template
-  - `/api/vorlage/kombis` → lädt leeres Template
-  - `/api/upload/ideen` → lädt Nutzerdatei hoch
-  - `/api/upload/kombis` → lädt Nutzerdatei hoch
-- Dummy-Daten in `AktuelleSammlung/`
+### Aktueller Stand (Juni 2025)
+Die Grundfunktionen von Backend und Frontend sind lauffähig.
+Neu hinzugekommen sind:
+- Aufsplittung der Sprachdatei in `src/i18n/` mit einem zentralen `index.ts`.
+- Erste Aufteilung des Frontends in mehrere Seiten (`SelectDataPage`, `IdeaSelectionPage`, `CombinationSelectionPage`, `PersonalDataPage`, `ConfigSummaryPage`, `CalcResultsPage`).
+- Navigation zwischen den Seiten über "Weiter"/"Zurück" Buttons.
 
-### 🔜 Schritt 3: Frontend-Grundstruktur (React)
-- Auswahlfelder für aktuelle / eigene Sammlung
-- Multiple-Choice-Matrix zur Gewichtung
-- Platzhalter-Logik für Berechnung + Ranking
+### Nächste Schritte
+- Inhalte der neuen Seiten weiter ausbauen (Beschreibungstexte, Validierung).
+- Altes Routing aufräumen und ungenutzte Komponenten entfernen.
+- Statistik-Formular an geeigneter Stelle einbinden und speichern.
 
 ---
 
@@ -78,4 +74,4 @@ Dann kannst du sofort am nächsten Schritt weiterarbeiten.
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (28.05.2025:13:07)*
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:13:24)*
