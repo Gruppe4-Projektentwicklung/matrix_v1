@@ -10,7 +10,7 @@ export const StartPage = () => {
         {t('title')}
       </h1>
       <Link to="/upload" className="mt-4 inline-block px-4 py-2 bg-[#1d2c5b] text-white rounded">
-        Start
+        {t('start')}
       </Link>
     </div>
   );
