@@ -271,8 +271,8 @@ const handleKombiSammlungChange = (dateiName: string) => {
   }, [loadIdeen, loadKombis]);
 
 return (
-  <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pt-24 pb-10 relative">
-    <header className="fixed top-0 left-0 w-full bg-[#1d2c5b] text-white shadow-md z-10">
+  <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pb-10">
+    <header className="w-full bg-blue-300 text-white shadow-md mb-4">
       <div className="max-w-5xl mx-auto flex justify-between items-center p-3">
         <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">
           Session ID: {sessionId}
