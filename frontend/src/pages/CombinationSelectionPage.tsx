@@ -3,6 +3,7 @@ import { WeightingSelector } from '../components/WeightingSelector';
 import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ResetButton } from '../components/ResetButton';
 
 interface Props {
   gewichtungen: any[];
@@ -37,8 +38,15 @@ export const CombinationSelectionPage = ({
         />
       </div>
       <div className="mt-6 flex justify-between">
-        <Link to="/ideas" className="px-4 py-2 bg-gray-300 rounded">{t('back')}</Link>
-        <Link to="/personal" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">{t('next')}</Link>
+        <ResetButton />
+        <div className="flex gap-4">
+          <Link to="/ideas" className="px-4 py-2 bg-gray-300 rounded">
+            {t('back')}
+          </Link>
+          <Link to="/personal" className="px-4 py-2 bg-blue-600 text-white rounded">
+            {t('next')}
+          </Link>
+        </div>
       </div>
     </div>
   );

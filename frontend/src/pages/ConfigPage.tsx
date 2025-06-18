@@ -47,17 +47,12 @@ export const ConfigPage = ({
       </div>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       <div className="mt-6 text-center">
-
-        <Link to="/results" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
-          {t('next')}
-
         <Link
           to="/results"
           onClick={onOpenStatistikForm}
-          className="px-4 py-2 bg-[#1d2c5b] text-white rounded"
+          className="px-4 py-2 bg-blue-600 text-white rounded"
         >
-          
-
+          {t('next')}
         </Link>
       </div>
     </div>

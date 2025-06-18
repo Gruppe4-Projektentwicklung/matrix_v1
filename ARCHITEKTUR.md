@@ -14,20 +14,29 @@ Durch Kombination von Attributen (aus einer Excel-Tabelle) sollen vergleichbare 
 ## 📁 Projektstruktur
 
 /backend/
-server.py ← Haupt-API: Upload, Bewertung, Statistik, Session
-excel_loader.py ← Einlesen & Validieren von Excel-Dateien (mehrsprachig, IDs)
-config_loader.py ← Einlesen Konfigurationsdateien (matrixconfig etc.)
-bewertung.py ← Bewertungslogik: Kombinationen, Gewichtungen, Richtung
-save_run.py ← (Blueprint) Speichern der Bewertungsläufe/Statistiken
+main.py ← Haupt-API für Upload, Bewertung, Statistik und Session
+loader/excel_loader.py ← Einlesen & Validieren von Excel-Dateien
+config_loader.py ← Laden der Konfiguration (`matrixconfig.ini`)
+bewertung.py ← Bewertungslogik für Kombinationen und Gewichtungen
+api/ ← Routen (z. B. `/save_run`)
 
-/frontend/
+/frontend/src/
 components/
-IdeenSelector.tsx ← Anzeige und Auswahl der Ideen, Attribut-Details, Mehrsprachigkeit
-CollectionSelector.tsx ← Dropdown & Upload für Ideensammlungen / Kombis
+IdeenSelector.tsx ← Anzeige und Auswahl der Ideen
+CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Dropdown & Upload
 WeightingSelector.tsx ← Gewichtung der Kombinationen
-BewertungsOptionen.tsx ← Optionen, z. B. Runden-Auswahl, Aktivieren/Deaktivieren
-Ranking.tsx ← (noch offen) Ranking- und Ergebnisanzeige
-StatistikForm.tsx ← (offen) Formular für Demografie/Statistikdaten
+BewertungsOptionen.tsx ← Optionen wie Runden-Auswahl
+Ranking.tsx ← Ranking- und Ergebnisanzeige
+StatistikForm.tsx ← Formular für Demografie/Statistikdaten
+StatusToast.tsx / SaveRunSuccess.tsx ← Rückmeldungen
+pages/
+StartPage.tsx, SelectDataPage.tsx,
+IdeaSelectionPage.tsx, CombinationSelectionPage.tsx,
+PersonalDataPage.tsx, ConfigSummaryPage.tsx,
+CalcResultsPage.tsx ← Einzelseiten der App
+i18n/
+index.ts ← Initialisiert die Übersetzungen
+common.ts ← Sprachdateien (de/en/fr)
 
 /templates/
 ideen_template.xlsx ← Vorlage für Ideensammlung (IDs, Sprachen, Attribute)
@@ -46,16 +55,22 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
 
 ## **2. Ablauf & Datenfluss**
 
-1. **Upload**
-   - Nutzer wählt aktuelle oder eigene Ideensammlung/Kombisammlung aus (Excel, Templates).
-   - Uploads werden **in der Session** zwischengespeichert (Dropdown-Auswahl) UND, wenn **kein Tester-Modus** aktiv, persistent im `storage`-Ordner mit UUID gespeichert.
+1. **Start & Datenauswahl**
+   - Die `StartPage` leitet auf die `SelectDataPage` weiter.
+   - Dort wählt der Nutzer Ideensammlung und Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Uploads bleiben zunächst in der Session und werden – sofern kein App-Tester-Modus aktiv ist – im Ordner `storage` gespeichert.
 
-2. **Konfiguration & Bewertung**
-   - User gewichtet Kombinationen, aktiviert/deaktiviert Attribute, wählt Sprache etc.
-   - Bewertungslogik (`bewertung.py`) liest Excel, wertet Formeln aus, berechnet Scores, berücksichtigt Richtung (high/low).
+2. **Ideen und Kombinationen festlegen**
+   - In der `IdeaSelectionPage` werden Ideen aktiviert oder deaktiviert.
+   - Die `CombinationSelectionPage` erlaubt die Gewichtung der Kombinationen. Über `BewertungsOptionen.tsx` lassen sich weitere Optionen wählen.
+   - Alle Texte stammen aus `src/i18n/common.ts` und werden zentral über `src/i18n/index.ts` geladen.
 
-3. **Ranking**
-   - Zeigt sortierte Ergebnisliste nach Score (Platz 1
+3. **Persönliche Angaben & Zusammenfassung**
+   - Die `PersonalDataPage` sammelt optionale Statistikdaten.
+   - Anschließend zeigt die `ConfigSummaryPage` einen Überblick aller Einstellungen.
+
+4. **Berechnung & Ergebnisse**
+   - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Lauf über die Route `save_run`.
+   - Die `CalcResultsPage` präsentiert das Ranking der Ideen.
 
 
 ## ⚙️ Backend-Komponenten (FastAPI)
@@ -141,4 +156,4 @@ Alle Dateien befinden sich unter:
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (28.05.2025:13:03)*
+*Letzte Aktualisierung durch ChatGPT: (20.06.2025:10:15)*
