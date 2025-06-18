@@ -4,3 +4,7 @@ backend/get-pip.py
 
 # Node modules and other environment files
 node_modules/
+
+# Python cache files
+__pycache__/
+*.pyc
