@@ -54,6 +54,7 @@ export const CombinationSelectionPage = ({
           appTester={appTester}
           datenfreigabe={datenfreigabe}
           onChange={onOptionsChange}
+          showDataRelease={false}
         />
       </div>
       

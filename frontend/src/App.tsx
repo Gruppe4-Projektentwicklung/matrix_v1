@@ -45,6 +45,7 @@ function App() {
   const [saveRunMessage, setSaveRunMessage] = useState("");
   const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
   const [statistikFormOpen, setStatistikFormOpen] = useState(false);
+  const [statistikFormInline, setStatistikFormInline] = useState(false);
   const [statusToastOpen, setStatusToastOpen] = useState(false);
   const [statusToastMessage, setStatusToastMessage] = useState("");
   const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
@@ -246,12 +247,14 @@ const handleKombiSammlungChange = (dateiName: string) => {
     setSaveRunId(undefined);
   };
 
-  const openStatistikForm = () => {
+  const openStatistikForm = (inline: boolean = false) => {
+    setStatistikFormInline(inline);
     setStatistikFormOpen(true);
   };
 
   const handleCloseStatistikForm = () => {
     setStatistikFormOpen(false);
+    setStatistikFormInline(false);
   };
 
   const handleSaveSuccess = (result: { run_id?: string; message: string }) => {
@@ -272,8 +275,8 @@ const handleKombiSammlungChange = (dateiName: string) => {
 
 return (
   <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pb-10">
-    <header className="w-full bg-blue-300 text-white shadow-md mb-4">
-      <div className="max-w-5xl mx-auto flex justify-between items-center p-3">
+    <header className="w-[85%] mx-auto bg-blue-300 text-white shadow-md mb-4">
+      <div className="flex justify-between items-center p-3">
         <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">
           Session ID: {sessionId}
         </div>
@@ -297,7 +300,7 @@ return (
         <Route
           path="/select-data"
           element={(
-            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+            <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
               <SelectDataPage
                 aktuelleIdeensammlung={aktuelleIdeensammlung}
                 aktuelleKombiSammlung={aktuelleKombiSammlung}
@@ -312,7 +315,7 @@ return (
         <Route
           path="/ideas"
           element={(
-            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+            <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
               <IdeaSelectionPage
                 ideen={ideen}
                 sprache={language as "de" | "en" | "fr"}
@@ -324,7 +327,7 @@ return (
         <Route
           path="/combinations"
           element={(
-            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+            <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
               <CombinationSelectionPage
                 gewichtungen={gewichtungen}
                 runde1={runde1}
@@ -340,10 +343,18 @@ return (
         <Route
           path="/personal"
           element={(
-            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+            <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
               <PersonalDataPage
-                onOpenStatistikForm={openStatistikForm}
-                onCloseStatistikForm={handleCloseStatistikForm}
+                tester={appTester}
+                payload={{
+                  ideenSammlung: aktuelleIdeensammlung,
+                  kombiSammlung: aktuelleKombiSammlung,
+                  gewaehlteIdeen: ideen.filter((i) => i.aktiv).map((i) => i.id),
+                  deaktivierteIdeen: ideen.filter((i) => !i.aktiv).map((i) => i.id),
+                  gewichtungen: {},
+                  ergebnisRanking: [],
+                }}
+                onSaveSuccess={handleSaveSuccess}
               />
             </div>
           )}
@@ -351,7 +362,7 @@ return (
         <Route
           path="/summary"
           element={(
-            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+            <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
               <ConfigSummaryPage
                 ideenCount={ideen.length}
                 activeIdeen={ideen.filter((i) => i.aktiv).length}
@@ -364,7 +375,7 @@ return (
         <Route
           path="/results"
           element={(
-            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+            <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
               <CalcResultsPage rankingEintraege={rankingEintraege} />
             </div>
           )}
@@ -373,6 +384,7 @@ return (
 
       <StatistikForm
         open={statistikFormOpen}
+        inline={statistikFormInline}
         onClose={handleCloseStatistikForm}
         tester={appTester}
         payload={{

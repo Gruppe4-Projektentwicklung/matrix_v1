@@ -7,6 +7,7 @@ type BewertungsOptionenProps = {
   appTester: boolean;
   datenfreigabe: "offen" | "anonym" | "keine";
   onChange: (field: string, value: any) => void;
+  showDataRelease?: boolean;
 };
 
 export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
@@ -15,6 +16,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
   appTester,
   datenfreigabe,
   onChange,
+  showDataRelease = true,
 }) => {
   const { t } = useTranslation();
 
@@ -55,18 +57,20 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
         </label>
       </div>
 
-      <div className="mt-2 text-center">
-        <label className="block mb-1 font-medium">{t("optionDataRelease")}</label>
-        <select
-          value={datenfreigabe}
-          onChange={(e) => onChange("datenfreigabe", e.target.value)}
-          className="border p-2 rounded w-full max-w-xs mx-auto"
-        >
-          <option value="offen">{t("optionDataReleaseOpen")}</option>
-          <option value="anonym">{t("optionDataReleaseAnonym")}</option>
-          <option value="keine">{t("optionDataReleaseNone")}</option>
-        </select>
-      </div>
+      {showDataRelease && (
+        <div className="mt-2 text-center">
+          <label className="block mb-1 font-medium">{t("optionDataRelease")}</label>
+          <select
+            value={datenfreigabe}
+            onChange={(e) => onChange("datenfreigabe", e.target.value)}
+            className="border p-2 rounded w-full max-w-xs mx-auto"
+          >
+            <option value="offen">{t("optionDataReleaseOpen")}</option>
+            <option value="anonym">{t("optionDataReleaseAnonym")}</option>
+            <option value="keine">{t("optionDataReleaseNone")}</option>
+          </select>
+        </div>
+      )}
    
     </div>
   );
