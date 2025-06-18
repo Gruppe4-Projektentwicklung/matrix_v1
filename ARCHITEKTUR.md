@@ -156,4 +156,4 @@ Alle Dateien befinden sich unter:
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (20.06.2025:10:15)*
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:14:55)*
