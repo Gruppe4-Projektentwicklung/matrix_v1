@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Query
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from pathlib import Path
@@ -7,6 +7,7 @@ import os
 import configparser
 import json
 import uuid
+from datetime import datetime
 from config import config  # Deine eigene Configklasse!
 from loader.excel_loader import ExcelLoader
 from validator.validate_ideen import validate_ideen_excel
@@ -291,6 +292,10 @@ async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), l
 STORAGE_FOLDER = Path(__file__).parent.parent / "storage" / "runs"
 STORAGE_FOLDER.mkdir(parents=True, exist_ok=True)
 
+# Ordner für Nutzungsdaten
+ARCHIVE_FOLDER = Path(__file__).parent.parent / "archive"
+ARCHIVE_FOLDER.mkdir(parents=True, exist_ok=True)
+
 
 @app.post("/save_run")
 async def save_run(data: dict):
@@ -308,3 +313,24 @@ async def save_run(data: dict):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     return {"message": "Bewertungslauf gespeichert", "run_id": run_id}
+
+
+# ---- Nutzungsdaten speichern ----
+@app.post("/log_step")
+async def log_step(request: Request, payload: dict):
+    session = payload.get("session")
+    step = payload.get("step")
+    if not session or not step:
+        raise HTTPException(status_code=400, detail="Session und Schritt erforderlich")
+    entry = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "step": step,
+        "data": payload.get("data", {}),
+        "ip": request.client.host if request.client else None,
+        "user_agent": request.headers.get("User-Agent", "")
+    }
+    log_file = ARCHIVE_FOLDER / f"{session}.jsonl"
+    with open(log_file, "a", encoding="utf-8") as f:
+        json.dump(entry, f, ensure_ascii=False)
+        f.write("\n")
+    return {"message": "Logged"}

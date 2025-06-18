@@ -47,11 +47,16 @@ Neu hinzugekommen sind:
 - Standardsprache wurde auf Englisch gestellt und fehlende Übersetzungen ergänzt.
 - Fehlerbehandlung beim Upload überarbeitet und Statistikformular lässt sich jetzt öffnen.
 - Die veralteten Seiten `ConfigPage.tsx`, `UploadPage.tsx` und `ResultsPage.tsx` wurden entfernt.
+- Neue Route `/log_step` im Backend archiviert jede Nutzeraktion als JSONL im Ordner `archive/`.
+- Reset-Buttons zeigen nun eine Warnung und starten garantiert eine neue Session.
+- Auf der "Select Data" Seite gibt es keinen Zurück-Button mehr.
+- Fehlermeldungen vom Backend werden beim Speichern von Bewertungen angezeigt.
 
 ### Nächste Schritte
-- Inhalte der neuen Seiten weiter ausbauen (Beschreibungstexte, Validierung).
-- Altes Routing weiter aufräumen (veraltete Seiten wurden bereits entfernt).
-- Statistik-Formular an geeigneter Stelle einbinden und speichern.
+- Navigationsmenü (Arbeitsplan Punkt 4) ergänzen und 404-Seite erstellen.
+- Gemeinsamen Zustand per React Context zentral verwalten.
+- Archivierte Nutzungsdaten auswerten und Statistiken vorbereiten.
+- Weiteren Feinschliff an den Seiten (Texte und Validierung).
 
 ---
 
@@ -77,4 +82,4 @@ Dann kannst du sofort am nächsten Schritt weiterarbeiten.
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:16:16)*
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:23:25)*

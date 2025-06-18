@@ -3,7 +3,8 @@ import { IdeenSelector } from '../components/IdeenSelector';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-import { hasSessionStarted } from '../utils/session';
+import { hasSessionStarted, getSessionId } from '../utils/session';
+import { logEvent } from '../api/logEvent';
 
 interface Props {
   ideen: any[];
@@ -28,7 +29,16 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
           <button onClick={() => navigate('/select-data')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button onClick={() => navigate('/combinations')} className="px-4 py-2 bg-blue-600 text-white rounded">
+          <button
+            onClick={() => {
+              logEvent(getSessionId(), 'ideas', {
+                active: ideen.filter((i) => i.aktiv).map((i) => i.id),
+                inactive: ideen.filter((i) => !i.aktiv).map((i) => i.id),
+              });
+              navigate('/combinations');
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
             {t('next')}
           </button>
         </div>

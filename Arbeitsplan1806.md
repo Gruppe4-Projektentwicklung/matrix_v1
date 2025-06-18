@@ -19,7 +19,7 @@ ausklammern oder abhaken.
 4. [ ] **Navigation implementieren**
    - Ein Menü oder Header mit Links (`<NavLink>`) zu den Seiten erstellen
 
-5. [ ] **Bestehende Komponenten in die jeweiligen Seiten verschieben**
+5. [x] **Bestehende Komponenten in die jeweiligen Seiten verschieben**
    - Upload‑Komponenten auf `Upload.tsx`
    - Gewichtungs- und Ranking-Komponenten auf `Bewertung` bzw. `Ranking`
 
