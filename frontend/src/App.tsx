@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import "./i18n";
@@ -151,6 +152,29 @@ const handleKombiSammlungChange = (dateiName: string) => {
   setAktuelleKombiSammlung(dateiName);
   loadKombis(dateiName);
 };
+
+  // Nach Auswahl oder Upload einer Kombi-Datei Konfiguration laden
+  useEffect(() => {
+    if (!aktuelleKombiSammlung) return;
+    const loadConfig = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/kombi_config?session=${sessionId}&filename=${encodeURIComponent(
+            aktuelleKombiSammlung
+          )}&lang=${language}`
+        );
+        const data = await res.json();
+        if (res.ok) {
+          setGewichtungen(data.kombinationen || []);
+        } else {
+          console.error("Fehler beim Laden der Konfiguration", data.error);
+        }
+      } catch (err) {
+        console.error("Fehler beim Laden der Konfiguration", err);
+      }
+    };
+    loadConfig();
+  }, [aktuelleKombiSammlung, language, sessionId]);
 
   const handleIdeenUpload = async (file: File, sessionId: string) => {
   setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
