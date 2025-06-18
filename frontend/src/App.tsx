@@ -86,7 +86,8 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
         Object.keys(row).forEach((k) => {
           if (k.startsWith("#-#") || k.startsWith("#+#")) attrs[k] = row[k];
         });
-        return { id: row.id || row.ID || String(idx + 1), aktiv: true, attribute: attrs, ...row };
+        const rowId = row.ID || row.id || row["#ID#"] || String(idx + 1);
+        return { id: rowId, aktiv: true, attribute: attrs, ...row };
       });
       setIdeen(parsed);
     },
