@@ -28,12 +28,17 @@ export const ConfigSummaryPage = ({
         </li>
       </ul>
       <div className="mt-6 flex justify-between">
-        <Link to="/personal" className="px-4 py-2 bg-gray-300 rounded">
-          {t('back')}
+        <Link to="/" className="px-4 py-2 bg-gray-300 rounded">
+          {t('reset')}
         </Link>
-        <Link to="/results" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
-          {t('calculate')}
-        </Link>
+        <div className="flex gap-4">
+          <Link to="/personal" className="px-4 py-2 bg-gray-300 rounded">
+            {t('back')}
+          </Link>
+          <Link to="/results" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
+            {t('calculate')}
+          </Link>
+        </div>
       </div>
     </div>
   );
