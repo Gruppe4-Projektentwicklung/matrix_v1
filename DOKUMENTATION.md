@@ -46,10 +46,11 @@ Neu hinzugekommen sind:
 - Navigation zwischen den Seiten über "Weiter"/"Zurück" Buttons.
 - Standardsprache wurde auf Englisch gestellt und fehlende Übersetzungen ergänzt.
 - Fehlerbehandlung beim Upload überarbeitet und Statistikformular lässt sich jetzt öffnen.
+- Die veralteten Seiten `ConfigPage.tsx`, `UploadPage.tsx` und `ResultsPage.tsx` wurden entfernt.
 
 ### Nächste Schritte
 - Inhalte der neuen Seiten weiter ausbauen (Beschreibungstexte, Validierung).
-- Altes Routing aufräumen und ungenutzte Komponenten entfernen.
+- Altes Routing weiter aufräumen (veraltete Seiten wurden bereits entfernt).
 - Statistik-Formular an geeigneter Stelle einbinden und speichern.
 
 ---
