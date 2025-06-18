@@ -37,8 +37,17 @@ export const CombinationSelectionPage = ({
         />
       </div>
       <div className="mt-6 flex justify-between">
-        <Link to="/ideas" className="px-4 py-2 bg-gray-300 rounded">{t('back')}</Link>
-        <Link to="/personal" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">{t('next')}</Link>
+        <Link to="/" className="px-4 py-2 bg-gray-300 rounded">
+          {t('reset')}
+        </Link>
+        <div className="flex gap-4">
+          <Link to="/ideas" className="px-4 py-2 bg-gray-300 rounded">
+            {t('back')}
+          </Link>
+          <Link to="/personal" className="px-4 py-2 bg-[#1d2c5b] text-white rounded">
+            {t('next')}
+          </Link>
+        </div>
       </div>
     </div>
   );
