@@ -49,6 +49,16 @@ class Config:
         return self.config["Dateien"]["default_kombi"]
 
     @property
+    def current_ideen_path(self):
+        """Vollständiger Pfad zur aktuell ausgewählten Ideensammlung."""
+        return Path(self.selectionideas_dir) / self.default_ideen
+
+    @property
+    def current_kombi_path(self):
+        """Vollständiger Pfad zur aktuell ausgewählten Kombisammlung."""
+        return Path(self.selectioncombis_dir) / self.default_kombi
+
+    @property
     def ideen_template_path(self):
         return self.config["Dateien"]["ideentemplate"]
 

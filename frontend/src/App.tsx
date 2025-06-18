@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useCallback } from "react";
+
 import "./App.css";
 import "./i18n";
 
 import { useTranslation } from "react-i18next";
 
-import { BewertungsOptionen } from "./components/BewertungsOptionen";
-import { CollectionSelectorIdeas } from "./components/CollectionSelectorIdeas";
-import { CollectionSelectorKombis } from "./components/CollectionSelectorKombis";
-import { ExportRankingButton } from "./components/ExportRankingButton";
-import { IdeenSelector } from "./components/IdeenSelector";
+import { Routes, Route } from "react-router-dom";
+
+import { StartPage } from "./pages/StartPage";
+import { UploadPage } from "./pages/UploadPage";
+import { ConfigPage } from "./pages/ConfigPage";
+import { ResultsPage } from "./pages/ResultsPage";
+
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
-import { Ranking } from "./components/Ranking";
 import { SaveRunSuccess } from "./components/SaveRunSuccess";
 import { StatistikForm } from "./components/StatistikForm";
 import { StatusToast } from "./components/StatusToast";
-import { WeightingSelector } from "./components/WeightingSelector";
 
 import { getSessionId } from "./utils/session";
 
@@ -45,6 +47,65 @@ function App() {
 const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
 const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_kombi.xlsx");
 
+  const fetchCollectionContent = useCallback(
+    async (typ: "ideen" | "kombis", filename: string) => {
+      try {
+        const url = `${import.meta.env.VITE_API_URL}/api/uploads/${typ}/content?session=${sessionId}&filename=${encodeURIComponent(
+          filename,
+        )}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text || `HTTP ${response.status}`);
+        }
+        return await response.json();
+      } catch (err) {
+        setStatusToastMessage(
+          `${t("uploadError")}: ${err instanceof Error ? err.message : String(err)}`,
+        );
+        setStatusToastType("error");
+        setStatusToastOpen(true);
+        return null;
+      }
+    },
+    [sessionId, t],
+  );
+
+  const loadIdeen = useCallback(
+    async (filename: string) => {
+      const data = await fetchCollectionContent("ideen", filename);
+      if (!data) return;
+      const rows = Array.isArray(data.rows) ? data.rows : [];
+      const parsed = rows.map((row: any, idx: number) => {
+        const attrs: Record<string, any> = {};
+        Object.keys(row).forEach((k) => {
+          if (k.startsWith("#-#") || k.startsWith("#+#")) attrs[k] = row[k];
+        });
+        return { id: row.id || row.ID || String(idx + 1), aktiv: true, attribute: attrs, ...row };
+      });
+      setIdeen(parsed);
+    },
+    [fetchCollectionContent],
+  );
+
+  const loadKombis = useCallback(
+    async (filename: string) => {
+      const data = await fetchCollectionContent("kombis", filename);
+      if (!data) return;
+      const rows = Array.isArray(data.rows) ? data.rows : [];
+      const parsed = rows.map((row: any, idx: number) => ({
+        id: row.Kombi_ID || row.id || String(idx + 1),
+        name: row["#t_de#1"] || row.name || "",
+        beschreibung: row["#t_de#2"] || row.beschreibung || "",
+        gewichtung: 0,
+        aktiv: false,
+        ...row,
+      }));
+      setGewichtungen(parsed);
+    },
+    [fetchCollectionContent],
+  );
+
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
@@ -54,6 +115,7 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
 
   const handleIdeenSammlungChange = (dateiName: string) => {
     setAktuelleIdeensammlung(dateiName);
+    loadIdeen(dateiName);
   };
 const handleKombiUpload = async (file: File, sessionId: string) => {
   setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
@@ -89,6 +151,7 @@ const handleKombiUpload = async (file: File, sessionId: string) => {
 
 const handleKombiSammlungChange = (dateiName: string) => {
   setAktuelleKombiSammlung(dateiName);
+  loadKombis(dateiName);
 };
 
   // Nach Auswahl oder Upload einer Kombi-Datei Konfiguration laden
@@ -190,6 +253,11 @@ const handleKombiSammlungChange = (dateiName: string) => {
     setStatusToastMessage("");
   };
 
+  useEffect(() => {
+    loadIdeen(aktuelleIdeensammlung);
+    loadKombis(aktuelleKombiSammlung);
+  }, [loadIdeen, loadKombis]);
+
   return (
     <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10">
       <div className="w-full max-w-7xl bg-gray-800 text-white shadow-xl rounded-2xl p-8 relative">
@@ -210,55 +278,51 @@ const handleKombiSammlungChange = (dateiName: string) => {
         </div>
       </div>
 
-      <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
-        <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] text-center tracking-tight drop-shadow">
-          {t("title")}
-        </h1>
-
-        <CollectionSelectorIdeas
-  aktuelleSammlungName={aktuelleIdeensammlung}
-  onSammlungChange={handleIdeenSammlungChange}
-  onUpload={(file) => handleIdeenUpload(file, sessionId)}
-/>
-
-<CollectionSelectorKombis
-  aktuelleSammlungName={aktuelleKombiSammlung}
-  onSammlungChange={handleKombiSammlungChange}
-  onUpload={(file) => handleKombiUpload(file, sessionId)}
-/>
-        <div className="mt-6">
-          <IdeenSelector
-            ideen={ideen}
-            sprache={language as "de" | "en" | "fr"}
-            onUpdate={handleIdeenUpdate}
-          />
-        </div>
-
-        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
-          <BewertungsOptionen
-            runde1={runde1}
-            runde2={runde2}
-            appTester={appTester}
-            datenfreigabe={datenfreigabe}
-            onChange={handleBewertungsOptionenChange}
-          />
-        </div>
-
-        <div className="mt-6">
-          <WeightingSelector
-            kombinationen={gewichtungen}
-            onUpdate={handleGewichtungenUpdate}
-          />
-        </div>
-
-        <div className="mt-6">
-          <Ranking eintraege={rankingEintraege} />
-        </div>
-
-        <div className="mt-6 flex flex-col items-center gap-4">
-          <ExportRankingButton eintraege={rankingEintraege} />
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route
+          path="/upload"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <UploadPage
+                aktuelleIdeensammlung={aktuelleIdeensammlung}
+                aktuelleKombiSammlung={aktuelleKombiSammlung}
+                onIdeenSammlungChange={handleIdeenSammlungChange}
+                onKombiSammlungChange={handleKombiSammlungChange}
+                onIdeenUpload={(file) => handleIdeenUpload(file, sessionId)}
+                onKombiUpload={(file) => handleKombiUpload(file, sessionId)}
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/config"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <ConfigPage
+                ideen={ideen}
+                sprache={language as "de" | "en" | "fr"}
+                runde1={runde1}
+                runde2={runde2}
+                appTester={appTester}
+                datenfreigabe={datenfreigabe}
+                gewichtungen={gewichtungen}
+                onIdeenUpdate={handleIdeenUpdate}
+                onBewertungsOptionenChange={handleBewertungsOptionenChange}
+                onGewichtungenUpdate={handleGewichtungenUpdate}
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/results"
+          element={(
+            <div className="max-w-5xl w-full mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <ResultsPage rankingEintraege={rankingEintraege} />
+            </div>
+          )}
+        />
+      </Routes>
 
       <StatistikForm
         open={statistikFormOpen}
