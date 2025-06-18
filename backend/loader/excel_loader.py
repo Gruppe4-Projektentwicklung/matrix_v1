@@ -24,7 +24,10 @@ class ExcelLoader:
             raise ValueError("Excel-Datei hat nicht genug Zeilen (mindestens 3 erforderlich)")
 
         # IDs aus Zeile 1
-        self.spalten_ids = {idx: val.strip() for idx, val in enumerate(raw.iloc[self.id_zeile])}
+        self.spalten_ids = {
+            idx: (val.strip() if str(val).strip() != "#ID#" else "ID")
+            for idx, val in enumerate(raw.iloc[self.id_zeile])
+        }
 
         # Sichtbare Namen aus Zeile 2
         spalten_namen = [val.strip() for val in raw.iloc[self.spaltenname_zeile]]
@@ -34,6 +37,9 @@ class ExcelLoader:
 
         # IDs als Spaltennamen verwenden
         daten.columns = [self.spalten_ids.get(i, f"Unbekannt_{i}") for i in range(len(spalten_namen))]
+
+        if "#ID#" in daten.columns:
+            daten.rename(columns={"#ID#": "ID"}, inplace=True)
 
         # Sprachbezogene Spalten extrahieren (z. B. #t_de#1 etc.)
         sprachfelder = {
