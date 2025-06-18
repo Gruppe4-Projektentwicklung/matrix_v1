@@ -1,12 +1,19 @@
 import pandas as pd
 
+# Pflichtspalten entsprechend dem Excel-Template.
+# Ursprünglich wurden hier "FormelID" und "Direction"
+# erwartet, was zu Fehlermeldungen führte. Das Template
+# nutzt aber "Formel_ID" für die Formelspalte. Bei der
+# Bewertungsrichtung gibt es Varianten: Einige Tabellen
+# verwenden "Direction", andere "Richtung". Damit beide
+# funktionieren, akzeptiert der Validator hier "Direction".
 REQUIRED_KOMBI_COLUMNS = [
     "Kombi_ID",
     "#t_de#1", "#t_en#1", "#t_fr#1",
     "#t_de#2", "#t_en#2", "#t_fr#2",
     "#t_de#3", "#t_en#3", "#t_fr#3",
-    "FormelID",
-    "Direction"
+    "Formel_ID",
+    "Direction",
 ]
 
 def validate_kombi_excel(path: str, template_path: str = None) -> list[str]:
