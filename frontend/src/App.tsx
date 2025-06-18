@@ -357,7 +357,6 @@ return (
                 onSaveSuccess={handleSaveSuccess}
                 onOpenStatistikForm={() => openStatistikForm(true)}
                 onCloseStatistikForm={handleCloseStatistikForm}
-
               />
             </div>
           )}

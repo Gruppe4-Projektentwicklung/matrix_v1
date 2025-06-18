@@ -3,13 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted } from '../utils/session';
+import { StatistikForm, BewertungsLaufPayload } from '../components/StatistikForm';
 import { StatistikForm } from '../components/StatistikForm';
 import type { BewertungsLaufPayload } from '../components/StatistikForm';
+
 
 interface Props {
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, 'tester' | 'userData'>;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
+
+
+export const PersonalDataPage = ({ tester, payload, onSaveSuccess }: Props) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [formOpen, setFormOpen] = useState(true);
+  const [saved, setSaved] = useState(false);
   onOpenStatistikForm: (inline?: boolean) => void;
   onCloseStatistikForm: () => void;
 }
@@ -37,7 +46,6 @@ export const PersonalDataPage = ({
       navigate('/', { replace: true });
     }
   }, [navigate]);
-
   const handleSaveSuccess = (result: { run_id?: string; message: string; error?: string }) => {
     setSaved(true);
     setFormOpen(false);
@@ -78,6 +86,18 @@ export const PersonalDataPage = ({
           </button>
         </div>
       </div>
+      {formOpen && (
+        <div className="mb-6 flex justify-center">
+          <StatistikForm
+            open={true}
+            inline
+            tester={tester}
+            payload={payload}
+            onClose={() => setFormOpen(false)}
+            onSaveSuccess={handleSaveSuccess}
+          />
+        </div>
+      )}
     </div>
   );
 };
