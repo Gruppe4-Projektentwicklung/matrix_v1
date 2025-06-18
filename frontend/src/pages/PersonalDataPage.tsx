@@ -33,7 +33,9 @@ export const PersonalDataPage = ({
           <button onClick={() => navigate('/combinations')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button onClick={() => navigate('/summary')} className="px-4 py-2 bg-gray-300 rounded">
+
+          <button onClick={() => navigate('/summary')} className="px-4 py-2 bg-blue-600 text-white rounded">
+
             {t('next')}
           </button>
         </div>
