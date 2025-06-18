@@ -272,19 +272,15 @@ const handleKombiSammlungChange = (dateiName: string) => {
 
   return (
 
-    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center justify-center py-10 relative">
-      <div className="absolute top-4 left-4 z-50 bg-white/90 px-3 py-2 rounded-xl shadow border text-sm font-mono">
-        Session ID: {sessionId}
-      </div>
-      <div className="absolute top-4 right-4 z-50 flex items-center gap-2 bg-white/90 px-3 py-2 rounded-xl shadow border">
-
-
-
+    <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center py-10 relative">
+      <header className="w-full bg-[#1d2c5b] text-white shadow-md mb-8">
+        <div className="max-w-5xl mx-auto flex justify-between items-center p-3">
+          <div className="text-xs font-mono">Session ID: {sessionId}</div>
           <select
             id="lang-select"
             value={language}
             onChange={handleLanguageChange}
-            className="px-2 py-1 rounded border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
+            className="px-2 py-1 rounded border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
             style={{ minWidth: 80 }}
           >
             <option value="de">Deutsch</option>
@@ -292,7 +288,9 @@ const handleKombiSammlungChange = (dateiName: string) => {
             <option value="fr">Français</option>
           </select>
         </div>
+      </header>
 
+      <main className="flex-grow w-full">
       <Routes>
         <Route path="/" element={<StartPage />} />
         <Route
@@ -408,6 +406,7 @@ const handleKombiSammlungChange = (dateiName: string) => {
         onClose={handleCloseStatusToast}
         type={statusToastType}
       />
+      </main>
     </div>
   );
 }
