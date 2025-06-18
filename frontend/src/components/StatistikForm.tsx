@@ -91,6 +91,16 @@ export const StatistikForm: React.FC<Props> = ({
           onSubmit={handleSubmit}
           className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
         >
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+            aria-label={t("close")}
+          >
+            ×
+          </button>
+
           <h2 className="font-bold text-lg mb-2">{t("helpImproveStats")}</h2>
           <p
             className="text-gray-700 text-sm mb-4"
@@ -134,6 +144,10 @@ export const StatistikForm: React.FC<Props> = ({
           <div className="flex gap-3 mt-4">
             <button
               type="submit"
+
+              disabled={sending || (!tester && (!alter || !geschlecht || !branche || !berufsrolle))}
+              className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
+
               disabled={sending || (!tester && (!alter || !geschlecht || !branche || !berufsrolle))}
               className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
             >
