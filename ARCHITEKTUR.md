@@ -178,7 +178,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise, ToDo-Liste
   - `backend_logging = on/off`
   - `standardeinstellung_runde1 = einbezogen/ausgeschlossen`
   - `exportformat = csv/pdf/excel`
-  - u. v. m.
+*Letzte Aktualisierung durch ChatGPT: (18.06.2025:15:58)*
 
 ### 3. **Bewertungslogik**
 - Bewertet alle aktiven Ideen mit den aktiven Kombinationen
