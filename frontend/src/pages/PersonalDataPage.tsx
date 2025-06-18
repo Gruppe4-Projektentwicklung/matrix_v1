@@ -6,16 +6,10 @@ import { hasSessionStarted } from '../utils/session';
 import { StatistikForm } from '../components/StatistikForm';
 import type { BewertungsLaufPayload } from '../components/StatistikForm';
 
-
 interface Props {
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, 'tester' | 'userData'>;
   onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
-
-}
-
-export const PersonalDataPage = ({ tester, payload, onSaveSuccess }: Props) => {
-
   onOpenStatistikForm: (inline?: boolean) => void;
   onCloseStatistikForm: () => void;
 }
@@ -27,7 +21,6 @@ export const PersonalDataPage = ({
   onOpenStatistikForm,
   onCloseStatistikForm,
 }: Props) => {
-
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [formOpen, setFormOpen] = useState(true);
@@ -38,14 +31,11 @@ export const PersonalDataPage = ({
     return onCloseStatistikForm;
   }, [onOpenStatistikForm, onCloseStatistikForm]);
 
-
   useEffect(() => {
     if (!hasSessionStarted()) {
       navigate('/', { replace: true });
     }
   }, [navigate]);
-
-
 
   const handleSaveSuccess = (result: { run_id?: string; message: string; error?: string }) => {
     setSaved(true);
@@ -82,23 +72,11 @@ export const PersonalDataPage = ({
           <button onClick={() => navigate('/combinations')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-
           <button onClick={handleNext} className="px-4 py-2 bg-blue-600 text-white rounded">
             {t('next')}
           </button>
         </div>
       </div>
-      {formOpen && (
-        <div className="mb-6 flex justify-center">
-          <StatistikForm
-            open={true}
-            inline
-            tester={tester}
-            payload={payload}
-            onSaveSuccess={handleSaveSuccess}
-          />
-        </div>
-      )}
     </div>
   );
 };
