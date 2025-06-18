@@ -12,6 +12,7 @@ export const ResetButton: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    if (!window.confirm(t('resetWarning'))) return;
 
     clearSession();
 

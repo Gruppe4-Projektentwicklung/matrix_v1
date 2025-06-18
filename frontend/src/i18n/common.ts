@@ -37,6 +37,7 @@ const common = {
         optionDataReleaseNone: "Es werden keine Daten gespeichert",
         introText: "Mit diesem Tool können Sie Ideen bewerten und kombinieren.",
         fieldsRequired: "Bitte alle Felder ausfüllen.",
+        resetWarning: "Warnung! Durch Zur\u00fccksetzen werden alle eingegebenen Daten gel\u00f6scht. Zur\u00fccksetzen oder abbrechen?",
 
         currentIdeaCollection: "Aktuelle Ideensammlung",
         currentCombinationCollection: "Aktuelle Kombinationssammlung",
@@ -137,6 +138,7 @@ const common = {
         optionDataReleaseNone: "No data will be saved",
         introText: "This tool lets you rate and combine ideas.",
         fieldsRequired: "Please fill in all fields.",
+        resetWarning: "Warning! Resetting will remove all entered data. Reset or cancel?",
 
         currentIdeaCollection: "Current idea collection",
         currentCombinationCollection: "Current combination collection",
@@ -237,6 +239,7 @@ const common = {
         optionDataReleaseNone: "Aucune donnée ne sera enregistrée",
         introText: "Cet outil vous permet d'évaluer et de combiner des idées.",
         fieldsRequired: "Veuillez remplir tous les champs.",
+        resetWarning: "Attention! La r\u00e9initialisation supprimera toutes les donn\u00e9es saisies. R\u00e9initialiser ou annuler?",
 
         currentIdeaCollection: "Collection d'idées actuelle",
         currentCombinationCollection: "Collection de combinaisons actuelle",
