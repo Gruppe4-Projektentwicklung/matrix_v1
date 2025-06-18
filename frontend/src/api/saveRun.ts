@@ -27,6 +27,16 @@ export async function saveRun(payload: BewertungsLaufPayload): Promise<{run_id?:
     },
     body: JSON.stringify(payload)
   });
+  if (!response.ok) {
+    let msg = "Unknown error";
+    try {
+      const err = await response.json();
+      msg = err.error || msg;
+    } catch {
+      // ignore json parse errors
+    }
+    throw new Error(msg);
+  }
   const data = await response.json();
   return data;
 }
