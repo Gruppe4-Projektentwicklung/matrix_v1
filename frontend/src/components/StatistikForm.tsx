@@ -282,3 +282,5 @@ export const StatistikForm: React.FC<Props> = ({
     </div>
   );
 };
+
+export type { SaveRunResponse };
