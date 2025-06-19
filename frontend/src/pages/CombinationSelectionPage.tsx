@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
-import pageDescriptions from '../pageDescriptions';
 import { logEvent } from '../api/logEvent';
 
 interface Props {
@@ -73,7 +72,7 @@ export const CombinationSelectionPage = ({
           showDataRelease={false}
           showRoundOptions={showRoundOptions}
         />
-        <p className="mt-4 text-center text-sm text-gray-700">{pageDescriptions.combinationSelection.info}</p>
+        <p className="mt-4 text-center text-sm text-gray-700">{t('selectWeightsInfo')}</p>
       </div>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       

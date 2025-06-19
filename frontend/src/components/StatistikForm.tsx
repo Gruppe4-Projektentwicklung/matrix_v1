@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { saveRun } from "../api/saveRun";
-import pageDescriptions from "../pageDescriptions";
 import type { SaveRunResponse, BewertungsLaufPayload, UserData } from "../api/saveRun";
 
 
@@ -127,7 +126,7 @@ export const StatistikForm: React.FC<Props> = ({
   if (tester) {
     const content = (
       <div className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full text-center">
-        <p>{pageDescriptions.personalData.testerMessage}</p>
+        <p>{t('appTesterMode')}</p>
       </div>
     );
     if (inline) {
@@ -158,10 +157,10 @@ export const StatistikForm: React.FC<Props> = ({
             </button>
           )}
 
-          <h2 className="font-bold text-lg mb-2">{pageDescriptions.personalData.helpTitle}</h2>
+          <h2 className="font-bold text-lg mb-2">{t('helpImproveStats')}</h2>
           <p
             className="text-gray-700 text-sm mb-4"
-            dangerouslySetInnerHTML={{ __html: pageDescriptions.personalData.infoText }}
+            dangerouslySetInnerHTML={{ __html: t('infoVoluntary') }}
           />
           {!tester && (
             <div className="space-y-2 mb-3">
@@ -297,10 +296,10 @@ export const StatistikForm: React.FC<Props> = ({
             ×
           </button>
         )}
-        <h2 className="font-bold text-lg mb-2">{pageDescriptions.personalData.helpTitle}</h2>
+        <h2 className="font-bold text-lg mb-2">{t('helpImproveStats')}</h2>
         <p
           className="text-gray-700 text-sm mb-4"
-          dangerouslySetInnerHTML={{ __html: pageDescriptions.personalData.infoText }}
+          dangerouslySetInnerHTML={{ __html: t('infoVoluntary') }}
         />
 
         {!tester && (
