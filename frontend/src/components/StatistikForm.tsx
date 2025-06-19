@@ -299,4 +299,4 @@ export const StatistikForm: React.FC<Props> = ({
   );
 };
 
-export type { SaveRunResponse, UserData };
+export type { SaveRunResponse };
