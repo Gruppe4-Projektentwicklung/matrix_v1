@@ -62,7 +62,6 @@ export const CombinationSelectionPage = ({
           </button>
         </div>
       </div>
-      <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
         <BewertungsOptionen
           runde1={runde1}
@@ -75,6 +74,7 @@ export const CombinationSelectionPage = ({
         />
         <p className="mt-4 text-center text-sm text-gray-700">{t('selectWeightsInfo')}</p>
       </div>
+      <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
       
     </div>
   );
