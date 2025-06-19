@@ -142,9 +142,9 @@ export const StatistikForm: React.FC<Props> = ({
                 onChange={(e) => setGeschlecht(e.target.value)}
               >
                 <option value="">{t("gender")}</option>
-                <option value="male">Männlich</option>
-                <option value="female">Weiblich</option>
-                <option value="none">Keine Angabe</option>
+                <option value="male">{t("genderMale")}</option>
+                <option value="female">{t("genderFemale")}</option>
+                <option value="none">{t("genderNone")}</option>
               </select>
               <input
                 className="border p-2 rounded w-full"
@@ -232,9 +232,9 @@ export const StatistikForm: React.FC<Props> = ({
               onChange={(e) => setGeschlecht(e.target.value)}
             >
               <option value="">{t("gender")}</option>
-              <option value="male">Männlich</option>
-              <option value="female">Weiblich</option>
-              <option value="none">Keine Angabe</option>
+              <option value="male">{t("genderMale")}</option>
+              <option value="female">{t("genderFemale")}</option>
+              <option value="none">{t("genderNone")}</option>
             </select>
             <input
               className="border p-2 rounded w-full"
