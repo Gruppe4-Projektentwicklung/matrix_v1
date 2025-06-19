@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-import pageDescriptions from '../pageDescriptions';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
@@ -66,7 +65,7 @@ export const PersonalDataPage = ({
   return (
     <div className="text-center">
       {tester ? (
-        <p className="mb-6">{pageDescriptions.personalData.testerMessage}</p>
+        <p className="mb-6">{t('appTesterMode')}</p>
       ) : (
         <>
           {formOpen && (
