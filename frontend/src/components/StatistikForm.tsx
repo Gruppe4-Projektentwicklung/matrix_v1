@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { saveRun } from "../api/saveRun";
-import type { SaveRunResponse } from "../api/saveRun";
+import type { SaveRunResponse, BewertungsLaufPayload, UserData } from "../api/saveRun";
 import { setSaveRunStatus } from "../utils/session";
+
 
 export interface UserData {
   alter?: string;
@@ -299,5 +300,7 @@ export const StatistikForm: React.FC<Props> = ({
   );
 };
 
+
 // Nur SaveRunResponse exportieren, nicht UserData (wird oben per `export interface` bereits exportiert)
 export type { SaveRunResponse };
+

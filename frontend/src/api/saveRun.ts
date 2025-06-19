@@ -1,14 +1,16 @@
 // matrix_v1/frontend/api/saveRun.ts
 
+export interface UserData {
+  alter?: string;
+  geschlecht?: string;
+  branche?: string;
+  berufsrolle?: string;
+  [key: string]: any;
+}
+
 export interface BewertungsLaufPayload {
   tester: boolean; // true, wenn Tester-Modus aktiviert
-  userData?: {
-    alter?: string;
-    geschlecht?: string;
-    branche?: string;
-    berufsrolle?: string;
-    [key: string]: any;
-  };
+  userData?: UserData;
   ideenSammlung: string; // Dateiname oder ID der verwendeten Ideensammlung
   kombiSammlung: string; // Dateiname oder ID der verwendeten Kombisammlung
   gewaehlteIdeen: string[]; // IDs der aktiven Ideen
