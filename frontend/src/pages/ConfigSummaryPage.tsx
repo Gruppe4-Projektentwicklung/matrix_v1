@@ -142,10 +142,10 @@ export const ConfigSummaryPage = ({
               {t('gender')}: {userData.geschlecht || '-'}
             </li>
             <li>
-              {t('industry')}: {userData.branche || '-'}
+              {t('industry')}: {userData.branche ? t(userData.branche) : '-'}
             </li>
             <li>
-              {t('jobRole')}: {userData.berufsrolle || '-'}
+              {t('jobRole')}: {userData.berufsrolle ? t(userData.berufsrolle) : '-'}
             </li>
           </ul>
         </div>

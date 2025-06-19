@@ -30,20 +30,32 @@ export const StatistikForm: React.FC<Props> = ({
     setSaveRunStatus("idle");
   }, []);
 
+  // store translation keys for select options so the labels can be
+  // translated dynamically via i18n
   const industryOptions = [
-    "Baugewerbe",
-    "Energie",
-    "IT",
-    "Bildung",
-    "Gesundheit",
+    "industryConstruction",
+    "industryEnergy",
+    "industryIT",
+    "industryEducation",
+    "industryHealthcare",
+    "industryRetail",
+    "industryTourism",
+    "industryFinance",
+    "industryManufacturing",
+    "industryPublic",
   ];
 
   const jobRoleOptions = [
-    "Ingenieur/in",
-    "Architekt/in",
-    "Manager/in",
-    "Forscher/in",
-    "Student/in",
+    "jobEngineer",
+    "jobArchitect",
+    "jobManager",
+    "jobResearcher",
+    "jobStudent",
+    "jobDeveloper",
+    "jobConsultant",
+    "jobSales",
+    "jobTeacher",
+    "jobDoctor",
   ];
 
   const [alter, setAlter] = useState("");
@@ -171,7 +183,7 @@ export const StatistikForm: React.FC<Props> = ({
                 <option value="">{t("industry")}</option>
                 {industryOptions.map((opt) => (
                   <option key={opt} value={opt}>
-                    {opt}
+                    {t(opt)}
                   </option>
                 ))}
                 <option value="other">{t("other")}</option>
@@ -201,7 +213,7 @@ export const StatistikForm: React.FC<Props> = ({
                 <option value="">{t("jobRole")}</option>
                 {jobRoleOptions.map((opt) => (
                   <option key={opt} value={opt}>
-                    {opt}
+                    {t(opt)}
                   </option>
                 ))}
                 <option value="other">{t("other")}</option>
@@ -311,7 +323,7 @@ export const StatistikForm: React.FC<Props> = ({
               <option value="">{t("industry")}</option>
               {industryOptions.map((opt) => (
                 <option key={opt} value={opt}>
-                  {opt}
+                  {t(opt)}
                 </option>
               ))}
               <option value="other">{t("other")}</option>
@@ -341,7 +353,7 @@ export const StatistikForm: React.FC<Props> = ({
               <option value="">{t("jobRole")}</option>
               {jobRoleOptions.map((opt) => (
                 <option key={opt} value={opt}>
-                  {opt}
+                  {t(opt)}
                 </option>
               ))}
               <option value="other">{t("other")}</option>
