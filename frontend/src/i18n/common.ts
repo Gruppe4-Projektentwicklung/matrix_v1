@@ -85,6 +85,7 @@ const common = {
         submitWithoutData: "Ohne Angaben abschicken",
         saveRating: "Bewertung speichern",
         cancel: "Abbrechen",
+        editData: "Daten überarbeiten",
         submitError: "Fehler beim Senden der Bewertung. Bitte erneut versuchen.",
 
         disabled: "Deaktiviert",
@@ -197,6 +198,7 @@ const common = {
         submitWithoutData: "Submit without info",
         saveRating: "Save rating",
         cancel: "Cancel",
+        editData: "Edit data",
         submitError: "Error sending rating. Please try again.",
 
         disabled: "Disabled",
@@ -311,6 +313,7 @@ const common = {
         submitWithoutData: "Envoyez sans information",
         saveRating: "Enregistrez l'évaluation",
         cancel: "Annulez",
+        editData: "Modifier les données",
         submitError: "Erreur lors de l'envoi de l'évaluation. Veuillez réessayer.",
 
         disabled: "Désactivé",
