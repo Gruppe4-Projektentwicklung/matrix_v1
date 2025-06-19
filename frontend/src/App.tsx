@@ -13,7 +13,7 @@ import { SelectDataPage } from "./pages/SelectDataPage";
 import { IdeaSelectionPage } from "./pages/IdeaSelectionPage";
 import { CombinationSelectionPage } from "./pages/CombinationSelectionPage";
 import { PersonalDataPage } from "./pages/PersonalDataPage";
-import type { SaveRunResponse } from "./components/StatistikForm";
+import type { SaveRunResponse } from "./api/saveRun";
 import { ConfigSummaryPage } from "./pages/ConfigSummaryPage";
 import { CalcResultsPage } from "./pages/CalcResultsPage";
 
