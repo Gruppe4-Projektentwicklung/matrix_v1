@@ -20,6 +20,7 @@ export function resetSessionId(): string {
 export function markSessionStarted() {
   sessionStorage.setItem("sessionStarted", "true");
   resetPageStatus();
+  setSaveRunStatus('idle');
 }
 
 export function hasSessionStarted(): boolean {
@@ -29,6 +30,7 @@ export function hasSessionStarted(): boolean {
 export function clearSession() {
   sessionStorage.removeItem("sessionStarted");
   resetSessionId();
+  setSaveRunStatus('idle');
 }
 
 export function resetPageStatus() {
