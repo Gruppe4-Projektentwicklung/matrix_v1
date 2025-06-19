@@ -18,7 +18,6 @@ import { ConfigSummaryPage } from "./pages/ConfigSummaryPage";
 import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
-import { StatusToast } from "./components/StatusToast";
 
 import { getSessionId, setPageStatus } from "./utils/session";
 import { devConfig } from "./devConfig";
@@ -49,9 +48,6 @@ function App() {
   const [dev2Mode, setDev2Mode] = useState(
     sessionStorage.getItem('dev2mode') === 'true'
   );
-  const [statusToastOpen, setStatusToastOpen] = useState(false);
-  const [statusToastMessage, setStatusToastMessage] = useState("");
-  const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
 
 const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
 const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_kombi.xlsx");
@@ -269,18 +265,6 @@ const handleKombiSammlungChange = useCallback(
     setKombiInfoPayload(null);
   }; */
 
-
-  const handleUserDataSaved = (data: UserData | undefined) => {
-    setUserData(data);
-  };
-
-  const handleCloseStatusToast = () => {
-    setStatusToastOpen(false);
-    setStatusToastMessage("");
-  };
-
-
-  const handleCalculateRanking = async () => {
     try {
       const gew: Record<string, number> = {};
       gewichtungen.forEach((k: any) => {
@@ -459,12 +443,6 @@ return (
         />
       </Routes>
 
-      {/* <KombiInfoModal
-        open={kombiInfoModalOpen}
-        kombi={kombiInfoPayload}
-        sprache={language as "de" | "en" | "fr"}
-        onClose={handleCloseKombiInfoModal}
-      /> */}
 
       <StatusToast
         open={statusToastOpen}
