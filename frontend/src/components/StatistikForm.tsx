@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { saveRun } from "../api/saveRun";
-import type { SaveRunResponse, BewertungsLaufPayload, UserData } from "../api/saveRun";
+import {
+  saveRun,
+  type SaveRunResponse,
+  type BewertungsLaufPayload,
+  type UserData,
+} from "../api/saveRun";
 import { setSaveRunStatus } from "../utils/session";
 
 type Props = {
