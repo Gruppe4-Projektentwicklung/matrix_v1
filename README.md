@@ -13,6 +13,9 @@ This project consists of a FastAPI backend and a Vite/React frontend.
    cd frontend
    npm install
    ```
+3. **Install script**
+   The helper script `./codex-setup.sh` installs the Node packages for you. Run
+   it from the repository root if you prefer an automated setup.
 
 ## Running the application
 
@@ -42,6 +45,23 @@ frontend:
 ```bash
 VITE_I18N_DEBUG=true npm run dev
 ```
+
+### Backend configuration
+
+The backend reads `backend/matrixconfig.ini` on startup.  Path options in the
+`[Dateien]` section control where uploads, templates and log files are stored.
+Feature flags in the `[Features]` section enable or disable optional
+functionality such as export buttons, custom uploads or usage logging.  Adjust
+these values to match your environment.
+
+### Logging endpoints
+
+The backend exposes two helper endpoints for collecting usage data.
+
+* **`/save_run`** – stores a full evaluation run as a JSON file under
+  `storage/runs/`.
+* **`/log_step`** – appends a single user step to an archive file identified by
+  a session ID.
 
 ## Linting and type checking (offline)
 
