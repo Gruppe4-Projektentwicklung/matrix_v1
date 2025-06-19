@@ -48,6 +48,9 @@ const common = {
         uploadErrorInvalidFile: "Bitte laden Sie eine Excel-Datei (.xlsx) hoch.",
         exportRankingCSV: "Ranking als CSV exportieren",
         summary: "Zusammenfassung",
+        ideaCollectionName: "Ideensammlung",
+        combinationCollectionName: "Kombinationssammlung",
+        personalDataSummary: "Pers\u00f6nliche Daten",
 
         noIdeasLoaded: "Keine Ideen geladen.",
         noDescription: "Keine Beschreibung",
@@ -157,6 +160,9 @@ const common = {
         uploadErrorInvalidFile: "Please upload an Excel file (.xlsx).",
         exportRankingCSV: "Export ranking as CSV",
         summary: "Summary",
+        ideaCollectionName: "Idea list",
+        combinationCollectionName: "Combination list",
+        personalDataSummary: "Personal data",
 
         noIdeasLoaded: "No ideas loaded.",
         noDescription: "No description",
@@ -266,6 +272,9 @@ const common = {
         uploadErrorInvalidFile: "Veuillez téléverser un fichier Excel (.xlsx).",
         exportRankingCSV: "Exporter le classement en CSV",
         summary: "Résumé",
+        ideaCollectionName: "Liste d'idées",
+        combinationCollectionName: "Liste de combinaisons",
+        personalDataSummary: "Données personnelles",
 
         noIdeasLoaded: "Aucune idée chargée.",
         noDescription: "Pas de description",

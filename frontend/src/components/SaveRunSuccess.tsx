@@ -20,8 +20,8 @@ export const SaveRunSuccess: React.FC<Props> = ({
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full text-center relative">
+    <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center text-center">
+      <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full relative">
         <h2 className="font-bold text-lg mb-2">{t("thankYouForRating")}</h2>
         <div className="mb-3 text-gray-700">{message}</div>
         {runId && !isTester && (

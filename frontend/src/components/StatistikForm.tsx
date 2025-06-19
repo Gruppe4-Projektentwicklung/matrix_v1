@@ -22,11 +22,19 @@ export interface BewertungsLaufPayload {
   zeitstempel?: string;
 }
 
+export interface UserData {
+  alter?: string;
+  geschlecht?: string;
+  branche?: string;
+  berufsrolle?: string;
+}
+
 type Props = {
   open: boolean;
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
   onSaveSuccess: (result: SaveRunResponse) => void;
+  onUserDataSaved?: (data: UserData | undefined) => void;
   onClose?: () => void;
   inline?: boolean;
 };
@@ -36,6 +44,7 @@ export const StatistikForm: React.FC<Props> = ({
   tester,
   payload,
   onSaveSuccess,
+  onUserDataSaved,
   onClose,
   inline = false,
 }) => {
@@ -90,6 +99,13 @@ export const StatistikForm: React.FC<Props> = ({
     try {
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
+      if (onUserDataSaved) {
+        onUserDataSaved(
+          tester
+            ? undefined
+            : { alter, geschlecht, branche, berufsrolle }
+        );
+      }
       setSaveRunStatus("ok");
       if (onClose) onClose();
     } catch (e: any) {
@@ -282,3 +298,5 @@ export const StatistikForm: React.FC<Props> = ({
     </div>
   );
 };
+
+export type { SaveRunResponse, UserData };
