@@ -5,10 +5,9 @@ import { markSessionStarted } from '../utils/session';
 
 interface Props {
   dev2Mode: boolean;
-  onDev2ModeChange: (v: boolean) => void;
   onStart: (dev2: boolean) => void;
 }
-export const StartPage = ({ dev2Mode, onDev2ModeChange, onStart }: Props) => {
+export const StartPage = ({ dev2Mode, onStart }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -24,14 +23,6 @@ export const StartPage = ({ dev2Mode, onDev2ModeChange, onStart }: Props) => {
       </h1>
       <p className="mb-6 text-gray-700">{t('introText')}</p>
       <div className="flex items-center justify-center gap-4 mt-4">
-        <label className="text-sm flex items-center gap-1">
-          <input
-            type="checkbox"
-            checked={dev2Mode}
-            onChange={(e) => onDev2ModeChange(e.target.checked)}
-          />
-          Dev2 mode
-        </label>
         <button
           onClick={handleStart}
           className="px-4 py-2 bg-blue-600 text-white rounded"
