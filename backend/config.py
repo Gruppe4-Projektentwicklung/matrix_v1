@@ -117,7 +117,16 @@ class Config:
     @property
     def enable_usage_logging(self): return self._feature("enable_usage_logging")
     @property
-    def show_round_options(self): return self._feature("show_round_options")
+    def show_round_options(self):
+        if "show_round_options" in self.config["Features"]:
+            return self._feature("show_round_options")
+        if "consider1checkbox" in self.config["Features"]:
+            return self._feature("consider1checkbox")
+        return False
+
+    @property
+    def show_tester_checkbox(self):
+        return self.testerbutton_enabled
 
     @property
     def log_level(self):
