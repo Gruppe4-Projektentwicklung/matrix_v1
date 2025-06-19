@@ -330,11 +330,12 @@ ARCHIVE_FOLDER.mkdir(parents=True, exist_ok=True)
 @app.post("/save_run")
 async def save_run(data: dict):
     """Speichert einen Bewertungslauf als JSON-Datei."""
+    lang = data.get("lang", config.default_language)
     if not data or "tester" not in data:
-        raise HTTPException(status_code=400, detail="Ung\u00fcltige Daten")
+        raise HTTPException(status_code=400, detail=t("invalid_data", lang))
 
     if data.get("tester"):
-        return {"message": "Tester-Modus: Bewertungslauf NICHT gespeichert.", "status": "ok"}
+        return {"message": t("run_not_saved_tester", lang), "status": "ok"}
 
     run_id = str(uuid.uuid4())
     filepath = STORAGE_FOLDER / f"{run_id}.json"
@@ -342,7 +343,7 @@ async def save_run(data: dict):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    return {"message": "Bewertungslauf gespeichert", "run_id": run_id, "status": "ok"}
+    return {"message": t("run_saved", lang), "run_id": run_id, "status": "ok"}
 
 
 # ---- Nutzungsdaten speichern ----
