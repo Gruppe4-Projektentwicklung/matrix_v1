@@ -139,10 +139,13 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
     i18n.changeLanguage(lang);
   };
 
-  const handleIdeenSammlungChange = (dateiName: string) => {
-    setAktuelleIdeensammlung(dateiName);
-    loadIdeen(dateiName);
-  };
+  const handleIdeenSammlungChange = useCallback(
+    (dateiName: string) => {
+      setAktuelleIdeensammlung(dateiName);
+      loadIdeen(dateiName);
+    },
+    [loadIdeen],
+  );
 const handleKombiUpload = async (file: File, sessionId: string) => {
   setStatusToastMessage(t("uploadFile") + " " + file.name + " (Session: " + sessionId + ")");
   setStatusToastType("info");
@@ -176,10 +179,13 @@ const handleKombiUpload = async (file: File, sessionId: string) => {
   }
 };
 
-const handleKombiSammlungChange = (dateiName: string) => {
-  setAktuelleKombiSammlung(dateiName);
-  loadKombis(dateiName);
-};
+const handleKombiSammlungChange = useCallback(
+  (dateiName: string) => {
+    setAktuelleKombiSammlung(dateiName);
+    loadKombis(dateiName);
+  },
+  [loadKombis],
+);
 
   // Nach Auswahl oder Upload einer Kombi-Datei Konfiguration laden
   useEffect(() => {
