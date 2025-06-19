@@ -116,6 +116,8 @@ class Config:
     def api_key_required(self): return self._feature("api_key_required")
     @property
     def enable_usage_logging(self): return self._feature("enable_usage_logging")
+    @property
+    def show_round_options(self): return self._feature("show_round_options")
 
     @property
     def log_level(self):

@@ -16,6 +16,7 @@ interface Props {
   onIdeenUpdate: (ideen: any[]) => void;
   onBewertungsOptionenChange: (field: string, value: any) => void;
   onGewichtungenUpdate: (g: any[]) => void;
+  showRoundOptions?: boolean;
   onOpenStatistikForm?: (inline?: boolean) => void;
 }
 
@@ -30,6 +31,7 @@ export const ConfigPage = ({
   onIdeenUpdate,
   onBewertungsOptionenChange,
   onGewichtungenUpdate,
+  showRoundOptions = true,
   onOpenStatistikForm = () => {},
 }: Props) => {
   const { t } = useTranslation();
@@ -44,6 +46,7 @@ export const ConfigPage = ({
           appTester={appTester}
           datenfreigabe={datenfreigabe}
           onChange={onBewertungsOptionenChange}
+          showRoundOptions={showRoundOptions}
         />
       </div>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />

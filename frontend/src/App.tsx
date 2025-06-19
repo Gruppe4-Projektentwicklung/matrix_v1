@@ -36,6 +36,7 @@ function App() {
   const [runde2, setRunde2] = useState(true);
   const [appTester, setAppTester] = useState(false);
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
+  const [showRoundOptions, setShowRoundOptions] = useState(true);
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
   const [rankingEintraege/*, setRankingEintraege*/] = useState<any[]>([]);
   /* const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
@@ -49,6 +50,20 @@ function App() {
 
 const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
 const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_kombi.xlsx");
+
+  // Backend-Feature-Flags laden
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/features`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.show_round_options === "boolean") {
+          setShowRoundOptions(data.show_round_options);
+        }
+      })
+      .catch((err) => {
+        console.error("Fehler beim Laden der Features", err);
+      });
+  }, []);
 
   const fetchCollectionContent = useCallback(
     async (typ: "ideen" | "kombis", filename: string) => {
@@ -322,6 +337,7 @@ return (
                 runde2={runde2}
                 appTester={appTester}
                 datenfreigabe={datenfreigabe}
+                showRoundOptions={showRoundOptions}
                 onGewichtungenUpdate={handleGewichtungenUpdate}
                 onOptionsChange={handleBewertungsOptionenChange}
               />

@@ -13,6 +13,7 @@ interface Props {
   runde2: boolean;
   appTester: boolean;
   datenfreigabe: 'offen' | 'anonym' | 'keine';
+  showRoundOptions?: boolean;
   onGewichtungenUpdate: (g: any[]) => void;
   onOptionsChange: (field: string, value: any) => void;
 }
@@ -23,6 +24,7 @@ export const CombinationSelectionPage = ({
   runde2,
   appTester,
   datenfreigabe,
+  showRoundOptions = true,
   onGewichtungenUpdate,
   onOptionsChange,
 }: Props) => {
@@ -68,6 +70,7 @@ export const CombinationSelectionPage = ({
           datenfreigabe={datenfreigabe}
           onChange={onOptionsChange}
           showDataRelease={false}
+          showRoundOptions={showRoundOptions}
         />
       </div>
       
