@@ -405,7 +405,18 @@ async def calculate_ranking(payload: dict):
     results = []
     for idee_id, score in ranking_series.items():
         idee = ideen_df.loc[idee_id]
-        details = {col: kombi_ergebnisse.loc[idee_id, col] for col in kombi_ergebnisse.columns}
+        raw_details = {
+            col: kombi_ergebnisse.loc[idee_id, col]
+            for col in kombi_ergebnisse.columns
+        }
+
+        # FastAPI's jsonable_encoder cannot handle numpy scalar types, therefore
+        # convert them explicitly to Python float values
+        details = {
+            col: (float(val) if val == val else None)
+            for col, val in raw_details.items()
+        }
+
         results.append({
             "id": str(idee_id),
             "name": idee.get("titel", ""),
