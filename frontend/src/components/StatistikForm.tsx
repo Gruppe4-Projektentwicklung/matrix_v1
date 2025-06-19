@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { saveRun } from "../api/saveRun";
-import type { SaveRunResponse, BewertungsLaufPayload, UserData } from "../api/saveRun";
+import {
+  saveRun,
+  type SaveRunResponse,
+  type BewertungsLaufPayload as BewertungsLaufPayloadType,
+  type UserData as UserDataType,
+} from "../api/saveRun";
 import { setSaveRunStatus } from "../utils/session";
 
 type Props = {
   open: boolean;
   tester: boolean;
-  payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
+  payload: Omit<BewertungsLaufPayloadType, "tester" | "userData">;
   onSaveSuccess: (result: SaveRunResponse) => void;
-  onUserDataSaved?: (data: UserData | undefined) => void;
+  onUserDataSaved?: (data: UserDataType | undefined) => void;
   onClose?: () => void;
   inline?: boolean;
 };
@@ -57,7 +61,7 @@ export const StatistikForm: React.FC<Props> = ({
       return;
     }
 
-    const fullPayload: BewertungsLaufPayload = {
+    const fullPayload: BewertungsLaufPayloadType = {
       ...payload,
       tester,
       userData: tester
