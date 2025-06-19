@@ -13,12 +13,11 @@ import { SelectDataPage } from "./pages/SelectDataPage";
 import { IdeaSelectionPage } from "./pages/IdeaSelectionPage";
 import { CombinationSelectionPage } from "./pages/CombinationSelectionPage";
 import { PersonalDataPage } from "./pages/PersonalDataPage";
-import type { SaveRunResponse, UserData } from "./api/saveRun";
+import type { UserData } from "./api/saveRun";
 import { ConfigSummaryPage } from "./pages/ConfigSummaryPage";
 import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
-import { SaveRunSuccess } from "./components/SaveRunSuccess";
 import { StatusToast } from "./components/StatusToast";
 
 import { getSessionId, setPageStatus } from "./utils/session";
@@ -49,9 +48,6 @@ function App() {
   const [dev2Mode, setDev2Mode] = useState(
     sessionStorage.getItem('dev2mode') === 'true'
   );
-  const [saveRunSuccessOpen, setSaveRunSuccessOpen] = useState(false);
-  const [saveRunMessage, setSaveRunMessage] = useState("");
-  const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
   const [statusToastOpen, setStatusToastOpen] = useState(false);
   const [statusToastMessage, setStatusToastMessage] = useState("");
   const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
@@ -272,18 +268,6 @@ const handleKombiSammlungChange = useCallback(
     setKombiInfoPayload(null);
   }; */
 
-  const handleCloseSaveRunSuccess = () => {
-    setSaveRunSuccessOpen(false);
-    setSaveRunMessage("");
-    setSaveRunId(undefined);
-  };
-
-
-  const handleSaveSuccess = (result: SaveRunResponse) => {
-    setSaveRunId(result.run_id);
-    setSaveRunMessage(result.message);
-    setSaveRunSuccessOpen(true);
-  };
 
   const handleUserDataSaved = (data: UserData | undefined) => {
     setUserData(data);
@@ -413,7 +397,6 @@ return (
                   gewichtungen: {},
                   ergebnisRanking: [],
                 }}
-                onSaveSuccess={handleSaveSuccess}
                 onUserDataSaved={handleUserDataSaved}
               />
             </div>
@@ -445,15 +428,6 @@ return (
           )}
         />
       </Routes>
-
-
-      <SaveRunSuccess
-        open={saveRunSuccessOpen}
-        message={saveRunMessage}
-        runId={saveRunId}
-        onClose={handleCloseSaveRunSuccess}
-        isTester={appTester}
-      />
 
       {/* <KombiInfoModal
         open={kombiInfoModalOpen}
