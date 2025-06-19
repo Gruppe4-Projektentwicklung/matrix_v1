@@ -4,6 +4,8 @@ export function getSessionId(): string {
   if (!sessionId) {
     sessionId = crypto.randomUUID();
     sessionStorage.setItem("sessionId", sessionId);
+    // Ensure dev2 mode is disabled when a new session starts
+    sessionStorage.setItem("dev2mode", "false");
   }
   return sessionId;
 }
@@ -11,6 +13,8 @@ export function getSessionId(): string {
 export function resetSessionId(): string {
   const newId = crypto.randomUUID();
   sessionStorage.setItem("sessionId", newId);
+  // Disable dev2 mode whenever a new session ID is created
+  sessionStorage.setItem("dev2mode", "false");
   return newId;
 }
 export function markSessionStarted() {
