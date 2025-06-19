@@ -35,9 +35,10 @@ const common = {
         optionDataReleaseOpen: "Bitte geben Sie Ihre Daten ein (anonym)",
         optionDataReleaseAnonym: "Nur Ihr Nutzungsverhalten wird gespeichert",
         optionDataReleaseNone: "Es werden keine Daten gespeichert",
+        selectWeightsInfo: "Bitte Gewichtung der Kombinationen auswählen.",
         introText: "Mit diesem Tool können Sie Ideen bewerten und kombinieren.",
         fieldsRequired: "Bitte alle Felder ausfüllen.",
-        invalidAge: "Bitte ein realistisches Alter eingeben (0-120).",
+        invalidAge: "Bitte ein realistisches Alter eingeben (10-120).",
 
         resetWarning: "Warnung! Durch Zur\u00fccksetzen werden alle eingegebenen Daten gel\u00f6scht. Zur\u00fccksetzen oder abbrechen?",
 
@@ -138,9 +139,10 @@ const common = {
         optionDataReleaseOpen: "Please enter your data (anonymous)",
         optionDataReleaseAnonym: "Only your usage behavior will be saved",
         optionDataReleaseNone: "No data will be saved",
+        selectWeightsInfo: "Please select the weights of the combinations.",
         introText: "This tool lets you rate and combine ideas.",
         fieldsRequired: "Please fill in all fields.",
-        invalidAge: "Please enter a realistic age (0-120).",
+        invalidAge: "Please enter a realistic age (10-120).",
         resetWarning: "Warning! Resetting will remove all entered data. Reset or cancel?",
 
         currentIdeaCollection: "Current idea collection",
@@ -240,9 +242,10 @@ const common = {
         optionDataReleaseOpen: "Veuillez entrer vos données (anonymes)",
         optionDataReleaseAnonym: "Seul votre comportement d'utilisation sera enregistré",
         optionDataReleaseNone: "Aucune donnée ne sera enregistrée",
+        selectWeightsInfo: "Veuillez choisir la pondération des combinaisons.",
         introText: "Cet outil vous permet d'évaluer et de combiner des idées.",
         fieldsRequired: "Veuillez remplir tous les champs.",
-        invalidAge: "Veuillez entrer un âge réaliste (0-120).",
+        invalidAge: "Veuillez entrer un âge réaliste (10-120).",
         resetWarning: "Attention! La r\u00e9initialisation supprimera toutes les donn\u00e9es saisies. R\u00e9initialiser ou annuler?",
 
         currentIdeaCollection: "Collection d'idées actuelle",

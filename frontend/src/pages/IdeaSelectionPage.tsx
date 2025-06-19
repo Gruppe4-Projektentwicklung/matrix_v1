@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { IdeenSelector } from '../components/IdeenSelector';
+import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-import { hasSessionStarted, getSessionId } from '../utils/session';
+import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 
 interface Props {
@@ -35,6 +36,7 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
                 active: ideen.filter((i) => i.aktiv).map((i) => i.id),
                 inactive: ideen.filter((i) => !i.aktiv).map((i) => i.id),
               });
+              setPageStatus('idea', 'ok');
               navigate('/combinations');
             }}
             className="px-4 py-2 bg-blue-600 text-white rounded"
@@ -42,6 +44,17 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
             {t('next')}
           </button>
         </div>
+      </div>
+      <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
+        <BewertungsOptionen
+          runde1={true}
+          runde2={true}
+          appTester={false}
+          datenfreigabe="offen"
+          onChange={() => {}}
+          showDataRelease={false}
+        />
+        <p className="mt-4 text-center text-sm text-gray-700">{t('selectWeightsInfo')}</p>
       </div>
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
     </div>

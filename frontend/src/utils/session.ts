@@ -15,6 +15,7 @@ export function resetSessionId(): string {
 }
 export function markSessionStarted() {
   sessionStorage.setItem("sessionStarted", "true");
+  resetPageStatus();
 }
 
 export function hasSessionStarted(): boolean {
@@ -24,4 +25,29 @@ export function hasSessionStarted(): boolean {
 export function clearSession() {
   sessionStorage.removeItem("sessionStarted");
   resetSessionId();
+}
+
+export function resetPageStatus() {
+  const initial = {
+    "select-data": "nok",
+    idea: "nok",
+    combination: "nok",
+    personal: "nok",
+    summary: "nok",
+  };
+  sessionStorage.setItem("pageStatus", JSON.stringify(initial));
+  window.dispatchEvent(new Event("pageStatusUpdated"));
+}
+
+export function setPageStatus(page: string, status: "ok" | "nok") {
+  const raw = sessionStorage.getItem("pageStatus");
+  const obj = raw ? JSON.parse(raw) : {};
+  obj[page] = status;
+  sessionStorage.setItem("pageStatus", JSON.stringify(obj));
+  window.dispatchEvent(new Event("pageStatusUpdated"));
+}
+
+export function getPageStatus(): Record<string, string> {
+  const raw = sessionStorage.getItem("pageStatus");
+  return raw ? JSON.parse(raw) : {};
 }
