@@ -24,6 +24,7 @@ import { StatusToast } from "./components/StatusToast";
 import { getSessionId, setPageStatus } from "./utils/session";
 import { devConfig } from "./devConfig";
 import { DevStatusBar } from "./components/DevStatusBar";
+import { calculateRanking } from "./api/calculateRanking";
 
 function App() {
   const location = useLocation();
@@ -42,7 +43,7 @@ function App() {
   const [showRoundOptions, setShowRoundOptions] = useState(true);
   const [loadingScreenDuration, setLoadingScreenDuration] = useState(0.8);
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
-  const [rankingEintraege/*, setRankingEintraege*/] = useState<any[]>([]);
+  const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
   const [userData, setUserData] = useState<UserData | undefined>(undefined);
   /* const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
   const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null); */
@@ -294,6 +295,32 @@ const handleKombiSammlungChange = useCallback(
     setStatusToastMessage("");
   };
 
+  const handleCalculateRanking = async () => {
+    try {
+      const gew: Record<string, number> = {};
+      gewichtungen.forEach((k: any) => {
+        gew[k.id] = Number(k.gewichtung || 0);
+      });
+
+      const result = await calculateRanking({
+        session: sessionId,
+        ideenFile: aktuelleIdeensammlung,
+        kombiFile: aktuelleKombiSammlung,
+        ideenIds: ideen.filter((i) => i.aktiv).map((i) => i.id),
+        gewichtungen: gew,
+        lang: language,
+      });
+      setRankingEintraege(result);
+    } catch (err) {
+      console.error(err);
+      setStatusToastMessage(
+        `${t('loadError')}: ${err instanceof Error ? err.message : String(err)}`,
+      );
+      setStatusToastType('error');
+      setStatusToastOpen(true);
+    }
+  };
+
   useEffect(() => {
     loadIdeen(aktuelleIdeensammlung);
     loadKombis(aktuelleKombiSammlung);
@@ -425,6 +452,7 @@ return (
                 ideenSammlung={aktuelleIdeensammlung}
                 kombiSammlung={aktuelleKombiSammlung}
                 userData={userData}
+                onCalculate={handleCalculateRanking}
               />
             </div>
           )}
