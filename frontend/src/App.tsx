@@ -38,6 +38,7 @@ function App() {
   const [appTester, setAppTester] = useState(false);
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
   const [showRoundOptions, setShowRoundOptions] = useState(true);
+  const [showTesterOption, setShowTesterOption] = useState(true);
   const [loadingScreenDuration, setLoadingScreenDuration] = useState(0.8);
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
   const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
@@ -63,6 +64,9 @@ function App() {
       .then((data) => {
         if (typeof data.show_round_options === "boolean") {
           setShowRoundOptions(data.show_round_options);
+        }
+        if (typeof data.show_tester_checkbox === "boolean") {
+          setShowTesterOption(data.show_tester_checkbox);
         }
         if (typeof data.loadingscreen_duration === "number") {
           setLoadingScreenDuration(data.loadingscreen_duration);
@@ -398,6 +402,7 @@ function App() {
                   appTester={appTester}
                   datenfreigabe={datenfreigabe}
                   showRoundOptions={showRoundOptions}
+                  showTesterOption={showTesterOption}
                   onGewichtungenUpdate={handleGewichtungenUpdate}
                   onOptionsChange={handleBewertungsOptionenChange}
                 />

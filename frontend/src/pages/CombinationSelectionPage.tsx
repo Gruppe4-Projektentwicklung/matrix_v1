@@ -15,6 +15,7 @@ interface Props {
   appTester: boolean;
   datenfreigabe: 'offen' | 'anonym' | 'keine';
   showRoundOptions?: boolean;
+  showTesterOption?: boolean;
   onGewichtungenUpdate: (g: any[]) => void;
   onOptionsChange: (field: string, value: any) => void;
 }
@@ -26,6 +27,7 @@ export const CombinationSelectionPage = ({
   appTester,
   datenfreigabe,
   showRoundOptions = true,
+  showTesterOption = true,
   onGewichtungenUpdate,
   onOptionsChange,
 }: Props) => {
@@ -72,6 +74,7 @@ export const CombinationSelectionPage = ({
           onChange={onOptionsChange}
           showDataRelease={false}
           showRoundOptions={showRoundOptions}
+          showTesterOption={showTesterOption}
         />
         <p className="mt-4 text-center text-sm text-gray-700">{pageDescriptions.combinationSelection.info}</p>
       </div>

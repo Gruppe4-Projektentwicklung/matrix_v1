@@ -9,6 +9,7 @@ type BewertungsOptionenProps = {
   onChange: (field: string, value: any) => void;
   showDataRelease?: boolean;
   showRoundOptions?: boolean;
+  showTesterOption?: boolean;
 };
 
 export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
@@ -19,6 +20,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
   onChange,
   showDataRelease = true,
   showRoundOptions = true,
+  showTesterOption = true,
 }) => {
   const { t } = useTranslation();
 
@@ -52,15 +54,17 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
           </>
         )}
 
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={appTester}
-            onChange={(e) => onChange("appTester", e.target.checked)}
-            className="accent-[#1d2c5b]"
-          />
-          {t("optionAppTester")}
-        </label>
+        {showTesterOption && (
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={appTester}
+              onChange={(e) => onChange("appTester", e.target.checked)}
+              className="accent-[#1d2c5b]"
+            />
+            {t("optionAppTester")}
+          </label>
+        )}
       </div>
 
       {showDataRelease && (
