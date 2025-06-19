@@ -38,6 +38,10 @@ class ExcelLoader:
         # IDs als Spaltennamen verwenden
         daten.columns = [self.spalten_ids.get(i, f"Unbekannt_{i}") for i in range(len(spalten_namen))]
 
+        # Versuche numerische Daten in echte Zahlen zu konvertieren
+        # Dadurch können Berechnungen im Backend korrekt ausgeführt werden
+        daten = daten.apply(pd.to_numeric, errors="ignore")
+
         if "#ID#" in daten.columns:
             daten.rename(columns={"#ID#": "ID"}, inplace=True)
 
