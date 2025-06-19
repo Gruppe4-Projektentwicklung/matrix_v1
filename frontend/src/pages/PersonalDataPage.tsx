@@ -5,6 +5,7 @@ import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
+import { SaveRunSuccess } from '../components/SaveRunSuccess';
 
 import type { BewertungsLaufPayload, UserData, SaveRunResponse } from '../api/saveRun';
 
@@ -12,7 +13,7 @@ import type { BewertungsLaufPayload, UserData, SaveRunResponse } from '../api/sa
 interface Props {
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, 'tester' | 'userData'>;
-  onSaveSuccess: (result: SaveRunResponse) => void;
+  onSaveSuccess?: (result: SaveRunResponse) => void;
   onUserDataSaved: (data: UserData | undefined) => void;
 }
 
@@ -26,6 +27,8 @@ export const PersonalDataPage = ({
   const navigate = useNavigate();
   const [formOpen, setFormOpen] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
 
 
   useEffect(() => {
@@ -37,11 +40,13 @@ export const PersonalDataPage = ({
   const handleSaveSuccess = (result: SaveRunResponse) => {
     setSaved(true);
     setFormOpen(false);
+    setSaveMessage(result.message);
+    setSaveRunId(result.run_id);
     logEvent(getSessionId(), 'personal-data', result);
     if (!result.error && result.status === 'ok') {
       setPageStatus('personal', 'ok');
     }
-    onSaveSuccess(result);
+    if (onSaveSuccess) onSaveSuccess(result);
   };
 
   const handleNext = () => {
@@ -70,6 +75,19 @@ export const PersonalDataPage = ({
             onUserDataSaved={onUserDataSaved}
           />
         </div>
+      )}
+      {!formOpen && saved && (
+        <SaveRunSuccess
+          open={true}
+          inline
+          message={saveMessage}
+          runId={saveRunId}
+          isTester={tester}
+          onEdit={() => {
+            setFormOpen(true);
+            setSaved(false);
+          }}
+        />
       )}
       <div className="mt-8 mb-6 flex justify-between">
         <ResetButton />
