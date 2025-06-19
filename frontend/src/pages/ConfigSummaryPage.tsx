@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
@@ -10,6 +10,7 @@ interface Props {
   activeIdeen: number;
   kombiCount: number;
   activeKombis: number;
+  loadingDuration: number;
 }
 
 export const ConfigSummaryPage = ({
@@ -17,10 +18,15 @@ export const ConfigSummaryPage = ({
   activeIdeen,
   kombiCount,
   activeKombis,
+  loadingDuration,
 }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const disabled = activeIdeen === 0 || activeKombis === 0;
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressDuration, setProgressDuration] = useState(0);
+  const [showResultButton, setShowResultButton] = useState(false);
 
   const handleCalculate = () => {
     if (disabled) {
@@ -34,7 +40,16 @@ export const ConfigSummaryPage = ({
       activeKombis,
     });
     setPageStatus('summary', 'ok');
-    navigate('/results');
+    const duration = loadingDuration + Math.random() * 0.4;
+    setProgressDuration(duration);
+    setLoading(true);
+    setShowResultButton(false);
+    setProgress(0);
+    setTimeout(() => setProgress(100), 50);
+    setTimeout(() => {
+      setLoading(false);
+      setShowResultButton(true);
+    }, duration * 1000);
   };
 
   useEffect(() => {
@@ -72,7 +87,28 @@ export const ConfigSummaryPage = ({
           {t('currentCombinationCollection')}: {activeKombis} / {kombiCount}
         </li>
       </ul>
-      
+      {loading && (
+        <div className="my-4">
+          <p className="mb-2">{t('calculating')}</p>
+          <div className="w-full bg-gray-200 rounded">
+            <div
+              className="h-2 bg-blue-600 rounded transition-all"
+              style={{ width: `${progress}%`, transitionDuration: `${progressDuration}s` }}
+            />
+          </div>
+        </div>
+      )}
+      {showResultButton && (
+        <div className="mt-4">
+          <button
+            onClick={() => navigate('/results')}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            {t('showResults')}
+          </button>
+        </div>
+      )}
+
     </div>
   );
 };
