@@ -222,6 +222,7 @@ async def get_features():
     """Liefert Feature-Flags aus der Backend-Konfiguration."""
     return {
         "show_round_options": config.show_round_options,
+        "loadingscreen_duration": config.duration_loadingscreen,
     }
 
 

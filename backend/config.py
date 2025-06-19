@@ -143,6 +143,10 @@ class Config:
     def supported_languages(self):
         raw = self.config["Features"].get("available_languages", "de,en,fr")
         return [lang.strip() for lang in raw.split(",")]
+
+    @property
+    def duration_loadingscreen(self):
+        return float(self.config["Features"].get("duration_loadingscreen", 0.8))
     @property
     def valid_ideen_template(self):
         path = self.config["Dateien"].get("valid_ideen_template", None)

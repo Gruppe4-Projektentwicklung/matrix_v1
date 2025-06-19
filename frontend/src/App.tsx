@@ -39,6 +39,7 @@ function App() {
   const [appTester, setAppTester] = useState(false);
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
   const [showRoundOptions, setShowRoundOptions] = useState(true);
+  const [loadingScreenDuration, setLoadingScreenDuration] = useState(0.8);
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
   const [rankingEintraege/*, setRankingEintraege*/] = useState<any[]>([]);
   /* const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
@@ -63,6 +64,9 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
       .then((data) => {
         if (typeof data.show_round_options === "boolean") {
           setShowRoundOptions(data.show_round_options);
+        }
+        if (typeof data.loadingscreen_duration === "number") {
+          setLoadingScreenDuration(data.loadingscreen_duration);
         }
       })
       .catch((err) => {
@@ -410,6 +414,7 @@ return (
                 activeIdeen={ideen.filter((i) => i.aktiv).length}
                 kombiCount={gewichtungen.length}
                 activeKombis={gewichtungen.filter((k) => k.aktiv).length}
+                loadingDuration={loadingScreenDuration}
               />
             </div>
           )}
