@@ -1,8 +1,8 @@
 export interface CalcPayload {
   session: string;
-  ideenFile: string;
-  kombiFile: string;
-  ideenIds: string[];
+  ideen_file: string;
+  kombi_file: string;
+  ideen_ids: string[];
   gewichtungen: Record<string, number>;
   lang: string;
 }

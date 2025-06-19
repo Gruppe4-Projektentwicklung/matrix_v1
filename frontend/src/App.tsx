@@ -285,9 +285,9 @@ function App() {
 
       const result = await calculateRanking({
         session: sessionId,
-        ideenFile: aktuelleIdeensammlung,
-        kombiFile: aktuelleKombiSammlung,
-        ideenIds: ideen.filter((i) => i.aktiv).map((i) => i.id),
+        ideen_file: aktuelleIdeensammlung,
+        kombi_file: aktuelleKombiSammlung,
+        ideen_ids: ideen.filter((i) => i.aktiv).map((i) => i.id),
         gewichtungen: gew,
         lang: language,
       });
