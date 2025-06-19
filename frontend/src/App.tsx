@@ -325,8 +325,8 @@ return (
           element={
             <StartPage
               dev2Mode={dev2Mode}
-              onDev2ModeChange={setDev2Mode}
               onStart={(v) => {
+                setDev2Mode(v);
                 sessionStorage.setItem('dev2mode', v ? 'true' : 'false');
               }}
             />
