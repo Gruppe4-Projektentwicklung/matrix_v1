@@ -55,3 +55,16 @@ export function getPageStatus(): Record<string, string> {
   const raw = sessionStorage.getItem("pageStatus");
   return raw ? JSON.parse(raw) : {};
 }
+
+// ---- Backend Save Status Handling ----
+export type SaveRunStatus = 'idle' | 'sending' | 'ok' | 'error';
+
+export function setSaveRunStatus(status: SaveRunStatus) {
+  sessionStorage.setItem('saveRunStatus', status);
+  window.dispatchEvent(new Event('saveRunStatusUpdated'));
+}
+
+export function getSaveRunStatus(): SaveRunStatus {
+  return (sessionStorage.getItem('saveRunStatus') as SaveRunStatus) || 'idle';
+}
+

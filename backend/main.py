@@ -313,7 +313,7 @@ async def save_run(data: dict):
         raise HTTPException(status_code=400, detail="Ung\u00fcltige Daten")
 
     if data.get("tester"):
-        return {"message": "Tester-Modus: Bewertungslauf NICHT gespeichert."}
+        return {"message": "Tester-Modus: Bewertungslauf NICHT gespeichert.", "status": "ok"}
 
     run_id = str(uuid.uuid4())
     filepath = STORAGE_FOLDER / f"{run_id}.json"
@@ -321,7 +321,7 @@ async def save_run(data: dict):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    return {"message": "Bewertungslauf gespeichert", "run_id": run_id}
+    return {"message": "Bewertungslauf gespeichert", "run_id": run_id, "status": "ok"}
 
 
 # ---- Nutzungsdaten speichern ----

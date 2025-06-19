@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { saveRun } from "../api/saveRun";
+import { saveRun, SaveRunResponse } from "../api/saveRun";
+import { setSaveRunStatus } from "../utils/session";
+import { useEffect } from "react";
 
 export interface BewertungsLaufPayload {
   tester: boolean;
@@ -24,7 +26,7 @@ type Props = {
   open: boolean;
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
-  onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
+  onSaveSuccess: (result: SaveRunResponse) => void;
   onClose?: () => void;    // <---- Das ergänzt!
   inline?: boolean;
 };
@@ -38,6 +40,9 @@ export const StatistikForm: React.FC<Props> = ({
   inline = false,
 }) => {
   const { t } = useTranslation();
+  useEffect(() => {
+    setSaveRunStatus('idle');
+  }, []);
 
   const [alter, setAlter] = useState("");
   const [geschlecht, setGeschlecht] = useState("");
@@ -55,6 +60,7 @@ export const StatistikForm: React.FC<Props> = ({
     e.preventDefault();
     setSending(true);
     setFehler(null);
+    setSaveRunStatus('sending');
 
     if (!tester && (!alter || !geschlecht || !branche || !berufsrolle)) {
       setFehler(t('fieldsRequired'));
@@ -84,9 +90,11 @@ export const StatistikForm: React.FC<Props> = ({
     try {
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
+      setSaveRunStatus('ok');
       if (onClose) onClose();    // <--- Callback nach Erfolg, falls übergeben
     } catch (e: any) {
       setFehler(e.message || t("submitError"));
+      setSaveRunStatus('error');
     } finally {
       setSending(false);
     }
@@ -128,13 +136,16 @@ export const StatistikForm: React.FC<Props> = ({
                 value={alter}
                 onChange={(e) => setAlter(e.target.value)}
               />
-              <input
+              <select
                 className="border p-2 rounded w-full"
-                type="text"
-                placeholder={t("gender")}
                 value={geschlecht}
                 onChange={(e) => setGeschlecht(e.target.value)}
-              />
+              >
+                <option value="">{t("gender")}</option>
+                <option value="male">Männlich</option>
+                <option value="female">Weiblich</option>
+                <option value="none">Keine Angabe</option>
+              </select>
               <input
                 className="border p-2 rounded w-full"
                 type="text"
@@ -215,13 +226,16 @@ export const StatistikForm: React.FC<Props> = ({
               value={alter}
               onChange={(e) => setAlter(e.target.value)}
             />
-            <input
+            <select
               className="border p-2 rounded w-full"
-              type="text"
-              placeholder={t("gender")}
               value={geschlecht}
               onChange={(e) => setGeschlecht(e.target.value)}
-            />
+            >
+              <option value="">{t("gender")}</option>
+              <option value="male">Männlich</option>
+              <option value="female">Weiblich</option>
+              <option value="none">Keine Angabe</option>
+            </select>
             <input
               className="border p-2 rounded w-full"
               type="text"
@@ -270,3 +284,4 @@ export const StatistikForm: React.FC<Props> = ({
 };
 
 // KEIN weiteres export default – das ist hier nicht mehr nötig!
+export type { SaveRunResponse };
