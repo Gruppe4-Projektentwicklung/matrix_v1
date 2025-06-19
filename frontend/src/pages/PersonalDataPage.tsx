@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
+import pageDescriptions from '../pageDescriptions';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
@@ -64,30 +65,36 @@ export const PersonalDataPage = ({
 
   return (
     <div className="text-center">
-      {formOpen && (
-        <div className="mb-6 flex justify-center">
-          <StatistikForm
-            open={true}
-            inline
-            tester={tester}
-            payload={payload}
-            onSaveSuccess={handleSaveSuccess}
-            onUserDataSaved={onUserDataSaved}
-          />
-        </div>
-      )}
-      {!formOpen && saved && (
-        <SaveRunSuccess
-          open={true}
-          inline
-          message={saveMessage}
-          runId={saveRunId}
-          isTester={tester}
-          onEdit={() => {
-            setFormOpen(true);
-            setSaved(false);
-          }}
-        />
+      {tester ? (
+        <p className="mb-6">{pageDescriptions.personalData.testerMessage}</p>
+      ) : (
+        <>
+          {formOpen && (
+            <div className="mb-6 flex justify-center">
+              <StatistikForm
+                open={true}
+                inline
+                tester={tester}
+                payload={payload}
+                onSaveSuccess={handleSaveSuccess}
+                onUserDataSaved={onUserDataSaved}
+              />
+            </div>
+          )}
+          {!formOpen && saved && (
+            <SaveRunSuccess
+              open={true}
+              inline
+              message={saveMessage}
+              runId={saveRunId}
+              isTester={tester}
+              onEdit={() => {
+                setFormOpen(true);
+                setSaved(false);
+              }}
+            />
+          )}
+        </>
       )}
       <div className="mt-8 mb-6 flex justify-between">
         <ResetButton />
