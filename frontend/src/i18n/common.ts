@@ -102,6 +102,8 @@ const common = {
         uploadSuccess: "Upload erfolgreich",
         loadError: "Laden fehlgeschlagen",
         noDataLoaded: "Keine Daten geladen",
+        calculating: "Berechnung läuft...",
+        showResults: "Ergebnis anzeigen",
       },
     },
     en: {
@@ -206,6 +208,8 @@ const common = {
         uploadSuccess: "Upload successful",
         loadError: "Loading failed",
         noDataLoaded: "No data loaded",
+        calculating: "Calculating...",
+        showResults: "Show results",
       },
     },
     fr: {
@@ -312,6 +316,8 @@ const common = {
         uploadSuccess: "Téléversement réussi",
         loadError: "Échec du chargement",
         noDataLoaded: "Aucune donnée chargée",
+        calculating: "Calcul en cours...",
+        showResults: "Afficher le résultat",
       },
     },
   };
