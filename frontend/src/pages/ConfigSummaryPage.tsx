@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-import { hasSessionStarted, getSessionId } from '../utils/session';
+import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 
 interface Props {
@@ -33,6 +33,7 @@ export const ConfigSummaryPage = ({
       kombiCount,
       activeKombis,
     });
+    setPageStatus('summary', 'ok');
     navigate('/results');
   };
 

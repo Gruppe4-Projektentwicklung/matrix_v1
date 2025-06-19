@@ -4,7 +4,7 @@ import { CollectionSelectorKombis } from '../components/CollectionSelectorKombis
 import { useNavigate } from 'react-router-dom';
 import { ResetButton } from '../components/ResetButton';
 import { useTranslation } from 'react-i18next';
-import { hasSessionStarted, getSessionId } from '../utils/session';
+import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 
 interface Props {
@@ -43,6 +43,7 @@ export const SelectDataPage = ({
                 ideenSammlung: aktuelleIdeensammlung,
                 kombiSammlung: aktuelleKombiSammlung,
               });
+              setPageStatus('select-data', 'ok');
               navigate('/ideas');
             }}
             className="px-4 py-2 bg-blue-600 text-white rounded"

@@ -48,7 +48,7 @@ export const StatistikForm: React.FC<Props> = ({
 
   const isValidAge = (value: string) => {
     const num = Number(value);
-    return Number.isInteger(num) && num >= 0 && num <= 120;
+    return Number.isInteger(num) && num >= 10 && num <= 120;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -122,7 +122,7 @@ export const StatistikForm: React.FC<Props> = ({
               <input
                 className="border p-2 rounded w-full"
                 type="number"
-                min="0"
+                min="10"
                 max="120"
                 placeholder={t("age")}
                 value={alter}
@@ -209,7 +209,7 @@ export const StatistikForm: React.FC<Props> = ({
             <input
               className="border p-2 rounded w-full"
               type="number"
-              min="0"
+              min="10"
               max="120"
               placeholder={t("age")}
               value={alter}
