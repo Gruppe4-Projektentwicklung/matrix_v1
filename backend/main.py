@@ -216,6 +216,14 @@ async def get_kombi_config(session: str, filename: str, lang: str = Query("de"))
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
+# ---- Feature-Flags für das Frontend ----
+@app.get("/api/features")
+async def get_features():
+    """Liefert Feature-Flags aus der Backend-Konfiguration."""
+    return {
+        "show_round_options": config.show_round_options,
+    }
+
 
 
 

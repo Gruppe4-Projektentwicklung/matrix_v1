@@ -8,6 +8,7 @@ type BewertungsOptionenProps = {
   datenfreigabe: "offen" | "anonym" | "keine";
   onChange: (field: string, value: any) => void;
   showDataRelease?: boolean;
+  showRoundOptions?: boolean;
 };
 
 export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
@@ -17,6 +18,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
   datenfreigabe,
   onChange,
   showDataRelease = true,
+  showRoundOptions = true,
 }) => {
   const { t } = useTranslation();
 
@@ -26,25 +28,29 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
 
       {/* Checkboxen nebeneinander und zentriert */}
       <div className="flex justify-center gap-8 flex-wrap text-center">
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={runde1}
-            onChange={(e) => onChange("runde1", e.target.checked)}
-            className="accent-[#1d2c5b]"
-          />
-          {t("optionConsiderRound1")}
-        </label>
+        {showRoundOptions && (
+          <>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={runde1}
+                onChange={(e) => onChange("runde1", e.target.checked)}
+                className="accent-[#1d2c5b]"
+              />
+              {t("optionConsiderRound1")}
+            </label>
 
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={runde2}
-            onChange={(e) => onChange("runde2", e.target.checked)}
-            className="accent-[#1d2c5b]"
-          />
-          {t("optionConsiderRound2")}
-        </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={runde2}
+                onChange={(e) => onChange("runde2", e.target.checked)}
+                className="accent-[#1d2c5b]"
+              />
+              {t("optionConsiderRound2")}
+            </label>
+          </>
+        )}
 
         <label className="flex items-center gap-2">
           <input
