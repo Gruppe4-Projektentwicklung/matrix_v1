@@ -1,33 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { saveRun } from "../api/saveRun";
-import type { SaveRunResponse } from "../api/saveRun";
+import type { SaveRunResponse, BewertungsLaufPayload, UserData } from "../api/saveRun";
 import { setSaveRunStatus } from "../utils/session";
-
-export interface BewertungsLaufPayload {
-  tester: boolean;
-  userData?: {
-    alter?: string;
-    geschlecht?: string;
-    branche?: string;
-    berufsrolle?: string;
-    [key: string]: any;
-  };
-  ideenSammlung: string;
-  kombiSammlung: string;
-  gewaehlteIdeen: string[];
-  deaktivierteIdeen: string[];
-  gewichtungen: Record<string, number>;
-  ergebnisRanking: any[];
-  zeitstempel?: string;
-}
-
-export interface UserData {
-  alter?: string;
-  geschlecht?: string;
-  branche?: string;
-  berufsrolle?: string;
-}
 
 type Props = {
   open: boolean;
@@ -298,5 +273,3 @@ export const StatistikForm: React.FC<Props> = ({
     </div>
   );
 };
-
-export type { SaveRunResponse, UserData };
