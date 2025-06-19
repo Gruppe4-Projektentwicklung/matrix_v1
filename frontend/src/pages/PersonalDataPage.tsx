@@ -5,12 +5,12 @@ import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
-import type { BewertungsLaufPayload } from '../components/StatistikForm';
+import type { BewertungsLaufPayload, SaveRunResponse } from '../components/StatistikForm';
 
 interface Props {
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, 'tester' | 'userData'>;
-  onSaveSuccess: (result: { run_id?: string; message: string; error?: string }) => void;
+  onSaveSuccess: (result: SaveRunResponse) => void;
 }
 
 export const PersonalDataPage = ({
@@ -30,11 +30,11 @@ export const PersonalDataPage = ({
     }
   }, [navigate]);
 
-  const handleSaveSuccess = (result: { run_id?: string; message: string; error?: string }) => {
+  const handleSaveSuccess = (result: SaveRunResponse) => {
     setSaved(true);
     setFormOpen(false);
     logEvent(getSessionId(), 'personal-data', result);
-    if (!result.error) {
+    if (!result.error && result.status === 'ok') {
       setPageStatus('personal', 'ok');
     }
     onSaveSuccess(result);

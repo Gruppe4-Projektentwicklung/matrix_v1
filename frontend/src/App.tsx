@@ -13,6 +13,7 @@ import { SelectDataPage } from "./pages/SelectDataPage";
 import { IdeaSelectionPage } from "./pages/IdeaSelectionPage";
 import { CombinationSelectionPage } from "./pages/CombinationSelectionPage";
 import { PersonalDataPage } from "./pages/PersonalDataPage";
+import type { SaveRunResponse } from "./components/StatistikForm";
 import { ConfigSummaryPage } from "./pages/ConfigSummaryPage";
 import { CalcResultsPage } from "./pages/CalcResultsPage";
 
@@ -273,7 +274,7 @@ const handleKombiSammlungChange = useCallback(
   };
 
 
-  const handleSaveSuccess = (result: { run_id?: string; message: string }) => {
+  const handleSaveSuccess = (result: SaveRunResponse) => {
     setSaveRunId(result.run_id);
     setSaveRunMessage(result.message);
     setSaveRunSuccessOpen(true);

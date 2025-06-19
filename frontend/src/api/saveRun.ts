@@ -19,9 +19,16 @@ export interface BewertungsLaufPayload {
   // ...weitere gewünschte Felder
 }
 
+export interface SaveRunResponse {
+  run_id?: string;
+  message: string;
+  status?: string;
+  error?: string;
+}
+
 export async function saveRun(
   payload: BewertungsLaufPayload,
-): Promise<{ run_id?: string; message: string; error?: string }> {
+): Promise<SaveRunResponse> {
   const apiBase = import.meta.env.VITE_API_URL;
   let response: Response;
   try {

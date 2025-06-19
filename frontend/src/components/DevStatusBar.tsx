@@ -1,16 +1,23 @@
 import React from 'react';
-import { getPageStatus } from '../utils/session';
+import { getPageStatus, getSaveRunStatus } from '../utils/session';
 
 const pages = ['select-data', 'idea', 'combination', 'personal', 'summary'];
 
 export const DevStatusBar: React.FC = () => {
   const [status, setStatus] = React.useState<Record<string, string>>({});
+  const [saveStatus, setSaveStatus] = React.useState(getSaveRunStatus());
 
   React.useEffect(() => {
-    const update = () => setStatus(getPageStatus());
-    update();
-    window.addEventListener('pageStatusUpdated', update);
-    return () => window.removeEventListener('pageStatusUpdated', update);
+    const updateStatus = () => setStatus(getPageStatus());
+    const updateSave = () => setSaveStatus(getSaveRunStatus());
+    updateStatus();
+    updateSave();
+    window.addEventListener('pageStatusUpdated', updateStatus);
+    window.addEventListener('saveRunStatusUpdated', updateSave);
+    return () => {
+      window.removeEventListener('pageStatusUpdated', updateStatus);
+      window.removeEventListener('saveRunStatusUpdated', updateSave);
+    };
   }, []);
 
   return (
@@ -38,6 +45,12 @@ export const DevStatusBar: React.FC = () => {
                 </td>
               );
             })}
+          </tr>
+          <tr>
+            <td className="px-2">SaveRun</td>
+            <td colSpan={pages.length} className="px-2 border text-center">
+              <span>{saveStatus}</span>
+            </td>
           </tr>
         </tbody>
       </table>
