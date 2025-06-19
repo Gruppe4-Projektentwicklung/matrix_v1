@@ -55,15 +55,26 @@ export const ConfigSummaryPage = ({
     setPageStatus('summary', 'ok');
     const duration = loadingDuration + Math.random() * 0.4;
     setProgressDuration(duration);
-    setLoading(true);
-    setShowResultButton(false);
     setProgress(0);
-    setTimeout(() => setProgress(100), 50);
-    setTimeout(() => {
-      setLoading(false);
-      setShowResultButton(true);
-    }, duration * 1000);
+    setShowResultButton(false);
+    setLoading(true);
   };
+
+  useEffect(() => {
+    if (!loading) return;
+    const start = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = (Date.now() - start) / 1000;
+      const percentage = Math.min((elapsed / progressDuration) * 100, 100);
+      setProgress(percentage);
+      if (percentage >= 100) {
+        clearInterval(interval);
+        setLoading(false);
+        setShowResultButton(true);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, [loading, progressDuration]);
 
   useEffect(() => {
     if (!hasSessionStarted()) {
@@ -127,11 +138,13 @@ export const ConfigSummaryPage = ({
       )}
       {loading && (
         <div className="my-4">
-          <p className="mb-2">{t('calculating')}</p>
+          <p className="mb-2">
+            {t('calculating')} {`${Math.round(progress)}/100 %`}
+          </p>
           <div className="w-full bg-gray-200 rounded">
             <div
               className="h-2 bg-blue-600 rounded transition-all"
-              style={{ width: `${progress}%`, transitionDuration: `${progressDuration}s` }}
+              style={{ width: `${progress}%` }}
             />
           </div>
         </div>
