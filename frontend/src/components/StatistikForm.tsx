@@ -30,9 +30,27 @@ export const StatistikForm: React.FC<Props> = ({
     setSaveRunStatus("idle");
   }, []);
 
+  const industryOptions = [
+    "Baugewerbe",
+    "Energie",
+    "IT",
+    "Bildung",
+    "Gesundheit",
+  ];
+
+  const jobRoleOptions = [
+    "Ingenieur/in",
+    "Architekt/in",
+    "Manager/in",
+    "Forscher/in",
+    "Student/in",
+  ];
+
   const [alter, setAlter] = useState("");
   const [geschlecht, setGeschlecht] = useState("");
+  const [brancheOption, setBrancheOption] = useState("");
   const [branche, setBranche] = useState("");
+  const [berufsrolleOption, setBerufsrolleOption] = useState("");
   const [berufsrolle, setBerufsrolle] = useState("");
   const [sending, setSending] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
@@ -137,20 +155,66 @@ export const StatistikForm: React.FC<Props> = ({
                 <option value="female">{t("genderFemale")}</option>
                 <option value="none">{t("genderNone")}</option>
               </select>
-              <input
+              <select
                 className="border p-2 rounded w-full"
-                type="text"
-                placeholder={t("industry")}
-                value={branche}
-                onChange={(e) => setBranche(e.target.value)}
-              />
-              <input
+                value={brancheOption}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setBrancheOption(val);
+                  if (val !== "other") {
+                    setBranche(val);
+                  } else {
+                    setBranche("");
+                  }
+                }}
+              >
+                <option value="">{t("industry")}</option>
+                {industryOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+                <option value="other">{t("other")}</option>
+              </select>
+              {brancheOption === "other" && (
+                <input
+                  className="border p-2 rounded w-full"
+                  type="text"
+                  placeholder={t("industry")}
+                  value={branche}
+                  onChange={(e) => setBranche(e.target.value)}
+                />
+              )}
+              <select
                 className="border p-2 rounded w-full"
-                type="text"
-                placeholder={t("jobRole")}
-                value={berufsrolle}
-                onChange={(e) => setBerufsrolle(e.target.value)}
-              />
+                value={berufsrolleOption}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setBerufsrolleOption(val);
+                  if (val !== "other") {
+                    setBerufsrolle(val);
+                  } else {
+                    setBerufsrolle("");
+                  }
+                }}
+              >
+                <option value="">{t("jobRole")}</option>
+                {jobRoleOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+                <option value="other">{t("other")}</option>
+              </select>
+              {berufsrolleOption === "other" && (
+                <input
+                  className="border p-2 rounded w-full"
+                  type="text"
+                  placeholder={t("jobRole")}
+                  value={berufsrolle}
+                  onChange={(e) => setBerufsrolle(e.target.value)}
+                />
+              )}
             </div>
           )}
 
@@ -231,20 +295,66 @@ export const StatistikForm: React.FC<Props> = ({
               <option value="female">{t("genderFemale")}</option>
               <option value="none">{t("genderNone")}</option>
             </select>
-            <input
+            <select
               className="border p-2 rounded w-full"
-              type="text"
-              placeholder={t("industry")}
-              value={branche}
-              onChange={(e) => setBranche(e.target.value)}
-            />
-            <input
+              value={brancheOption}
+              onChange={(e) => {
+                const val = e.target.value;
+                setBrancheOption(val);
+                if (val !== "other") {
+                  setBranche(val);
+                } else {
+                  setBranche("");
+                }
+              }}
+            >
+              <option value="">{t("industry")}</option>
+              {industryOptions.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+              <option value="other">{t("other")}</option>
+            </select>
+            {brancheOption === "other" && (
+              <input
+                className="border p-2 rounded w-full"
+                type="text"
+                placeholder={t("industry")}
+                value={branche}
+                onChange={(e) => setBranche(e.target.value)}
+              />
+            )}
+            <select
               className="border p-2 rounded w-full"
-              type="text"
-              placeholder={t("jobRole")}
-              value={berufsrolle}
-              onChange={(e) => setBerufsrolle(e.target.value)}
-            />
+              value={berufsrolleOption}
+              onChange={(e) => {
+                const val = e.target.value;
+                setBerufsrolleOption(val);
+                if (val !== "other") {
+                  setBerufsrolle(val);
+                } else {
+                  setBerufsrolle("");
+                }
+              }}
+            >
+              <option value="">{t("jobRole")}</option>
+              {jobRoleOptions.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+              <option value="other">{t("other")}</option>
+            </select>
+            {berufsrolleOption === "other" && (
+              <input
+                className="border p-2 rounded w-full"
+                type="text"
+                placeholder={t("jobRole")}
+                value={berufsrolle}
+                onChange={(e) => setBerufsrolle(e.target.value)}
+              />
+            )}
           </div>
         )}
 
