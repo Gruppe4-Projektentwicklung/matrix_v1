@@ -28,6 +28,7 @@ const common = {
         noDetails: "Keine Details vorhanden",
 
         optionsTitle: "Bewertungsoptionen",
+        ideaSelectionTitle: "Ideenauswahl",
         optionConsiderRound1: "Runde 1 berücksichtigen",
         optionConsiderRound2: "Runde 2 berücksichtigen",
         optionAppTester: "App-Tester (kein Logging, keine Datenabfrage)",
@@ -132,6 +133,7 @@ const common = {
         noDetails: "No details available",
 
         optionsTitle: "Evaluation options",
+        ideaSelectionTitle: "Idea selection",
         optionConsiderRound1: "Consider round 1",
         optionConsiderRound2: "Consider round 2",
         optionAppTester: "App tester (no logging, no data collection)",
@@ -235,6 +237,7 @@ const common = {
         noDetails: "Aucun détail disponible",
 
         optionsTitle: "Options d'évaluation",
+        ideaSelectionTitle: "Sélection d'idées",
         optionConsiderRound1: "Prenez en compte le tour 1",
         optionConsiderRound2: "Prenez en compte le tour 2",
         optionAppTester: "Testeur d'app (pas de journalisation, pas de collecte de données)",

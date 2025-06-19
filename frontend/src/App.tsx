@@ -96,6 +96,8 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
 
   const loadIdeen = useCallback(
     async (filename: string) => {
+      // Clear previous ideas to avoid flicker while loading new data
+      setIdeen([]);
       const data = await fetchCollectionContent("ideen", filename);
       if (!data) return;
       const rows = Array.isArray(data.rows) ? data.rows : [];

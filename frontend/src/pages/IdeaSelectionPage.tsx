@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { IdeenSelector } from '../components/IdeenSelector';
-import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
@@ -46,14 +45,7 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
         </div>
       </div>
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
-        <BewertungsOptionen
-          runde1={true}
-          runde2={true}
-          appTester={false}
-          datenfreigabe="offen"
-          onChange={() => {}}
-          showDataRelease={false}
-        />
+        <h2 className="text-lg font-semibold text-center">{t('ideaSelectionTitle')}</h2>
         <p className="mt-4 text-center text-sm text-gray-700">{t('selectWeightsInfo')}</p>
       </div>
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
