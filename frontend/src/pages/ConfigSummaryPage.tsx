@@ -98,23 +98,23 @@ export const ConfigSummaryPage = ({
   return (
     <div>
       <div className="mt-8 mb-6 flex justify-between">
-        <ResetButton />
         <div className="flex gap-4">
+          <ResetButton />
           <button onClick={() => navigate('/personal')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button
-            onClick={handleCalculate}
-            disabled={disabled}
-            className={
-              disabled
-                ? 'px-4 py-2 bg-gray-300 rounded cursor-not-allowed'
-                : 'px-4 py-2 bg-blue-600 text-white rounded'
-            }
-          >
-            {t('calculate')}
-          </button>
         </div>
+        <button
+          onClick={handleCalculate}
+          disabled={disabled}
+          className={
+            disabled
+              ? 'px-4 py-2 bg-gray-300 rounded cursor-not-allowed'
+              : 'px-4 py-2 bg-blue-600 text-white rounded'
+          }
+        >
+          {t('calculate')}
+        </button>
       </div>
       <h2 className="text-xl font-bold mb-4">{t('summary')}</h2>
       <ul className="mb-4 list-disc list-inside">
