@@ -4,15 +4,16 @@ import { saveRun } from "../api/saveRun";
 import type { SaveRunResponse } from "../api/saveRun";
 import { setSaveRunStatus } from "../utils/session";
 
+export interface UserData {
+  alter?: string;
+  geschlecht?: string;
+  branche?: string;
+  berufsrolle?: string;
+}
+
 export interface BewertungsLaufPayload {
   tester: boolean;
-  userData?: {
-    alter?: string;
-    geschlecht?: string;
-    branche?: string;
-    berufsrolle?: string;
-    [key: string]: any;
-  };
+  userData?: UserData;
   ideenSammlung: string;
   kombiSammlung: string;
   gewaehlteIdeen: string[];
@@ -20,13 +21,6 @@ export interface BewertungsLaufPayload {
   gewichtungen: Record<string, number>;
   ergebnisRanking: any[];
   zeitstempel?: string;
-}
-
-export interface UserData {
-  alter?: string;
-  geschlecht?: string;
-  branche?: string;
-  berufsrolle?: string;
 }
 
 type Props = {
@@ -101,9 +95,7 @@ export const StatistikForm: React.FC<Props> = ({
       onSaveSuccess(result);
       if (onUserDataSaved) {
         onUserDataSaved(
-          tester
-            ? undefined
-            : { alter, geschlecht, branche, berufsrolle }
+          tester ? undefined : { alter, geschlecht, branche, berufsrolle }
         );
       }
       setSaveRunStatus("ok");
@@ -187,7 +179,11 @@ export const StatistikForm: React.FC<Props> = ({
               disabled={
                 sending ||
                 (!tester &&
-                  (!alter || !geschlecht || !branche || !berufsrolle || !isValidAge(alter)))
+                  (!alter ||
+                    !geschlecht ||
+                    !branche ||
+                    !berufsrolle ||
+                    !isValidAge(alter)))
               }
               className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
             >
@@ -277,7 +273,11 @@ export const StatistikForm: React.FC<Props> = ({
             disabled={
               sending ||
               (!tester &&
-                (!alter || !geschlecht || !branche || !berufsrolle || !isValidAge(alter)))
+                (!alter ||
+                  !geschlecht ||
+                  !branche ||
+                  !berufsrolle ||
+                  !isValidAge(alter)))
             }
             className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
           >
@@ -299,4 +299,5 @@ export const StatistikForm: React.FC<Props> = ({
   );
 };
 
-export type { SaveRunResponse, UserData };
+// Nur SaveRunResponse exportieren, nicht UserData (wird oben per `export interface` bereits exportiert)
+export type { SaveRunResponse };
