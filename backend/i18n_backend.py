@@ -45,6 +45,21 @@ MESSAGES = {
         "de": "Lesefehler:",
         "en": "Read error:",
         "fr": "Erreur de lecture :"
+    },
+    "run_saved": {
+        "de": "Bewertungslauf gespeichert",
+        "en": "Evaluation run saved",
+        "fr": "Exécution de l'évaluation enregistrée"
+    },
+    "run_not_saved_tester": {
+        "de": "Tester-Modus: Bewertungslauf NICHT gespeichert.",
+        "en": "Tester mode: evaluation run NOT saved.",
+        "fr": "Mode testeur : l'exécution de l'évaluation n'a PAS été enregistrée."
+    },
+    "invalid_data": {
+        "de": "Ungültige Daten",
+        "en": "Invalid data",
+        "fr": "Données invalides"
     }
 }
 

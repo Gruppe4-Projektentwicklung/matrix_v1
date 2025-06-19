@@ -11,6 +11,7 @@ export interface UserData {
 export interface BewertungsLaufPayload {
   tester: boolean; // true, wenn Tester-Modus aktiviert
   userData?: UserData;
+  lang?: string;
   ideenSammlung: string; // Dateiname oder ID der verwendeten Ideensammlung
   kombiSammlung: string; // Dateiname oder ID der verwendeten Kombisammlung
   gewaehlteIdeen: string[]; // IDs der aktiven Ideen

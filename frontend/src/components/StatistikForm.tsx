@@ -26,7 +26,7 @@ export const StatistikForm: React.FC<Props> = ({
   onClose,
   inline = false,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     setSaveRunStatus("idle");
   }, []);
@@ -93,6 +93,7 @@ export const StatistikForm: React.FC<Props> = ({
     const fullPayload: BewertungsLaufPayload = {
       ...payload,
       tester,
+      lang: i18n.language,
       userData: tester
         ? undefined
         : {

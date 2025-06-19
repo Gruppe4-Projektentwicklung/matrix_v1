@@ -422,6 +422,7 @@ function App() {
                     deaktivierteIdeen: ideen.filter((i) => !i.aktiv).map((i) => i.id),
                     gewichtungen: {},
                     ergebnisRanking: [],
+                    lang: language,
                   }}
                   onUserDataSaved={handleUserDataSaved}
                 />
