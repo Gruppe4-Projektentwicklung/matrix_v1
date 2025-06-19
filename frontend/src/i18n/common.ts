@@ -74,8 +74,8 @@ const common = {
         testerModeNotice: "Hinweis: Im App-Tester-Modus wird <b>keine</b> Speicherung vorgenommen.",
 
         helpImproveStats: "Bitte helfen Sie uns, die Statistik zu verbessern",
-        infoVoluntary: "Ihre Angaben sind <b>freiwillig</b>, anonym und werden nur für Auswertungen gespeichert. Sie können auch als App-Tester fortfahren, dann wird <b>gar nichts</b> gespeichert.",
-        appTesterMode: "App-Tester: Keine Daten speichern und keine Angaben machen",
+        infoVoluntary: "Ihre Angaben sind <b>freiwillig</b>, anonym und werden nur für Auswertungen gespeichert.",
+        appTesterMode: "App-Tester Modus, keine Datenabfrage",
         age: "Alter",
         gender: "Geschlecht",
         genderMale: "Männlich",
@@ -209,8 +209,8 @@ const common = {
         testerModeNotice: "Note: In app tester mode, <b>no</b> data is saved.",
 
         helpImproveStats: "Please help us improve the statistics",
-        infoVoluntary: "Your information is <b>voluntary</b>, anonymous, and used only for evaluations. You can also continue as an app tester; then <b>no</b> data is saved.",
-        appTesterMode: "App tester: Do not save data or provide info",
+        infoVoluntary: "Your information is <b>voluntary</b>, anonymous, and used only for evaluations.",
+        appTesterMode: "App tester mode, no data collection",
         age: "Age",
         gender: "Gender",
         genderMale: "Male",
@@ -344,8 +344,8 @@ const common = {
         testerModeNotice: "Remarque : En mode testeur d'application, <b>aucune</b> donnée n'est enregistrée.",
 
         helpImproveStats: "Aidez-nous à améliorer les statistiques",
-        infoVoluntary: "Vos informations sont <b>volontaires</b>, anonymes et utilisées uniquement pour des évaluations. Vous pouvez également continuer en tant que testeur d'application ; alors <b>aucune</b> donnée n'est enregistrée.",
-        appTesterMode: "Testeur d'app : ne pas enregistrer les données ni fournir d'informations",
+        infoVoluntary: "Vos informations sont <b>volontaires</b>, anonymes et utilisées uniquement pour des évaluations.",
+        appTesterMode: "Mode testeur d'app, aucune collecte de données",
 
         age: "Âge",
         gender: "Sexe",

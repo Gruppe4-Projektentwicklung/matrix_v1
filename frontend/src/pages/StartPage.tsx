@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { markSessionStarted } from '../utils/session';
+import pageDescriptions from '../pageDescriptions';
 
 interface Props {
   dev2Mode: boolean;
@@ -21,7 +22,7 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
       <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] tracking-tight drop-shadow">
         {t('title')}
       </h1>
-      <p className="mb-6 text-gray-700">{t('introText')}</p>
+      <p className="mb-6 text-gray-700">{pageDescriptions.startIntro}</p>
       <div className="flex items-center justify-center gap-4 mt-4">
         <button
           onClick={handleStart}
