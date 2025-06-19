@@ -46,7 +46,7 @@ Neu hinzugekommen sind:
 - Navigation zwischen den Seiten über "Weiter"/"Zurück" Buttons.
 - Standardsprache wurde auf Englisch gestellt und fehlende Übersetzungen ergänzt.
 - Fehlerbehandlung beim Upload überarbeitet und Statistikformular lässt sich jetzt öffnen.
-- Die veralteten Seiten `ConfigPage.tsx`, `UploadPage.tsx` und `ResultsPage.tsx` wurden entfernt.
+- `ResultsPage.tsx` wurde entfernt; `ConfigPage.tsx` und `UploadPage.tsx` liegen noch im Projekt, sind aber aktuell ungenutzt.
 - Neue Route `/log_step` im Backend archiviert jede Nutzeraktion als JSONL im Ordner `archive/`.
 - Reset-Buttons zeigen nun eine Warnung und starten garantiert eine neue Session.
 - Auf der "Select Data" Seite gibt es keinen Zurück-Button mehr.
@@ -55,10 +55,12 @@ Neu hinzugekommen sind:
   der Fehler "unknown error" auf der Personal-Seite behoben wurde.
 
 ### Nächste Schritte
-- Navigationsmenü (Arbeitsplan Punkt 4) ergänzen und 404-Seite erstellen.
-- Gemeinsamen Zustand per React Context zentral verwalten.
+- Navigationsmenü mit Links zu allen Seiten erstellen (Arbeitsplan Schritt 4) und eine 404-Seite einbauen.
+- Gemeinsamen Zustand per React Context zentral verwalten (Schritt 6).
+- Fehlerseite einrichten und 404-Routing ergänzen (Schritt 7).
+- Optional: Lazy Loading via `React.lazy` für größere Seiten nutzen (Schritt 8).
 - Archivierte Nutzungsdaten auswerten und Statistiken vorbereiten.
-- Weiteren Feinschliff an den Seiten (Texte und Validierung).
+- Finaler End-to-End-Test aller Routen und Funktionen (Schritt 10).
 
 ---
 
@@ -84,4 +86,4 @@ Dann kannst du sofort am nächsten Schritt weiterarbeiten.
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (19.06.2025:11:16)*
+*Letzte Aktualisierung durch ChatGPT: (19.06.2025:17:37)*
