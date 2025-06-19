@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { saveRun, SaveRunResponse } from "../api/saveRun";
+import { saveRun } from "../api/saveRun";
+import type { SaveRunResponse } from "../api/saveRun";
 import { setSaveRunStatus } from "../utils/session";
-import { useEffect } from "react";
 
 export interface BewertungsLaufPayload {
   tester: boolean;
@@ -27,7 +27,7 @@ type Props = {
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, "tester" | "userData">;
   onSaveSuccess: (result: SaveRunResponse) => void;
-  onClose?: () => void;    // <---- Das ergänzt!
+  onClose?: () => void;
   inline?: boolean;
 };
 
@@ -36,12 +36,12 @@ export const StatistikForm: React.FC<Props> = ({
   tester,
   payload,
   onSaveSuccess,
-  onClose,          // <--- und das hier!
+  onClose,
   inline = false,
 }) => {
   const { t } = useTranslation();
   useEffect(() => {
-    setSaveRunStatus('idle');
+    setSaveRunStatus("idle");
   }, []);
 
   const [alter, setAlter] = useState("");
@@ -60,15 +60,15 @@ export const StatistikForm: React.FC<Props> = ({
     e.preventDefault();
     setSending(true);
     setFehler(null);
-    setSaveRunStatus('sending');
+    setSaveRunStatus("sending");
 
     if (!tester && (!alter || !geschlecht || !branche || !berufsrolle)) {
-      setFehler(t('fieldsRequired'));
+      setFehler(t("fieldsRequired"));
       setSending(false);
       return;
     }
     if (!tester && !isValidAge(alter)) {
-      setFehler(t('invalidAge'));
+      setFehler(t("invalidAge"));
       setSending(false);
       return;
     }
@@ -90,11 +90,11 @@ export const StatistikForm: React.FC<Props> = ({
     try {
       const result = await saveRun(fullPayload);
       onSaveSuccess(result);
-      setSaveRunStatus('ok');
-      if (onClose) onClose();    // <--- Callback nach Erfolg, falls übergeben
+      setSaveRunStatus("ok");
+      if (onClose) onClose();
     } catch (e: any) {
       setFehler(e.message || t("submitError"));
-      setSaveRunStatus('error');
+      setSaveRunStatus("error");
     } finally {
       setSending(false);
     }
@@ -282,6 +282,3 @@ export const StatistikForm: React.FC<Props> = ({
     </div>
   );
 };
-
-// KEIN weiteres export default – das ist hier nicht mehr nötig!
-export type { SaveRunResponse };
