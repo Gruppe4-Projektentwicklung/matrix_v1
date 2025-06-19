@@ -14,6 +14,7 @@ from validator.validate_ideen import validate_ideen_excel
 from validator.validate_kombis import validate_kombi_excel
 from i18n_backend import t
 from frontend_config import lade_frontend_konfiguration
+from bewertung import Bewertung
 
 import tempfile
 
@@ -58,6 +59,26 @@ def get_global_files(sammlung_typ):
         return [], None
     files = sorted([f.name for f in base_dir.glob("*.xlsx")])
     return files, default_file
+
+# ---- Hilfsfunktion: Pfad zu Datei aus Session oder globalem Ordner ----
+def resolve_file(sammlung_typ: str, session: str, filename: str) -> Path:
+    """Sucht eine Datei zuerst in der Session, dann im globalen Verzeichnis."""
+    if sammlung_typ == "ideen":
+        global_dir = Path(config.selectionideas_dir)
+    elif sammlung_typ == "kombis":
+        global_dir = Path(config.selectioncombis_dir)
+    else:
+        raise HTTPException(status_code=400, detail="invalid_collection_type")
+
+    session_path = UPLOAD_BASE / session / sammlung_typ / filename
+    if session_path.exists():
+        return session_path
+
+    global_path = global_dir / filename
+    if global_path.exists():
+        return global_path
+
+    raise HTTPException(status_code=404, detail=f"{filename} not found")
 
 # ======================= ROUTES ===========================
 
@@ -343,3 +364,51 @@ async def log_step(request: Request, payload: dict):
         json.dump(entry, f, ensure_ascii=False)
         f.write("\n")
     return {"message": "Logged"}
+
+
+# ---- Berechnung und Ranking ----
+@app.post("/api/calculate")
+async def calculate_ranking(payload: dict):
+    """Berechnet das Ranking der Ideen anhand der übermittelten Auswahl."""
+    session = payload.get("session", "")
+    ideen_file = payload.get("ideen_file")
+    kombi_file = payload.get("kombi_file")
+    ideen_ids = payload.get("ideen_ids", [])
+    gewichtungen = payload.get("gewichtungen", {})
+    lang = payload.get("lang", config.default_language)
+
+    if not ideen_file or not kombi_file:
+        raise HTTPException(status_code=400, detail="missing filenames")
+
+    ideen_path = resolve_file("ideen", session, ideen_file)
+    kombi_path = resolve_file("kombis", session, kombi_file)
+
+    try:
+        ideen_loader = ExcelLoader(str(ideen_path), sprache=lang)
+        ideen_df = ideen_loader.lade_excel()
+
+        kombi_loader = ExcelLoader(str(kombi_path), sprache=lang)
+        kombis_df = kombi_loader.lade_excel()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    if ideen_ids:
+        ideen_df = ideen_df[ideen_df["ID"].astype(str).isin([str(i) for i in ideen_ids])]
+
+    bewertung = Bewertung(ideen_df, kombis_df, gewichtungen)
+    kombi_ergebnisse = bewertung.berechne_alle_kombinationen()
+    ranking_series = bewertung.berechne_gesamt_ranking(kombi_ergebnisse)
+
+    results = []
+    for idee_id, score in ranking_series.items():
+        idee = ideen_df.loc[idee_id]
+        details = {col: kombi_ergebnisse.loc[idee_id, col] for col in kombi_ergebnisse.columns}
+        results.append({
+            "id": str(idee_id),
+            "name": idee.get("titel", ""),
+            "beschreibung": idee.get("beschreibung", ""),
+            "score": float(score) if score == score else None,
+            "details": details,
+        })
+
+    return {"ranking": results}
