@@ -6,7 +6,7 @@ import "./i18n";
 
 import { useTranslation } from "react-i18next";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import { StartPage } from "./pages/StartPage";
 import { SelectDataPage } from "./pages/SelectDataPage";
@@ -20,11 +20,13 @@ import { CalcResultsPage } from "./pages/CalcResultsPage";
 import { SaveRunSuccess } from "./components/SaveRunSuccess";
 import { StatusToast } from "./components/StatusToast";
 
-import { getSessionId } from "./utils/session";
+import { getSessionId, setPageStatus } from "./utils/session";
+import { devConfig } from "./devConfig";
+import { DevStatusBar } from "./components/DevStatusBar";
 
 function App() {
-	
-	const sessionId = getSessionId();
+  const location = useLocation();
+  const sessionId = getSessionId();
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(
     i18n.language || (import.meta.env.VITE_DEFAULT_LANGUAGE || "en"),
@@ -40,6 +42,9 @@ function App() {
   const [rankingEintraege/*, setRankingEintraege*/] = useState<any[]>([]);
   /* const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
   const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null); */
+  const [dev2Mode, setDev2Mode] = useState(
+    sessionStorage.getItem('dev2mode') === 'true'
+  );
   const [saveRunSuccessOpen, setSaveRunSuccessOpen] = useState(false);
   const [saveRunMessage, setSaveRunMessage] = useState("");
   const [saveRunId, setSaveRunId] = useState<string | undefined>(undefined);
@@ -101,8 +106,8 @@ const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_komb
         id: row.Kombi_ID || row.id || String(idx + 1),
         name: row["#t_de#1"] || row.name || "",
         beschreibung: row["#t_de#2"] || row.beschreibung || "",
-        gewichtung: 0,
-        aktiv: false,
+        gewichtung: 3,
+        aktiv: true,
         ...row,
       }));
       setGewichtungen(parsed);
@@ -265,8 +270,20 @@ return (
   <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pb-10">
     <header className="w-[85%] mx-auto bg-blue-300 text-white shadow-md mb-4">
       <div className="flex justify-between items-center p-3">
-        <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">
-          Session ID: {sessionId}
+        <div className="flex items-center gap-4">
+          <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">
+            Session ID: {sessionId}
+          </div>
+          {location.pathname === '/' && devConfig.dataSaveStatus === 'on' && (
+            <label className="text-xs flex items-center gap-1 text-blue-900">
+              <input
+                type="checkbox"
+                checked={dev2Mode}
+                onChange={(e) => setDev2Mode(e.target.checked)}
+              />
+              Dev2 mode
+            </label>
+          )}
         </div>
         <select
           id="lang-select"
@@ -282,9 +299,22 @@ return (
       </div>
     </header>
 
+    {dev2Mode && devConfig.dataSaveStatus === 'on' && <DevStatusBar />}
+
     <main className="flex-grow w-full">
       <Routes>
-        <Route path="/" element={<StartPage />} />
+        <Route
+          path="/"
+          element={
+            <StartPage
+              dev2Mode={dev2Mode}
+              onDev2ModeChange={setDev2Mode}
+              onStart={(v) => {
+                sessionStorage.setItem('dev2mode', v ? 'true' : 'false');
+              }}
+            />
+          }
+        />
         <Route
           path="/select-data"
           element={(

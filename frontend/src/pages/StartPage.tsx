@@ -1,26 +1,44 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { markSessionStarted } from '../utils/session';
 
-export const StartPage = () => {
+interface Props {
+  dev2Mode: boolean;
+  onDev2ModeChange: (v: boolean) => void;
+  onStart: (dev2: boolean) => void;
+}
+export const StartPage = ({ dev2Mode, onDev2ModeChange, onStart }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  useEffect(() => {
+
+  const handleStart = () => {
     markSessionStarted();
-  }, []);
+    onStart(dev2Mode);
+    navigate('/select-data');
+  };
   return (
     <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 text-center min-h-[80vh]">
       <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] tracking-tight drop-shadow">
         {t('title')}
       </h1>
       <p className="mb-6 text-gray-700">{t('introText')}</p>
-      <button
-        onClick={() => navigate('/select-data')}
-        className="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded"
-      >
-        {t('start')}
-      </button>
+      <div className="flex items-center justify-center gap-4 mt-4">
+        <label className="text-sm flex items-center gap-1">
+          <input
+            type="checkbox"
+            checked={dev2Mode}
+            onChange={(e) => onDev2ModeChange(e.target.checked)}
+          />
+          Dev2 mode
+        </label>
+        <button
+          onClick={handleStart}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          {t('start')}
+        </button>
+      </div>
   
     </div>
   );

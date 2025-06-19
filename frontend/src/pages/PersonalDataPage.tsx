@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
-import { hasSessionStarted, getSessionId } from '../utils/session';
+import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
 import type { BewertungsLaufPayload } from '../components/StatistikForm';
@@ -34,6 +34,9 @@ export const PersonalDataPage = ({
     setSaved(true);
     setFormOpen(false);
     logEvent(getSessionId(), 'personal-data', result);
+    if (!result.error) {
+      setPageStatus('personal', 'ok');
+    }
     onSaveSuccess(result);
   };
 
@@ -44,6 +47,9 @@ export const PersonalDataPage = ({
       return;
     }
     logEvent(getSessionId(), 'personal-next', { saved });
+    if (saved || tester) {
+      setPageStatus('personal', 'ok');
+    }
     navigate('/summary');
   };
 
