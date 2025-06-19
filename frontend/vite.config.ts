@@ -15,6 +15,8 @@ export default defineConfig({
     '/session_files': 'http://localhost:8000',
     '/upload': 'http://localhost:8000',
     '/api': 'http://localhost:8000',
-	 '/download_template': 'http://localhost:8000', // ergänzen!
+    '/download_template': 'http://localhost:8000',
+    '/save_run': 'http://localhost:8000',
+    '/log_step': 'http://localhost:8000',
   }}
 });

@@ -22,9 +22,10 @@ export interface BewertungsLaufPayload {
 export async function saveRun(
   payload: BewertungsLaufPayload,
 ): Promise<{ run_id?: string; message: string; error?: string }> {
+  const apiBase = import.meta.env.VITE_API_URL;
   let response: Response;
   try {
-    response = await fetch("/save_run", {
+    response = await fetch(`${apiBase}/save_run`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

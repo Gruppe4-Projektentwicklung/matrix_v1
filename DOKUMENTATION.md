@@ -51,6 +51,8 @@ Neu hinzugekommen sind:
 - Reset-Buttons zeigen nun eine Warnung und starten garantiert eine neue Session.
 - Auf der "Select Data" Seite gibt es keinen Zurück-Button mehr.
 - Fehlermeldungen vom Backend werden beim Speichern von Bewertungen angezeigt.
+- API-Aufrufe zu `/save_run` und `/log_step` nutzen nun `VITE_API_URL`, wodurch
+  der Fehler "unknown error" auf der Personal-Seite behoben wurde.
 
 ### Nächste Schritte
 - Navigationsmenü (Arbeitsplan Punkt 4) ergänzen und 404-Seite erstellen.
@@ -82,4 +84,4 @@ Dann kannst du sofort am nächsten Schritt weiterarbeiten.
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:23:25)*
+*Letzte Aktualisierung durch ChatGPT: (19.06.2025:11:16)*
