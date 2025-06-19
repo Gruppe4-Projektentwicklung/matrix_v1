@@ -51,8 +51,10 @@ function App() {
   const [statusToastMessage, setStatusToastMessage] = useState("");
   const [statusToastType, setStatusToastType] = useState<"success" | "error" | "info">("info");
 
-  const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("default_ideen.xlsx");
-  const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("default_kombi.xlsx");
+  // Default file names should mirror the backend configuration
+  // (see backend/matrixconfig.ini -> default_ideen / default_kombi)
+  const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("standard_ideen.xlsx");
+  const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("CW25_combi_list.xlsx");
 
   // Backend-Feature-Flags laden
   useEffect(() => {
