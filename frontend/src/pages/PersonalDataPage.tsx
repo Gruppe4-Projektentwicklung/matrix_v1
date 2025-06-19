@@ -5,7 +5,10 @@ import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
-import type { BewertungsLaufPayload, SaveRunResponse, UserData } from '../components/StatistikForm';
+
+import type { BewertungsLaufPayload, UserData } from '../components/StatistikForm';
+import type { SaveRunResponse } from '../api/saveRun';
+
 
 interface Props {
   tester: boolean;
