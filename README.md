@@ -31,6 +31,10 @@ cd frontend
 npm run dev
 ```
 
+The frontend expects the backend URL in the `VITE_API_URL` environment
+variable.  You can adjust this in `frontend/.env` if your backend is not
+running on `http://localhost:8000`.
+
 The i18next library's debug output is disabled by default. You can enable it by
 setting the `VITE_I18N_DEBUG` environment variable to `true` before starting the
 frontend:

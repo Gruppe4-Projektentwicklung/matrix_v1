@@ -231,7 +231,7 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise
   - `backend_logging = on/off`
   - `standardeinstellung_runde1 = einbezogen/ausgeschlossen`
   - `exportformat = csv/pdf/excel`
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:23:25)*
+*Letzte Aktualisierung durch ChatGPT: (19.06.2025:11:16)*
 
 ### 3. **Bewertungslogik**
 - Bewertet alle aktiven Ideen mit den aktiven Kombinationen
@@ -245,6 +245,8 @@ README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise
 - Wenn `App-Tester` aktiv → kein Logging
 - Wenn `datapopup = on` → anonyme Datenabfrage vor Berechnung
 - Zusätzlich protokolliert `/log_step` jeden Schritt einer Session im Ordner `archive/`
+- Die Route `/save_run` legt das Ergebnis einer Bewertung als JSON-Datei ab.
+- Beide Endpoints werden im Frontend über `VITE_API_URL` aufgerufen.
 
 ---
 
@@ -299,4 +301,4 @@ Alle Dateien befinden sich unter:
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (18.06.2025:23:25)*
+*Letzte Aktualisierung durch ChatGPT: (19.06.2025:11:16)*
