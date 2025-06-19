@@ -294,6 +294,13 @@ const handleKombiSammlungChange = useCallback(
     setStatusToastMessage("");
   };
 
+  // Ensure success modal is only visible on the personal data page
+  useEffect(() => {
+    if (location.pathname !== "/personal") {
+      setSaveRunSuccessOpen(false);
+    }
+  }, [location.pathname]);
+
   useEffect(() => {
     loadIdeen(aktuelleIdeensammlung);
     loadKombis(aktuelleKombiSammlung);
