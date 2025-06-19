@@ -29,6 +29,7 @@ const common = {
 
         optionsTitle: "Bewertungsoptionen",
         ideaSelectionTitle: "Ideenauswahl",
+        selectIdeasInfo: "Hier k\u00f6nnen Sie Ideen f\u00fcr die Berechnung aktivieren oder deaktivieren.",
         optionConsiderRound1: "Runde 1 berücksichtigen",
         optionConsiderRound2: "Runde 2 berücksichtigen",
         optionAppTester: "App-Tester (kein Logging, keine Datenabfrage)",
@@ -82,6 +83,7 @@ const common = {
         genderNone: "Keine Angabe",
         industry: "Branche",
         jobRole: "Berufsrolle",
+        other: "Sonstiges",
         submitWithoutData: "Ohne Angaben abschicken",
         saveRating: "Bewertung speichern",
         cancel: "Abbrechen",
@@ -142,6 +144,7 @@ const common = {
 
         optionsTitle: "Evaluation options",
         ideaSelectionTitle: "Idea selection",
+        selectIdeasInfo: "Enable or disable ideas for the calculation.",
         optionConsiderRound1: "Consider round 1",
         optionConsiderRound2: "Consider round 2",
         optionAppTester: "App tester (no logging, no data collection)",
@@ -194,6 +197,7 @@ const common = {
         genderNone: "Prefer not to say",
         industry: "Industry",
         jobRole: "Job role",
+        other: "Other",
         submitWithoutData: "Submit without info",
         saveRating: "Save rating",
         cancel: "Cancel",
@@ -254,6 +258,7 @@ const common = {
 
         optionsTitle: "Options d'évaluation",
         ideaSelectionTitle: "Sélection d'idées",
+        selectIdeasInfo: "Activez ou désactivez des idées pour le calcul.",
         optionConsiderRound1: "Prenez en compte le tour 1",
         optionConsiderRound2: "Prenez en compte le tour 2",
         optionAppTester: "Testeur d'app (pas de journalisation, pas de collecte de données)",
@@ -307,6 +312,7 @@ const common = {
         genderNone: "Aucune indication",
         industry: "Secteur",
         jobRole: "Rôle professionnel",
+        other: "Autre",
 
         submitWithoutData: "Envoyez sans information",
         saveRating: "Enregistrez l'évaluation",
