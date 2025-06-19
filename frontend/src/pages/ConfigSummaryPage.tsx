@@ -11,6 +11,14 @@ interface Props {
   kombiCount: number;
   activeKombis: number;
   loadingDuration: number;
+  ideenSammlung: string;
+  kombiSammlung: string;
+  userData?: {
+    alter?: string;
+    geschlecht?: string;
+    branche?: string;
+    berufsrolle?: string;
+  };
 }
 
 export const ConfigSummaryPage = ({
@@ -19,6 +27,9 @@ export const ConfigSummaryPage = ({
   kombiCount,
   activeKombis,
   loadingDuration,
+  ideenSammlung,
+  kombiSammlung,
+  userData,
 }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -38,6 +49,8 @@ export const ConfigSummaryPage = ({
       activeIdeen,
       kombiCount,
       activeKombis,
+      ideenSammlung,
+      kombiSammlung,
     });
     setPageStatus('summary', 'ok');
     const duration = loadingDuration + Math.random() * 0.4;
@@ -81,12 +94,37 @@ export const ConfigSummaryPage = ({
       <h2 className="text-xl font-bold mb-4">{t('summary')}</h2>
       <ul className="mb-4 list-disc list-inside">
         <li>
+          {t('ideaCollectionName')}: {ideenSammlung}
+        </li>
+        <li>
+          {t('combinationCollectionName')}: {kombiSammlung}
+        </li>
+        <li>
           {t('currentIdeaCollection')}: {activeIdeen} / {ideenCount}
         </li>
         <li>
           {t('currentCombinationCollection')}: {activeKombis} / {kombiCount}
         </li>
       </ul>
+      {userData && (
+        <div className="mb-4 p-4 border rounded bg-gray-50">
+          <h3 className="font-semibold mb-2">{t('personalDataSummary')}</h3>
+          <ul className="list-disc list-inside">
+            <li>
+              {t('age')}: {userData.alter || '-'}
+            </li>
+            <li>
+              {t('gender')}: {userData.geschlecht || '-'}
+            </li>
+            <li>
+              {t('industry')}: {userData.branche || '-'}
+            </li>
+            <li>
+              {t('jobRole')}: {userData.berufsrolle || '-'}
+            </li>
+          </ul>
+        </div>
+      )}
       {loading && (
         <div className="my-4">
           <p className="mb-2">{t('calculating')}</p>

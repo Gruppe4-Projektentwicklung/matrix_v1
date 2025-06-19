@@ -13,7 +13,7 @@ import { SelectDataPage } from "./pages/SelectDataPage";
 import { IdeaSelectionPage } from "./pages/IdeaSelectionPage";
 import { CombinationSelectionPage } from "./pages/CombinationSelectionPage";
 import { PersonalDataPage } from "./pages/PersonalDataPage";
-import type { SaveRunResponse } from "./components/StatistikForm";
+import type { SaveRunResponse, UserData } from "./components/StatistikForm";
 import { ConfigSummaryPage } from "./pages/ConfigSummaryPage";
 import { CalcResultsPage } from "./pages/CalcResultsPage";
 
@@ -43,6 +43,7 @@ function App() {
   const [loadingScreenDuration, setLoadingScreenDuration] = useState(0.8);
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
   const [rankingEintraege/*, setRankingEintraege*/] = useState<any[]>([]);
+  const [userData, setUserData] = useState<UserData | undefined>(undefined);
   /* const [kombiInfoModalOpen, setKombiInfoModalOpen] = useState(false);
   const [kombiInfoPayload, setKombiInfoPayload] = useState<any>(null); */
   const [dev2Mode, setDev2Mode] = useState(
@@ -284,6 +285,10 @@ const handleKombiSammlungChange = useCallback(
     setSaveRunSuccessOpen(true);
   };
 
+  const handleUserDataSaved = (data: UserData | undefined) => {
+    setUserData(data);
+  };
+
   const handleCloseStatusToast = () => {
     setStatusToastOpen(false);
     setStatusToastMessage("");
@@ -402,6 +407,7 @@ return (
                   ergebnisRanking: [],
                 }}
                 onSaveSuccess={handleSaveSuccess}
+                onUserDataSaved={handleUserDataSaved}
               />
             </div>
           )}
@@ -416,6 +422,9 @@ return (
                 kombiCount={gewichtungen.length}
                 activeKombis={gewichtungen.filter((k) => k.aktiv).length}
                 loadingDuration={loadingScreenDuration}
+                ideenSammlung={aktuelleIdeensammlung}
+                kombiSammlung={aktuelleKombiSammlung}
+                userData={userData}
               />
             </div>
           )}

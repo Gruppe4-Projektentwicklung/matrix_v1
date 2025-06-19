@@ -5,18 +5,20 @@ import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
-import type { BewertungsLaufPayload, SaveRunResponse } from '../components/StatistikForm';
+import type { BewertungsLaufPayload, SaveRunResponse, UserData } from '../components/StatistikForm';
 
 interface Props {
   tester: boolean;
   payload: Omit<BewertungsLaufPayload, 'tester' | 'userData'>;
   onSaveSuccess: (result: SaveRunResponse) => void;
+  onUserDataSaved: (data: UserData | undefined) => void;
 }
 
 export const PersonalDataPage = ({
   tester,
   payload,
   onSaveSuccess,
+  onUserDataSaved,
 }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -63,6 +65,7 @@ export const PersonalDataPage = ({
             tester={tester}
             payload={payload}
             onSaveSuccess={handleSaveSuccess}
+            onUserDataSaved={onUserDataSaved}
           />
         </div>
       )}
