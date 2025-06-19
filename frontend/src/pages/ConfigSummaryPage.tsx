@@ -19,6 +19,7 @@ interface Props {
     branche?: string;
     berufsrolle?: string;
   };
+  onCalculate: () => Promise<void>;
 }
 
 export const ConfigSummaryPage = ({
@@ -30,6 +31,7 @@ export const ConfigSummaryPage = ({
   ideenSammlung,
   kombiSammlung,
   userData,
+  onCalculate,
 }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ export const ConfigSummaryPage = ({
   const [progressDuration, setProgressDuration] = useState(0);
   const [showResultButton, setShowResultButton] = useState(false);
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     if (disabled) {
       alert(t('noDataLoaded'));
       return;
@@ -59,6 +61,11 @@ export const ConfigSummaryPage = ({
     setShowResultButton(false);
     setProgress(0);
     setTimeout(() => setProgress(100), 50);
+    try {
+      await onCalculate();
+    } catch (err) {
+      console.error(err);
+    }
     setTimeout(() => {
       setLoading(false);
       setShowResultButton(true);
