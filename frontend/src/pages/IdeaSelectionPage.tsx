@@ -25,25 +25,25 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
   return (
     <div>
       <div className="mt-8 mb-6 flex justify-between">
-        <ResetButton />
         <div className="flex gap-4">
+          <ResetButton />
           <button onClick={() => navigate('/select-data')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button
-            onClick={() => {
-              logEvent(getSessionId(), 'ideas', {
-                active: ideen.filter((i) => i.aktiv).map((i) => i.id),
-                inactive: ideen.filter((i) => !i.aktiv).map((i) => i.id),
-              });
-              setPageStatus('idea', 'ok');
-              navigate('/combinations');
-            }}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-          >
-            {t('next')}
-          </button>
         </div>
+        <button
+          onClick={() => {
+            logEvent(getSessionId(), 'ideas', {
+              active: ideen.filter((i) => i.aktiv).map((i) => i.id),
+              inactive: ideen.filter((i) => !i.aktiv).map((i) => i.id),
+            });
+            setPageStatus('idea', 'ok');
+            navigate('/combinations');
+          }}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          {t('next')}
+        </button>
       </div>
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
         <h2 className="text-lg font-semibold text-center">{pageDescriptions.ideaSelection.title}</h2>

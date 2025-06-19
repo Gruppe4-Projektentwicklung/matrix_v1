@@ -97,15 +97,15 @@ export const PersonalDataPage = ({
         </>
       )}
       <div className="mt-8 mb-6 flex justify-between">
-        <ResetButton />
         <div className="flex gap-4">
+          <ResetButton />
           <button onClick={() => navigate('/combinations')} className="px-4 py-2 bg-gray-300 rounded">
             {t('back')}
           </button>
-          <button onClick={handleNext} className="px-4 py-2 bg-blue-600 text-white rounded">
-            {t('next')}
-          </button>
         </div>
+        <button onClick={handleNext} className="px-4 py-2 bg-blue-600 text-white rounded">
+          {t('next')}
+        </button>
       </div>
     </div>
   );
