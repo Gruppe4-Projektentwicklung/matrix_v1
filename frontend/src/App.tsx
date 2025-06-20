@@ -347,7 +347,7 @@ function App() {
   >
     {/* Linke Seite */}
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <Box component="img" src="/logo.svg" alt="Logo" sx={{ height: 32 }} />
+      <Box component="img" src="/Logo.png" alt="Logo" sx={{ height: 32 }} />
       <Typography
         variant="caption"
         sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
@@ -379,7 +379,7 @@ function App() {
       }}
     >
       <img
-        src="/vite.svg"
+        src="/Logo.png"
         alt={t('appName')}
         style={{ height: 32, cursor: 'pointer' }}
         onClick={handleHeaderReset}
@@ -390,12 +390,6 @@ function App() {
         onClick={handleHeaderReset}
       >
         {t('appName')}
-      </Typography>
-      <Typography
-        variant="h6"
-        sx={{ color: '#fff', textTransform: 'uppercase', textAlign: 'center' }}
-      >
-        Bewertungsmatrix
       </Typography>
     </Box>
 
@@ -419,7 +413,7 @@ function App() {
 
       {dev2Mode && devConfig.dataSaveStatus === 'on' && <DevStatusBar />}
 
-      <Container sx={{ flexGrow: 1 }} maxWidth="lg">
+      <Container sx={{ flexGrow: 1, bgcolor: 'background.paper', py: 2 }} maxWidth="lg">
         <Routes>
           <Route
             path="/"
