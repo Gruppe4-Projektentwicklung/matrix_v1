@@ -123,22 +123,22 @@ export const WeightingSelector: React.FC<Props> = ({
                     </Typography>
                   )}
                   <RadioGroup
-                    row
-                    value={kombi.gewichtung === 0 ? 3 : kombi.gewichtung}
-                    onChange={(e, v) => handleGewichtungChange(kombi.id, Number(v))}
-                    sx={{ mt: 1 }}
-                    disabled={inactive}
-                  >
-                    {gewichtungLabels.map((label, i) => (
-                      <FormControlLabel
-                        key={i + 1}
-                        value={i + 1}
-                        control={<Radio size="small" />}
-                        label={label}
-                        disabled={inactive}
-                      />
-                    ))}
-                  </RadioGroup>
+  row
+  value={kombi.gewichtung === 0 ? 3 : kombi.gewichtung}
+  onChange={(e, v) => handleGewichtungChange(kombi.id, Number(v))}
+  sx={{ mt: 1 }}
+>
+  {gewichtungLabels.map((label, i) => (
+    <FormControlLabel
+      key={i + 1}
+      value={i + 1}
+      control={<Radio size="small" />}
+      label={label}
+      disabled={inactive}
+    />
+  ))}
+</RadioGroup>
+
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
