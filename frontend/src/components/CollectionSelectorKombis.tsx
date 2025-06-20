@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { Button } from "@mui/material";
 import { getSessionId } from "@/utils/session";
 
 type Props = {
@@ -56,9 +57,6 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
       });
   }, [sessionId]);
 
-  const handleUploadButtonClick = () => {
-    fileInputRef.current?.click();
-  };
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadError(null);
@@ -140,28 +138,25 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
         ))}
       </select>
       <div className="mt-2 flex items-center space-x-4">
-        <button
-          type="button"
-          onClick={handleUploadButtonClick}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-        >
+        <Button variant="contained" component="label">
           {t("uploadFile")}
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".xlsx"
-          onChange={handleUpload}
-          className="hidden"
-          key={fileKey}
-        />
-        <button
-          type="button"
-          onClick={() => window.open(`${backendUrl}/download_template?type=kombi`, '_blank')}
-          className="px-4 py-2 bg-gray-300 rounded"
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".xlsx"
+            onChange={handleUpload}
+            hidden
+            key={fileKey}
+          />
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() =>
+            window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
+          }
         >
           {t("downloadCombinationTemplate")}
-        </button>
+        </Button>
       </div>
       {uploadError && (
         <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
