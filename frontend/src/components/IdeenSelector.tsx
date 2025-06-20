@@ -135,22 +135,81 @@ export const IdeenSelector: React.FC<Props> = ({
                         {Object.keys(attribute).length > 0 ? (
                           <Table size="small">
                             <TableBody>
-                              {Object.entries(attribute).map(([key, value]) => {
-                                const meta = attributeMeta[key] || { name: key, unit: '', description: '' };
-                                return (
-                                  <TableRow key={key}>
-                                    <TableCell>{meta.name}</TableCell>
-                                    <TableCell>
-                                      {value} {meta.unit}
-                                    </TableCell>
-                                    <TableCell width={40} align="right">
-                                      <IconButton size="small" onClick={() => setInfoAttr(key)}>
-                                        <InfoOutlinedIcon fontSize="inherit" />
-                                      </IconButton>
-                                    </TableCell>
-                                  </TableRow>
-                                );
-                              })}
+                              {(() => {
+                                const groups: Record<string, any> = {};
+                                Object.entries(attribute).forEach(([k, v]) => {
+                                  const m = attributeMeta[k] || { name: k, unit: '', description: '' };
+                                  const match = m.name.match(/^(.*?)(?:\s*(Alt|Neu))$/i);
+                                  if (match) {
+                                    const base = match[1].trim();
+                                    const type = match[2].toLowerCase() === 'alt' ? 'alt' : 'neu';
+                                    if (!groups[base]) groups[base] = { base };
+                                    groups[base][type] = { key: k, value: v, meta: m };
+                                  } else {
+                                    if (!groups[m.name]) groups[m.name] = { single: { key: k, value: v, meta: m } };
+                                  }
+                                });
+                                return Object.values(groups).map((g: any) => {
+                                  if (g.single) {
+                                    const { key, value, meta } = g.single;
+                                    return (
+                                      <TableRow key={key}>
+                                        <TableCell>{meta.name}</TableCell>
+                                        <TableCell>
+                                          {value} {meta.unit}
+                                        </TableCell>
+                                        <TableCell width={40} align="right">
+                                          <IconButton size="small" onClick={() => setInfoAttr(key)}>
+                                            <InfoOutlinedIcon fontSize="inherit" />
+                                          </IconButton>
+                                        </TableCell>
+                                      </TableRow>
+                                    );
+                                  }
+                                  return (
+                                    <TableRow key={g.base}>
+                                      {g.alt ? (
+                                        <>
+                                          <TableCell>{g.alt.meta.name}</TableCell>
+                                          <TableCell>
+                                            {g.alt.value} {g.alt.meta.unit}
+                                          </TableCell>
+                                          <TableCell width={40} align="right">
+                                            <IconButton size="small" onClick={() => setInfoAttr(g.alt.key)}>
+                                              <InfoOutlinedIcon fontSize="inherit" />
+                                            </IconButton>
+                                          </TableCell>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                        </>
+                                      )}
+                                      {g.neu ? (
+                                        <>
+                                          <TableCell>{g.neu.meta.name}</TableCell>
+                                          <TableCell>
+                                            {g.neu.value} {g.neu.meta.unit}
+                                          </TableCell>
+                                          <TableCell width={40} align="right">
+                                            <IconButton size="small" onClick={() => setInfoAttr(g.neu.key)}>
+                                              <InfoOutlinedIcon fontSize="inherit" />
+                                            </IconButton>
+                                          </TableCell>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                        </>
+                                      )}
+                                    </TableRow>
+                                  );
+                                });
+                              })()}
                             </TableBody>
                           </Table>
                         ) : (
