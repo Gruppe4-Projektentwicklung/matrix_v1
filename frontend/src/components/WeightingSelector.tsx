@@ -35,7 +35,7 @@ export const WeightingSelector: React.FC<Props> = ({
   kombinationen = [],
   onUpdate,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const gewichtungLabels = [
@@ -154,33 +154,44 @@ export const WeightingSelector: React.FC<Props> = ({
                 <TableCell colSpan={hasCategory ? 4 : 3} sx={{ p: 0 }}>
                   <Collapse in={expandedId === kombi.id} timeout="auto" unmountOnExit>
                     <Box sx={{ p: 2 }}>
-                      {(kombi.formel || kombi.einheit || kombi.richtung) && (
-                        <Typography>
-                          {kombi.formel && (
-                            <>
-                              {kombi.formel}
-                              <br />
-                            </>
-                          )}
-                          {kombi.einheit && (
-                            <>
-                              {kombi.einheit}
-                              <br />
-                            </>
-                          )}
-                          {kombi.richtung && (
-                            <>
-                              {kombi.richtung} –
-                              {(() => {
-                                const dir = kombi.richtung.toLowerCase();
-                                if (["high", "hoch"].includes(dir)) return ` ${t('higherIsBetter')}`;
-                                if (["low", "niedrig"].includes(dir)) return ` ${t('lowerIsBetter')}`;
-                                return "";
-                              })()}
-                            </>
-                          )}
-                        </Typography>
-                      )}
+                      {(() => {
+                        const description =
+                          kombi[`#t_${i18n.language}#3`] || kombi.formel || "";
+                        const unit = kombi.einheit || kombi.Result_Unit || "";
+                        const direction = kombi.richtung || kombi.Direction || "";
+
+                        if (!description && !unit && !direction) return null;
+
+                        return (
+                          <Typography>
+                            {description && (
+                              <>
+                                {description}
+                                <br />
+                              </>
+                            )}
+                            {unit && (
+                              <>
+                                {unit}
+                                <br />
+                              </>
+                            )}
+                            {direction && (
+                              <>
+                                {direction} –
+                                {(() => {
+                                  const dir = String(direction).toLowerCase();
+                                  if (["high", "hoch"].includes(dir))
+                                    return ` ${t("higherIsBetter")}`;
+                                  if (["low", "niedrig"].includes(dir))
+                                    return ` ${t("lowerIsBetter")}`;
+                                  return "";
+                                })()}
+                              </>
+                            )}
+                          </Typography>
+                        );
+                      })()}
                     </Box>
                   </Collapse>
                 </TableCell>
