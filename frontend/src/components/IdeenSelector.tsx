@@ -155,7 +155,7 @@ export const IdeenSelector: React.FC<Props> = ({
                                   }
                                 });
 
-                                const rows: JSX.Element[] = [];
+                                const rows: React.JSX.Element[] = [];
                                 pairOrder.forEach((base) => {
                                   const g = pairs[base];
                                   rows.push(
