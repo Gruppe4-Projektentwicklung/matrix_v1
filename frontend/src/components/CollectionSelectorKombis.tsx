@@ -127,7 +127,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
   };
 
 return (
-  <div className="max-w-xs">
+  <div>
     <div className="flex items-start space-x-4">
       <FormControl fullWidth size="small" sx={{ flexGrow: 1 }}>
         <InputLabel id="kombis-select-label">
@@ -149,12 +149,12 @@ return (
           ))}
         </Select>
       </FormControl>
-      <div className="flex flex-col space-y-2">
+      <div className="flex items-center space-x-2">
         <Button
           variant="contained"
           component="label"
           size="small"
-          sx={{ px: 1.5, py: 0.5 }}
+          sx={{ px: 1.5, py: 0.5, whiteSpace: 'nowrap' }}
         >
           {t("uploadFile")}
           <input
@@ -168,7 +168,7 @@ return (
         </Button>
         <Button
           variant="outlined"
-          sx={{ px: 1.5, py: 0.5 }}
+          sx={{ px: 1.5, py: 0.5, whiteSpace: 'nowrap' }}
           onClick={() =>
             window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
           }
@@ -177,7 +177,7 @@ return (
           {t("downloadCombinationTemplate")}
         </Button>
       </div>
-    </div> {/* <-- DAS HAT GEFEHLT! */}
+    </div>
     {uploadError && (
       <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
     )}
