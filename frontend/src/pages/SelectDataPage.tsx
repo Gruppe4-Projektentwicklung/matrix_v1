@@ -52,6 +52,9 @@ export const SelectDataPage = ({
           </button>
         </div>
       </div>
+      <h2 className="text-lg font-semibold text-center mb-4">
+        {t('masterDataSelectionTitle')}
+      </h2>
       <CollectionSelectorIdeas
         aktuelleSammlungName={aktuelleIdeensammlung}
         onSammlungChange={onIdeenSammlungChange}
@@ -62,6 +65,11 @@ export const SelectDataPage = ({
         onSammlungChange={onKombiSammlungChange}
         onUpload={onKombiUpload}
       />
+      <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
+        <p className="text-sm text-gray-700 text-center">
+          {t('selectDataInfo')}
+        </p>
+      </div>
     </div>
   );
 };
