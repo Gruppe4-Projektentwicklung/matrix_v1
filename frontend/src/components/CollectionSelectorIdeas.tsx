@@ -63,7 +63,6 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
       });
   }, [sessionId]);
 
-
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadError(null);
     const files = e.target.files;
@@ -131,7 +130,6 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
 
   return (
     <div className="mb-4">
-
       <div className="flex items-end justify-between gap-4">
         <FormControl size="small" sx={{ flexGrow: 1, maxWidth: 320 }}>
           <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
@@ -157,50 +155,24 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
             component="label"
             size="small"
             sx={{ px: 1.5, py: 0.5 }}
-
-      <FormControl fullWidth size="small" sx={{ maxWidth: 320 }}>
-        <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
-        <Select
-          labelId="ideas-select-label"
-          value={auswahl}
-          label={t("selectCollection")}
-          onChange={(e: SelectChangeEvent<string>) =>
-            setAuswahl(e.target.value as string)
-          }
-          disabled={sammlungListe.length === 0}
-        >
-          {sammlungListe.map((datei) => (
-            <MenuItem key={datei} value={datei}>
-              {datei}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <div className="mt-2 flex items-center space-x-4">
-        <Button
-          variant="contained"
-          component="label"
-          size="small"
-          sx={{ px: 1.5, py: 0.5 }}
-
-        >
-          {t("uploadFile")}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx"
-            onChange={handleUpload}
-            hidden
-            key={fileKey}
-          />
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ px: 1.5, py: 0.5 }}
-          onClick={() =>
-            window.open(`${backendUrl}/download_template?type=ideen`, '_blank')
-          }
+          >
+            {t("uploadFile")}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".xlsx"
+              onChange={handleUpload}
+              hidden
+              key={fileKey}
+            />
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ px: 1.5, py: 0.5 }}
             size="small"
+            onClick={() =>
+              window.open(`${backendUrl}/download_template?type=ideen`, '_blank')
+            }
           >
             {t("downloadIdeaTemplate")}
           </Button>
