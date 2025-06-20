@@ -70,8 +70,8 @@ const common = {
         explanation: "Erklärung",
         formula: "Formel",
         evaluationDirection: "Bewertungsrichtung",
-        higherIsBetter: "Höheres Ergebnis besser",
-        lowerIsBetter: "Niedrigeres Ergebnis besser",
+        higherIsBetter: "Höheres Ergebnis ist besser",
+        lowerIsBetter: "Niedrigeres Ergebnis ist besser",
 
         thankYouForRating: "Danke für Ihre Bewertung!",
         evaluationId: "Bewertungs-ID",
@@ -281,8 +281,8 @@ const common = {
         explanation: "Explanation",
         formula: "Formula",
         evaluationDirection: "Evaluation direction",
-        higherIsBetter: "Higher result better",
-        lowerIsBetter: "Lower result better",
+        higherIsBetter: "Higher result is better",
+        lowerIsBetter: "Lower result is better",
 
         thankYouForRating: "Thank you for your rating!",
         evaluationId: "Evaluation ID",
@@ -492,8 +492,8 @@ const common = {
         explanation: "Explication",
         formula: "Formule",
         evaluationDirection: "Direction de l'évaluation",
-        higherIsBetter: "Résultat plus élevé = mieux",
-        lowerIsBetter: "Résultat plus bas = mieux",
+        higherIsBetter: "Résultat plus élevé est meilleur",
+        lowerIsBetter: "Résultat plus bas est meilleur",
 
         thankYouForRating: "Merci pour votre évaluation !",
         evaluationId: "ID d'évaluation",
