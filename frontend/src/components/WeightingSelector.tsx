@@ -156,7 +156,9 @@ export const WeightingSelector: React.FC<Props> = ({
                     <Box sx={{ p: 2 }}>
                       {kombi.formel && (
                         <Typography>
-                          <b>{t('formula')}:</b> <span style={{ fontFamily: 'monospace' }}>{kombi.formel}</span>
+                          <b>{t('formula')}:</b>{' '}
+                          <span style={{ fontFamily: 'monospace' }}>{kombi.formel}</span>
+                          {kombi.einheit ? ` ${kombi.einheit}` : ''}
                         </Typography>
                       )}
                       {kombi.richtung && (

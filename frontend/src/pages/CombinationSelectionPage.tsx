@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { PageContainer } from '../components/PageContainer';
 
 interface Props {
@@ -65,7 +65,7 @@ export const CombinationSelectionPage = ({
           {t('next')}
         </Button>
       </Box>
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Box sx={{ mb: 4 }}>
         <BewertungsOptionen
           runde1={runde1}
           runde2={runde2}
@@ -79,7 +79,7 @@ export const CombinationSelectionPage = ({
         <Typography mt={2} textAlign="center" color="text.secondary">
           {t('selectWeightsInfo')}
         </Typography>
-      </Paper>
+      </Box>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
 
       </Box>

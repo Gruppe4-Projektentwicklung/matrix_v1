@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 type BewertungsOptionenProps = {
   runde1: boolean;
@@ -55,15 +56,15 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
         )}
 
         {showTesterOption && (
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={appTester}
-              onChange={(e) => onChange("appTester", e.target.checked)}
-              className="accent-[#1d2c5b]"
-            />
-            {t("optionAppTester")}
-          </label>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={appTester}
+                onChange={(e) => onChange("appTester", e.target.checked)}
+              />
+            }
+            label={t("optionAppTester") as string}
+          />
         )}
       </div>
 
