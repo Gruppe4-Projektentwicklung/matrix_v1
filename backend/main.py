@@ -393,14 +393,14 @@ async def save_run(data: dict):
     if not data or "tester" not in data:
         raise HTTPException(status_code=400, detail=t("invalid_data", lang))
 
-    if data.get("tester"):
-        return {"message": t("run_not_saved_tester", lang), "status": "ok"}
+    tester_flag = bool(data.get("tester"))
 
     run_id = str(uuid.uuid4())
     filepath = STORAGE_FOLDER / f"{run_id}.json"
 
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    if not tester_flag:
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
 
     # auch in die Datenbank schreiben
     with SessionLocal() as db:
@@ -414,10 +414,13 @@ async def save_run(data: dict):
             gewichtung_json=data.get("gewichtung"),
             ranking_json=data.get("ranking"),
             nutzerdaten_json=data.get("nutzerdaten"),
+            tester=tester_flag,
         )
         db.add(db_entry)
         db.commit()
 
+    if tester_flag:
+        return {"message": t("run_not_saved_tester", lang), "status": "ok"}
     return {"message": t("run_saved", lang), "run_id": run_id, "status": "ok"}
 
 
@@ -426,7 +429,7 @@ async def save_run(data: dict):
 def get_calc_count():
     """Liefert die Anzahl der gespeicherten Berechnungsläufe."""
     with SessionLocal() as db:
-        count = db.query(Calculation).count()
+        count = db.query(Calculation).filter(Calculation.tester == False).count()
     return {"count": count}
 
 
