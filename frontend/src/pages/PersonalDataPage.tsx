@@ -6,6 +6,7 @@ import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session
 import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
 import { SaveRunSuccess } from '../components/SaveRunSuccess';
+import { Box, Button, Typography } from '@mui/material';
 
 import type { BewertungsLaufPayload, UserData, SaveRunResponse } from '../api/saveRun';
 
@@ -63,13 +64,13 @@ export const PersonalDataPage = ({
   };
 
   return (
-    <div className="text-center">
+    <Box textAlign="center">
       {tester ? (
-        <p className="mb-6">{t('appTesterMode')}</p>
+        <Typography mb={3}>{t('appTesterMode')}</Typography>
       ) : (
         <>
           {formOpen && (
-            <div className="mb-6 flex justify-center">
+            <Box mb={3} display="flex" justifyContent="center">
               <StatistikForm
                 open={true}
                 inline
@@ -78,7 +79,7 @@ export const PersonalDataPage = ({
                 onSaveSuccess={handleSaveSuccess}
                 onUserDataSaved={onUserDataSaved}
               />
-            </div>
+            </Box>
           )}
           {!formOpen && saved && (
             <SaveRunSuccess
@@ -95,17 +96,17 @@ export const PersonalDataPage = ({
           )}
         </>
       )}
-      <div className="mt-8 mb-6 flex justify-between">
-        <div className="flex gap-4">
+      <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           <ResetButton />
-          <button onClick={() => navigate('/combinations')} className="px-4 py-2 bg-gray-300 rounded">
+          <Button variant="outlined" onClick={() => navigate('/combinations')}>
             {t('back')}
-          </button>
-        </div>
-        <button onClick={handleNext} className="px-4 py-2 bg-blue-600 text-white rounded">
+          </Button>
+        </Box>
+        <Button variant="contained" onClick={handleNext}>
           {t('next')}
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Box>
+    </Box>
   );
 };

@@ -6,6 +6,7 @@ import { ResetButton } from '../components/ResetButton';
 import { useTranslation } from 'react-i18next';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
+import { Box, Button } from '@mui/material';
 
 interface Props {
   aktuelleIdeensammlung: string;
@@ -33,25 +34,23 @@ export const SelectDataPage = ({
     }
   }, [navigate]);
   return (
-    <div>
-      <div className="mt-8 mb-6 flex justify-between">
+    <Box>
+      <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <ResetButton />
-        <div className="flex gap-4">
-          <button
-            onClick={() => {
-              logEvent(getSessionId(), 'select-data', {
-                ideenSammlung: aktuelleIdeensammlung,
-                kombiSammlung: aktuelleKombiSammlung,
-              });
-              setPageStatus('select-data', 'ok');
-              navigate('/ideas');
-            }}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-          >
-            {t('next')}
-          </button>
-        </div>
-      </div>
+        <Button
+          variant="contained"
+          onClick={() => {
+            logEvent(getSessionId(), 'select-data', {
+              ideenSammlung: aktuelleIdeensammlung,
+              kombiSammlung: aktuelleKombiSammlung,
+            });
+            setPageStatus('select-data', 'ok');
+            navigate('/ideas');
+          }}
+        >
+          {t('next')}
+        </Button>
+      </Box>
       <CollectionSelectorIdeas
         aktuelleSammlungName={aktuelleIdeensammlung}
         onSammlungChange={onIdeenSammlungChange}
@@ -62,6 +61,6 @@ export const SelectDataPage = ({
         onSammlungChange={onKombiSammlungChange}
         onUpload={onKombiUpload}
       />
-    </div>
+    </Box>
   );
 };

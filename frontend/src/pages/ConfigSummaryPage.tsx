@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
+import { Box, Button, Paper, Typography, LinearProgress } from '@mui/material';
 
 interface Props {
   ideenCount: number;
@@ -96,27 +97,21 @@ export const ConfigSummaryPage = ({
     }
   }, [navigate]);
   return (
-    <div>
-      <div className="mt-8 mb-6 flex justify-between">
-        <div className="flex gap-4">
+    <Box>
+      <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           <ResetButton />
-          <button onClick={() => navigate('/personal')} className="px-4 py-2 bg-gray-300 rounded">
+          <Button variant="outlined" onClick={() => navigate('/personal')}>
             {t('back')}
-          </button>
-        </div>
-        <button
-          onClick={handleCalculate}
-          disabled={disabled}
-          className={
-            disabled
-              ? 'px-4 py-2 bg-gray-300 rounded cursor-not-allowed'
-              : 'px-4 py-2 bg-blue-600 text-white rounded'
-          }
-        >
+          </Button>
+        </Box>
+        <Button variant="contained" onClick={handleCalculate} disabled={disabled}>
           {t('calculate')}
-        </button>
-      </div>
-      <h2 className="text-xl font-bold mb-4">{t('summary')}</h2>
+        </Button>
+      </Box>
+      <Typography variant="h5" mb={2} fontWeight="bold">
+        {t('summary')}
+      </Typography>
       <ul className="mb-4 list-disc list-inside">
         <li>
           {t('ideaCollectionName')}: {ideenSammlung}
@@ -132,8 +127,10 @@ export const ConfigSummaryPage = ({
         </li>
       </ul>
       {userData && (
-        <div className="mb-4 p-4 border rounded bg-gray-50">
-          <h3 className="font-semibold mb-2">{t('personalDataSummary')}</h3>
+        <Paper sx={{ mb: 2, p: 2 }}>
+          <Typography variant="subtitle1" fontWeight="bold" mb={1}>
+            {t('personalDataSummary')}
+          </Typography>
           <ul className="list-disc list-inside">
             <li>
               {t('age')}: {userData.alter || '-'}
@@ -148,32 +145,24 @@ export const ConfigSummaryPage = ({
               {t('jobRole')}: {userData.berufsrolle ? t(userData.berufsrolle) : '-'}
             </li>
           </ul>
-        </div>
+        </Paper>
       )}
       {loading && (
-        <div className="my-4">
-          <p className="mb-2">
+        <Box my={2}>
+          <Typography mb={1}>
             {t('calculating')} {`${Math.round(progress)}/100 %`}
-          </p>
-          <div className="w-full bg-gray-200 rounded">
-            <div
-              className="h-2 bg-blue-600 rounded transition-all"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
+          </Typography>
+          <LinearProgress variant="determinate" value={progress} />
+        </Box>
       )}
       {showResultButton && (
-        <div className="mt-4">
-          <button
-            onClick={() => navigate('/results')}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-          >
+        <Box mt={2}>
+          <Button variant="contained" onClick={() => navigate('/results')}>
             {t('showResults')}
-          </button>
-        </div>
+          </Button>
+        </Box>
       )}
 
-    </div>
+    </Box>
   );
 };
