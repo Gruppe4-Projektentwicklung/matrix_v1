@@ -254,6 +254,39 @@ async def get_features():
         "loadingscreen_duration": config.duration_loadingscreen,
     }
 
+# ---- Attributbeschreibungen laden ----
+@app.get("/api/attribute_descriptions")
+async def get_attribute_descriptions(lang: str = Query(default=config.default_language)):
+    """Liefert Namen und Beschreibungen der Attribute in der gewählten Sprache."""
+    desc_path = Path(config.attribute_description_file)
+    if not desc_path.exists():
+        return JSONResponse(status_code=404, content={"error": t("file_not_found", lang)})
+
+    try:
+        df = pd.read_excel(desc_path, header=None, dtype=str, keep_default_na=False)
+        if df.shape[0] < 7:
+            return JSONResponse(status_code=400, content={"error": t("not_enough_rows", lang)})
+
+        attr_ids = [str(val).strip() for val in df.iloc[0, 1:]]
+
+        if lang.startswith("en"):
+            desc_row, name_row = 2, 5
+        elif lang.startswith("fr"):
+            desc_row, name_row = 3, 6
+        else:
+            desc_row, name_row = 1, 4
+
+        descriptions = [str(val).strip() for val in df.iloc[desc_row, 1:1+len(attr_ids)]]
+        names = [str(val).strip() for val in df.iloc[name_row, 1:1+len(attr_ids)]]
+
+        result = {
+            attr_id: {"name": name, "description": desc}
+            for attr_id, name, desc in zip(attr_ids, names, descriptions)
+        }
+        return {"attributes": result}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
 
 
 

@@ -26,7 +26,7 @@ type Idee = {
   [key: string]: any; // für dynamische Sprachspalten wie '#t_de#1', '#t_en#1', etc.
 };
 
-type AttributeMeta = Record<string, { name: string; unit: string }>;
+type AttributeMeta = Record<string, { name: string; unit: string; description?: string }>;
 
 type Props = {
   ideen?: Idee[]; // optional für Robustheit
@@ -136,7 +136,7 @@ export const IdeenSelector: React.FC<Props> = ({
                           <Table size="small">
                             <TableBody>
                               {Object.entries(attribute).map(([key, value]) => {
-                                const meta = attributeMeta[key] || { name: key, unit: '' };
+                                const meta = attributeMeta[key] || { name: key, unit: '', description: '' };
                                 return (
                                   <TableRow key={key}>
                                     <TableCell>{meta.name}</TableCell>
@@ -169,7 +169,7 @@ export const IdeenSelector: React.FC<Props> = ({
         <DialogTitle>{attributeMeta[infoAttr || ""]?.name || ""}</DialogTitle>
         <DialogContent>
           <Typography>
-            {t('attributeDescriptionPlaceholder')}
+            {attributeMeta[infoAttr || ""]?.description || t('attributeDescriptionPlaceholder')}
           </Typography>
         </DialogContent>
         <DialogActions>
