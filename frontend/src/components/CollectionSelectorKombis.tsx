@@ -126,7 +126,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
     <div className="mb-4">
       <label className="block font-semibold mb-1">{t("selectCombinationCollection")}</label>
       <select
-        className="border p-2 rounded w-full max-w-xs"
+        className="border border-gray-300 p-2 rounded-md w-full max-w-xs bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
         value={auswahl}
         onChange={(e) => setAuswahl(e.target.value)}
         disabled={sammlungListe.length === 0}
@@ -138,7 +138,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
         ))}
       </select>
       <div className="mt-2 flex items-center space-x-4">
-        <Button variant="contained" component="label">
+        <Button variant="contained" component="label" size="small">
           {t("uploadFile")}
           <input
             ref={fileInputRef}
@@ -154,6 +154,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
           onClick={() =>
             window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
           }
+          size="small"
         >
           {t("downloadCombinationTemplate")}
         </Button>
