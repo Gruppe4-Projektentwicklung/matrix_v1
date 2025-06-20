@@ -130,11 +130,10 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
 return (
   <div>
     <div
-      className="grid items-start gap-x-6"
-      style={{ gridTemplateColumns: '320px auto' }}
+      className="grid items-center"
+      style={{ gridTemplateColumns: '320px auto', columnGap: '1.5cm' }}
     >
       <FormControl size="small" sx={{ width: 320 }}>
-
         <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
         <Select
           labelId="ideas-select-label"
