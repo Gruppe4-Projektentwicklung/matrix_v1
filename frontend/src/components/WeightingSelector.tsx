@@ -156,8 +156,12 @@ export const WeightingSelector: React.FC<Props> = ({
   <Box sx={{ p: 2 }}>
     {(() => {
       // Korrigierte Deklaration:
-      const formula = kombi.formel || "";
       const langKey = i18n.language.slice(0, 2);
+      const formula =
+        kombi.formel ||
+        // Fallback: Excel liefert Formeltexte oft in den Sprachspalten
+        kombi[`#t_${langKey}#3`] ||
+        "";
       const description = kombi[`#t_${langKey}#3`] || "";
       const unit = kombi.einheit || kombi.Result_Unit || "";
       const direction = kombi.richtung || kombi.Direction || "";

@@ -369,6 +369,33 @@ function App() {
 
   // Entfernt: useEffect mit setSaveRunSuccessOpen
 
+  // Recalculate ranking results when language changes
+  useEffect(() => {
+    if (rankingEintraege.length === 0) return;
+    const gew: Record<string, number> = {};
+    gewichtungen.forEach((k: any) => {
+      gew[k.id] = Number(k.gewichtung || 0);
+    });
+    calculateRanking({
+      session: sessionId,
+      ideen_file: aktuelleIdeensammlung,
+      kombi_file: aktuelleKombiSammlung,
+      ideen_ids: ideen.filter((i) => i.aktiv).map((i) => i.id),
+      gewichtungen: gew,
+      lang: language,
+    })
+      .then(setRankingEintraege)
+      .catch((err) => {
+        console.error(err);
+        setStatusToastMessage(
+          `${t('loadError')}: ${err instanceof Error ? err.message : String(err)}`,
+        );
+        setStatusToastType('error');
+        setStatusToastOpen(true);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
+
   useEffect(() => {
     loadIdeen(aktuelleIdeensammlung);
     loadKombis(aktuelleKombiSammlung);
@@ -420,12 +447,18 @@ function App() {
       <img
         src="/Logo.png"
         alt={t('appName')}
-        style={{ height: 32, cursor: 'pointer' }}
+        style={{ height: 42, cursor: 'pointer', borderRadius: 8 }}
         onClick={handleHeaderReset}
       />
       <Typography
         variant="h6"
-        sx={{ color: '#fff', textTransform: 'uppercase', cursor: 'pointer' }}
+        sx={{
+          color: '#fff',
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          fontSize: 42,
+          lineHeight: '42px',
+        }}
         onClick={handleHeaderReset}
       >
         {t('appName')}

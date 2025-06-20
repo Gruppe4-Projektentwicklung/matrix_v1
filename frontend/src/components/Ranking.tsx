@@ -80,8 +80,12 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                   </TableCell>
                   <TableCell align="center">
                     {eintrag.beschreibung && (
-                      <Button size="small" onClick={() => setInfoId(showInfo ? null : eintrag.id)}>
-                        {t("info")}
+                      <Button
+                        size="small"
+                        variant={showInfo ? "contained" : "outlined"}
+                        onClick={() => setInfoId(showInfo ? null : eintrag.id)}
+                      >
+                        {showInfo ? t("close") : t("info")}
                       </Button>
                     )}
                   </TableCell>
@@ -89,6 +93,7 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                     {eintrag.details && (
                       <Button
                         size="small"
+                        variant={showDetails ? "contained" : "outlined"}
                         onClick={() =>
                           setDetailIds((prev) =>
                             prev.includes(eintrag.id)
@@ -97,7 +102,7 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                           )
                         }
                       >
-                        {t("details")}
+                        {showDetails ? t("close") : t("details")}
                       </Button>
                     )}
                   </TableCell>
