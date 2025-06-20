@@ -148,8 +148,10 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                                     <TableRow key={kombi}>
                                       <TableCell>{info?.name || kombi}</TableCell>
                                       <TableCell>
-                                        {info?.formel ||
-                                          info?.[`#t_${i18n.language.slice(0, 2)}#3`] || ""}
+                                        {(() => {
+                                          const langKey = i18n.language.slice(0, 2);
+                                          const byLang = info?.[`#t_${langKey}#3`];
+                                          return byLang || info?.formel || "";
                                       </TableCell>
                                       <TableCell align="right">{val}</TableCell>
                                       <TableCell>
