@@ -420,12 +420,18 @@ function App() {
       <img
         src="/Logo.png"
         alt={t('appName')}
-        style={{ height: 32, cursor: 'pointer' }}
+        style={{ height: 37, cursor: 'pointer', borderRadius: 8 }}
         onClick={handleHeaderReset}
       />
       <Typography
         variant="h6"
-        sx={{ color: '#fff', textTransform: 'uppercase', cursor: 'pointer' }}
+        sx={{
+          color: '#fff',
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          fontSize: 37,
+          lineHeight: '37px',
+        }}
         onClick={handleHeaderReset}
       >
         {t('appName')}
