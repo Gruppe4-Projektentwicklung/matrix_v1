@@ -41,6 +41,8 @@ const common = {
         introText: "Mit diesem Tool können Sie Ideen bewerten und kombinieren.",
         fieldsRequired: "Bitte alle Felder ausfüllen.",
         invalidAge: "Bitte ein realistisches Alter eingeben (10-120).",
+        masterDataSelectionTitle: "Stammdaten Auswahl",
+        selectDataInfo: "Hier kann eine Beschreibung dieser Seite stehen, wie eigene Dateien hochgeladen werden und worauf zu achten ist.",
 
         resetWarning: "Warnung! Durch Zur\u00fccksetzen werden alle eingegebenen Daten gel\u00f6scht. Zur\u00fccksetzen oder abbrechen?",
 
@@ -177,6 +179,8 @@ const common = {
         introText: "This tool lets you rate and combine ideas.",
         fieldsRequired: "Please fill in all fields.",
         invalidAge: "Please enter a realistic age (10-120).",
+        masterDataSelectionTitle: "Master data selection",
+        selectDataInfo: "Here you can add a description of this page, how to upload your own files and what to pay attention to.",
         resetWarning: "Warning! Resetting will remove all entered data. Reset or cancel?",
 
         currentIdeaCollection: "Current idea collection",
@@ -312,6 +316,8 @@ const common = {
         introText: "Cet outil vous permet d'évaluer et de combiner des idées.",
         fieldsRequired: "Veuillez remplir tous les champs.",
         invalidAge: "Veuillez entrer un âge réaliste (10-120).",
+        masterDataSelectionTitle: "Sélection des données de base",
+        selectDataInfo: "Vous pouvez ajouter ici une description de cette page, comment téléverser vos propres fichiers et ce à quoi il faut faire attention.",
         resetWarning: "Attention! La r\u00e9initialisation supprimera toutes les donn\u00e9es saisies. R\u00e9initialiser ou annuler?",
 
         currentIdeaCollection: "Collection d'idées actuelle",

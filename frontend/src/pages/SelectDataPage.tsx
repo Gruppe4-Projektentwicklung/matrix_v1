@@ -37,6 +37,7 @@ export const SelectDataPage = ({
     <Box>
       <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <ResetButton />
+
         <Button
           variant="contained"
           onClick={() => {
@@ -51,6 +52,27 @@ export const SelectDataPage = ({
           {t('next')}
         </Button>
       </Box>
+
+        <div className="flex gap-4">
+          <button
+            onClick={() => {
+              logEvent(getSessionId(), 'select-data', {
+                ideenSammlung: aktuelleIdeensammlung,
+                kombiSammlung: aktuelleKombiSammlung,
+              });
+              setPageStatus('select-data', 'ok');
+              navigate('/ideas');
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            {t('next')}
+          </button>
+        </div>
+      </div>
+      <h2 className="text-lg font-semibold text-center mb-4">
+        {t('masterDataSelectionTitle')}
+      </h2>
+
       <CollectionSelectorIdeas
         aktuelleSammlungName={aktuelleIdeensammlung}
         onSammlungChange={onIdeenSammlungChange}
@@ -61,6 +83,15 @@ export const SelectDataPage = ({
         onSammlungChange={onKombiSammlungChange}
         onUpload={onKombiUpload}
       />
+
     </Box>
+
+      <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
+        <p className="text-sm text-gray-700 text-center">
+          {t('selectDataInfo')}
+        </p>
+      </div>
+    </div>
+
   );
 };

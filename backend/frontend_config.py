@@ -10,9 +10,10 @@ def lade_frontend_konfiguration(kombis_df: pd.DataFrame) -> dict:
     for _, row in kombis_df.iterrows():
         kombi = {
             "id": row.get("Kombi_ID", ""),
-            "name": row["Kombinationsname"],
-            "beschreibung": row.get("Beschreibung", ""),
-            "formel": row.get("Formeltext", ""),
+            # Prefer language-specific columns if available
+            "name": row.get("titel", row.get("Kombinationsname", "")),
+            "beschreibung": row.get("beschreibung", row.get("Beschreibung", "")),
+            "formel": row.get("formeltext", row.get("Formeltext", "")),
             "gewichtung": 3,  # Standardgewichtung "neutral"
             "aktiv": True,
             "einheit": row.get("Einheit", ""),
