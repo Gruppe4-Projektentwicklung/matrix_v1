@@ -16,7 +16,8 @@ def lade_frontend_konfiguration(kombis_df: pd.DataFrame) -> dict:
             "formel": row.get("formeltext", row.get("Formeltext", "")),
             "gewichtung": 3,  # Standardgewichtung "neutral"
             "aktiv": True,
-            "einheit": row.get("Einheit", ""),
+            # Some tables use "Result_Unit" instead of "Einheit"
+            "einheit": row.get("Einheit", row.get("Result_Unit", "")),
             # Manche Dateien nutzen "Direction" als Spaltenname
             "richtung": row.get("Richtung", row.get("Direction", "hoch"))
         }
