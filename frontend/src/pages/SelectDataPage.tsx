@@ -58,8 +58,8 @@ export const SelectDataPage = ({
         {t('masterDataSelectionTitle')}
       </h2>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Box mb={6}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
+        <Box mb={6} sx={{ width: '100%' }}>
           <CollectionSelectorIdeas
             aktuelleSammlungName={aktuelleIdeensammlung}
             onSammlungChange={onIdeenSammlungChange}
@@ -67,7 +67,7 @@ export const SelectDataPage = ({
           />
         </Box>
 
-        <Box mb={6}>
+        <Box mb={6} sx={{ width: '100%' }}>
           <CollectionSelectorKombis
             aktuelleSammlungName={aktuelleKombiSammlung}
             onSammlungChange={onKombiSammlungChange}
