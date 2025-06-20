@@ -69,6 +69,7 @@ const common = {
 
         explanation: "Erklärung",
         formula: "Formel",
+        resultUnit: "Ergebniseinheit",
         evaluationDirection: "Bewertungsrichtung",
         higherIsBetter: "Höheres Ergebnis ist besser",
         lowerIsBetter: "Niedrigeres Ergebnis ist besser",
@@ -280,6 +281,7 @@ const common = {
 
         explanation: "Explanation",
         formula: "Formula",
+        resultUnit: "Result unit",
         evaluationDirection: "Evaluation direction",
         higherIsBetter: "Higher result is better",
         lowerIsBetter: "Lower result is better",
@@ -491,6 +493,7 @@ const common = {
 
         explanation: "Explication",
         formula: "Formule",
+        resultUnit: "Unité du résultat",
         evaluationDirection: "Direction de l'évaluation",
         higherIsBetter: "Résultat plus élevé est meilleur",
         lowerIsBetter: "Résultat plus bas est meilleur",
