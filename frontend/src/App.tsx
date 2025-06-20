@@ -18,19 +18,17 @@ import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { StatusToast } from "./components/StatusToast";
-import {
-  AppBar,
-  Box,
-  Checkbox,
-  Container,
-  FormControlLabel,
-  MenuItem,
-  Select,
-  Toolbar,
-  Typography,
-  SelectChangeEvent,
-} from "@mui/material";
 
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import type { SelectChangeEvent } from "@mui/material/Select";
 import { getSessionId, setPageStatus } from "./utils/session";
 import { devConfig } from "./devConfig";
 import { DevStatusBar } from "./components/DevStatusBar";
