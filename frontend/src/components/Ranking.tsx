@@ -35,7 +35,7 @@ type Props = {
 };
 
 export const Ranking = ({ eintraege, kombinationen }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [infoId, setInfoId] = useState<string | null>(null);
   const [detailIds, setDetailIds] = useState<string[]>([]);
 
@@ -142,7 +142,10 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                                   return (
                                     <TableRow key={kombi}>
                                       <TableCell>{info?.name || kombi}</TableCell>
-                                      <TableCell>{info?.formel || ""}</TableCell>
+                                      <TableCell>
+                                        {info?.formel ||
+                                          info?.[`#t_${i18n.language}#3`] || ""}
+                                      </TableCell>
                                       <TableCell align="right">{val}</TableCell>
                                       <TableCell>{info?.einheit || ""}</TableCell>
                                     </TableRow>
