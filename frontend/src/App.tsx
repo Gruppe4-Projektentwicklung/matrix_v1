@@ -452,7 +452,13 @@ function App() {
       />
       <Typography
         variant="h6"
-        sx={{ color: '#fff', textTransform: 'uppercase', cursor: 'pointer' }}
+        sx={{
+          color: '#fff',
+          textTransform: 'uppercase',
+          cursor: 'pointer',
+          fontSize: 42,
+          lineHeight: '42px',
+        }}
         onClick={handleHeaderReset}
       >
         {t('appName')}
