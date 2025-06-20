@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
+import { PageContainer } from '../components/PageContainer';
 import { markSessionStarted } from '../utils/session';
 
 interface Props {
@@ -18,19 +19,7 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
     navigate('/select-data');
   };
   return (
-    <Box
-      sx={{
-        maxWidth: 800,
-        mx: 'auto',
-        bgcolor: 'background.paper',
-        boxShadow: 3,
-        borderRadius: 2,
-        p: 4,
-        my: 4,
-        textAlign: 'center',
-        minHeight: '80vh',
-      }}
-    >
+    <PageContainer className="min-h-[80vh] text-center">
       <Typography variant="h4" component="h1" mb={4} color="primary">
         {t('title')}
       </Typography>
@@ -42,6 +31,6 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
           {t('start')}
         </Button>
       </Box>
-    </Box>
+    </PageContainer>
   );
 };

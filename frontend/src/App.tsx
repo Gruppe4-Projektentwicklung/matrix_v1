@@ -18,6 +18,7 @@ import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { StatusToast } from "./components/StatusToast";
+import { PageContainer } from "./components/PageContainer";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -383,7 +384,7 @@ function App() {
           <Route
             path="/select-data"
             element={(
-              <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
+              <PageContainer className="min-h-[80vh]">
                 <SelectDataPage
                   aktuelleIdeensammlung={aktuelleIdeensammlung}
                   aktuelleKombiSammlung={aktuelleKombiSammlung}
@@ -392,25 +393,25 @@ function App() {
                   onIdeenUpload={(file) => handleIdeenUpload(file, sessionId)}
                   onKombiUpload={(file) => handleKombiUpload(file, sessionId)}
                 />
-              </div>
+              </PageContainer>
             )}
           />
           <Route
             path="/ideas"
             element={(
-              <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <PageContainer>
                 <IdeaSelectionPage
                   ideen={ideen}
                   sprache={language as "de" | "en" | "fr"}
                   onIdeenUpdate={handleIdeenUpdate}
                 />
-              </div>
+              </PageContainer>
             )}
           />
           <Route
             path="/combinations"
             element={(
-              <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <PageContainer>
                 <CombinationSelectionPage
                   gewichtungen={gewichtungen}
                   runde1={runde1}
@@ -422,13 +423,13 @@ function App() {
                   onGewichtungenUpdate={handleGewichtungenUpdate}
                   onOptionsChange={handleBewertungsOptionenChange}
                 />
-              </div>
+              </PageContainer>
             )}
           />
           <Route
             path="/personal"
             element={(
-              <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
+              <PageContainer className="min-h-[80vh]">
                 <PersonalDataPage
                   tester={appTester}
                   payload={{
@@ -442,13 +443,13 @@ function App() {
                   }}
                   onUserDataSaved={handleUserDataSaved}
                 />
-              </div>
+              </PageContainer>
             )}
           />
           <Route
             path="/summary"
             element={(
-              <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 min-h-[80vh]">
+              <PageContainer className="min-h-[80vh]">
                 <ConfigSummaryPage
                   ideenCount={ideen.length}
                   activeIdeen={ideen.filter((i) => i.aktiv).length}
@@ -460,15 +461,15 @@ function App() {
                   userData={userData}
                   onCalculate={handleCalculateRanking}
                 />
-              </div>
+              </PageContainer>
             )}
           />
           <Route
             path="/results"
             element={(
-              <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10">
+              <PageContainer>
                 <CalcResultsPage rankingEintraege={rankingEintraege} />
-              </div>
+              </PageContainer>
             )}
           />
         </Routes>
