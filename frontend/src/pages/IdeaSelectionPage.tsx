@@ -11,10 +11,11 @@ import { PageContainer } from '../components/PageContainer';
 interface Props {
   ideen: any[];
   sprache: 'de' | 'en' | 'fr';
+  attributeMeta: Record<string, { name: string; unit: string }>;
   onIdeenUpdate: (ideen: any[]) => void;
 }
 
-export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
+export const IdeaSelectionPage = ({ ideen, sprache, attributeMeta, onIdeenUpdate }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
           {t('selectIdeasInfo')}
         </Typography>
       </Paper>
-      <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
+      <IdeenSelector ideen={ideen} sprache={sprache} attributeMeta={attributeMeta} onUpdate={onIdeenUpdate} />
       </Box>
     </PageContainer>
   );

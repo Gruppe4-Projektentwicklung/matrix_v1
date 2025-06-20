@@ -7,8 +7,14 @@ import {
   IconButton,
   Table,
   TableBody,
+  TableHead,
   TableCell,
   TableRow,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
   Typography,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -20,19 +26,24 @@ type Idee = {
   [key: string]: any; // für dynamische Sprachspalten wie '#t_de#1', '#t_en#1', etc.
 };
 
+type AttributeMeta = Record<string, { name: string; unit: string }>;
+
 type Props = {
-  ideen?: Idee[];  // optional für Robustheit
+  ideen?: Idee[]; // optional für Robustheit
   sprache: "de" | "en" | "fr";
+  attributeMeta?: AttributeMeta;
   onUpdate: (updated: Idee[]) => void;
 };
 
 export const IdeenSelector: React.FC<Props> = ({
   ideen = [],
   sprache,
+  attributeMeta = {},
   onUpdate,
 }) => {
   const { t } = useTranslation();
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [infoAttr, setInfoAttr] = useState<string | null>(null);
 
   const toggleActive = (id: string) => {
     const updated = (ideen || []).map((idee) =>
@@ -51,6 +62,14 @@ export const IdeenSelector: React.FC<Props> = ({
 
   return (
     <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell padding="checkbox">{t('active')} / {t('disabled')}</TableCell>
+          <TableCell>{t('category')}</TableCell>
+          <TableCell>{t('description')}</TableCell>
+          <TableCell align="right">{t('info')}</TableCell>
+        </TableRow>
+      </TableHead>
       <TableBody>
         {(ideen || []).map((idee) => {
           const name =
@@ -75,7 +94,7 @@ export const IdeenSelector: React.FC<Props> = ({
               <TableRow
                 sx={{
                   bgcolor: inactive ? 'action.disabledBackground' : 'background.paper',
-                  color: inactive ? 'text.disabled' : 'inherit',
+                  '& *': { color: inactive ? 'text.disabled' : 'inherit' },
                 }}
               >
                 <TableCell padding="checkbox" sx={{ borderRight: 1, borderColor: 'divider' }}>
@@ -115,12 +134,22 @@ export const IdeenSelector: React.FC<Props> = ({
                       {Object.keys(attribute).length > 0 ? (
                         <Table size="small">
                           <TableBody>
-                            {Object.entries(attribute).map(([key, value]) => (
-                              <TableRow key={key}>
-                                <TableCell>{key}</TableCell>
-                                <TableCell>{value}</TableCell>
-                              </TableRow>
-                            ))}
+                            {Object.entries(attribute).map(([key, value]) => {
+                              const meta = attributeMeta[key] || { name: key, unit: '' };
+                              return (
+                                <TableRow key={key}>
+                                  <TableCell>{meta.name}</TableCell>
+                                  <TableCell>
+                                    {value} {meta.unit}
+                                  </TableCell>
+                                  <TableCell width={40} align="right">
+                                    <IconButton size="small" onClick={() => setInfoAttr(key)}>
+                                      <InfoOutlinedIcon fontSize="inherit" />
+                                    </IconButton>
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
                           </TableBody>
                         </Table>
                       ) : (
@@ -135,6 +164,17 @@ export const IdeenSelector: React.FC<Props> = ({
         })}
       </TableBody>
     </Table>
+    <Dialog open={!!infoAttr} onClose={() => setInfoAttr(null)}>
+      <DialogTitle>{attributeMeta[infoAttr || ""]?.name || ""}</DialogTitle>
+      <DialogContent>
+        <Typography>
+          {t('attributeDescriptionPlaceholder')}
+        </Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setInfoAttr(null)}>OK</Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

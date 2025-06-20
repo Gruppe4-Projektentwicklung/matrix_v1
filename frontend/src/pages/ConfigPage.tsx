@@ -9,6 +9,7 @@ import { PageContainer } from '../components/PageContainer';
 interface Props {
   ideen: any[];
   sprache: 'de' | 'en' | 'fr';
+  attributeMeta: Record<string, { name: string; unit: string }>;
   runde1: boolean;
   runde2: boolean;
   appTester: boolean;
@@ -25,6 +26,7 @@ interface Props {
 export const ConfigPage = ({
   ideen,
   sprache,
+  attributeMeta,
   runde1,
   runde2,
   appTester,
@@ -42,7 +44,7 @@ export const ConfigPage = ({
   return (
     <PageContainer>
       <div>
-      <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
+      <IdeenSelector ideen={ideen} sprache={sprache} attributeMeta={attributeMeta} onUpdate={onIdeenUpdate} />
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
         <BewertungsOptionen
           runde1={runde1}

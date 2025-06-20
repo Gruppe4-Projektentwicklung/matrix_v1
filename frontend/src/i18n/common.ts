@@ -65,6 +65,7 @@ const common = {
         hideAttributes: "Attribute ausblenden",
         attribute: "Attribut",
         noAttributes: "Keine Attribute vorhanden",
+        attributeDescriptionPlaceholder: "Beschreibung des Attributs.",
 
         explanation: "Erklärung",
         formula: "Formel",
@@ -203,6 +204,7 @@ const common = {
         hideAttributes: "Hide attributes",
         attribute: "Attribute",
         noAttributes: "No attributes available",
+        attributeDescriptionPlaceholder: "Description of the attribute.",
 
         explanation: "Explanation",
         formula: "Formula",
@@ -341,6 +343,7 @@ const common = {
         hideAttributes: "Masquer les attributs",
         attribute: "Attribut",
         noAttributes: "Aucun attribut disponible",
+        attributeDescriptionPlaceholder: "Description de l'attribut.",
 
         explanation: "Explication",
         formula: "Formule",

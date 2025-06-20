@@ -45,6 +45,7 @@ function App() {
   );
 
   const [ideen, setIdeen] = useState<any[]>([]);
+  const [attributeMeta, setAttributeMeta] = useState<Record<string, {name: string; unit: string}>>({});
   const [runde1, setRunde1] = useState(true);
   const [runde2, setRunde2] = useState(true);
   const [appTester, setAppTester] = useState(false);
@@ -120,10 +121,24 @@ function App() {
       const data = await fetchCollectionContent("ideen", filename);
       if (!data) return;
       const rows = Array.isArray(data.rows) ? data.rows : [];
+      const columns: string[] = Array.isArray(data.columns) ? data.columns : [];
+      const columnNames: string[] = Array.isArray(data.column_names) ? data.column_names : [];
+
+      const meta: Record<string, { name: string; unit: string }> = {};
+      columns.forEach((id, idx) => {
+        if (id.startsWith("#-#")) {
+          const num = id.slice(3);
+          const unitId = `#+#${num}`;
+          const unit = columnNames[columns.indexOf(unitId)] || "";
+          meta[id] = { name: columnNames[idx] || id, unit };
+        }
+      });
+      setAttributeMeta(meta);
+
       const parsed = rows.map((row: any, idx: number) => {
         const attrs: Record<string, any> = {};
         Object.keys(row).forEach((k) => {
-          if (k.startsWith("#-#") || k.startsWith("#+#")) attrs[k] = row[k];
+          if (k.startsWith("#-#")) attrs[k] = row[k];
         });
         const rowId = row.ID || row.id || row["#ID#"] || String(idx + 1);
         return { id: rowId, aktiv: true, attribute: attrs, ...row };
@@ -452,6 +467,7 @@ function App() {
               <IdeaSelectionPage
                 ideen={ideen}
                 sprache={language as "de" | "en" | "fr"}
+                attributeMeta={attributeMeta}
                 onIdeenUpdate={handleIdeenUpdate}
               />
             )}

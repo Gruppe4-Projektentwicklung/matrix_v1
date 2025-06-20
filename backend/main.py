@@ -207,12 +207,16 @@ async def read_uploaded_file(sammlung_typ: str, session: str, filename: str, lan
             return JSONResponse(status_code=400, content={"error": t("not_enough_rows", lang)})
 
         spalten_ids = ["ID" if str(val).strip() == "#ID#" else str(val).strip() for val in df.iloc[0]]
+        spalten_namen = [str(val).strip() for val in df.iloc[1]]
+
         daten = df.iloc[2:].copy()
         daten.columns = spalten_ids
         if "#ID#" in daten.columns:
             daten = daten.rename(columns={"#ID#": "ID"})
+
         return {
             "columns": spalten_ids,
+            "column_names": spalten_namen,
             "rows": daten.to_dict(orient="records")
         }
     except Exception as e:

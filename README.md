@@ -75,3 +75,20 @@ npm run typecheck  # runs TypeScript type checking
 ```
 
 Currently this repository does not contain automated tests.
+
+### Attribute description file
+
+The optional info dialog for attributes expects a spreadsheet under
+`backend/uploads/attributdescription/CW25_AttributDescrition.xlsx`. Because
+binary files are not included in version control, you can generate this file
+locally with the helper script:
+
+```bash
+python backend/scripts/generate_attribute_descriptions.py \
+    backend/uploads/selectionideas/Dev_CW25_idea_list_filled.xlsx \
+    backend/uploads/attributdescription/CW25_AttributDescrition.xlsx
+```
+
+The script extracts the attribute columns from the idea list and creates a sheet
+with placeholder descriptions in German, English and French.  Adjust the
+resulting spreadsheet to provide the real texts used by the information dialog.
