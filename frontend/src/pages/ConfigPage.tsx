@@ -9,7 +9,7 @@ import { PageContainer } from '../components/PageContainer';
 interface Props {
   ideen: any[];
   sprache: 'de' | 'en' | 'fr';
-  attributeMeta: Record<string, { name: string; unit: string }>;
+  attributeMeta: Record<string, { name: string; unit: string; description?: string }>;
   runde1: boolean;
   runde2: boolean;
   appTester: boolean;

@@ -11,7 +11,7 @@ import { PageContainer } from '../components/PageContainer';
 interface Props {
   ideen: any[];
   sprache: 'de' | 'en' | 'fr';
-  attributeMeta: Record<string, { name: string; unit: string }>;
+  attributeMeta: Record<string, { name: string; unit: string; description?: string }>;
   onIdeenUpdate: (ideen: any[]) => void;
 }
 
