@@ -61,120 +61,122 @@ export const IdeenSelector: React.FC<Props> = ({
   }
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell padding="checkbox">{t('active')} / {t('disabled')}</TableCell>
-          <TableCell>{t('category')}</TableCell>
-          <TableCell>{t('description')}</TableCell>
-          <TableCell align="right">{t('info')}</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {(ideen || []).map((idee) => {
-          const name =
-            typeof idee[`#t_${sprache}#1`] === "string"
-              ? idee[`#t_${sprache}#1`]
-              : t("noName");
-          const beschreibung =
-            typeof idee[`#t_${sprache}#2`] === "string"
-              ? idee[`#t_${sprache}#2`]
-              : t("noDescription");
-          const kategorie =
-            typeof idee[`#t_${sprache}#3`] === "string"
-              ? idee[`#t_${sprache}#3`]
-              : t("noCategory");
-          const attribute =
-            typeof idee.attribute === "object" && idee.attribute ? idee.attribute : {};
+    <>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell padding="checkbox">{t('active')} / {t('disabled')}</TableCell>
+            <TableCell>{t('category')}</TableCell>
+            <TableCell>{t('description')}</TableCell>
+            <TableCell align="right">{t('info')}</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {(ideen || []).map((idee) => {
+            const name =
+              typeof idee[`#t_${sprache}#1`] === "string"
+                ? idee[`#t_${sprache}#1`]
+                : t("noName");
+            const beschreibung =
+              typeof idee[`#t_${sprache}#2`] === "string"
+                ? idee[`#t_${sprache}#2`]
+                : t("noDescription");
+            const kategorie =
+              typeof idee[`#t_${sprache}#3`] === "string"
+                ? idee[`#t_${sprache}#3`]
+                : t("noCategory");
+            const attribute =
+              typeof idee.attribute === "object" && idee.attribute ? idee.attribute : {};
 
-          const inactive = !idee.aktiv;
+            const inactive = !idee.aktiv;
 
-          return (
-            <React.Fragment key={idee.id}>
-              <TableRow
-                sx={{
-                  bgcolor: inactive ? 'action.disabledBackground' : 'background.paper',
-                  '& *': { color: inactive ? 'text.disabled' : 'inherit' },
-                }}
-              >
-                <TableCell padding="checkbox" sx={{ borderRight: 1, borderColor: 'divider' }}>
-                  <Checkbox
-                    checked={!!idee.aktiv}
-                    onChange={() => toggleActive(idee.id)}
-                    inputProps={{ 'aria-label': idee.aktiv ? t('active') : t('disabled') }}
-                  />
-                </TableCell>
-                <TableCell sx={{ borderRight: 1, borderColor: 'divider', width: 120 }}>
-                  <Typography variant="body2" color="text.secondary">
-                    {kategorie}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ px: 2 }}>
-                  <Typography variant="subtitle1">{name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {beschreibung}
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton
-                    onClick={() => toggleExpand(idee.id)}
-                    size="small"
-                    aria-label={
-                      expandedId === idee.id ? t('hideAttributes') : t('showAttributes')
-                    }
-                  >
-                    <InfoOutlinedIcon fontSize="inherit" />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell colSpan={4} sx={{ p: 0 }}>
-                  <Collapse in={expandedId === idee.id} timeout="auto" unmountOnExit>
-                    <Box sx={{ p: 2 }}>
-                      {Object.keys(attribute).length > 0 ? (
-                        <Table size="small">
-                          <TableBody>
-                            {Object.entries(attribute).map(([key, value]) => {
-                              const meta = attributeMeta[key] || { name: key, unit: '' };
-                              return (
-                                <TableRow key={key}>
-                                  <TableCell>{meta.name}</TableCell>
-                                  <TableCell>
-                                    {value} {meta.unit}
-                                  </TableCell>
-                                  <TableCell width={40} align="right">
-                                    <IconButton size="small" onClick={() => setInfoAttr(key)}>
-                                      <InfoOutlinedIcon fontSize="inherit" />
-                                    </IconButton>
-                                  </TableCell>
-                                </TableRow>
-                              );
-                            })}
-                          </TableBody>
-                        </Table>
-                      ) : (
-                        <Typography color="text.secondary">{t('noAttributes')}</Typography>
-                      )}
-                    </Box>
-                  </Collapse>
-                </TableCell>
-              </TableRow>
-            </React.Fragment>
-          );
-        })}
-      </TableBody>
-    </Table>
-    <Dialog open={!!infoAttr} onClose={() => setInfoAttr(null)}>
-      <DialogTitle>{attributeMeta[infoAttr || ""]?.name || ""}</DialogTitle>
-      <DialogContent>
-        <Typography>
-          {t('attributeDescriptionPlaceholder')}
-        </Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setInfoAttr(null)}>OK</Button>
-      </DialogActions>
-    </Dialog>
+            return (
+              <React.Fragment key={idee.id}>
+                <TableRow
+                  sx={{
+                    bgcolor: inactive ? 'action.disabledBackground' : 'background.paper',
+                    '& *': { color: inactive ? 'text.disabled' : 'inherit' },
+                  }}
+                >
+                  <TableCell padding="checkbox" sx={{ borderRight: 1, borderColor: 'divider' }}>
+                    <Checkbox
+                      checked={!!idee.aktiv}
+                      onChange={() => toggleActive(idee.id)}
+                      inputProps={{ 'aria-label': idee.aktiv ? t('active') : t('disabled') }}
+                    />
+                  </TableCell>
+                  <TableCell sx={{ borderRight: 1, borderColor: 'divider', width: 120 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      {kategorie}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ px: 2 }}>
+                    <Typography variant="subtitle1">{name}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {beschreibung}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      onClick={() => toggleExpand(idee.id)}
+                      size="small"
+                      aria-label={
+                        expandedId === idee.id ? t('hideAttributes') : t('showAttributes')
+                      }
+                    >
+                      <InfoOutlinedIcon fontSize="inherit" />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={4} sx={{ p: 0 }}>
+                    <Collapse in={expandedId === idee.id} timeout="auto" unmountOnExit>
+                      <Box sx={{ p: 2 }}>
+                        {Object.keys(attribute).length > 0 ? (
+                          <Table size="small">
+                            <TableBody>
+                              {Object.entries(attribute).map(([key, value]) => {
+                                const meta = attributeMeta[key] || { name: key, unit: '' };
+                                return (
+                                  <TableRow key={key}>
+                                    <TableCell>{meta.name}</TableCell>
+                                    <TableCell>
+                                      {value} {meta.unit}
+                                    </TableCell>
+                                    <TableCell width={40} align="right">
+                                      <IconButton size="small" onClick={() => setInfoAttr(key)}>
+                                        <InfoOutlinedIcon fontSize="inherit" />
+                                      </IconButton>
+                                    </TableCell>
+                                  </TableRow>
+                                );
+                              })}
+                            </TableBody>
+                          </Table>
+                        ) : (
+                          <Typography color="text.secondary">{t('noAttributes')}</Typography>
+                        )}
+                      </Box>
+                    </Collapse>
+                  </TableCell>
+                </TableRow>
+              </React.Fragment>
+            );
+          })}
+        </TableBody>
+      </Table>
+      <Dialog open={!!infoAttr} onClose={() => setInfoAttr(null)}>
+        <DialogTitle>{attributeMeta[infoAttr || ""]?.name || ""}</DialogTitle>
+        <DialogContent>
+          <Typography>
+            {t('attributeDescriptionPlaceholder')}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setInfoAttr(null)}>OK</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
