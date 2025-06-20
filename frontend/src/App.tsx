@@ -28,6 +28,7 @@ import {
   Select,
   Toolbar,
   Typography,
+  SelectChangeEvent,
 } from "@mui/material";
 
 import { getSessionId, setPageStatus } from "./utils/session";
@@ -151,8 +152,8 @@ function App() {
   );
 
 
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const lang = e.target.value;
+  const handleLanguageChange = (event: SelectChangeEvent) => {
+    const lang = event.target.value;
     setLanguage(lang);
     i18n.changeLanguage(lang);
   };
