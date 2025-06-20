@@ -156,21 +156,16 @@ export const WeightingSelector: React.FC<Props> = ({
                     <Box sx={{ p: 2 }}>
                       {(kombi.formel || kombi.einheit || kombi.richtung) && (
                         <Typography>
-                          {kombi.formel && (
-                            <>
-                              <b>{t('formula')}:</b>{' '}
-                              <span style={{ fontFamily: 'monospace' }}>{kombi.formel}</span>
-                              {kombi.einheit ? ` ${kombi.einheit}` : ''}
-                            </>
-                          )}
+                          {kombi.formel || ''}
+                          {kombi.einheit ? ` ${kombi.einheit}` : ''}
                           {kombi.richtung && (
-                            <>
-                              {' – '}
+                            <> {' '}
+                              {kombi.richtung}{' '}
                               {(() => {
                                 const dir = kombi.richtung.toLowerCase();
-                                if (['high', 'hoch'].includes(dir)) return t('higherIsBetter');
-                                if (['low', 'niedrig'].includes(dir)) return t('lowerIsBetter');
-                                return dir;
+                                if (['high', 'hoch'].includes(dir)) return `(${t('higherIsBetter')})`;
+                                if (['low', 'niedrig'].includes(dir)) return `(${t('lowerIsBetter')})`;
+                                return '';
                               })()}
                             </>
                           )}

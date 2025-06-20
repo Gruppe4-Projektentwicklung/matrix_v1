@@ -127,9 +127,10 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
     setFileKey((k) => k + 1);
   };
 
-  return (
-    <div className="max-w-xs">
-      <FormControl fullWidth size="small">
+return (
+  <div className="max-w-xs">
+    <div className="flex items-start space-x-4">
+      <FormControl fullWidth size="small" sx={{ flexGrow: 1 }}>
         <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
         <Select
           labelId="ideas-select-label"
@@ -147,7 +148,7 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
           ))}
         </Select>
       </FormControl>
-      <div className="mt-6 flex items-center space-x-4 justify-end">
+      <div className="flex flex-col space-y-2">
         <Button
           variant="contained"
           component="label"
@@ -175,11 +176,12 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
           {t("downloadIdeaTemplate")}
         </Button>
       </div>
-      {uploadError && (
-        <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
-      )}
     </div>
-  );
+    {uploadError && (
+      <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
+    )}
+  </div>
+);
 };
 
 export default CollectionSelectorIdeas;

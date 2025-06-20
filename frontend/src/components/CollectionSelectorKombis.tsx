@@ -126,9 +126,10 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
     setFileKey((k) => k + 1);
   };
 
-  return (
-    <div className="max-w-xs">
-      <FormControl fullWidth size="small">
+return (
+  <div className="max-w-xs">
+    <div className="flex items-start space-x-4">
+      <FormControl fullWidth size="small" sx={{ flexGrow: 1 }}>
         <InputLabel id="kombis-select-label">
           {t("selectCombinationCollection")}
         </InputLabel>
@@ -148,7 +149,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
           ))}
         </Select>
       </FormControl>
-      <div className="mt-6 flex items-center space-x-4 justify-end">
+      <div className="flex flex-col space-y-2">
         <Button
           variant="contained"
           component="label"
@@ -176,11 +177,12 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
           {t("downloadCombinationTemplate")}
         </Button>
       </div>
-      {uploadError && (
-        <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
-      )}
-    </div>
-  );
+    </div> {/* <-- DAS HAT GEFEHLT! */}
+    {uploadError && (
+      <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
+    )}
+  </div>
+);
 };
 
 export default CollectionSelectorKombis;
