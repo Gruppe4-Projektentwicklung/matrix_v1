@@ -58,26 +58,30 @@ export const SelectDataPage = ({
         {t('masterDataSelectionTitle')}
       </h2>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-<CollectionSelectorIdeas
-  aktuelleSammlungName={aktuelleIdeensammlung}
-  onSammlungChange={onIdeenSammlungChange}
-  onUpload={onIdeenUpload}
-/>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
+        <Box mb={6} sx={{ width: '100%' }}>
+          <CollectionSelectorIdeas
+            aktuelleSammlungName={aktuelleIdeensammlung}
+            onSammlungChange={onIdeenSammlungChange}
+            onUpload={onIdeenUpload}
+          />
+        </Box>
 
-<div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8 mt-8">
-  <p className="text-sm text-gray-700 text-center">
-    {t('selectDataInfo')}
-  </p>
-</div>
+        <Box mb={6} sx={{ width: '100%' }}>
+          <CollectionSelectorKombis
+            aktuelleSammlungName={aktuelleKombiSammlung}
+            onSammlungChange={onKombiSammlungChange}
+            onUpload={onKombiUpload}
+          />
+        </Box>
 
-<Divider sx={{ my: 4, width: '100%' }} />
+        <Divider sx={{ my: 6, width: '100%' }} />
 
-<CollectionSelectorKombis
-  aktuelleSammlungName={aktuelleKombiSammlung}
-  onSammlungChange={onKombiSammlungChange}
-  onUpload={onKombiUpload}
-/>
+        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mt-6">
+          <p className="text-sm text-gray-700 text-center">
+            {t('selectDataInfo')}
+          </p>
+        </div>
       </Box>
       </Box>
     </PageContainer>
