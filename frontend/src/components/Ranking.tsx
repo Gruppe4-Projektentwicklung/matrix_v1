@@ -125,7 +125,9 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                             <TableHead>
                               <TableRow>
                                 <TableCell>{t("combination")}</TableCell>
-                                <TableCell>{t("value")}</TableCell>
+                                <TableCell>{t("formula")}</TableCell>
+                                <TableCell align="right">{t("value")}</TableCell>
+                                <TableCell>{t("resultUnit")}</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -133,11 +135,6 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                                 Object.entries(eintrag.details).map(([kombi, wert]) => {
                                   const id = kombi.replace(/^Kombi_/, "");
                                   const info = kombinationen?.find(k => String(k.id) === id);
-                                  const richtung = info?.richtung?.toLowerCase() || "";
-                                  const dirText =
-                                    richtung === "low"
-                                      ? t("lowerIsBetter")
-                                      : t("higherIsBetter");
                                   const val =
                                     typeof wert === "number"
                                       ? Number(wert).toFixed(3)
@@ -145,18 +142,15 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                                   return (
                                     <TableRow key={kombi}>
                                       <TableCell>{info?.name || kombi}</TableCell>
-                                      <TableCell>
-                                        {info?.formel ? `${info.formel} ` : ""}
-                                        {val}
-                                        {info?.einheit ? ` ${info.einheit}` : ""}
-                                        {info?.richtung && ` ${dirText}`}
-                                      </TableCell>
+                                      <TableCell>{info?.formel || ""}</TableCell>
+                                      <TableCell align="right">{val}</TableCell>
+                                      <TableCell>{info?.einheit || ""}</TableCell>
                                     </TableRow>
                                   );
                                 })
                               ) : (
                                 <TableRow>
-                                  <TableCell colSpan={2}>
+                                  <TableCell colSpan={4}>
                                     <Typography color="text.secondary">{t("noDetails")}</Typography>
                                   </TableCell>
                                 </TableRow>
