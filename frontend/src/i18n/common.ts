@@ -2,6 +2,7 @@ const common = {
     de: {
       translation: {
         title: "Matrix Bewertungstool",
+        appName: "Bewertungsmatrix",
         selectCollection: "Ideensammlung auswählen",
         selectCombination: "Kombinationssammlung auswählen",
         uploadFile: "Datei hochladen",
@@ -140,6 +141,7 @@ const common = {
     en: {
       translation: {
         title: "Matrix Evaluation Tool",
+        appName: "Evaluation Matrix",
         selectCollection: "Select idea collection",
         selectCombination: "Select combination collection",
         uploadFile: "Upload file",
@@ -277,6 +279,7 @@ const common = {
     fr: {
       translation: {
         title: "Outil d'évaluation de la matrice",
+        appName: "Matrice d'évaluation",
         selectCollection: "Sélectionnez une collection d'idées",
         selectCombination: "Sélectionnez une collection de combinaisons",
         uploadFile: "Téléversez un fichier",
