@@ -6,7 +6,7 @@ import { ResetButton } from '../components/ResetButton';
 import { useTranslation } from 'react-i18next';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Divider } from '@mui/material';
 
 interface Props {
   aktuelleIdeensammlung: string;
@@ -66,6 +66,8 @@ export const SelectDataPage = ({
         onSammlungChange={onKombiSammlungChange}
         onUpload={onKombiUpload}
       />
+
+      <Divider sx={{ my: 4 }} />
 
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8 mt-8">
         <p className="text-sm text-gray-700 text-center">
