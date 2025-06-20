@@ -176,11 +176,6 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
             {t("downloadIdeaTemplate")}
           </Button>
         </div>
-      </div>
-      {uploadError && (
-        <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
-      )}
-    </div>
   );
 };
 

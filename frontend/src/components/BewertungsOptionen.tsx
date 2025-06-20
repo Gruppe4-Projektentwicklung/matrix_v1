@@ -26,7 +26,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="border rounded-xl p-4 space-y-6 bg-white shadow-sm">
+    <div className="space-y-6">
       <h2 className="text-lg font-semibold text-center">{t("optionsTitle")}</h2>
 
       {/* Checkboxen nebeneinander und zentriert */}

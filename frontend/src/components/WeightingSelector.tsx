@@ -154,17 +154,26 @@ export const WeightingSelector: React.FC<Props> = ({
                 <TableCell colSpan={hasCategory ? 4 : 3} sx={{ p: 0 }}>
                   <Collapse in={expandedId === kombi.id} timeout="auto" unmountOnExit>
                     <Box sx={{ p: 2 }}>
-                      {kombi.formel && (
+                      {(kombi.formel || kombi.einheit || kombi.richtung) && (
                         <Typography>
-                          <b>{t('formula')}:</b>{' '}
-                          <span style={{ fontFamily: 'monospace' }}>{kombi.formel}</span>
-                          {kombi.einheit ? ` ${kombi.einheit}` : ''}
-                        </Typography>
-                      )}
-                      {kombi.richtung && (
-                        <Typography>
-                          <b>{t('evaluationDirection')}:</b>{' '}
-                          {kombi.richtung.toLowerCase() === 'high' ? t('higherIsBetter') : t('lowerIsBetter')}
+                          {kombi.formel && (
+                            <>
+                              <b>{t('formula')}:</b>{' '}
+                              <span style={{ fontFamily: 'monospace' }}>{kombi.formel}</span>
+                              {kombi.einheit ? ` ${kombi.einheit}` : ''}
+                            </>
+                          )}
+                          {kombi.richtung && (
+                            <>
+                              {' – '}
+                              {(() => {
+                                const dir = kombi.richtung.toLowerCase();
+                                if (['high', 'hoch'].includes(dir)) return t('higherIsBetter');
+                                if (['low', 'niedrig'].includes(dir)) return t('lowerIsBetter');
+                                return dir;
+                              })()}
+                            </>
+                          )}
                         </Typography>
                       )}
                     </Box>

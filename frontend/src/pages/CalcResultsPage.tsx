@@ -9,9 +9,10 @@ import { PageContainer } from '../components/PageContainer';
 
 interface Props {
   rankingEintraege: any[];
+  kombinationen: any[];
 }
 
-export const CalcResultsPage = ({ rankingEintraege }: Props) => {
+export const CalcResultsPage = ({ rankingEintraege, kombinationen }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export const CalcResultsPage = ({ rankingEintraege }: Props) => {
           <ResetButton />
           <ExportRankingButton eintraege={rankingEintraege} />
         </Box>
-        <Ranking eintraege={rankingEintraege} />
+        <Ranking eintraege={rankingEintraege} kombinationen={kombinationen} />
       </Box>
     </PageContainer>
   );

@@ -543,7 +543,10 @@ function App() {
           <Route
             path="/results"
             element={(
-              <CalcResultsPage rankingEintraege={rankingEintraege} />
+              <CalcResultsPage
+                rankingEintraege={rankingEintraege}
+                kombinationen={gewichtungen}
+              />
             )}
           />
           <Route path="/impressum" element={<ImpressumPage />} />

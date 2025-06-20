@@ -177,7 +177,6 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
             {t("downloadCombinationTemplate")}
           </Button>
         </div>
-      </div>
       {uploadError && (
         <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
       )}
