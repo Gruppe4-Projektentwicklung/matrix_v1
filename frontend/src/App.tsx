@@ -33,6 +33,7 @@ import type { SelectChangeEvent } from "@mui/material/Select";
 import { getSessionId, setPageStatus } from "./utils/session";
 import { devConfig } from "./devConfig";
 import { DevStatusBar } from "./components/DevStatusBar";
+import { Footer } from "./components/Footer";
 import { calculateRanking } from "./api/calculateRanking";
 
 function App() {
@@ -491,6 +492,7 @@ function App() {
           type={statusToastType}
         />
       </Container>
+      <Footer />
     </div>
   );
 
