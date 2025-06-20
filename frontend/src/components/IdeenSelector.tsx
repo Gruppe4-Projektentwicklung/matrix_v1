@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import IconButton from "@mui/material/IconButton";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {
+  Box,
+  Checkbox,
+  Collapse,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 type Idee = {
   id: string;
@@ -41,99 +50,91 @@ export const IdeenSelector: React.FC<Props> = ({
   }
 
   return (
-    <div className="space-y-4">
-      {(ideen || []).map((idee) => {
-        const name =
-          typeof idee[`#t_${sprache}#1`] === "string"
-            ? idee[`#t_${sprache}#1`]
-            : t("noName");
-        const beschreibung =
-          typeof idee[`#t_${sprache}#2`] === "string"
-            ? idee[`#t_${sprache}#2`]
-            : t("noDescription");
-        const kategorie =
-          typeof idee[`#t_${sprache}#3`] === "string"
-            ? idee[`#t_${sprache}#3`]
-            : t("noCategory");
-        const attribute =
-          typeof idee.attribute === "object" && idee.attribute
-            ? idee.attribute
-            : {};
+    <Table>
+      <TableBody>
+        {(ideen || []).map((idee) => {
+          const name =
+            typeof idee[`#t_${sprache}#1`] === "string"
+              ? idee[`#t_${sprache}#1`]
+              : t("noName");
+          const beschreibung =
+            typeof idee[`#t_${sprache}#2`] === "string"
+              ? idee[`#t_${sprache}#2`]
+              : t("noDescription");
+          const kategorie =
+            typeof idee[`#t_${sprache}#3`] === "string"
+              ? idee[`#t_${sprache}#3`]
+              : t("noCategory");
+          const attribute =
+            typeof idee.attribute === "object" && idee.attribute ? idee.attribute : {};
 
-        return (
-          <div
-            key={idee.id}
-            className={`border rounded-xl p-4 shadow-sm ${
-              idee.aktiv ? "bg-white" : "bg-gray-100 text-gray-500"
-            }`}
-          >
-            <div className="grid grid-cols-[auto_auto_1fr_auto] gap-4 items-start">
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  checked={!!idee.aktiv}
-                  onChange={() => toggleActive(idee.id)}
-                  className="mr-1 mt-1"
-                />
-                <span className="text-sm">
-                  {idee.aktiv ? t("active") : t("disabled")}
-                </span>
-              </div>
-              <div className="text-xs text-gray-500 mt-1">{kategorie}</div>
-              <div>
-                <h2 className="font-semibold text-lg">{name}</h2>
-                <p className="text-sm text-gray-700 mt-1">{beschreibung}</p>
-              </div>
-              <div className="flex justify-end">
-                <IconButton
-                  onClick={() => toggleExpand(idee.id)}
-                  color="primary"
-                  size="small"
-                  aria-label={
-                    expandedId === idee.id ? t("hideAttributes") : t("showAttributes")
-                  }
-                >
-                  {expandedId === idee.id ? (
-                    <VisibilityOffIcon fontSize="inherit" />
-                  ) : (
-                    <VisibilityIcon fontSize="inherit" />
-                  )}
-                </IconButton>
-              </div>
-            </div>
+          const inactive = !idee.aktiv;
 
-            {expandedId === idee.id && (
-              <div className="mt-4 bg-gray-50 p-3 rounded text-sm">
-                <table className="w-full table-auto text-left">
-                  <thead>
-                    <tr>
-                      <th className="pr-4">{t("attribute")}</th>
-                      <th>{t("value")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.keys(attribute).length > 0 ? (
-                      Object.entries(attribute).map(([key, value]) => (
-                        <tr key={key}>
-                          <td className="pr-4 text-gray-700">{key}</td>
-                          <td>{value}</td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={2} className="text-gray-400">
-                          {t("noAttributes")}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
+          return (
+            <React.Fragment key={idee.id}>
+              <TableRow
+                sx={{
+                  bgcolor: inactive ? 'action.disabledBackground' : 'background.paper',
+                  color: inactive ? 'text.disabled' : 'inherit',
+                }}
+              >
+                <TableCell padding="checkbox" sx={{ borderRight: 1, borderColor: 'divider' }}>
+                  <Checkbox
+                    checked={!!idee.aktiv}
+                    onChange={() => toggleActive(idee.id)}
+                    inputProps={{ 'aria-label': idee.aktiv ? t('active') : t('disabled') }}
+                  />
+                </TableCell>
+                <TableCell sx={{ borderRight: 1, borderColor: 'divider', width: 120 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    {kategorie}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={{ px: 2 }}>
+                  <Typography variant="subtitle1">{name}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {beschreibung}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <IconButton
+                    onClick={() => toggleExpand(idee.id)}
+                    size="small"
+                    aria-label={
+                      expandedId === idee.id ? t('hideAttributes') : t('showAttributes')
+                    }
+                  >
+                    <InfoOutlinedIcon fontSize="inherit" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={4} sx={{ p: 0 }}>
+                  <Collapse in={expandedId === idee.id} timeout="auto" unmountOnExit>
+                    <Box sx={{ p: 2 }}>
+                      {Object.keys(attribute).length > 0 ? (
+                        <Table size="small">
+                          <TableBody>
+                            {Object.entries(attribute).map(([key, value]) => (
+                              <TableRow key={key}>
+                                <TableCell>{key}</TableCell>
+                                <TableCell>{value}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      ) : (
+                        <Typography color="text.secondary">{t('noAttributes')}</Typography>
+                      )}
+                    </Box>
+                  </Collapse>
+                </TableCell>
+              </TableRow>
+            </React.Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
