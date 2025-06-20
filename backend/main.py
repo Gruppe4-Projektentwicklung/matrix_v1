@@ -269,6 +269,7 @@ async def get_features():
     return {
         "show_round_options": config.show_round_options,
         "show_tester_checkbox": config.show_tester_checkbox,
+        "show_dev2_checkbox": config.show_dev2_checkbox,
         "loadingscreen_duration": config.duration_loadingscreen,
     }
 

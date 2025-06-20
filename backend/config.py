@@ -149,6 +149,10 @@ class Config:
         return self.testerbutton_enabled
 
     @property
+    def show_dev2_checkbox(self):
+        return self._feature("dev2_checkbox")
+
+    @property
     def log_level(self):
         return self.config["Features"].get("log_level", "INFO").upper()
 
