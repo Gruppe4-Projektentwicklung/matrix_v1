@@ -134,7 +134,7 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                               {Object.entries(eintrag.details).length > 0 ? (
                                 Object.entries(eintrag.details).map(([kombi, wert]) => {
                                   const id = kombi.replace(/^Kombi_/, "");
-                                  const info = kombinationen?.find(k => String(k.id) === id);
+                                  const info = kombinationen?.find((k) => String(k.id) === id);
                                   const val =
                                     typeof wert === "number"
                                       ? Number(wert).toFixed(3)
@@ -144,10 +144,12 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                                       <TableCell>{info?.name || kombi}</TableCell>
                                       <TableCell>
                                         {info?.formel ||
-                                          info?.[`#t_${i18n.language}#3`] || ""}
+                                          info?.[`#t_${i18n.language.slice(0, 2)}#3`] || ""}
                                       </TableCell>
                                       <TableCell align="right">{val}</TableCell>
-                                      <TableCell>{info?.einheit || ""}</TableCell>
+                                      <TableCell>
+                                        {info?.einheit || info?.Result_Unit || ""}
+                                      </TableCell>
                                     </TableRow>
                                   );
                                 })
