@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material/Select";
 import { getSessionId } from "@/utils/session";
 
 type Props = {
@@ -124,21 +131,33 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
 
   return (
     <div className="mb-4">
-      <label className="block font-semibold mb-1">{t("selectCombinationCollection")}</label>
-      <select
-        className="border border-gray-300 p-2 rounded-md w-full max-w-xs bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-        value={auswahl}
-        onChange={(e) => setAuswahl(e.target.value)}
-        disabled={sammlungListe.length === 0}
-      >
-        {sammlungListe.map((datei) => (
-          <option key={datei} value={datei}>
-            {datei}
-          </option>
-        ))}
-      </select>
+      <FormControl fullWidth size="small" sx={{ maxWidth: 320 }}>
+        <InputLabel id="kombis-select-label">
+          {t("selectCombinationCollection")}
+        </InputLabel>
+        <Select
+          labelId="kombis-select-label"
+          value={auswahl}
+          label={t("selectCombinationCollection")}
+          onChange={(e: SelectChangeEvent<string>) =>
+            setAuswahl(e.target.value as string)
+          }
+          disabled={sammlungListe.length === 0}
+        >
+          {sammlungListe.map((datei) => (
+            <MenuItem key={datei} value={datei}>
+              {datei}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <div className="mt-2 flex items-center space-x-4">
-        <Button variant="contained" component="label" size="small">
+        <Button
+          variant="contained"
+          component="label"
+          size="small"
+          sx={{ px: 1.5, py: 0.5 }}
+        >
           {t("uploadFile")}
           <input
             ref={fileInputRef}
@@ -151,6 +170,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
         </Button>
         <Button
           variant="outlined"
+          sx={{ px: 1.5, py: 0.5 }}
           onClick={() =>
             window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
           }
