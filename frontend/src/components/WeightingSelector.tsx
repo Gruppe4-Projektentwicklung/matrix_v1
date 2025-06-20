@@ -206,19 +206,8 @@ export const WeightingSelector: React.FC<Props> = ({
                 </TableRow>
               </TableBody>
             </Table>
-            {description && (
-              <Typography sx={{ mt: 1 }}>{description}</Typography>
-            )}
+            {/* description intentionally not shown below the table */}
           </>
-        );
-      }
-
-      // Wenn nur Beschreibung da ist (und nichts anderes)
-      if (description) {
-        return (
-          <Typography>
-            {description}
-          </Typography>
         );
       }
 
