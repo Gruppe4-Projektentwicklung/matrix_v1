@@ -58,7 +58,10 @@ export const IdeenSelector: React.FC<Props> = ({
             : {};
 
         return (
-          <div key={idee.id} className="border rounded-xl p-4 bg-white shadow-sm">
+          <div
+            key={idee.id}
+            className={`border rounded-xl p-4 shadow-sm ${idee.aktiv ? 'bg-white' : 'bg-gray-100 text-gray-500'}`}
+          >
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="font-semibold text-lg">{name}</h2>
@@ -75,7 +78,7 @@ export const IdeenSelector: React.FC<Props> = ({
                     onChange={() => toggleActive(idee.id)}
                     className="mr-1"
                   />
-                  {t("active")}
+                  {idee.aktiv ? t("active") : t("disabled")}
                 </label>
                 <button
                   onClick={() => toggleExpand(idee.id)}

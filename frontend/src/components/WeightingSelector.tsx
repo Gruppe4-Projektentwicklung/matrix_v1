@@ -50,7 +50,10 @@ export const WeightingSelector: React.FC<Props> = ({
   return (
     <div className="space-y-6">
       {(kombinationen || []).map((kombi) => (
-        <div key={kombi.id} className="border rounded-xl p-4 shadow-sm bg-white">
+        <div
+          key={kombi.id}
+          className={`border rounded-xl p-4 shadow-sm ${kombi.gewichtung === 0 ? 'bg-gray-100 text-gray-500' : 'bg-white'}`}
+        >
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-lg font-semibold">{kombi.name}</h2>
