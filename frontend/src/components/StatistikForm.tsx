@@ -320,6 +320,7 @@ export const StatistikForm: React.FC<Props> = ({
                   <MenuItem value="male">{t("genderMale")}</MenuItem>
                   <MenuItem value="female">{t("genderFemale")}</MenuItem>
                   <MenuItem value="none">{t("genderNone")}</MenuItem>
+                  <MenuItem value="mechanic">{t("genderMechanic")}</MenuItem>
                 </Select>
               </FormControl>
               <FormControl fullWidth>
@@ -467,6 +468,7 @@ export const StatistikForm: React.FC<Props> = ({
                 <MenuItem value="male">{t("genderMale")}</MenuItem>
                 <MenuItem value="female">{t("genderFemale")}</MenuItem>
                 <MenuItem value="none">{t("genderNone")}</MenuItem>
+                <MenuItem value="mechanic">{t("genderMechanic")}</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth>
