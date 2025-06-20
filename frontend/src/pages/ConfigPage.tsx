@@ -4,6 +4,7 @@ import { BewertungsOptionen } from '../components/BewertungsOptionen';
 import { WeightingSelector } from '../components/WeightingSelector';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { PageContainer } from '../components/PageContainer';
 
 interface Props {
   ideen: any[];
@@ -39,7 +40,8 @@ export const ConfigPage = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
-    <div>
+    <PageContainer>
+      <div>
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
         <BewertungsOptionen
@@ -64,6 +66,7 @@ export const ConfigPage = ({
           {t('next')}
         </button>
       </div>
-    </div>
+      </div>
+    </PageContainer>
   );
 };

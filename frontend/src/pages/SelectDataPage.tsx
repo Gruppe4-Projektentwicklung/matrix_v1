@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { Box, Button, Divider } from '@mui/material';
+import { PageContainer } from '../components/PageContainer';
 
 interface Props {
   aktuelleIdeensammlung: string;
@@ -44,7 +45,8 @@ export const SelectDataPage = ({
   };
 
   return (
-    <Box>
+    <PageContainer>
+      <Box>
       <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <ResetButton />
         <Button variant="contained" onClick={handleWeiter}>
@@ -74,6 +76,7 @@ export const SelectDataPage = ({
           {t('selectDataInfo')}
         </p>
       </div>
-    </Box>
+      </Box>
+    </PageContainer>
   );
 };

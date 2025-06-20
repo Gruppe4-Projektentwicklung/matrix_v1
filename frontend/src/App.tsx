@@ -18,7 +18,6 @@ import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { StatusToast } from "./components/StatusToast";
-import { PageContainer } from "./components/PageContainer";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -393,92 +392,80 @@ function App() {
           <Route
             path="/select-data"
             element={(
-              <PageContainer className="min-h-[80vh]">
-                <SelectDataPage
-                  aktuelleIdeensammlung={aktuelleIdeensammlung}
-                  aktuelleKombiSammlung={aktuelleKombiSammlung}
-                  onIdeenSammlungChange={handleIdeenSammlungChange}
-                  onKombiSammlungChange={handleKombiSammlungChange}
-                  onIdeenUpload={(file) => handleIdeenUpload(file, sessionId)}
-                  onKombiUpload={(file) => handleKombiUpload(file, sessionId)}
-                />
-              </PageContainer>
+              <SelectDataPage
+                aktuelleIdeensammlung={aktuelleIdeensammlung}
+                aktuelleKombiSammlung={aktuelleKombiSammlung}
+                onIdeenSammlungChange={handleIdeenSammlungChange}
+                onKombiSammlungChange={handleKombiSammlungChange}
+                onIdeenUpload={(file) => handleIdeenUpload(file, sessionId)}
+                onKombiUpload={(file) => handleKombiUpload(file, sessionId)}
+              />
             )}
           />
           <Route
             path="/ideas"
             element={(
-              <PageContainer>
-                <IdeaSelectionPage
-                  ideen={ideen}
-                  sprache={language as "de" | "en" | "fr"}
-                  onIdeenUpdate={handleIdeenUpdate}
-                />
-              </PageContainer>
+              <IdeaSelectionPage
+                ideen={ideen}
+                sprache={language as "de" | "en" | "fr"}
+                onIdeenUpdate={handleIdeenUpdate}
+              />
             )}
           />
           <Route
             path="/combinations"
             element={(
-              <PageContainer>
-                <CombinationSelectionPage
-                  gewichtungen={gewichtungen}
-                  runde1={runde1}
-                  runde2={runde2}
-                  appTester={appTester}
-                  datenfreigabe={datenfreigabe}
-                  showRoundOptions={showRoundOptions}
-                  showTesterOption={showTesterOption}
-                  onGewichtungenUpdate={handleGewichtungenUpdate}
-                  onOptionsChange={handleBewertungsOptionenChange}
-                />
-              </PageContainer>
+              <CombinationSelectionPage
+                gewichtungen={gewichtungen}
+                runde1={runde1}
+                runde2={runde2}
+                appTester={appTester}
+                datenfreigabe={datenfreigabe}
+                showRoundOptions={showRoundOptions}
+                showTesterOption={showTesterOption}
+                onGewichtungenUpdate={handleGewichtungenUpdate}
+                onOptionsChange={handleBewertungsOptionenChange}
+              />
             )}
           />
           <Route
             path="/personal"
             element={(
-              <PageContainer className="min-h-[80vh]">
-                <PersonalDataPage
-                  tester={appTester}
-                  payload={{
-                    ideenSammlung: aktuelleIdeensammlung,
-                    kombiSammlung: aktuelleKombiSammlung,
-                    gewaehlteIdeen: ideen.filter((i) => i.aktiv).map((i) => i.id),
-                    deaktivierteIdeen: ideen.filter((i) => !i.aktiv).map((i) => i.id),
-                    gewichtungen: {},
-                    ergebnisRanking: [],
-                    lang: language,
-                  }}
-                  onUserDataSaved={handleUserDataSaved}
-                />
-              </PageContainer>
+              <PersonalDataPage
+                tester={appTester}
+                payload={{
+                  ideenSammlung: aktuelleIdeensammlung,
+                  kombiSammlung: aktuelleKombiSammlung,
+                  gewaehlteIdeen: ideen.filter((i) => i.aktiv).map((i) => i.id),
+                  deaktivierteIdeen: ideen.filter((i) => !i.aktiv).map((i) => i.id),
+                  gewichtungen: {},
+                  ergebnisRanking: [],
+                  lang: language,
+                }}
+                onUserDataSaved={handleUserDataSaved}
+              />
             )}
           />
           <Route
             path="/summary"
             element={(
-              <PageContainer className="min-h-[80vh]">
-                <ConfigSummaryPage
-                  ideenCount={ideen.length}
-                  activeIdeen={ideen.filter((i) => i.aktiv).length}
-                  kombiCount={gewichtungen.length}
-                  activeKombis={gewichtungen.filter((k) => k.aktiv).length}
-                  loadingDuration={loadingScreenDuration}
-                  ideenSammlung={aktuelleIdeensammlung}
-                  kombiSammlung={aktuelleKombiSammlung}
-                  userData={userData}
-                  onCalculate={handleCalculateRanking}
-                />
-              </PageContainer>
+              <ConfigSummaryPage
+                ideenCount={ideen.length}
+                activeIdeen={ideen.filter((i) => i.aktiv).length}
+                kombiCount={gewichtungen.length}
+                activeKombis={gewichtungen.filter((k) => k.aktiv).length}
+                loadingDuration={loadingScreenDuration}
+                ideenSammlung={aktuelleIdeensammlung}
+                kombiSammlung={aktuelleKombiSammlung}
+                userData={userData}
+                onCalculate={handleCalculateRanking}
+              />
             )}
           />
           <Route
             path="/results"
             element={(
-              <PageContainer>
-                <CalcResultsPage rankingEintraege={rankingEintraege} />
-              </PageContainer>
+              <CalcResultsPage rankingEintraege={rankingEintraege} />
             )}
           />
         </Routes>

@@ -15,6 +15,7 @@ import {
   TableCell,
   TableRow,
 } from '@mui/material';
+import { PageContainer } from '../components/PageContainer';
 
 interface Props {
   ideenCount: number;
@@ -107,7 +108,8 @@ export const ConfigSummaryPage = ({
     }
   }, [navigate]);
   return (
-    <Box>
+    <PageContainer>
+      <Box>
       <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <ResetButton />
@@ -185,6 +187,7 @@ export const ConfigSummaryPage = ({
         </Box>
       )}
 
-    </Box>
+      </Box>
+    </PageContainer>
   );
 };

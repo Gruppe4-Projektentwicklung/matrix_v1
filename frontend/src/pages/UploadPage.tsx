@@ -3,6 +3,7 @@ import { CollectionSelectorIdeas } from '../components/CollectionSelectorIdeas';
 import { CollectionSelectorKombis } from '../components/CollectionSelectorKombis';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { PageContainer } from '../components/PageContainer';
 
 interface Props {
   aktuelleIdeensammlung: string;
@@ -24,7 +25,8 @@ export const UploadPage = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
-    <div>
+    <PageContainer>
+      <div>
       <CollectionSelectorIdeas
         aktuelleSammlungName={aktuelleIdeensammlung}
         onSammlungChange={onIdeenSammlungChange}
@@ -43,6 +45,7 @@ export const UploadPage = ({
           {t('next')}
         </button>
       </div>
-    </div>
+      </div>
+    </PageContainer>
   );
 };
