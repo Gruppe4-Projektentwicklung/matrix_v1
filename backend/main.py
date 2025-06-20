@@ -9,6 +9,7 @@ import json
 import uuid
 from datetime import datetime
 from config import config  # Deine eigene Configklasse!
+from database import init_db, SessionLocal, Calculation, UsageLog
 from loader.excel_loader import ExcelLoader
 from validator.validate_ideen import validate_ideen_excel
 from validator.validate_kombis import validate_kombi_excel
@@ -19,6 +20,7 @@ from bewertung import Bewertung
 import tempfile
 
 app = FastAPI()
+init_db()
 valid_ideen_template = Path(config.valid_ideen_template).resolve()
 valid_kombi_template = Path(config.valid_kombi_template).resolve()
 
@@ -345,6 +347,22 @@ async def save_run(data: dict):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
+    # auch in die Datenbank schreiben
+    with SessionLocal() as db:
+        db_entry = Calculation(
+            id=run_id,
+            session_id=data.get("session"),
+            timestamp=datetime.utcnow(),
+            sprache=data.get("lang", config.default_language),
+            datenfreigabe=data.get("datenfreigabe"),
+            ideen_json=data.get("ideen"),
+            gewichtung_json=data.get("gewichtung"),
+            ranking_json=data.get("ranking"),
+            nutzerdaten_json=data.get("nutzerdaten"),
+        )
+        db.add(db_entry)
+        db.commit()
+
     return {"message": t("run_saved", lang), "run_id": run_id, "status": "ok"}
 
 
@@ -362,6 +380,18 @@ async def log_step(request: Request, payload: dict):
         "ip": request.client.host if request.client else None,
         "user_agent": request.headers.get("User-Agent", "")
     }
+    # auch in die Datenbank schreiben
+    with SessionLocal() as db:
+        log_row = UsageLog(
+            session=session,
+            timestamp=datetime.utcnow(),
+            step=step,
+            data_json=payload.get("data", {}),
+            ip=request.client.host if request.client else None,
+            user_agent=request.headers.get("User-Agent", ""),
+        )
+        db.add(log_row)
+        db.commit()
     log_file = ARCHIVE_FOLDER / f"{session}.jsonl"
     with open(log_file, "a", encoding="utf-8") as f:
         json.dump(entry, f, ensure_ascii=False)
