@@ -1,14 +1,29 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import IconButton from "@mui/material/IconButton";
+import {
+  Box,
+  Checkbox,
+  Collapse,
+  FormControlLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 type Combination = {
   id: string;
   name: string;
-  beschreibung: string;
+  beschreibung?: string;
   gewichtung: number;
   aktiv: boolean;
+  [key: string]: any;
 };
 
 type Props = {
@@ -24,7 +39,6 @@ export const WeightingSelector: React.FC<Props> = ({
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const gewichtungLabels = [
-    t("disabled"),
     t("notImportantAtAll"),
     t("slightlyImportant"),
     t("neutral"),
@@ -32,9 +46,27 @@ export const WeightingSelector: React.FC<Props> = ({
     t("veryImportant"),
   ];
 
+  const getCategory = (k: any) =>
+    k.kategorie || k.category || k.Kategorie || "";
+
+  const hasCategory = kombinationen.some((k) => getCategory(k));
+
   const handleGewichtungChange = (id: string, value: number) => {
     const updated = (kombinationen || []).map((kombi) =>
       kombi.id === id ? { ...kombi, gewichtung: value, aktiv: value > 0 } : kombi
+    );
+    onUpdate(updated);
+  };
+
+  const toggleActive = (id: string) => {
+    const updated = (kombinationen || []).map((kombi) =>
+      kombi.id === id
+        ? {
+            ...kombi,
+            gewichtung: kombi.gewichtung === 0 ? 3 : 0,
+            aktiv: kombi.gewichtung === 0,
+          }
+        : kombi
     );
     onUpdate(updated);
   };
@@ -44,60 +76,104 @@ export const WeightingSelector: React.FC<Props> = ({
   };
 
   if (!Array.isArray(kombinationen) || kombinationen.length === 0) {
-    return (
-      <div className="text-gray-500">{t("noWeightingCombinationsAvailable")}</div>
-    );
+    return <div className="text-gray-500">{t("noWeightingCombinationsAvailable")}</div>;
   }
 
   return (
-    <div className="space-y-6">
-      {(kombinationen || []).map((kombi) => (
-        <div
-          key={kombi.id}
-          className={`border rounded-xl p-4 shadow-sm ${kombi.gewichtung === 0 ? 'bg-gray-100 text-gray-500' : 'bg-white'}`}
-        >
-          <div className="grid grid-cols-[auto,1fr,auto] items-start gap-4">
-            <label className="cursor-pointer flex items-center gap-1">
-              <input
-                type="radio"
-                name={kombi.id}
-                checked={kombi.gewichtung === 0}
-                onChange={() => handleGewichtungChange(kombi.id, 0)}
-              />
-              {gewichtungLabels[0]}
-            </label>
-            <div>
-              <h2 className="text-lg font-semibold">{kombi.name}</h2>
-              {expandedId === kombi.id && (
-                <p className="text-sm mt-1 text-gray-700">{kombi.beschreibung}</p>
-              )}
-            </div>
-            <IconButton
-              onClick={() => toggleInfo(kombi.id)}
-              aria-label={t('info')}
-              size="small"
-            >
-              <InfoOutlinedIcon fontSize="small" />
-            </IconButton>
-          </div>
-
-          <div className="mt-4 flex flex-wrap gap-4 items-center ml-6">
-            {gewichtungLabels.slice(1).map((label, i) => (
-              <label key={i + 1} className="cursor-pointer">
-                <input
-                  type="radio"
-                  name={kombi.id}
-                  checked={kombi.gewichtung === i + 1}
-                  onChange={() => handleGewichtungChange(kombi.id, i + 1)}
-                  className="mr-1"
-                />
-                {label}
-              </label>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell padding="checkbox">{t('active')} / {t('disabled')}</TableCell>
+          {hasCategory && <TableCell>{t('category')}</TableCell>}
+          <TableCell>{t('description')}</TableCell>
+          <TableCell align="right">{t('info')}</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {kombinationen.map((kombi) => {
+          const inactive = kombi.gewichtung === 0;
+          const category = getCategory(kombi) || t('noCategory');
+          return (
+            <React.Fragment key={kombi.id}>
+              <TableRow
+                sx={{
+                  bgcolor: inactive ? 'action.disabledBackground' : 'background.paper',
+                  '& *': { color: inactive ? 'text.disabled' : 'inherit' },
+                }}
+              >
+                <TableCell padding="checkbox" sx={{ borderRight: 1, borderColor: 'divider' }}>
+                  <Checkbox
+                    checked={!inactive}
+                    onChange={() => toggleActive(kombi.id)}
+                    inputProps={{ 'aria-label': inactive ? t('disabled') : t('active') }}
+                  />
+                </TableCell>
+                {hasCategory && (
+                  <TableCell sx={{ borderRight: 1, borderColor: 'divider', width: 120 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      {category}
+                    </Typography>
+                  </TableCell>
+                )}
+                <TableCell sx={{ px: 2 }}>
+                  <Typography variant="subtitle1">{kombi.name}</Typography>
+                  {kombi.beschreibung && (
+                    <Typography variant="body2" color="text.secondary">
+                      {kombi.beschreibung}
+                    </Typography>
+                  )}
+                  <RadioGroup
+                    row
+                    value={kombi.gewichtung === 0 ? 3 : kombi.gewichtung}
+                    onChange={(e, v) => handleGewichtungChange(kombi.id, Number(v))}
+                    sx={{ mt: 1 }}
+                    disabled={inactive}
+                  >
+                    {gewichtungLabels.map((label, i) => (
+                      <FormControlLabel
+                        key={i + 1}
+                        value={i + 1}
+                        control={<Radio size="small" />}
+                        label={label}
+                        disabled={inactive}
+                      />
+                    ))}
+                  </RadioGroup>
+                </TableCell>
+                <TableCell align="right">
+                  <IconButton
+                    onClick={() => toggleInfo(kombi.id)}
+                    size="small"
+                    aria-label={expandedId === kombi.id ? t('hideDescription') : t('showDescription')}
+                  >
+                    <InfoOutlinedIcon fontSize="inherit" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={hasCategory ? 4 : 3} sx={{ p: 0 }}>
+                  <Collapse in={expandedId === kombi.id} timeout="auto" unmountOnExit>
+                    <Box sx={{ p: 2 }}>
+                      {kombi.formel && (
+                        <Typography>
+                          <b>{t('formula')}:</b> <span style={{ fontFamily: 'monospace' }}>{kombi.formel}</span>
+                        </Typography>
+                      )}
+                      {kombi.richtung && (
+                        <Typography>
+                          <b>{t('evaluationDirection')}:</b>{' '}
+                          {kombi.richtung.toLowerCase() === 'high' ? t('higherIsBetter') : t('lowerIsBetter')}
+                        </Typography>
+                      )}
+                    </Box>
+                  </Collapse>
+                </TableCell>
+              </TableRow>
+            </React.Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
