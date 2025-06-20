@@ -368,7 +368,6 @@ function App() {
         />
       )}
     </Box>
-
     {/* Mitte */}
     <Box
       sx={{
