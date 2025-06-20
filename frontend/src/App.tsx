@@ -15,6 +15,7 @@ import { PersonalDataPage } from "./pages/PersonalDataPage";
 import type { UserData } from "./api/saveRun";
 import { ConfigSummaryPage } from "./pages/ConfigSummaryPage";
 import { CalcResultsPage } from "./pages/CalcResultsPage";
+import { ImpressumPage } from "./pages/ImpressumPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { StatusToast } from "./components/StatusToast";
@@ -329,8 +330,16 @@ function App() {
   return (
     <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pb-10">
       <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: '1fr auto 1fr',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box component="img" src="/logo.svg" alt="Logo" sx={{ height: 32 }} />
             <Typography
               variant="caption"
               sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
@@ -351,25 +360,25 @@ function App() {
               />
             )}
           </Box>
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-            <Typography
-              variant="h6"
-              sx={{ color: '#fff', textTransform: 'uppercase' }}
-            >
-              Bewertungsmatrix
-            </Typography>
-          </Box>
-          <Select
-            id="lang-select"
-            size="small"
-            value={language}
-            onChange={handleLanguageChange}
-            sx={{ bgcolor: 'background.paper', minWidth: 80 }}
+          <Typography
+            variant="h6"
+            sx={{ color: '#fff', textTransform: 'uppercase', textAlign: 'center' }}
           >
-            <MenuItem value="de">Deutsch</MenuItem>
-            <MenuItem value="en">English</MenuItem>
-            <MenuItem value="fr">Français</MenuItem>
-          </Select>
+            Bewertungsmatrix
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Select
+              id="lang-select"
+              size="small"
+              value={language}
+              onChange={handleLanguageChange}
+              sx={{ bgcolor: 'background.paper', minWidth: 80 }}
+            >
+              <MenuItem value="de">Deutsch</MenuItem>
+              <MenuItem value="en">English</MenuItem>
+              <MenuItem value="fr">Français</MenuItem>
+            </Select>
+          </Box>
         </Toolbar>
       </AppBar>
 
@@ -468,6 +477,7 @@ function App() {
               <CalcResultsPage rankingEintraege={rankingEintraege} />
             )}
           />
+          <Route path="/impressum" element={<ImpressumPage />} />
         </Routes>
 
         {/* <KombiInfoModal
