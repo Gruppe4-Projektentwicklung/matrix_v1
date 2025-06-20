@@ -327,9 +327,12 @@ function App() {
 
   return (
     <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pb-10">
-      <AppBar position="static" color="primary" sx={{ mb: 2 }}>
+      <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography variant="h6" color="inherit" sx={{ mr: 2 }}>
+              Bewertungsmatrix
+            </Typography>
             <Typography
               variant="caption"
               sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
