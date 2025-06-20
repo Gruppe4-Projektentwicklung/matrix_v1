@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Button } from "@mui/material";
 
 type RankingEintrag = {
   id: string;
@@ -50,12 +51,14 @@ export const ExportRankingButton: React.FC<Props> = ({ eintraege, fileName }) =>
   };
 
   return (
-    <button
+    <Button
+      variant="contained"
+      color="primary"
       onClick={handleExport}
-      className="bg-green-600 text-white rounded px-4 py-2 font-semibold hover:bg-green-700 mt-3"
+      size="small"
     >
       {t("exportRankingCSV")}
-    </button>
+    </Button>
   );
 };
 
