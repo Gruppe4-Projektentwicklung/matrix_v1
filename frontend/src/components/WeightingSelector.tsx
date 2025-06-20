@@ -156,6 +156,7 @@ export const WeightingSelector: React.FC<Props> = ({
                     <Box sx={{ p: 2 }}>
                       {(() => {
                         const formula =
+                        const description =
                           kombi[`#t_${i18n.language}#3`] || kombi.formel || "";
                         const unit = kombi.einheit || kombi.Result_Unit || "";
                         const direction = kombi.richtung || kombi.Direction || "";
@@ -198,6 +199,36 @@ export const WeightingSelector: React.FC<Props> = ({
                               </TableRow>
                             </TableBody>
                           </Table>
+                        if (!description && !unit && !direction) return null;
+
+                        return (
+                          <Typography>
+                            {description && (
+                              <>
+                                {description}
+                                <br />
+                              </>
+                            )}
+                            {unit && (
+                              <>
+                                {unit}
+                                <br />
+                              </>
+                            )}
+                            {direction && (
+                              <>
+                                {direction} –
+                                {(() => {
+                                  const dir = String(direction).toLowerCase();
+                                  if (["high", "hoch"].includes(dir))
+                                    return ` ${t("higherIsBetter")}`;
+                                  if (["low", "niedrig"].includes(dir))
+                                    return ` ${t("lowerIsBetter")}`;
+                                  return "";
+                                })()}
+                              </>
+                            )}
+                          </Typography>
                         );
                       })()}
                     </Box>

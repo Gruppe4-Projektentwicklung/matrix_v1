@@ -1,304 +1,174 @@
-# Architekturplan – Matrix-Tool zur Bewertung nachhaltiger Produktideen
+# ARCHITEKTUR – Das Matrix-Tool Schritt für Schritt erklärt
 
-Dieses Dokument beschreibt die geplante Architektur, Struktur und Komponenten des Matrix-Bewertungstools. Es dient der Selbstdokumentation für ChatGPT, um nach einem Chat-Reset oder längerer Pause jederzeit den aktuellen Aufbau und die Zielstruktur wieder zu verstehen.
-
----
-
-## 🎯 Ziel des Tools
-
-Das Tool dient dazu, rund 145 Produktideen aus dem Bereich nachhaltiges Bauen zu bewerten. Diese sind sehr unterschiedlich (z. B. Luftspeicherkraftwerk vs. Zementsack).  
-Durch Kombination von Attributen (aus einer Excel-Tabelle) sollen vergleichbare Kennwerte entstehen. Nutzer können die Wichtigkeit dieser Kombinationen gewichten, Ideen deaktivieren und so ein individuelles Ranking berechnen lassen.
+Dieses Dokument soll allen Interessierten – auch ohne tiefe IT-Kenntnisse – einen umfassenden Überblick über den Aufbau und die Funktionsweise des Matrix-Tools geben. Es beschreibt, welche Ordner welche Aufgaben haben, wie die einzelnen Komponenten zusammenspielen und wie aus Excel-Dateien am Ende eine übersichtliche Rangliste entsteht.
 
 ---
 
-## 📁 Projektstruktur
+## 1. Grundgedanke
 
-
-**/backend/**
-- main.py ← Haupt‑API für Upload, Bewertung und Sessions
-- loader/excel_loader.py ← Excel‑Import & Validierung
-- config_loader.py ← lädt `matrixconfig.ini`
-- bewertung.py ← Bewertungslogik der Kombinationen
-- api/ ← Routen (z. B. `/save_run`)
-- uploads/selectionideas/ und uploads/selectioncombis/ ← persistente Uploads
-- templates/ ← Excel‑Vorlagen
-
-**/frontend/src/**
-components/
-  IdeenSelector.tsx ← Ideenliste mit Aktivierung
-  CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Auswahl & Upload
-  WeightingSelector.tsx ← Kombinationsgewichtung
-  BewertungsOptionen.tsx ← Optionen (Runden, Tester‑Modus)
-  Ranking.tsx ← Ranking‑Anzeige
-  StatistikForm.tsx ← Formular für Demografiedaten
-  StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
-  ResetButton.tsx ← Session zurücksetzen
-pages/
-  StartPage.tsx – Einstieg und Sessionstart
-  SelectDataPage.tsx – Daten auswählen oder hochladen
-  IdeaSelectionPage.tsx – Ideen aktivieren/deaktivieren
-  CombinationSelectionPage.tsx – Kombinationen gewichten
-  PersonalDataPage.tsx – optionale Angaben
-  ConfigSummaryPage.tsx – Zusammenfassung vor Berechnung
-  CalcResultsPage.tsx – Ergebnisse und Export
-  UploadPage.tsx – separate Upload-Seite
-i18n/
-  index.ts – initialisiert i18n
-  common.ts – Übersetzungstexte (de/en/fr)
-
-/backend/templates/ ← Excel-Vorlagen
-/backend/uploads/
-  selectionideas/ ← hochgeladene Ideensammlungen
-  selectioncombis/ ← hochgeladene Kombinationssammlungen
-
-DOKUMENTATION.md ← Ausführliche Beschreibung
-
-**/backend/**
-/backend/
-
-
-main.py ← Haupt‑API für Upload, Bewertung und Session
-loader/excel_loader.py ← Excel‑Import & Validierung
-config_loader.py ← lädt `matrixconfig.ini`
-bewertung.py ← Bewertungslogik der Kombinationen
-api/ ← Routen (z. B. `/save_run`)
-uploads/selectionideas/ und uploads/selectioncombis/ ← persistente Uploads
-
-templates/ ← Excel‑Vorlagen
-
-**/frontend/src/**
-components/
-IdeenSelector.tsx ← Ideenliste mit Aktivierung
-CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Auswahl & Upload
-WeightingSelector.tsx ← Kombinationsgewichtung
-BewertungsOptionen.tsx ← Optionen (Runden, Tester‑Modus)
-Ranking.tsx ← Ranking‑Anzeige
-StatistikForm.tsx ← Formular für Demografiedaten
-StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
-ResetButton.tsx ← Session zurücksetzen
-pages/
-StartPage.tsx,
-SelectDataPage.tsx,
-IdeaSelectionPage.tsx,
-CombinationSelectionPage.tsx,
-PersonalDataPage.tsx,
-ConfigSummaryPage.tsx,
-CalcResultsPage.tsx,
-UploadPage.tsx
-i18n/
-index.ts ← i18n-Initialisierung
-common.ts ← Übersetzungstexte (de/en/fr)
-
-/frontend/src/
-components/
-IdeenSelector.tsx ← Ideenliste mit Aktivierung
-CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Auswahl & Upload
-WeightingSelector.tsx ← Kombinationsgewichtung
-BewertungsOptionen.tsx ← Optionen (Runden, Tester‑Modus)
-Ranking.tsx ← Ranking‑Anzeige
-StatistikForm.tsx ← Formular für Demografiedaten
-StatusToast.tsx / SaveRunSuccess.tsx ← Meldungen
-ResetButton.tsx ← Session zurücksetzen
-pages/
-StartPage.tsx, SelectDataPage.tsx, UploadPage.tsx,
-
-main.py ← Haupt-API für Upload, Bewertung, Statistik und Session
-loader/excel_loader.py ← Einlesen & Validieren von Excel-Dateien
-config_loader.py ← Laden der Konfiguration (`matrixconfig.ini`)
-bewertung.py ← Bewertungslogik für Kombinationen und Gewichtungen
-api/ ← Routen (z. B. `/save_run`)
-
-/frontend/src/
-components/
-IdeenSelector.tsx ← Anzeige und Auswahl der Ideen
-CollectionSelectorIdeas.tsx / CollectionSelectorKombis.tsx ← Dropdown & Upload
-WeightingSelector.tsx ← Gewichtung der Kombinationen
-BewertungsOptionen.tsx ← Optionen wie Runden-Auswahl
-Ranking.tsx ← Ranking- und Ergebnisanzeige
-StatistikForm.tsx ← Formular für Demografie/Statistikdaten
-StatusToast.tsx / SaveRunSuccess.tsx ← Rückmeldungen
-pages/
-StartPage.tsx, SelectDataPage.tsx,
-
-IdeaSelectionPage.tsx, CombinationSelectionPage.tsx,
-PersonalDataPage.tsx, ConfigSummaryPage.tsx,
-CalcResultsPage.tsx ← Einzelseiten der App
-i18n/
-
-index.ts ← Initialisiert i18next
-common.ts ← Übersetzungstexte (de/en/fr)
-
-index.ts ← Initialisiert die Übersetzungen
-common.ts ← Sprachdateien (de/en/fr)
-
-
-/templates/
-ideen_template.xlsx ← Vorlage für Ideensammlung (IDs, Sprachen, Attribute)
-kombis_template.xlsx ← Vorlage für Kombinationen (IDs, Sprachen, Formeltext)
-
-/backend/uploads/
-selectionideas/ ← hochgeladene Ideensammlungen
-selectioncombis/ ← hochgeladene Kombinationssammlungen
-
-DOKUMENTATION.md ← Ausführliche Beschreibung der Funktionsweise und Tabellenstruktur
-
-ARCHITEKTUR.md ← Dieses Architektur-Dokument
-README_DE.md/README_EN.md ← Kurzbeschreibung, Nutzungshinweise
-
-## **2. Ablauf & Datenfluss**
-
-1. **Start**
-   - Die `StartPage` startet eine neue Session und zeigt eine kurze Einführung.
-   - Auf der `SelectDataPage` wählt der Nutzer bestehende Sammlungen oder öffnet die `UploadPage` für eigene Dateien. Uploads werden sessionspezifisch in `backend/uploads/` gespeichert.
-
-2. **Ideen und Kombinationen**
-   - Auf der `IdeaSelectionPage` lassen sich Ideen aktivieren oder deaktivieren.
-   - Danach legt die `CombinationSelectionPage` die Gewichtung der Kombinationen fest; weitere Optionen bietet `BewertungsOptionen.tsx`.
-   - Alle Texte werden aus `src/i18n/common.ts` geladen und in `src/i18n/index.ts` initialisiert.
-
-3. **Persönliche Angaben & Zusammenfassung**
-   - Optional erfasst die `PersonalDataPage` statistische Informationen.
-   - Anschließend fasst die `ConfigSummaryPage` alle Einstellungen zusammen.
-
-4. **Berechnung & Ergebnis**
-   - Das Backend berechnet über `bewertung.py` das Ranking und speichert den Durchlauf via `save_run`.
-   - Die `CalcResultsPage` präsentiert das Ergebnis und bietet Exportfunktionen.
-1. **Start & Datenauswahl**
-   - Die `StartPage` legt eine Session-ID an und leitet zur `SelectDataPage` weiter.
-   - Dort wählt der Nutzer eine Ideensammlung und eine Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Dateien werden zunächst sessionspezifisch gespeichert und – sofern kein App‑Tester-Modus aktiv ist – dauerhaft unter `backend/uploads/` abgelegt.
-
-2. **Ideen und Kombinationen festlegen**
-   - In der `IdeaSelectionPage` können Ideen aktiviert oder deaktiviert werden.
-   - Die `CombinationSelectionPage` dient zum Gewichten der Kombinationen. Zusätzliche Optionen bringt `BewertungsOptionen.tsx` mit.
-   - Alle Texte stammen aus `src/i18n/common.ts` und werden von `src/i18n/index.ts` geladen.
-
-3. **Persönliche Angaben & Zusammenfassung**
-   - Optional erfasst die `PersonalDataPage` statistische Daten.
-   - Anschließend fasst die `ConfigSummaryPage` alle Einstellungen zusammen.
-
-4. **Berechnung & Ergebnisse**
-   - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Durchlauf über die Route `save_run`.
-   - Die `CalcResultsPage` zeigt das Ranking samt Exportmöglichkeit.
-
-
-   - Die `StartPage` erzeugt eine Session und führt zur `SelectDataPage`.
-   - Dort wählt der Nutzer Ideensammlung und Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Uploads bleiben zuerst in der Session und werden – sofern kein App‑Tester‑Modus aktiv ist – in `backend/uploads/` gespeichert.
-
-2. **Ideen und Kombinationen festlegen**
-   - In der `IdeaSelectionPage` lassen sich Ideen ein‑ oder ausblenden.
-   - Die `CombinationSelectionPage` ermöglicht das Gewichtung der Kombinationen. `BewertungsOptionen.tsx` stellt Zusatzoptionen bereit.
-   - Sämtliche Texte kommen aus `src/i18n/common.ts` und werden über `src/i18n/index.ts` geladen.
-
-3. **Persönliche Angaben & Zusammenfassung**
-   - Die `PersonalDataPage` fragt auf Wunsch Statistikdaten ab.
-   - Danach zeigt die `ConfigSummaryPage` eine Zusammenfassung aller Einstellungen.
-
-4. **Berechnung & Ergebnisse**
-   - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Lauf über die Route `save_run`.
-   - Die `CalcResultsPage` zeigt das Ranking der Ideen mit Export‑Möglichkeit.
-
-   - Die `StartPage` leitet auf die `SelectDataPage` weiter.
-   - Dort wählt der Nutzer Ideensammlung und Kombinationssammlung oder lädt eigene Excel-Dateien hoch. Uploads bleiben zunächst in der Session und werden – sofern kein App-Tester-Modus aktiv ist – im Ordner `storage` gespeichert.
-
-2. **Ideen und Kombinationen festlegen**
-   - In der `IdeaSelectionPage` werden Ideen aktiviert oder deaktiviert.
-   - Die `CombinationSelectionPage` erlaubt die Gewichtung der Kombinationen. Über `BewertungsOptionen.tsx` lassen sich weitere Optionen wählen.
-   - Alle Texte stammen aus `src/i18n/common.ts` und werden zentral über `src/i18n/index.ts` geladen.
-
-3. **Persönliche Angaben & Zusammenfassung**
-   - Die `PersonalDataPage` sammelt optionale Statistikdaten.
-   - Anschließend zeigt die `ConfigSummaryPage` einen Überblick aller Einstellungen.
-
-4. **Berechnung & Ergebnisse**
-   - Das Backend ruft die Bewertungslogik (`bewertung.py`) auf und speichert den Lauf über die Route `save_run`.
-   - Die `CalcResultsPage` präsentiert das Ranking der Ideen.
-
-
-
-## ⚙️ Backend-Komponenten (FastAPI)
-
-### 1. **Excel-Verarbeitung**
-- Liest eine Ideensammlung und eine Kombinationssammlung (aus `backend/templates/` oder Upload)
-- Jede Kombination enthält eine Formel (z. B. `CO2/Jahr * Lebensdauer + Produktion`)
-- Formel wird dynamisch ausgewertet
-- Einheiten werden automatisch kombiniert
-
-### 2. **Konfigurationsdatei (`matrixconfig.ini`)**
-- Legt aktuelle Ideensammlung/Kombisammlung fest
-- Steuerung von Optionen wie:
-  - `datapopup = on/off`
-  - `testerbutton = on/off`
-  - `backend_logging = on/off`
-  - `standardeinstellung_runde1 = einbezogen/ausgeschlossen`
-  - `exportformat = csv/pdf/excel`
-*Letzte Aktualisierung durch ChatGPT: (19.06.2025:11:16)*
-
-### 3. **Bewertungslogik**
-- Bewertet alle aktiven Ideen mit den aktiven Kombinationen
-- Berücksichtigt Gewichtungen (Skala 0–5)
-- Berechnet Score je Idee
-- Bewertet ob hoher oder niedriger Wert besser ist (aus Excel)
-
-### 4. **Logging / Speicherung**
-- Bewertungsdurchläufe werden gespeichert (z. B. in `/logs/`)
-- Als CSV, JSON oder Excel – konfigurierbar
-- Wenn `App-Tester` aktiv → kein Logging
-- Wenn `datapopup = on` → anonyme Datenabfrage vor Berechnung
-- Zusätzlich protokolliert `/log_step` jeden Schritt einer Session im Ordner `archive/`
-- Die Route `/save_run` legt das Ergebnis einer Bewertung als JSON-Datei ab.
-- Beide Endpoints werden im Frontend über `VITE_API_URL` aufgerufen.
+Das Matrix-Tool hilft dabei, viele unterschiedliche Produktideen aus dem Bereich nachhaltiges Bauen miteinander zu vergleichen. Jede Idee besitzt bestimmte Eigenschaften, etwa Kosten, CO₂-Ausstoß oder Lebensdauer. Mehrere dieser Eigenschaften lassen sich zu sogenannten **Kombinationen** zusammenfassen. Nutzerinnen und Nutzer können einstellen, welche Kombinationen wichtig sind und welche weniger. Am Ende ergibt sich pro Idee ein Wert, der **Score**, aus dem eine Rangliste berechnet wird.
 
 ---
 
-## 🧠 Frontend-Komponenten (React)
+## 2. Wichtigste Ordner im Überblick
 
-### 1. **Daten-Auswahl**
-- Auswahl zwischen:
-  - Aktuelle Ideensammlung / Eigene hochladen
-  - Aktuelle Kombisammlung / Eigene hochladen
-- Uploads werden gespeichert mit UUID
-- Blanko-Dateien zum Download
+| Ordner/Datei            | Kurzbeschreibung                                                  |
+|-------------------------|------------------------------------------------------------------|
+| `backend/`              | Enthält den FastAPI-Server, die Datenbank und die Bewertungslogik |
+| `frontend/`             | Beinhaltet die React-App, also alles, was im Browser angezeigt wird |
+| `templates/`            | Vorlagen für Excel-Dateien, an denen sich eigene Uploads orientieren |
+| `backend/uploads/`      | Dort landen alle hochgeladenen Dateien, sortiert nach Session-IDs |
+| `matrixconfig.ini`      | Zentrale Konfigurationsdatei für Standardwerte und Optionen       |
 
-### 2. **Bewertungsmatrix**
-- Kombinationen mit Gewichtung (0 = deaktiviert)
-- Info-Symbole mit Erklärung aus Excel
-- Kategorien (z. B. CO2, Finanzen) gruppiert
-
-### 3. **Ideenübersicht**
-- Liste aller Ideen mit Beschreibung (aus Excel)
-- Checkbox: Idee deaktivieren
-
-### 4. **Auswertung**
-- Platz 1, 2, 3 … mit Score
-- Ausklappbare Tabellen mit berechneten Werten
-- Einheit pro Kombination wird angezeigt
-- Export: Top 10, 20, 50 oder alle → CSV/PDF
-
-### 5. **Statistiken**
-- Button „Statistiken anzeigen“ (derzeit nur Hinweistext)
-- Später: Visualisierungen & Meta-Auswertung geplant
+Diese Struktur sorgt dafür, dass sich Backend und Frontend klar trennen lassen und trotzdem miteinander kommunizieren können.
 
 ---
 
-## 📝 Upload-Handling
+## 3. Das Backend ausführlich erklärt
 
-- Eigene Dateien (Ideen / Kombinationen) werden unter `backend/uploads/selectionideas/` bzw. `backend/uploads/selectioncombis/` gespeichert
-- Dateiname basiert auf UUID
-- Diese UUID wird beim Bewertungsdurchlauf mitgeloggt
+Das Backend basiert auf [FastAPI](https://fastapi.tiangolo.com/), einem modernen Python-Webframework. Die wichtigsten Bestandteile sind:
+
+### 3.1 `main.py`
+Hier startet die Anwendung. Es werden verschiedene API-Endpunkte definiert, z.B. für Datei-Uploads, Berechnungen oder das Speichern von Nutzungsdaten. Über die **CORS-Einstellungen** wird festgelegt, welche Webseiten auf das Backend zugreifen dürfen.
+
+### 3.2 `bewertung.py`
+In dieser Datei steckt das Herzstück der Berechnung. Sie liest die hochgeladenen Excel-Dateien ein, wendet Formeln auf die Daten an und gewichtet sie. Die Ergebnisse werden als Score pro Idee ausgegeben.
+
+### 3.3 `loader/`
+Dieses Unterverzeichnis enthält Hilfsfunktionen zum Einlesen und Prüfen der Excel-Dateien. Fehlerhafte oder unvollständige Dateien werden so frühzeitig erkannt.
+
+### 3.4 `database.py`
+Hier wird eine kleine SQLite-Datenbank verwaltet. Sie speichert Berechnungen und – wenn gewünscht – anonymisierte Nutzungsdaten. Die Datenbankdatei wird automatisch angelegt, sobald das Backend startet.
+
+### 3.5 `api/`
+Weitere Routen sind ausgelagert, zum Beispiel zum Speichern eines Bewertungslaufs (`/save_run`) oder zum Protokollieren einzelner Nutzeraktionen (`/log_step`).
+
+Alle Backend-Komponenten greifen auf die Einstellungen in `matrixconfig.ini` zu. Dort lässt sich etwa einstellen, ob Nutzungsdaten gespeichert werden sollen oder welche Dateien als Standard genutzt werden.
 
 ---
 
-## 🛠 Entwicklungsstrategie
+## 4. Das Frontend ausführlich erklärt
 
-Dieses Projekt wird **schrittweise** aufgebaut. Nach jedem abgeschlossenen Schritt wird der Code auf GitHub hochgeladen. ChatGPT kann bei Bedarf die GitHub-Dateien erneut lesen, sollte ein Reset stattfinden.
+Das Frontend ist mit [React](https://react.dev/) umgesetzt und nutzt [Vite](https://vitejs.dev/) als Entwicklungsumgebung. Die wichtigsten Bereiche sind:
+
+### 4.1 `src/pages/`
+Jede Datei in diesem Ordner stellt eine komplette Seite dar. Beispiele sind `StartPage.tsx`, `SelectDataPage.tsx` oder `CalcResultsPage.tsx`. Über ein kleines Navigationssystem gelangt man Schritt für Schritt durch den Bewertungsprozess.
+
+### 4.2 `src/components/`
+Hier finden sich wiederverwendbare Bausteine wie Tabellen, Buttons oder Formularfelder. Diese Komponenten sorgen dafür, dass die Oberfläche einheitlich aussieht.
+
+### 4.3 `src/i18n/`
+Alle Texte der Benutzeroberfläche sind in diesem Ordner gesammelt. Dadurch lässt sich das Tool leicht in mehrere Sprachen übersetzen. Aktuell sind Deutsch, Englisch und Französisch vorhanden.
+
+### 4.4 `api.ts`
+Dieser kleine Helfer stellt sicher, dass das Frontend die richtigen Endpunkte im Backend aufruft. Die Basis-URL wird über eine Umgebungsvariable (`VITE_API_URL`) gesteuert.
+
+Beim Start des Frontends mit `npm run dev` wird ein lokaler Entwicklungsserver gestartet, der Änderungen sofort anzeigt. Für den Produktivbetrieb lassen sich optimierte Dateien erzeugen (`npm run build`).
 
 ---
 
-## 🔗 GitHub-Repo
+## 5. Datenfluss von Anfang bis Ende
 
-Alle Dateien befinden sich unter:  
-👉 [https://github.com/Gruppe4-Projektentwicklung/matrix_v1](https://github.com/Gruppe4-Projektentwicklung/matrix_v1)
+1. **Start** – Eine neue Session-ID wird erzeugt und im Browser gespeichert.
+2. **Datenauswahl** – Nutzer wählen vorhandene Excel-Dateien aus oder laden eigene hoch. Die Dateien werden in `backend/uploads/sessions/<ID>/` gespeichert.
+3. **Ideenauswahl** – Eine Tabelle listet alle Ideen aus der gewählten Sammlung auf. Nicht benötigte Ideen lassen sich deaktivieren.
+4. **Kombinationsgewichtung** – In einer weiteren Tabelle werden die Kombinationen angezeigt. Jeder Eintrag erhält eine Gewichtung von 0 bis 5.
+5. **Optionale Angaben** – Ein Formular fragt anonyme Statistikinformationen ab.
+6. **Zusammenfassung** – Vor der Berechnung werden alle Einstellungen noch einmal übersichtlich dargestellt.
+7. **Berechnung** – Das Frontend sendet die Daten an das Backend. Dort werden alle aktiven Ideen anhand der gewichteten Kombinationen bewertet.
+8. **Ergebnis** – Eine Rangliste zeigt, welche Idee den höchsten Score erreicht hat. Zusätzlich kann man die Daten herunterladen.
+9. **Speichern** – Auf Wunsch werden die Ergebnisse und die gewählten Einstellungen in der Datenbank archiviert.
+10. **Ende** – Die Session kann beendet oder neu gestartet werden, woraufhin alle temporären Dateien gelöscht werden.
 
 ---
 
-*Letzte Aktualisierung durch ChatGPT: (19.06.2025:11:16)*
+## 6. Datenbank und Speicherung
+
+Die SQLite-Datenbank `backend/matrix.db` enthält zwei Haupttabellen:
+
+- **Calculation** – speichert jeden vollständigen Bewertungslauf mit Zeitstempel, verwendeten Dateien und dem Ergebnis als JSON.
+- **UsageLog** – protokolliert einzelne Nutzeraktionen, sofern die Option `backend_logging` aktiviert ist. Jede Aktion wird mit einer Session-ID verknüpft.
+
+Die Datenbank wird beim Start des Backends automatisch aktualisiert. Wer sie sich ansehen möchte, kann sie mit gängigen SQLite-Tools öffnen.
+
+---
+
+## 7. Die Konfigurationsdatei `matrixconfig.ini`
+
+Diese Datei regelt viele Verhalten des Tools. Ein paar wichtige Beispiele:
+
+- Welches Ideen- und Kombinations-Excel als Standard geladen wird.
+- In welchem Ordner Uploads landen (`upload_dir`).
+- Ob anonyme Nutzungsdaten gesammelt werden (`backend_logging`).
+- Ob vor der Berechnung ein Daten-Popup erscheint (`datapopup`).
+
+Durch Anpassen dieser Werte lässt sich das Tool leicht an verschiedene Einsatzzwecke anpassen.
+
+---
+
+## 8. Umgang mit Uploads
+
+Alle hochgeladenen Dateien werden zunächst in einem Session-Ordner abgelegt. Ist der sogenannte **App-Tester-Modus** ausgeschaltet, werden diese Dateien außerdem dauerhaft in `backend/uploads/selectionideas/` oder `backend/uploads/selectioncombis/` gespeichert. So können sie in späteren Sessions wieder genutzt werden. Die Dateinamen enthalten eine zufällige UUID, sodass keine Rückschlüsse auf die Nutzer gezogen werden können.
+
+---
+
+## 9. Beispielhafter Ablauf
+
+Damit der gesamte Prozess greifbarer wird, hier ein vereinfachtes Beispiel:
+
+1. Anna startet das Tool im Browser. Eine neue Session-ID wird erstellt.
+2. Sie entscheidet sich für die mitgelieferte Ideensammlung und lädt eine eigene Excel-Datei für die Kombinationen hoch.
+3. Auf der Ideenauswahl deaktiviert sie zwei Einträge, die für sie nicht relevant sind.
+4. Bei den Kombinationen setzt sie besonders hohe Gewichtungen auf die Themen CO₂ und Kosten.
+5. Die optionalen Statistikfelder lässt sie leer.
+6. In der Zusammenfassung überprüft sie ihre Eingaben und startet die Berechnung.
+7. Wenige Sekunden später sieht sie eine Rangliste, in der ihre favorisierte Idee auf Platz 1 landet.
+8. Anna lädt das Ergebnis als CSV-Datei herunter und beendet ihre Session.
+
+So oder ähnlich sieht der typische Ablauf für alle Nutzerinnen und Nutzer aus.
+
+---
+
+## 10. Technischer Steckbrief
+
+- **Programmiersprache Backend:** Python 3
+- **Framework Backend:** FastAPI
+- **Programmiersprache Frontend:** TypeScript mit React
+- **Build-Tool:** Vite
+- **Datenbank:** SQLite (Datei `backend/matrix.db`)
+- **Weitere Tools:** pandas für Excel-Verarbeitung, SQLAlchemy als ORM, Tailwind CSS für das Design
+
+Diese Kombination sorgt für eine schlanke, aber flexible Architektur.
+
+---
+
+## 11. Glossar
+
+- **FastAPI** – schnelles Python-Framework zum Erstellen von Web-APIs.
+- **React** – JavaScript-Bibliothek zur Erstellung interaktiver Benutzeroberflächen.
+- **Vite** – Entwicklungsumgebung für moderne Webprojekte mit Hot-Reload.
+- **ORM** – Objekt-Relationaler Mapper; erlaubt den einfachen Zugriff auf Datenbanken.
+- **CSV** – Dateiformat für Tabellen, das von nahezu allen Programmen gelesen werden kann.
+
+---
+
+## 12. Wie kann man das Projekt erweitern?
+
+Wer eigene Funktionen ergänzen möchte, kann folgendermaßen vorgehen:
+
+1. **Neue Seiten im Frontend** lassen sich im Ordner `frontend/src/pages/` anlegen. Von dort können sie über das Routing erreichbar gemacht werden.
+2. **Weitere API-Routen** können im Backend unter `backend/api/` erstellt werden. Anschließend sollten sie im Frontend über `api.ts` eingebunden werden.
+3. **Weitere Übersetzungen** erhalten Platz in `frontend/src/i18n/common.ts`.
+4. **Tests** können mit `pytest` für das Backend oder `Vitest` für das Frontend geschrieben werden.
+
+Durch die klare Trennung bleibt das Projekt auch bei neuen Features übersichtlich.
+
+---
+
+## 13. Letzter Blick in das Repository
+
+Alle Quellen sind öffentlich einsehbar unter [github.com/Gruppe4-Projektentwicklung/matrix_v1](https://github.com/Gruppe4-Projektentwicklung/matrix_v1). Dort findest du auch eine Historie aller Änderungen.
+
+---
+
+*Letzte Aktualisierung durch ChatGPT: (20.06.2025)*
