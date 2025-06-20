@@ -58,18 +58,19 @@ export const SelectDataPage = ({
         {t('masterDataSelectionTitle')}
       </h2>
 
-      <CollectionSelectorIdeas
-        aktuelleSammlungName={aktuelleIdeensammlung}
-        onSammlungChange={onIdeenSammlungChange}
-        onUpload={onIdeenUpload}
-      />
-      <CollectionSelectorKombis
-        aktuelleSammlungName={aktuelleKombiSammlung}
-        onSammlungChange={onKombiSammlungChange}
-        onUpload={onKombiUpload}
-      />
-
-      <Divider sx={{ my: 4 }} />
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <CollectionSelectorIdeas
+          aktuelleSammlungName={aktuelleIdeensammlung}
+          onSammlungChange={onIdeenSammlungChange}
+          onUpload={onIdeenUpload}
+        />
+        <Divider sx={{ my: 4, width: '100%' }} />
+        <CollectionSelectorKombis
+          aktuelleSammlungName={aktuelleKombiSammlung}
+          onSammlungChange={onKombiSammlungChange}
+          onUpload={onKombiUpload}
+        />
+      </Box>
 
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8 mt-8">
         <p className="text-sm text-gray-700 text-center">
