@@ -403,6 +403,15 @@ async def save_run(data: dict):
     return {"message": t("run_saved", lang), "run_id": run_id, "status": "ok"}
 
 
+# ---- Anzahl gespeicherter Berechnungen abrufen ----
+@app.get("/api/calc_count")
+def get_calc_count():
+    """Liefert die Anzahl der gespeicherten Berechnungsläufe."""
+    with SessionLocal() as db:
+        count = db.query(Calculation).count()
+    return {"count": count}
+
+
 # ---- Nutzungsdaten speichern ----
 @app.post("/log_step")
 async def log_step(request: Request, payload: dict):
