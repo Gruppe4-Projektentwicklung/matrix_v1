@@ -182,7 +182,9 @@ export const IdeenSelector: React.FC<Props> = ({
                                         </>
                                       ) : (
                                         <>
-                                          <TableCell colSpan={3}></TableCell>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
                                         </>
                                       )}
                                       {g.neu ? (
@@ -197,7 +199,13 @@ export const IdeenSelector: React.FC<Props> = ({
                                             </IconButton>
                                           </TableCell>
                                         </>
-                                      ) : null}
+                                      ) : (
+                                        <>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                        </>
+                                      )}
                                     </TableRow>
                                   );
                                 });
