@@ -33,20 +33,20 @@ export const SaveRunSuccess: React.FC<Props> = ({
         </div>
       )}
       {isTester && (
-        <div className="text-sm text-blue-600">
+        <div className="text-sm text-green-600">
           <span dangerouslySetInnerHTML={{ __html: t("testerModeNotice") }} />
         </div>
       )}
       {onEdit ? (
         <button
-          className="mt-4 bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
+          className="mt-4 bg-green-600 text-white rounded px-4 py-2 font-semibold hover:bg-green-700"
           onClick={onEdit}
         >
           {t("editData")}
         </button>
       ) : (
         <button
-          className="mt-4 bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
+          className="mt-4 bg-green-600 text-white rounded px-4 py-2 font-semibold hover:bg-green-700"
           onClick={onClose}
         >
           {t("close")}

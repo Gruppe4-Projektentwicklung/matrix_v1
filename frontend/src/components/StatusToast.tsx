@@ -29,7 +29,7 @@ export const StatusToast: React.FC<Props> = ({
   const colors: Record<string, string> = {
     success: "bg-green-600",
     error: "bg-red-600",
-    info: "bg-blue-600",
+    info: "bg-green-600",
   };
 
   // Optional: Könnte hier noch übersetzte Icons verwenden, falls gewünscht.

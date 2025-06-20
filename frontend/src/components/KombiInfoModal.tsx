@@ -80,7 +80,7 @@ export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose 
           </div>
         )}
         <button
-          className="mt-4 bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700"
+          className="mt-4 bg-green-600 text-white rounded px-4 py-2 font-semibold hover:bg-green-700"
           onClick={onClose}
         >
           {t("close")}

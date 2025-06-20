@@ -54,7 +54,7 @@ type Props = {
             </div>
             <div className="col-span-2 text-center">
               <button
-                className="text-blue-600 hover:underline"
+                className="text-green-600 hover:underline"
                 title={t("showDescription")}
                 onClick={() => setOpenId(openId === eintrag.id ? null : eintrag.id)}
                 type="button"
@@ -65,7 +65,7 @@ type Props = {
             <div className="col-span-3 text-right">
               {eintrag.details && (
                 <button
-                  className="text-blue-600 hover:underline"
+                  className="text-green-600 hover:underline"
                   onClick={() => setOpenId(openId === eintrag.id ? null : eintrag.id)}
                   type="button"
                 >
@@ -77,7 +77,7 @@ type Props = {
           {/* Beschreibung und Details ausklappbar */}
           {openId === eintrag.id && (
             <div
-              className="col-span-12 bg-blue-50 rounded-b p-3 mt-2"
+              className="col-span-12 bg-green-50 rounded-b p-3 mt-2"
               style={{ gridColumn: "1 / -1" }}
             >
               {eintrag.beschreibung && (

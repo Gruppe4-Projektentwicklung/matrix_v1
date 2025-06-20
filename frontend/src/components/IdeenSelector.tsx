@@ -82,7 +82,7 @@ export const IdeenSelector: React.FC<Props> = ({
                 </label>
                 <button
                   onClick={() => toggleExpand(idee.id)}
-                  className="text-blue-600 text-sm underline"
+                  className="text-green-600 text-sm underline"
                   type="button"
                 >
                   {expandedId === idee.id ? t("hideAttributes") : t("showAttributes")}

@@ -63,7 +63,7 @@ export const WeightingSelector: React.FC<Props> = ({
             </div>
             <button
               onClick={() => toggleInfo(kombi.id)}
-              className="text-blue-600 text-sm underline"
+              className="text-green-600 text-sm underline"
               type="button"
             >
               {expandedId === kombi.id

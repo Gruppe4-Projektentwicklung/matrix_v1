@@ -37,7 +37,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
                 type="checkbox"
                 checked={runde1}
                 onChange={(e) => onChange("runde1", e.target.checked)}
-                className="accent-[#1d2c5b]"
+                className="accent-[#4ab866]"
               />
               {t("optionConsiderRound1")}
             </label>
@@ -47,7 +47,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
                 type="checkbox"
                 checked={runde2}
                 onChange={(e) => onChange("runde2", e.target.checked)}
-                className="accent-[#1d2c5b]"
+                className="accent-[#4ab866]"
               />
               {t("optionConsiderRound2")}
             </label>
@@ -60,7 +60,7 @@ export const BewertungsOptionen: React.FC<BewertungsOptionenProps> = ({
               type="checkbox"
               checked={appTester}
               onChange={(e) => onChange("appTester", e.target.checked)}
-              className="accent-[#1d2c5b]"
+              className="accent-[#4ab866]"
             />
             {t("optionAppTester")}
           </label>
