@@ -80,8 +80,12 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                   </TableCell>
                   <TableCell align="center">
                     {eintrag.beschreibung && (
-                      <Button size="small" onClick={() => setInfoId(showInfo ? null : eintrag.id)}>
-                        {t("info")}
+                      <Button
+                        size="small"
+                        variant={showInfo ? "contained" : "outlined"}
+                        onClick={() => setInfoId(showInfo ? null : eintrag.id)}
+                      >
+                        {showInfo ? t("close") : t("info")}
                       </Button>
                     )}
                   </TableCell>
@@ -89,6 +93,7 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                     {eintrag.details && (
                       <Button
                         size="small"
+                        variant={showDetails ? "contained" : "outlined"}
                         onClick={() =>
                           setDetailIds((prev) =>
                             prev.includes(eintrag.id)
@@ -97,7 +102,7 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                           )
                         }
                       >
-                        {t("details")}
+                        {showDetails ? t("close") : t("details")}
                       </Button>
                     )}
                   </TableCell>
@@ -134,7 +139,7 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                               {Object.entries(eintrag.details).length > 0 ? (
                                 Object.entries(eintrag.details).map(([kombi, wert]) => {
                                   const id = kombi.replace(/^Kombi_/, "");
-                                  const info = kombinationen?.find(k => String(k.id) === id);
+                                  const info = kombinationen?.find((k) => String(k.id) === id);
                                   const val =
                                     typeof wert === "number"
                                       ? Number(wert).toFixed(3)
@@ -147,10 +152,11 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                                           const langKey = i18n.language.slice(0, 2);
                                           const byLang = info?.[`#t_${langKey}#3`];
                                           return byLang || info?.formel || "";
-                                        })()}
                                       </TableCell>
                                       <TableCell align="right">{val}</TableCell>
-                                      <TableCell>{info?.einheit || ""}</TableCell>
+                                      <TableCell>
+                                        {info?.einheit || info?.Result_Unit || ""}
+                                      </TableCell>
                                     </TableRow>
                                   );
                                 })
