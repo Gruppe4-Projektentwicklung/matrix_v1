@@ -127,7 +127,7 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
   };
 
   return (
-    <div className="mb-4 max-w-xs">
+    <div className="mt-8 mb-4 max-w-xs">
       <FormControl fullWidth size="small">
         <InputLabel id="kombis-select-label">
           {t("selectCombinationCollection")}
