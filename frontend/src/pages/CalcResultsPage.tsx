@@ -4,6 +4,7 @@ import { ExportRankingButton } from '../components/ExportRankingButton';
 import { useNavigate } from 'react-router-dom';
 import { hasSessionStarted } from '../utils/session';
 import { ResetButton } from '../components/ResetButton';
+import { Box } from '@mui/material';
 
 interface Props {
   rankingEintraege: any[];
@@ -18,12 +19,12 @@ export const CalcResultsPage = ({ rankingEintraege }: Props) => {
     }
   }, [navigate]);
   return (
-    <div>
+    <Box>
       <Ranking eintraege={rankingEintraege} />
-      <div className="mt-6 flex justify-between items-center gap-4">
+      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
         <ResetButton />
         <ExportRankingButton eintraege={rankingEintraege} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

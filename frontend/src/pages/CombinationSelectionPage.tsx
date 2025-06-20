@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
+import { Box, Button, Paper, Typography } from '@mui/material';
 
 interface Props {
   gewichtungen: any[];
@@ -39,15 +40,14 @@ export const CombinationSelectionPage = ({
     }
   }, [navigate]);
   return (
-    <div>
-      <div className="mt-8 mb-6 flex justify-between">
-        <div className="flex gap-4">
+    <Box>
+      <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', gap: 2 }}>
           <ResetButton />
-          <button onClick={() => navigate('/ideas')} className="px-4 py-2 bg-gray-300 rounded">
-            {t('back')}
-          </button>
-        </div>
-        <button
+          <Button variant="outlined" onClick={() => navigate('/ideas')}>{t('back')}</Button>
+        </Box>
+        <Button
+          variant="contained"
           onClick={() => {
             logEvent(getSessionId(), 'combinations', {
               gewichtungen,
@@ -59,12 +59,11 @@ export const CombinationSelectionPage = ({
             setPageStatus('combination', 'ok');
             navigate('/personal');
           }}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
         >
           {t('next')}
-        </button>
-      </div>
-      <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
+        </Button>
+      </Box>
+      <Paper sx={{ p: 3, mb: 4 }}>
         <BewertungsOptionen
           runde1={runde1}
           runde2={runde2}
@@ -75,10 +74,12 @@ export const CombinationSelectionPage = ({
           showRoundOptions={showRoundOptions}
           showTesterOption={showTesterOption}
         />
-        <p className="mt-4 text-center text-sm text-gray-700">{t('selectWeightsInfo')}</p>
-      </div>
+        <Typography mt={2} textAlign="center" color="text.secondary">
+          {t('selectWeightsInfo')}
+        </Typography>
+      </Paper>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
-      
-    </div>
+
+    </Box>
   );
 };

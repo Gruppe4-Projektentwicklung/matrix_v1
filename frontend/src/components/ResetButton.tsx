@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@mui/material';
 
 import { clearSession } from '../utils/session';
 import { resetSessionId } from '../utils/session';
@@ -20,9 +21,9 @@ export const ResetButton: React.FC = () => {
   };
 
   return (
-    <button onClick={handleClick} className="px-4 py-2 bg-gray-300 rounded">
+    <Button variant="outlined" color="inherit" onClick={handleClick} size="small">
       {t('reset')}
-    </button>
+    </Button>
   );
 };
 

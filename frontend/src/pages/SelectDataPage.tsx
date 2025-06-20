@@ -6,6 +6,7 @@ import { ResetButton } from '../components/ResetButton';
 import { useTranslation } from 'react-i18next';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
+import { Box, Button } from '@mui/material';
 
 interface Props {
   aktuelleIdeensammlung: string;
@@ -33,9 +34,25 @@ export const SelectDataPage = ({
     }
   }, [navigate]);
   return (
-    <div>
-      <div className="mt-8 mb-6 flex justify-between">
+    <Box>
+      <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <ResetButton />
+
+        <Button
+          variant="contained"
+          onClick={() => {
+            logEvent(getSessionId(), 'select-data', {
+              ideenSammlung: aktuelleIdeensammlung,
+              kombiSammlung: aktuelleKombiSammlung,
+            });
+            setPageStatus('select-data', 'ok');
+            navigate('/ideas');
+          }}
+        >
+          {t('next')}
+        </Button>
+      </Box>
+
         <div className="flex gap-4">
           <button
             onClick={() => {
@@ -55,6 +72,7 @@ export const SelectDataPage = ({
       <h2 className="text-lg font-semibold text-center mb-4">
         {t('masterDataSelectionTitle')}
       </h2>
+
       <CollectionSelectorIdeas
         aktuelleSammlungName={aktuelleIdeensammlung}
         onSammlungChange={onIdeenSammlungChange}
@@ -65,11 +83,15 @@ export const SelectDataPage = ({
         onSammlungChange={onKombiSammlungChange}
         onUpload={onKombiUpload}
       />
+
+    </Box>
+
       <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
         <p className="text-sm text-gray-700 text-center">
           {t('selectDataInfo')}
         </p>
       </div>
     </div>
+
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Box, Button, Typography } from '@mui/material';
 import { markSessionStarted } from '../utils/session';
 
 interface Props {
@@ -17,20 +18,30 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
     navigate('/select-data');
   };
   return (
-    <div className="w-[65%] max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-10 my-10 text-center min-h-[80vh]">
-      <h1 className="text-4xl font-bold mb-8 text-[#1d2c5b] tracking-tight drop-shadow">
+    <Box
+      sx={{
+        maxWidth: 800,
+        mx: 'auto',
+        bgcolor: 'background.paper',
+        boxShadow: 3,
+        borderRadius: 2,
+        p: 4,
+        my: 4,
+        textAlign: 'center',
+        minHeight: '80vh',
+      }}
+    >
+      <Typography variant="h4" component="h1" mb={4} color="primary">
         {t('title')}
-      </h1>
-      <p className="mb-6 text-gray-700">{t('introText')}</p>
-      <div className="flex items-center justify-center gap-4 mt-4">
-        <button
-          onClick={handleStart}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-        >
+      </Typography>
+      <Typography mb={3} color="text.secondary">
+        {t('introText')}
+      </Typography>
+      <Box mt={4} display="flex" justifyContent="center">
+        <Button variant="contained" color="primary" onClick={handleStart}>
           {t('start')}
-        </button>
-      </div>
-  
-    </div>
+        </Button>
+      </Box>
+    </Box>
   );
 };

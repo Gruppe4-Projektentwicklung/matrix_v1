@@ -18,6 +18,17 @@ import { CalcResultsPage } from "./pages/CalcResultsPage";
 
 // import { KombiInfoModal } from "./components/KombiInfoModal"; // ← entfernt, da ungenutzt
 import { StatusToast } from "./components/StatusToast";
+import {
+  AppBar,
+  Box,
+  Checkbox,
+  Container,
+  FormControlLabel,
+  MenuItem,
+  Select,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 
 import { getSessionId, setPageStatus } from "./utils/session";
 import { devConfig } from "./devConfig";
@@ -317,40 +328,46 @@ function App() {
 
   return (
     <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pb-10">
-      <header className="w-[85%] mx-auto bg-blue-300 text-white shadow-md mb-4">
-        <div className="flex justify-between items-center p-3">
-          <div className="flex items-center gap-4">
-            <div className="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-1 rounded">
+      <AppBar position="static" color="primary" sx={{ mb: 2 }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography
+              variant="caption"
+              sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
+            >
               Session ID: {sessionId}
-            </div>
+            </Typography>
             {location.pathname === '/' && devConfig.dataSaveStatus === 'on' && (
-              <label className="text-xs flex items-center gap-1 text-blue-900">
-                <input
-                  type="checkbox"
-                  checked={dev2Mode}
-                  onChange={(e) => setDev2Mode(e.target.checked)}
-                />
-                Dev2 mode
-              </label>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={dev2Mode}
+                    onChange={(e) => setDev2Mode(e.target.checked)}
+                    color="default"
+                  />
+                }
+                label={<Typography variant="caption">Dev2 mode</Typography>}
+              />
             )}
-          </div>
-          <select
+          </Box>
+          <Select
             id="lang-select"
+            size="small"
             value={language}
             onChange={handleLanguageChange}
-            className="px-2 py-1 rounded border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1d2c5b] text-sm"
-            style={{ minWidth: 80 }}
+            sx={{ bgcolor: 'background.paper', minWidth: 80 }}
           >
-            <option value="de">Deutsch</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-          </select>
-        </div>
-      </header>
+            <MenuItem value="de">Deutsch</MenuItem>
+            <MenuItem value="en">English</MenuItem>
+            <MenuItem value="fr">Français</MenuItem>
+          </Select>
+        </Toolbar>
+      </AppBar>
 
       {dev2Mode && devConfig.dataSaveStatus === 'on' && <DevStatusBar />}
 
-      <main className="flex-grow w-full">
+      <Container sx={{ flexGrow: 1 }} maxWidth="lg">
         <Routes>
           <Route
             path="/"
@@ -470,7 +487,7 @@ function App() {
           onClose={handleCloseStatusToast}
           type={statusToastType}
         />
-      </main>
+      </Container>
     </div>
   );
 
