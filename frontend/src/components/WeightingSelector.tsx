@@ -157,7 +157,8 @@ export const WeightingSelector: React.FC<Props> = ({
     {(() => {
       // Korrigierte Deklaration:
       const formula = kombi.formel || "";
-      const description = kombi[`#t_${i18n.language}#3`] || "";
+      const langKey = i18n.language.slice(0, 2);
+      const description = kombi[`#t_${langKey}#3`] || "";
       const unit = kombi.einheit || kombi.Result_Unit || "";
       const direction = kombi.richtung || kombi.Direction || "";
 
@@ -173,34 +174,39 @@ export const WeightingSelector: React.FC<Props> = ({
         })();
 
         return (
-          <Table
-            size="small"
-            sx={{
-              mt: 1,
-              border: 1,
-              borderColor: "divider",
-              borderRadius: 1,
-              '& td, & th': { borderColor: 'divider' },
-            }}
-          >
-            <TableHead>
-              <TableRow sx={{ bgcolor: "action.hover" }}>
-                <TableCell>{t("formula")}</TableCell>
-                <TableCell>{t("resultUnit")}</TableCell>
-                <TableCell>{t("evaluationDirection")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>{formula}</TableCell>
-                <TableCell>{unit}</TableCell>
-                <TableCell>
-                  {direction}
-                  {directionText && ` – ${directionText}`}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <>
+            <Table
+              size="small"
+              sx={{
+                mt: 1,
+                border: 1,
+                borderColor: "divider",
+                borderRadius: 1,
+                '& td, & th': { borderColor: 'divider' },
+              }}
+            >
+              <TableHead>
+                <TableRow sx={{ bgcolor: "action.hover" }}>
+                  <TableCell>{t("formula")}</TableCell>
+                  <TableCell>{t("resultUnit")}</TableCell>
+                  <TableCell>{t("evaluationDirection")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>{formula}</TableCell>
+                  <TableCell>{unit}</TableCell>
+                  <TableCell>
+                    {direction}
+                    {directionText && ` – ${directionText}`}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+            {description && (
+              <Typography sx={{ mt: 1 }}>{description}</Typography>
+            )}
+          </>
         );
       }
 
