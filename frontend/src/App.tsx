@@ -362,7 +362,6 @@ function App() {
   >
     {/* Linke Seite */}
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <Box component="img" src="/Logo.png" alt="Logo" sx={{ height: 32 }} />
       <Typography
         variant="caption"
         sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
