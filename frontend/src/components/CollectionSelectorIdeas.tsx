@@ -128,7 +128,7 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
   };
 
   return (
-    <div className="mb-6 max-w-xs">
+    <div className="mb-12 max-w-xs">
       <FormControl fullWidth size="small">
         <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
         <Select
@@ -147,7 +147,7 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
           ))}
         </Select>
       </FormControl>
-      <div className="mt-4 flex items-center space-x-4 justify-end">
+      <div className="mt-6 flex items-center space-x-4 justify-end">
         <Button
           variant="contained"
           component="label"
