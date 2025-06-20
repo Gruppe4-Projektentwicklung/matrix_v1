@@ -33,6 +33,7 @@ Deshalb wird dieses Projekt **schrittweise** aufgebaut und der Quellcode immer d
 - Excel-Dateien als Basis-Input definiert:
   - `ideen_template.xlsx`
   - `kombis_template.xlsx`
+- SQLite-Datenbank für Berechnungen und Nutzungslogs eingerichtet
 
 ---
 
