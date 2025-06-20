@@ -33,42 +33,25 @@ export const SelectDataPage = ({
       navigate('/', { replace: true });
     }
   }, [navigate]);
+
+  const handleWeiter = () => {
+    logEvent(getSessionId(), 'select-data', {
+      ideenSammlung: aktuelleIdeensammlung,
+      kombiSammlung: aktuelleKombiSammlung,
+    });
+    setPageStatus('select-data', 'ok');
+    navigate('/ideas');
+  };
+
   return (
     <Box>
       <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <ResetButton />
-
-        <Button
-          variant="contained"
-          onClick={() => {
-            logEvent(getSessionId(), 'select-data', {
-              ideenSammlung: aktuelleIdeensammlung,
-              kombiSammlung: aktuelleKombiSammlung,
-            });
-            setPageStatus('select-data', 'ok');
-            navigate('/ideas');
-          }}
-        >
+        <Button variant="contained" onClick={handleWeiter}>
           {t('next')}
         </Button>
       </Box>
 
-        <div className="flex gap-4">
-          <button
-            onClick={() => {
-              logEvent(getSessionId(), 'select-data', {
-                ideenSammlung: aktuelleIdeensammlung,
-                kombiSammlung: aktuelleKombiSammlung,
-              });
-              setPageStatus('select-data', 'ok');
-              navigate('/ideas');
-            }}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-          >
-            {t('next')}
-          </button>
-        </div>
-      </div>
       <h2 className="text-lg font-semibold text-center mb-4">
         {t('masterDataSelectionTitle')}
       </h2>
@@ -84,14 +67,11 @@ export const SelectDataPage = ({
         onUpload={onKombiUpload}
       />
 
-    </Box>
-
-      <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8">
+      <div className="bg-[#f8fafc] p-6 rounded-xl shadow mb-8 mt-8">
         <p className="text-sm text-gray-700 text-center">
           {t('selectDataInfo')}
         </p>
       </div>
-    </div>
-
+    </Box>
   );
 };
