@@ -9,7 +9,7 @@ import json
 import uuid
 from datetime import datetime
 from config import config  # Deine eigene Configklasse!
-from database import init_db, SessionLocal, Calculation, UsageLog
+from database import init_db, SessionLocal, Calculation, UsageLog, UploadedFile
 from loader.excel_loader import ExcelLoader
 from validator.validate_ideen import validate_ideen_excel
 from validator.validate_kombis import validate_kombi_excel
@@ -124,6 +124,24 @@ async def upload_file(
     saved_file_path = save_path / file.filename
     with open(saved_file_path, "wb") as buffer:
         buffer.write(file_bytes)
+
+    # Datei auch im Archiv ablegen
+    session_archive = ARCHIVE_FOLDER / session / sammlung_typ
+    session_archive.mkdir(parents=True, exist_ok=True)
+    archive_file_path = session_archive / file.filename
+    with open(archive_file_path, "wb") as buffer:
+        buffer.write(file_bytes)
+
+    # in der Datenbank speichern
+    with SessionLocal() as db:
+        db_entry = UploadedFile(
+            session_id=session,
+            sammlung_typ=sammlung_typ,
+            filename=str(saved_file_path),
+            is_default=False,
+        )
+        db.add(db_entry)
+        db.commit()
 
     return {
         "message": t("upload_success", lang),
@@ -423,8 +441,7 @@ async def log_step(request: Request, payload: dict):
         "timestamp": datetime.utcnow().isoformat(),
         "step": step,
         "data": payload.get("data", {}),
-        "ip": request.client.host if request.client else None,
-        "user_agent": request.headers.get("User-Agent", "")
+        "user_agent": request.headers.get("User-Agent", ""),
     }
     # auch in die Datenbank schreiben
     with SessionLocal() as db:
@@ -433,12 +450,13 @@ async def log_step(request: Request, payload: dict):
             timestamp=datetime.utcnow(),
             step=step,
             data_json=payload.get("data", {}),
-            ip=request.client.host if request.client else None,
             user_agent=request.headers.get("User-Agent", ""),
         )
         db.add(log_row)
         db.commit()
-    log_file = ARCHIVE_FOLDER / f"{session}.jsonl"
+    session_folder = ARCHIVE_FOLDER / session
+    session_folder.mkdir(parents=True, exist_ok=True)
+    log_file = session_folder / "usage.jsonl"
     with open(log_file, "a", encoding="utf-8") as f:
         json.dump(entry, f, ensure_ascii=False)
         f.write("\n")
