@@ -20,12 +20,21 @@ type RankingEintrag = {
   details?: Record<string, any>; // z.B. Attribut-Kombiwertungen
 };
 
-type Props = {
-  eintraege?: RankingEintrag[];
- // sprache: "de" | "en" | "fr";
+type Combination = {
+  id: string;
+  name?: string;
+  formel?: string;
+  einheit?: string;
+  richtung?: string;
+  [key: string]: any;
 };
 
-export const Ranking = ({ eintraege }: Props) => {
+type Props = {
+  eintraege?: RankingEintrag[];
+  kombinationen?: Combination[];
+};
+
+export const Ranking = ({ eintraege, kombinationen }: Props) => {
   const { t } = useTranslation();
   const [infoId, setInfoId] = useState<string | null>(null);
   const [detailIds, setDetailIds] = useState<string[]>([]);
@@ -121,12 +130,30 @@ export const Ranking = ({ eintraege }: Props) => {
                             </TableHead>
                             <TableBody>
                               {Object.entries(eintrag.details).length > 0 ? (
-                                Object.entries(eintrag.details).map(([kombi, wert]) => (
-                                  <TableRow key={kombi}>
-                                    <TableCell>{kombi}</TableCell>
-                                    <TableCell>{wert}</TableCell>
-                                  </TableRow>
-                                ))
+                                Object.entries(eintrag.details).map(([kombi, wert]) => {
+                                  const id = kombi.replace(/^Kombi_/, "");
+                                  const info = kombinationen?.find(k => String(k.id) === id);
+                                  const richtung = info?.richtung?.toLowerCase() || "";
+                                  const dirText =
+                                    richtung === "low"
+                                      ? t("lowerIsBetter")
+                                      : t("higherIsBetter");
+                                  const val =
+                                    typeof wert === "number"
+                                      ? wert.toFixed(3)
+                                      : wert;
+                                  return (
+                                    <TableRow key={kombi}>
+                                      <TableCell>{info?.name || kombi}</TableCell>
+                                      <TableCell>
+                                        {info?.formel ? `${info.formel}: ` : ""}
+                                        {val}
+                                        {info?.einheit ? ` ${info.einheit}` : ""}
+                                        {info?.richtung && ` ${dirText}`}
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })
                               ) : (
                                 <TableRow>
                                   <TableCell colSpan={2}>
