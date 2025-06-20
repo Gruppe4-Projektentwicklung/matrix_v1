@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { saveRun } from "../api/saveRun";
 import type { SaveRunResponse, BewertungsLaufPayload, UserData } from "../api/saveRun";
-
-
 import { setSaveRunStatus } from "../utils/session";
+import {
+  TextField,
+  MenuItem,
+  Button,
+  Box,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 
 type Props = {
   open: boolean;
@@ -45,7 +52,130 @@ export const StatistikForm: React.FC<Props> = ({
     "industryPublic",
   ];
 
-  const jobRoleOptions = [
+  const jobRoleOptionsByIndustry: Record<string, string[]> = {
+    industryConstruction: [
+      "jobEngineer",
+      "jobArchitect",
+      "jobSiteSupervisor",
+      "jobSafetyInspector",
+      "jobCarpenter",
+      "jobElectrician",
+      "jobPlumber",
+      "jobSurveyor",
+      "jobLaborer",
+      "jobManager",
+    ],
+    industryEnergy: [
+      "jobEngineer",
+      "jobTechnician",
+      "jobSafetyInspector",
+      "jobConsultant",
+      "jobElectrician",
+      "jobAnalyst",
+      "jobResearcher",
+      "jobManager",
+      "jobMarketingManager",
+      "jobProductionManager",
+    ],
+    industryIT: [
+      "jobDeveloper",
+      "jobSystemAdmin",
+      "jobDataScientist",
+      "jobProductManager",
+      "jobQAEngineer",
+      "jobResearcher",
+      "jobConsultant",
+      "jobArchitect",
+      "jobSupportSpecialist",
+      "jobManager",
+    ],
+    industryEducation: [
+      "jobTeacher",
+      "jobProfessor",
+      "jobResearcher",
+      "jobAdministrator",
+      "jobStudent",
+      "jobLibrarian",
+      "jobCounselor",
+      "jobLecturer",
+      "jobDeveloper",
+      "jobManager",
+    ],
+    industryHealthcare: [
+      "jobDoctor",
+      "jobNurse",
+      "jobTherapist",
+      "jobPharmacist",
+      "jobResearcher",
+      "jobTechnician",
+      "jobAdministrator",
+      "jobConsultant",
+      "jobParamedic",
+      "jobManager",
+    ],
+    industryRetail: [
+      "jobSales",
+      "jobStoreManager",
+      "jobCashier",
+      "jobInventorySpecialist",
+      "jobMarketingManager",
+      "jobMerchandiser",
+      "jobCustomerService",
+      "jobBuyer",
+      "jobLogisticsManager",
+      "jobConsultant",
+    ],
+    industryTourism: [
+      "jobTravelAgent",
+      "jobTourGuide",
+      "jobHotelManager",
+      "jobEventPlanner",
+      "jobChef",
+      "jobConcierge",
+      "jobReceptionist",
+      "jobMarketingManager",
+      "jobSales",
+      "jobManager",
+    ],
+    industryFinance: [
+      "jobAnalyst",
+      "jobAccountant",
+      "jobFinancialAdvisor",
+      "jobBanker",
+      "jobManager",
+      "jobConsultant",
+      "jobAuditor",
+      "jobRiskManager",
+      "jobTrader",
+      "jobActuary",
+    ],
+    industryManufacturing: [
+      "jobEngineer",
+      "jobTechnician",
+      "jobProductionManager",
+      "jobQualityControl",
+      "jobAssemblyWorker",
+      "jobLogisticsManager",
+      "jobSafetyInspector",
+      "jobMaintenanceTechnician",
+      "jobDesigner",
+      "jobResearcher",
+    ],
+    industryPublic: [
+      "jobCivilServant",
+      "jobManager",
+      "jobTeacher",
+      "jobEngineer",
+      "jobPolicyAdvisor",
+      "jobSocialWorker",
+      "jobPoliceOfficer",
+      "jobFirefighter",
+      "jobClerk",
+      "jobConsultant",
+    ],
+  };
+
+  const defaultJobRoleOptions = [
     "jobEngineer",
     "jobArchitect",
     "jobManager",
@@ -57,6 +187,10 @@ export const StatistikForm: React.FC<Props> = ({
     "jobTeacher",
     "jobDoctor",
   ];
+
+  const jobRoleOptions =
+    jobRoleOptionsByIndustry[brancheOption as keyof typeof jobRoleOptionsByIndustry] ||
+    defaultJobRoleOptions;
 
   const [alter, setAlter] = useState("");
   const [geschlecht, setGeschlecht] = useState("");
@@ -142,53 +276,206 @@ export const StatistikForm: React.FC<Props> = ({
 
   if (inline) {
     return (
-      <div className="flex justify-center">
-        <form
+      <Box display="flex" justifyContent="center">
+        <Box
+          component="form"
           onSubmit={handleSubmit}
-          className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
+          sx={{ bgcolor: "white", p: 3, borderRadius: 2, boxShadow: 3, maxWidth: 400, width: 1, position: "relative" }}
         >
           {onClose && (
-            <button
+            <Button
               type="button"
               onClick={onClose}
-              className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+              sx={{ position: "absolute", top: 8, right: 12, minWidth: 0 }}
               aria-label={t("close")}
             >
               ×
-            </button>
+            </Button>
           )}
 
-          <h2 className="font-bold text-lg mb-2">{t('helpImproveStats')}</h2>
-          <p
-            className="text-gray-700 text-sm mb-4"
-            dangerouslySetInnerHTML={{ __html: t('infoVoluntary') }}
+          <Box component="h2" sx={{ fontWeight: "bold", fontSize: "1.125rem", mb: 1 }}>
+            {t("helpImproveStats")}
+          </Box>
+          <Box
+            sx={{ color: "text.secondary", fontSize: "0.875rem", mb: 2 }}
+            dangerouslySetInnerHTML={{ __html: t("infoVoluntary") }}
           />
           {!tester && (
-            <div className="space-y-2 mb-3">
-              <input
-                className="border p-2 rounded w-full"
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 2 }}>
+              <TextField
                 type="number"
-                min="10"
-                max="120"
-                placeholder={t("age")}
+                inputProps={{ min: 10, max: 120 }}
+                label={t("age") as string}
                 value={alter}
                 onChange={(e) => setAlter(e.target.value)}
+                fullWidth
               />
-              <select
-                className="border p-2 rounded w-full"
+              <FormControl fullWidth>
+                <InputLabel>{t("gender")}</InputLabel>
+                <Select
+                  value={geschlecht}
+                  label={t("gender")}
+                  onChange={(e) => setGeschlecht(e.target.value as string)}
+                >
+                  <MenuItem value="male">{t("genderMale")}</MenuItem>
+                  <MenuItem value="female">{t("genderFemale")}</MenuItem>
+                  <MenuItem value="none">{t("genderNone")}</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel>{t("industry")}</InputLabel>
+                <Select
+                  value={brancheOption}
+                  label={t("industry")}
+                  onChange={(e) => {
+                    const val = e.target.value as string;
+                    setBrancheOption(val);
+                    if (val !== "other") {
+                      setBranche(val);
+                    } else {
+                      setBranche("");
+                    }
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>{t("industry")}</em>
+                  </MenuItem>
+                  {industryOptions.map((opt) => (
+                    <MenuItem key={opt} value={opt}>
+                      {t(opt)}
+                    </MenuItem>
+                  ))}
+                  <MenuItem value="other">{t("other")}</MenuItem>
+                </Select>
+              </FormControl>
+              {brancheOption === "other" && (
+                <TextField
+                  type="text"
+                  label={t("industry") as string}
+                  value={branche}
+                  onChange={(e) => setBranche(e.target.value)}
+                  fullWidth
+                />
+              )}
+              <FormControl fullWidth>
+                <InputLabel>{t("jobRole")}</InputLabel>
+                <Select
+                  value={berufsrolleOption}
+                  label={t("jobRole")}
+                  onChange={(e) => {
+                    const val = e.target.value as string;
+                    setBerufsrolleOption(val);
+                    if (val !== "other") {
+                      setBerufsrolle(val);
+                    } else {
+                      setBerufsrolle("");
+                    }
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>{t("jobRole")}</em>
+                  </MenuItem>
+                  {jobRoleOptions.map((opt) => (
+                    <MenuItem key={opt} value={opt}>
+                      {t(opt)}
+                    </MenuItem>
+                  ))}
+                  <MenuItem value="other">{t("other")}</MenuItem>
+                </Select>
+              </FormControl>
+              {berufsrolleOption === "other" && (
+                <TextField
+                  type="text"
+                  label={t("jobRole") as string}
+                  value={berufsrolle}
+                  onChange={(e) => setBerufsrolle(e.target.value)}
+                  fullWidth
+                />
+              )}
+            </Box>
+          )}
+
+          {fehler && (
+            <Box sx={{ color: "error.main", fontSize: "0.875rem", mb: 1 }}>{fehler}</Box>
+          )}
+
+          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={
+                sending ||
+                (!tester &&
+                  (!alter || !geschlecht || !branche || !berufsrolle || !isValidAge(alter)))
+              }
+            >
+              {tester ? t("submitWithoutData") : t("saveRating")}
+            </Button>
+            {onClose && (
+              <Button type="button" onClick={onClose} disabled={sending} variant="outlined">
+                {t("cancel")}
+              </Button>
+            )}
+          </Box>
+        </Box>
+      </Box>
+    );
+  }
+
+  return (
+    <Box className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ bgcolor: "white", p: 3, borderRadius: 2, boxShadow: 3, maxWidth: 400, width: 1, position: "relative" }}
+      >
+        {onClose && (
+          <Button
+            type="button"
+            onClick={onClose}
+            sx={{ position: "absolute", top: 8, right: 12, minWidth: 0 }}
+            aria-label={t("close")}
+          >
+            ×
+          </Button>
+        )}
+        <Box component="h2" sx={{ fontWeight: "bold", fontSize: "1.125rem", mb: 1 }}>
+          {t("helpImproveStats")}
+        </Box>
+        <Box
+          sx={{ color: "text.secondary", fontSize: "0.875rem", mb: 2 }}
+          dangerouslySetInnerHTML={{ __html: t("infoVoluntary") }}
+        />
+
+        {!tester && (
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 2 }}>
+            <TextField
+              type="number"
+              inputProps={{ min: 10, max: 120 }}
+              label={t("age") as string}
+              value={alter}
+              onChange={(e) => setAlter(e.target.value)}
+              fullWidth
+            />
+            <FormControl fullWidth>
+              <InputLabel>{t("gender")}</InputLabel>
+              <Select
                 value={geschlecht}
-                onChange={(e) => setGeschlecht(e.target.value)}
+                label={t("gender")}
+                onChange={(e) => setGeschlecht(e.target.value as string)}
               >
-                <option value="">{t("gender")}</option>
-                <option value="male">{t("genderMale")}</option>
-                <option value="female">{t("genderFemale")}</option>
-                <option value="none">{t("genderNone")}</option>
-              </select>
-              <select
-                className="border p-2 rounded w-full"
+                <MenuItem value="male">{t("genderMale")}</MenuItem>
+                <MenuItem value="female">{t("genderFemale")}</MenuItem>
+                <MenuItem value="none">{t("genderNone")}</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel>{t("industry")}</InputLabel>
+              <Select
                 value={brancheOption}
+                label={t("industry")}
                 onChange={(e) => {
-                  const val = e.target.value;
+                  const val = e.target.value as string;
                   setBrancheOption(val);
                   if (val !== "other") {
                     setBranche(val);
@@ -197,28 +484,33 @@ export const StatistikForm: React.FC<Props> = ({
                   }
                 }}
               >
-                <option value="">{t("industry")}</option>
+                <MenuItem value="">
+                  <em>{t("industry")}</em>
+                </MenuItem>
                 {industryOptions.map((opt) => (
-                  <option key={opt} value={opt}>
+                  <MenuItem key={opt} value={opt}>
                     {t(opt)}
-                  </option>
+                  </MenuItem>
                 ))}
-                <option value="other">{t("other")}</option>
-              </select>
-              {brancheOption === "other" && (
-                <input
-                  className="border p-2 rounded w-full"
-                  type="text"
-                  placeholder={t("industry")}
-                  value={branche}
-                  onChange={(e) => setBranche(e.target.value)}
-                />
-              )}
-              <select
-                className="border p-2 rounded w-full"
+                <MenuItem value="other">{t("other")}</MenuItem>
+              </Select>
+            </FormControl>
+            {brancheOption === "other" && (
+              <TextField
+                type="text"
+                label={t("industry") as string}
+                value={branche}
+                onChange={(e) => setBranche(e.target.value)}
+                fullWidth
+              />
+            )}
+            <FormControl fullWidth>
+              <InputLabel>{t("jobRole")}</InputLabel>
+              <Select
                 value={berufsrolleOption}
+                label={t("jobRole")}
                 onChange={(e) => {
-                  const val = e.target.value;
+                  const val = e.target.value as string;
                   setBerufsrolleOption(val);
                   if (val !== "other") {
                     setBerufsrolle(val);
@@ -227,197 +519,52 @@ export const StatistikForm: React.FC<Props> = ({
                   }
                 }}
               >
-                <option value="">{t("jobRole")}</option>
+                <MenuItem value="">
+                  <em>{t("jobRole")}</em>
+                </MenuItem>
                 {jobRoleOptions.map((opt) => (
-                  <option key={opt} value={opt}>
+                  <MenuItem key={opt} value={opt}>
                     {t(opt)}
-                  </option>
+                  </MenuItem>
                 ))}
-                <option value="other">{t("other")}</option>
-              </select>
-              {berufsrolleOption === "other" && (
-                <input
-                  className="border p-2 rounded w-full"
-                  type="text"
-                  placeholder={t("jobRole")}
-                  value={berufsrolle}
-                  onChange={(e) => setBerufsrolle(e.target.value)}
-                />
-              )}
-            </div>
-          )}
-
-          {fehler && <div className="text-red-600 text-sm mb-2">{fehler}</div>}
-
-          <div className="flex gap-3 mt-4">
-            <button
-              type="submit"
-              disabled={
-                sending ||
-                (!tester &&
-                  (!alter ||
-                    !geschlecht ||
-                    !branche ||
-                    !berufsrolle ||
-                    !isValidAge(alter)))
-              }
-              className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
-            >
-              {tester ? t("submitWithoutData") : t("saveRating")}
-            </button>
-            {onClose && (
-              <button
-                type="button"
-                onClick={onClose}
-                disabled={sending}
-                className="bg-gray-200 rounded px-4 py-2"
-              >
-                {t("cancel")}
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
-    );
-  }
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full relative"
-      >
-        {onClose && (
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
-            aria-label={t("close")}
-          >
-            ×
-          </button>
-        )}
-        <h2 className="font-bold text-lg mb-2">{t('helpImproveStats')}</h2>
-        <p
-          className="text-gray-700 text-sm mb-4"
-          dangerouslySetInnerHTML={{ __html: t('infoVoluntary') }}
-        />
-
-        {!tester && (
-          <div className="space-y-2 mb-3">
-            <input
-              className="border p-2 rounded w-full"
-              type="number"
-              min="10"
-              max="120"
-              placeholder={t("age")}
-              value={alter}
-              onChange={(e) => setAlter(e.target.value)}
-            />
-            <select
-              className="border p-2 rounded w-full"
-              value={geschlecht}
-              onChange={(e) => setGeschlecht(e.target.value)}
-            >
-              <option value="">{t("gender")}</option>
-              <option value="male">{t("genderMale")}</option>
-              <option value="female">{t("genderFemale")}</option>
-              <option value="none">{t("genderNone")}</option>
-            </select>
-            <select
-              className="border p-2 rounded w-full"
-              value={brancheOption}
-              onChange={(e) => {
-                const val = e.target.value;
-                setBrancheOption(val);
-                if (val !== "other") {
-                  setBranche(val);
-                } else {
-                  setBranche("");
-                }
-              }}
-            >
-              <option value="">{t("industry")}</option>
-              {industryOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {t(opt)}
-                </option>
-              ))}
-              <option value="other">{t("other")}</option>
-            </select>
-            {brancheOption === "other" && (
-              <input
-                className="border p-2 rounded w-full"
-                type="text"
-                placeholder={t("industry")}
-                value={branche}
-                onChange={(e) => setBranche(e.target.value)}
-              />
-            )}
-            <select
-              className="border p-2 rounded w-full"
-              value={berufsrolleOption}
-              onChange={(e) => {
-                const val = e.target.value;
-                setBerufsrolleOption(val);
-                if (val !== "other") {
-                  setBerufsrolle(val);
-                } else {
-                  setBerufsrolle("");
-                }
-              }}
-            >
-              <option value="">{t("jobRole")}</option>
-              {jobRoleOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {t(opt)}
-                </option>
-              ))}
-              <option value="other">{t("other")}</option>
-            </select>
+                <MenuItem value="other">{t("other")}</MenuItem>
+              </Select>
+            </FormControl>
             {berufsrolleOption === "other" && (
-              <input
-                className="border p-2 rounded w-full"
+              <TextField
                 type="text"
-                placeholder={t("jobRole")}
+                label={t("jobRole") as string}
                 value={berufsrolle}
                 onChange={(e) => setBerufsrolle(e.target.value)}
+                fullWidth
               />
             )}
-          </div>
+          </Box>
         )}
 
-        {fehler && <div className="text-red-600 text-sm mb-2">{fehler}</div>}
+        {fehler && (
+          <Box sx={{ color: "error.main", fontSize: "0.875rem", mb: 1 }}>{fehler}</Box>
+        )}
 
-        <div className="flex gap-3 mt-4">
-          <button
+        <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+          <Button
             type="submit"
+            variant="contained"
             disabled={
               sending ||
-              (!tester &&
-                (!alter ||
-                  !geschlecht ||
-                  !branche ||
-                  !berufsrolle ||
-                  !isValidAge(alter)))
+              (!tester && (!alter || !geschlecht || !branche || !berufsrolle || !isValidAge(alter)))
             }
-            className="bg-blue-600 text-white rounded px-4 py-2 font-semibold hover:bg-blue-700 disabled:opacity-50"
           >
             {tester ? t("submitWithoutData") : t("saveRating")}
-          </button>
+          </Button>
           {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={sending}
-              className="bg-gray-200 rounded px-4 py-2"
-            >
+            <Button type="button" onClick={onClose} disabled={sending} variant="outlined">
               {t("cancel")}
-            </button>
+            </Button>
           )}
-        </div>
-      </form>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
