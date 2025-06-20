@@ -1,0 +1,46 @@
+# Seiteninhalt anpassen
+
+Dieses Dokument erklärt, in welchen Dateien sich die Texte der einzelnen Seiten befinden und wie sie geändert werden können.
+
+## Allgemeiner Hinweis
+
+Fast alle Beschriftungen und Texte der React-Oberfläche werden über die Übersetzungsdatei `frontend/src/i18n/common.ts` gesteuert. Dort findest du für die Sprachen Deutsch (`de`), Englisch (`en`) und Französisch (`fr`) jeweils ein großes Objekt `translation`. Um die Texte einer Seite zu ändern, passe die entsprechenden Werte innerhalb dieses Objekts an.
+
+Einige statische Inhalte – etwa das Impressum – sind direkt in der jeweiligen Seitenkomponente hinterlegt. Welche Datei zuständig ist, siehst du in der folgenden Übersicht.
+
+## Übersicht der Seiten
+
+- **StartPage** (`frontend/src/pages/StartPage.tsx`)
+  - Texte wie Titel und Einleitung kommen aus den Schlüsseln `title`, `introText` und `start` in `common.ts`.
+
+- **SelectDataPage** (`frontend/src/pages/SelectDataPage.tsx`)
+  - Beschriftungen für die Auswahlfelder und die Infobox stammen aus `masterDataSelectionTitle`, `selectCollection`, `selectCombination`, `selectDataInfo` u. a. in `common.ts`.
+
+- **IdeaSelectionPage** (`frontend/src/pages/IdeaSelectionPage.tsx`)
+  - Die Überschriften und Hinweise nutzt die Schlüssel `ideaSelectionTitle` und `selectIdeasInfo` in `common.ts`.
+
+- **CombinationSelectionPage** (`frontend/src/pages/CombinationSelectionPage.tsx`)
+  - Texte der Bewertungsoptionen und der Gewichtungsinfo sind in `common.ts` unter anderem als `optionsTitle`, `optionConsiderRound1`, `optionAppTester`, `selectWeightsInfo` hinterlegt.
+
+- **PersonalDataPage** (`frontend/src/pages/PersonalDataPage.tsx`)
+  - Die Beschriftungen des Statistikformulars und Fehlermeldungen findest du ebenfalls in `common.ts` (z. B. `helpImproveStats`, `age`, `submitError`).
+
+- **ConfigSummaryPage** (`frontend/src/pages/ConfigSummaryPage.tsx`)
+  - Zusammenfassungstitel und Tabellenköpfe werden über `summary`, `ideaCollectionName`, `combinationCollectionName` usw. in `common.ts` definiert.
+
+- **CalcResultsPage** (`frontend/src/pages/CalcResultsPage.tsx`)
+  - Texte der Rangliste (z. B. `rankingTitle`, `showResults`, `exportRankingCSV`) entstammen ebenfalls der Übersetzungsdatei.
+
+- **ImpressumPage** (`frontend/src/pages/ImpressumPage.tsx`)
+  - Alle Absätze dieser Seite sind direkt in der Komponente hinterlegt. Ändere den Text hier im JSX-Code, wenn das Impressum angepasst werden soll.
+
+- **UploadPage** (`frontend/src/pages/UploadPage.tsx`)
+  - Diese Seite wird momentan nicht genutzt. Solltest du sie reaktivieren, stammen die Texte wie `uploadFile` oder `downloadIdeaTemplate` ebenfalls aus `common.ts`.
+
+## Vorgehensweise beim Ändern
+
+1. Öffne die Datei `frontend/src/i18n/common.ts` und suche nach dem gewünschten Schlüssel.
+2. Passe den Text innerhalb des entsprechenden Sprachabschnitts (`de`, `en` oder `fr`) an.
+3. Speichere die Datei und starte das Frontend neu, damit die Änderungen sichtbar werden.
+
+Statische Inhalte wie im Impressum bearbeitest du direkt im jeweiligen `.tsx`-File.
