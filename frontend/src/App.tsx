@@ -29,7 +29,7 @@ import Select from "@mui/material/Select";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import type { SelectChangeEvent } from "@mui/material/Select";
-import { getSessionId, setPageStatus } from "./utils/session";
+import { getSessionId, setPageStatus, clearSession, resetSessionId } from "./utils/session";
 import { devConfig } from "./devConfig";
 import { DevStatusBar } from "./components/DevStatusBar";
 import { Footer } from "./components/Footer";
@@ -155,6 +155,13 @@ function App() {
     const lang = event.target.value;
     setLanguage(lang);
     i18n.changeLanguage(lang);
+  };
+
+  const handleHeaderReset = () => {
+    if (!window.confirm(t('resetWarning'))) return;
+    clearSession();
+    resetSessionId();
+    window.location.href = '/';
   };
 
   const handleIdeenSammlungChange = useCallback(
@@ -351,12 +358,27 @@ function App() {
               />
             )}
           </Box>
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 1,
+            }}
+          >
+            <img
+              src="/vite.svg"
+              alt={t('appName')}
+              style={{ height: 32, cursor: 'pointer' }}
+              onClick={handleHeaderReset}
+            />
             <Typography
               variant="h6"
-              sx={{ color: '#fff', textTransform: 'uppercase' }}
+              sx={{ color: '#fff', textTransform: 'uppercase', cursor: 'pointer' }}
+              onClick={handleHeaderReset}
             >
-              Bewertungsmatrix
+              {t('appName')}
             </Typography>
           </Box>
           <Select
