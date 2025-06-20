@@ -32,8 +32,6 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
   const sessionId = getSessionId();
 
   const backendUrl = import.meta.env.VITE_API_URL;
-
-  // sammlungListe ist die kombinierte Liste aller verfügbaren Dateien (global + Session)
   const sammlungListe = eigeneSammlungenState;
 
   useEffect(() => {
@@ -63,7 +61,6 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
         console.error("Fehler beim Abrufen der Dateiliste:", err);
       });
   }, [sessionId]);
-
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadError(null);
@@ -158,50 +155,24 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
             component="label"
             size="small"
             sx={{ px: 1.5, py: 0.5 }}
-      <FormControl fullWidth size="small" sx={{ maxWidth: 320 }}>
-        <InputLabel id="kombis-select-label">
-          {t("selectCombinationCollection")}
-        </InputLabel>
-        <Select
-          labelId="kombis-select-label"
-          value={auswahl}
-          label={t("selectCombinationCollection")}
-          onChange={(e: SelectChangeEvent<string>) =>
-            setAuswahl(e.target.value as string)
-          }
-          disabled={sammlungListe.length === 0}
-        >
-          {sammlungListe.map((datei) => (
-            <MenuItem key={datei} value={datei}>
-              {datei}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <div className="mt-2 flex items-center space-x-4">
-        <Button
-          variant="contained"
-          component="label"
-          size="small"
-          sx={{ px: 1.5, py: 0.5 }}
-        >
-          {t("uploadFile")}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx"
-            onChange={handleUpload}
-            hidden
-            key={fileKey}
-          />
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ px: 1.5, py: 0.5 }}
-          onClick={() =>
-            window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
-          }
+          >
+            {t("uploadFile")}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".xlsx"
+              onChange={handleUpload}
+              hidden
+              key={fileKey}
+            />
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ px: 1.5, py: 0.5 }}
             size="small"
+            onClick={() =>
+              window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
+            }
           >
             {t("downloadCombinationTemplate")}
           </Button>
