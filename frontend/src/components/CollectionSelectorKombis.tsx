@@ -131,6 +131,33 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
 
   return (
     <div className="mb-4">
+      <div className="flex items-end justify-between gap-4">
+        <FormControl size="small" sx={{ flexGrow: 1, maxWidth: 320 }}>
+          <InputLabel id="kombis-select-label">
+            {t("selectCombinationCollection")}
+          </InputLabel>
+          <Select
+            labelId="kombis-select-label"
+            value={auswahl}
+            label={t("selectCombinationCollection")}
+            onChange={(e: SelectChangeEvent<string>) =>
+              setAuswahl(e.target.value as string)
+            }
+            disabled={sammlungListe.length === 0}
+          >
+            {sammlungListe.map((datei) => (
+              <MenuItem key={datei} value={datei}>
+                {datei}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="contained"
+            component="label"
+            size="small"
+            sx={{ px: 1.5, py: 0.5 }}
       <FormControl fullWidth size="small" sx={{ maxWidth: 320 }}>
         <InputLabel id="kombis-select-label">
           {t("selectCombinationCollection")}
@@ -174,10 +201,11 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
           onClick={() =>
             window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
           }
-          size="small"
-        >
-          {t("downloadCombinationTemplate")}
-        </Button>
+            size="small"
+          >
+            {t("downloadCombinationTemplate")}
+          </Button>
+        </div>
       </div>
       {uploadError && (
         <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
