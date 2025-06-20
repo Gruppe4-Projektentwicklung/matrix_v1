@@ -22,11 +22,11 @@ export const CalcResultsPage = ({ rankingEintraege }: Props) => {
   return (
     <PageContainer>
       <Box>
-        <Ranking eintraege={rankingEintraege} />
-        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+        <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
           <ResetButton />
           <ExportRankingButton eintraege={rankingEintraege} />
         </Box>
+        <Ranking eintraege={rankingEintraege} />
       </Box>
     </PageContainer>
   );
