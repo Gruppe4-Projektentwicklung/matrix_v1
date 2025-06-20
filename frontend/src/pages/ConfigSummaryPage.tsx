@@ -4,7 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
-import { Box, Button, Paper, Typography, LinearProgress } from '@mui/material';
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  LinearProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@mui/material';
 
 interface Props {
   ideenCount: number;
@@ -112,39 +122,51 @@ export const ConfigSummaryPage = ({
       <Typography variant="h5" mb={2} fontWeight="bold">
         {t('summary')}
       </Typography>
-      <ul className="mb-4 list-disc list-inside">
-        <li>
-          {t('ideaCollectionName')}: {ideenSammlung}
-        </li>
-        <li>
-          {t('combinationCollectionName')}: {kombiSammlung}
-        </li>
-        <li>
-          {t('currentIdeaCollection')}: {activeIdeen} / {ideenCount}
-        </li>
-        <li>
-          {t('currentCombinationCollection')}: {activeKombis} / {kombiCount}
-        </li>
-      </ul>
+      <Table size="small" sx={{ mb: 4 }}>
+        <TableBody>
+          <TableRow>
+            <TableCell>{t('ideaCollectionName')}</TableCell>
+            <TableCell>{ideenSammlung}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>{t('combinationCollectionName')}</TableCell>
+            <TableCell>{kombiSammlung}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>{t('currentIdeaCollection')}</TableCell>
+            <TableCell>{activeIdeen} / {ideenCount}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>{t('currentCombinationCollection')}</TableCell>
+            <TableCell>{activeKombis} / {kombiCount}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       {userData && (
         <Paper sx={{ mb: 2, p: 2 }}>
           <Typography variant="subtitle1" fontWeight="bold" mb={1}>
             {t('personalDataSummary')}
           </Typography>
-          <ul className="list-disc list-inside">
-            <li>
-              {t('age')}: {userData.alter || '-'}
-            </li>
-            <li>
-              {t('gender')}: {userData.geschlecht || '-'}
-            </li>
-            <li>
-              {t('industry')}: {userData.branche ? t(userData.branche) : '-'}
-            </li>
-            <li>
-              {t('jobRole')}: {userData.berufsrolle ? t(userData.berufsrolle) : '-'}
-            </li>
-          </ul>
+          <Table size="small">
+            <TableBody>
+              <TableRow>
+                <TableCell>{t('age')}</TableCell>
+                <TableCell>{userData.alter || '-'}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{t('gender')}</TableCell>
+                <TableCell>{userData.geschlecht || '-'}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{t('industry')}</TableCell>
+                <TableCell>{userData.branche ? t(userData.branche) : '-'}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{t('jobRole')}</TableCell>
+                <TableCell>{userData.berufsrolle ? t(userData.berufsrolle) : '-'}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </Paper>
       )}
       {loading && (
