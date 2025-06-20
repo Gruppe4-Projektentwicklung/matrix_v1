@@ -12,3 +12,4 @@ __pycache__/
 # Bytecode caches
 **/__pycache__/
 **/*.pyc
+backend/matrix.db
