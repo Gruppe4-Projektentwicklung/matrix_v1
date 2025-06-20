@@ -136,38 +136,30 @@ export const IdeenSelector: React.FC<Props> = ({
                           <Table size="small">
                             <TableBody>
                               {(() => {
-                                const groups: Record<string, any> = {};
+                                const pairs: Record<string, any> = {};
+                                const pairOrder: string[] = [];
+                                const singles: any[] = [];
                                 Object.entries(attribute).forEach(([k, v]) => {
                                   const m = attributeMeta[k] || { name: k, unit: '', description: '' };
                                   const match = m.name.match(/^(.*?)(?:\s*(Alt|Neu))$/i);
                                   if (match) {
                                     const base = match[1].trim();
                                     const type = match[2].toLowerCase() === 'alt' ? 'alt' : 'neu';
-                                    if (!groups[base]) groups[base] = { base };
-                                    groups[base][type] = { key: k, value: v, meta: m };
+                                    if (!pairs[base]) {
+                                      pairs[base] = { base };
+                                      pairOrder.push(base);
+                                    }
+                                    pairs[base][type] = { key: k, value: v, meta: m };
                                   } else {
-                                    if (!groups[m.name]) groups[m.name] = { single: { key: k, value: v, meta: m } };
+                                    singles.push({ key: k, value: v, meta: m });
                                   }
                                 });
-                                return Object.values(groups).map((g: any) => {
-                                  if (g.single) {
-                                    const { key, value, meta } = g.single;
-                                    return (
-                                      <TableRow key={key}>
-                                        <TableCell>{meta.name}</TableCell>
-                                        <TableCell>
-                                          {value} {meta.unit}
-                                        </TableCell>
-                                        <TableCell width={40} align="right">
-                                          <IconButton size="small" onClick={() => setInfoAttr(key)}>
-                                            <InfoOutlinedIcon fontSize="inherit" />
-                                          </IconButton>
-                                        </TableCell>
-                                      </TableRow>
-                                    );
-                                  }
-                                  return (
-                                    <TableRow key={g.base}>
+
+                                const rows: JSX.Element[] = [];
+                                pairOrder.forEach((base) => {
+                                  const g = pairs[base];
+                                  rows.push(
+                                    <TableRow key={base}>
                                       {g.alt ? (
                                         <>
                                           <TableCell>{g.alt.meta.name}</TableCell>
@@ -209,6 +201,55 @@ export const IdeenSelector: React.FC<Props> = ({
                                     </TableRow>
                                   );
                                 });
+
+                                for (let i = 0; i < singles.length; i += 2) {
+                                  const left = singles[i];
+                                  const right = singles[i + 1];
+                                  rows.push(
+                                    <TableRow key={`single-${i}`}> 
+                                      {left ? (
+                                        <>
+                                          <TableCell>{left.meta.name}</TableCell>
+                                          <TableCell>
+                                            {left.value} {left.meta.unit}
+                                          </TableCell>
+                                          <TableCell width={40} align="right">
+                                            <IconButton size="small" onClick={() => setInfoAttr(left.key)}>
+                                              <InfoOutlinedIcon fontSize="inherit" />
+                                            </IconButton>
+                                          </TableCell>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                        </>
+                                      )}
+                                      {right ? (
+                                        <>
+                                          <TableCell>{right.meta.name}</TableCell>
+                                          <TableCell>
+                                            {right.value} {right.meta.unit}
+                                          </TableCell>
+                                          <TableCell width={40} align="right">
+                                            <IconButton size="small" onClick={() => setInfoAttr(right.key)}>
+                                              <InfoOutlinedIcon fontSize="inherit" />
+                                            </IconButton>
+                                          </TableCell>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                          <TableCell></TableCell>
+                                        </>
+                                      )}
+                                    </TableRow>
+                                  );
+                                }
+
+                                return rows;
                               })()}
                             </TableBody>
                           </Table>
