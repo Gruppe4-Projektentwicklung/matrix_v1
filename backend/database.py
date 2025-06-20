@@ -28,6 +28,7 @@ class Calculation(Base):
     gewichtung_json = Column(JSON)
     ranking_json = Column(JSON)
     nutzerdaten_json = Column(JSON)
+    tester = Column(Boolean, default=False)
 
 class UsageLog(Base):
     __tablename__ = "nutzungslog"
