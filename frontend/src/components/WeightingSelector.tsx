@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import IconButton from "@mui/material/IconButton";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 type Combination = {
   id: string;
@@ -54,36 +56,32 @@ export const WeightingSelector: React.FC<Props> = ({
           key={kombi.id}
           className={`border rounded-xl p-4 shadow-sm ${kombi.gewichtung === 0 ? 'bg-gray-100 text-gray-500' : 'bg-white'}`}
         >
-          <div className="flex justify-between items-center">
+          <div className="grid grid-cols-[auto,1fr,auto] items-start gap-4">
+            <label className="cursor-pointer flex items-center gap-1">
+              <input
+                type="radio"
+                name={kombi.id}
+                checked={kombi.gewichtung === 0}
+                onChange={() => handleGewichtungChange(kombi.id, 0)}
+              />
+              {gewichtungLabels[0]}
+            </label>
             <div>
               <h2 className="text-lg font-semibold">{kombi.name}</h2>
               {expandedId === kombi.id && (
                 <p className="text-sm mt-1 text-gray-700">{kombi.beschreibung}</p>
               )}
             </div>
-            <button
+            <IconButton
               onClick={() => toggleInfo(kombi.id)}
-              className="text-blue-600 text-sm underline"
-              type="button"
+              aria-label={t('info')}
+              size="small"
             >
-              {expandedId === kombi.id
-                ? t("hideDescription")
-                : t("showDescription")}
-            </button>
+              <InfoOutlinedIcon fontSize="small" />
+            </IconButton>
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-4 items-center">
-            <label className="cursor-pointer border-r pr-4 mr-4 border-gray-300">
-              <input
-                type="radio"
-                name={kombi.id}
-                checked={kombi.gewichtung === 0}
-                onChange={() => handleGewichtungChange(kombi.id, 0)}
-                className="mr-1"
-              />
-              {gewichtungLabels[0]}
-            </label>
-
+          <div className="mt-4 flex flex-wrap gap-4 items-center ml-6">
             {gewichtungLabels.slice(1).map((label, i) => (
               <label key={i + 1} className="cursor-pointer">
                 <input
