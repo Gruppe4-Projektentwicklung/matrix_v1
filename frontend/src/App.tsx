@@ -447,7 +447,7 @@ function App() {
       <img
         src="/Logo.png"
         alt={t('appName')}
-        style={{ height: 32, cursor: 'pointer' }}
+        style={{ height: 42, cursor: 'pointer', borderRadius: 8 }}
         onClick={handleHeaderReset}
       />
       <Typography
