@@ -127,54 +127,56 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
   };
 
   return (
-    <div className="mt-12 mb-4 max-w-xs">
-      <FormControl fullWidth size="small">
-        <InputLabel id="kombis-select-label">
-          {t("selectCombinationCollection")}
-        </InputLabel>
-        <Select
-          labelId="kombis-select-label"
-          value={auswahl}
-          label={t("selectCombinationCollection")}
-          onChange={(e: SelectChangeEvent<string>) =>
-            setAuswahl(e.target.value as string)
-          }
-          disabled={sammlungListe.length === 0}
-        >
-          {sammlungListe.map((datei) => (
-            <MenuItem key={datei} value={datei}>
-              {datei}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <div className="mt-6 flex items-center space-x-4 justify-end">
-        <Button
-          variant="contained"
-          component="label"
-          size="small"
-          sx={{ px: 1.5, py: 0.5 }}
-        >
-          {t("uploadFile")}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx"
-            onChange={handleUpload}
-            hidden
-            key={fileKey}
-          />
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ px: 1.5, py: 0.5 }}
-          onClick={() =>
-            window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
-          }
-          size="small"
-        >
-          {t("downloadCombinationTemplate")}
-        </Button>
+    <div className="max-w-xs">
+      <div className="flex items-start space-x-4">
+        <FormControl fullWidth size="small" sx={{ flexGrow: 1 }}>
+          <InputLabel id="kombis-select-label">
+            {t("selectCombinationCollection")}
+          </InputLabel>
+          <Select
+            labelId="kombis-select-label"
+            value={auswahl}
+            label={t("selectCombinationCollection")}
+            onChange={(e: SelectChangeEvent<string>) =>
+              setAuswahl(e.target.value as string)
+            }
+            disabled={sammlungListe.length === 0}
+          >
+            {sammlungListe.map((datei) => (
+              <MenuItem key={datei} value={datei}>
+                {datei}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <div className="flex flex-col space-y-2">
+          <Button
+            variant="contained"
+            component="label"
+            size="small"
+            sx={{ px: 1.5, py: 0.5 }}
+          >
+            {t("uploadFile")}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".xlsx"
+              onChange={handleUpload}
+              hidden
+              key={fileKey}
+            />
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ px: 1.5, py: 0.5 }}
+            onClick={() =>
+              window.open(`${backendUrl}/download_template?type=kombi`, '_blank')
+            }
+            size="small"
+          >
+            {t("downloadCombinationTemplate")}
+          </Button>
+        </div>
       </div>
       {uploadError && (
         <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
