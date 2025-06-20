@@ -1,4 +1,13 @@
-from sqlalchemy import create_engine, Column, String, DateTime, JSON, Integer, Text
+from sqlalchemy import (
+    create_engine,
+    Column,
+    String,
+    DateTime,
+    JSON,
+    Integer,
+    Text,
+    Boolean,
+)
 from sqlalchemy.orm import declarative_base, sessionmaker
 from pathlib import Path
 import datetime
@@ -27,8 +36,17 @@ class UsageLog(Base):
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
     step = Column(String)
     data_json = Column(JSON)
-    ip = Column(String)
     user_agent = Column(Text)
+
+
+class UploadedFile(Base):
+    __tablename__ = "uploaded_files"
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(String, index=True)
+    sammlung_typ = Column(String)
+    filename = Column(String)
+    is_default = Column(Boolean, default=False)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
 def init_db():
     Base.metadata.create_all(bind=engine)

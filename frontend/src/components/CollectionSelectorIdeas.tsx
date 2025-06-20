@@ -134,6 +134,7 @@ return (
       style={{ gridTemplateColumns: '320px auto' }}
     >
       <FormControl size="small" sx={{ width: 320 }}>
+
         <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
         <Select
           labelId="ideas-select-label"
