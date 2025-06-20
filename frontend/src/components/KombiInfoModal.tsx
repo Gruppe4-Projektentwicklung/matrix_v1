@@ -13,6 +13,7 @@ type KombiInfo = {
   formeltext_de?: string;
   formeltext_en?: string;
   formeltext_fr?: string;
+  einheit?: string;
 };
 
 type Props = {
@@ -48,12 +49,13 @@ export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose 
       : kombi.formeltext_de;
 
   // Bewertungsrichtung übersetzen
-  const bewertungsrichtung =
-    kombi.richtung === "high"
-      ? t("higherIsBetter")
-      : kombi.richtung === "low"
-      ? t("lowerIsBetter")
-      : "";
+  const bewertungsrichtung = (() => {
+    if (!kombi.richtung) return "";
+    const dir = kombi.richtung.toLowerCase();
+    if (["high", "hoch"].includes(dir)) return t("higherIsBetter");
+    if (["low", "niedrig"].includes(dir)) return t("lowerIsBetter");
+    return dir;
+  })();
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
@@ -69,14 +71,12 @@ export const KombiInfoModal: React.FC<Props> = ({ open, kombi, sprache, onClose 
         <div className="mb-2">
           <b>{t("explanation")}:</b> {erklaerung}
         </div>
-        {formeltext && (
+        {(formeltext || kombi.einheit || kombi.richtung) && (
           <div className="mb-2">
-            <b>{t("formula")}:</b> <span className="font-mono">{formeltext}</span>
-          </div>
-        )}
-        {kombi.richtung && (
-          <div className="mb-2">
-            <b>{t("evaluationDirection")}:</b> <span>{bewertungsrichtung}</span>
+            <b>{t("formula")}:</b>{" "}
+            {formeltext && <span className="font-mono">{formeltext}</span>}
+            {kombi.einheit ? ` ${kombi.einheit}` : ""}
+            {kombi.richtung && <> – {bewertungsrichtung}</>}
           </div>
         )}
         <button
