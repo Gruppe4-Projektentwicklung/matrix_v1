@@ -407,13 +407,13 @@ function App() {
   <Toolbar
     sx={{
       display: 'grid',
-      gridTemplateColumns: '1fr auto 1fr',
+      gridTemplateColumns: { xs: 'auto 1fr auto', sm: '1fr auto 1fr' },
       alignItems: 'center',
-      gap: 2,
+      gap: { xs: 1, sm: 2 },
     }}
   >
     {/* Linke Seite */}
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+    <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 2 }}>
       <Typography
         variant="caption"
         sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
@@ -456,8 +456,8 @@ function App() {
           color: '#fff',
           textTransform: 'uppercase',
           cursor: 'pointer',
-          fontSize: 37,
-          lineHeight: '37px',
+          fontSize: { xs: 24, sm: 37 },
+          lineHeight: { xs: '24px', sm: '37px' },
         }}
         onClick={handleHeaderReset}
       >
@@ -472,7 +472,7 @@ function App() {
         size="small"
         value={language}
         onChange={handleLanguageChange}
-        sx={{ bgcolor: 'background.paper', minWidth: 80 }}
+        sx={{ bgcolor: 'background.paper', minWidth: { xs: 60, sm: 80 } }}
       >
         <MenuItem value="de">Deutsch</MenuItem>
         <MenuItem value="en">English</MenuItem>
