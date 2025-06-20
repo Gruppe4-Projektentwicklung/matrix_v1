@@ -98,7 +98,7 @@ export const PersonalDataPage = ({
           )}
         </>
       )}
-      <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
+           <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <ResetButton />
           <Button variant="outlined" onClick={() => navigate('/combinations')}>
@@ -109,6 +109,8 @@ export const PersonalDataPage = ({
           {t('next')}
         </Button>
       </Box>
+    </Box> {/* <---- DAS FEHLTE! */}
     </PageContainer>
   );
 };
+
