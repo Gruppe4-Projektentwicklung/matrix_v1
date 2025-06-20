@@ -124,40 +124,46 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
 
   return (
     <div className="mb-4">
-      <label className="block font-semibold mb-1">{t("selectCollection")}</label>
-      <select
-        className="border border-gray-300 p-2 rounded-md w-full max-w-xs bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-        value={auswahl}
-        onChange={(e) => setAuswahl(e.target.value)}
-        disabled={sammlungListe.length === 0}
-      >
-        {sammlungListe.map((datei) => (
-          <option key={datei} value={datei}>
-            {datei}
-          </option>
-        ))}
-      </select>
-      <div className="mt-2 flex items-center space-x-4">
-        <Button variant="contained" component="label" size="small">
-          {t("uploadFile")}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx"
-            onChange={handleUpload}
-            hidden
-            key={fileKey}
-          />
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() =>
-            window.open(`${backendUrl}/download_template?type=ideen`, '_blank')
-          }
-          size="small"
-        >
-          {t("downloadIdeaTemplate")}
-        </Button>
+      <div className="flex items-end justify-between gap-4">
+        <div className="flex-grow">
+          <label className="block font-semibold mb-1">
+            {t("selectCollection")}
+          </label>
+          <select
+            className="border border-gray-300 p-2 rounded-md w-full max-w-xs bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            value={auswahl}
+            onChange={(e) => setAuswahl(e.target.value)}
+            disabled={sammlungListe.length === 0}
+          >
+            {sammlungListe.map((datei) => (
+              <option key={datei} value={datei}>
+                {datei}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex items-center space-x-4">
+          <Button variant="contained" component="label" size="small">
+            {t("uploadFile")}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".xlsx"
+              onChange={handleUpload}
+              hidden
+              key={fileKey}
+            />
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() =>
+              window.open(`${backendUrl}/download_template?type=ideen`, '_blank')
+            }
+            size="small"
+          >
+            {t("downloadIdeaTemplate")}
+          </Button>
+        </div>
       </div>
       {uploadError && (
         <pre className="text-red-600 mt-1 whitespace-pre-wrap">{uploadError}</pre>
