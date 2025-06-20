@@ -45,7 +45,7 @@ function App() {
   );
 
   const [ideen, setIdeen] = useState<any[]>([]);
-  const [attributeMeta, setAttributeMeta] = useState<Record<string, {name: string; unit: string}>>({});
+  const [attributeMeta, setAttributeMeta] = useState<Record<string, {name: string; unit: string; description?: string}>>({});
   const [runde1, setRunde1] = useState(true);
   const [runde2, setRunde2] = useState(true);
   const [appTester, setAppTester] = useState(false);
@@ -114,6 +114,22 @@ function App() {
     [sessionId, t],
   );
 
+  const fetchAttributeDescriptions = useCallback(
+    async (lang: string) => {
+      try {
+        const url = `${import.meta.env.VITE_API_URL}/api/attribute_descriptions?lang=${lang}`;
+        const response = await fetch(url);
+        if (!response.ok) return {};
+        const data = await response.json();
+        return (data.attributes as Record<string, { name: string; description: string }>) || {};
+      } catch (err) {
+        console.error('Failed to load attribute descriptions', err);
+        return {};
+      }
+    },
+    []
+  );
+
   const loadIdeen = useCallback(
     async (filename: string) => {
       // Clear previous ideas to avoid flicker while loading new data
@@ -124,13 +140,22 @@ function App() {
       const columns: string[] = Array.isArray(data.columns) ? data.columns : [];
       const columnNames: string[] = Array.isArray(data.column_names) ? data.column_names : [];
 
-      const meta: Record<string, { name: string; unit: string }> = {};
+      const meta: Record<string, { name: string; unit: string; description?: string }> = {};
       columns.forEach((id, idx) => {
         if (id.startsWith("#-#")) {
           const num = id.slice(3);
           const unitId = `#+#${num}`;
           const unit = columnNames[columns.indexOf(unitId)] || "";
           meta[id] = { name: columnNames[idx] || id, unit };
+        }
+      });
+      const descData = await fetchAttributeDescriptions(language);
+      Object.entries(descData).forEach(([id, d]) => {
+        if (meta[id]) {
+          meta[id].name = d.name || meta[id].name;
+          meta[id].description = d.description;
+        } else {
+          meta[id] = { name: d.name, unit: '', description: d.description };
         }
       });
       setAttributeMeta(meta);
@@ -145,7 +170,7 @@ function App() {
       });
       setIdeen(parsed);
     },
-    [fetchCollectionContent],
+    [fetchCollectionContent, fetchAttributeDescriptions, language],
   );
 
   const loadKombis = useCallback(
@@ -362,7 +387,6 @@ function App() {
   >
     {/* Linke Seite */}
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <Box component="img" src="/Logo.png" alt="Logo" sx={{ height: 32 }} />
       <Typography
         variant="caption"
         sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
