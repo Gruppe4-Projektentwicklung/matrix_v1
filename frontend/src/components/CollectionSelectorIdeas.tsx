@@ -131,6 +131,7 @@ return (
   <div>
     <div
       className="grid items-center"
+
       style={{
         gridTemplateColumns: '1fr 1fr',
         columnGap: '1.5cm',
@@ -138,6 +139,7 @@ return (
       }}
     >
       <FormControl size="small" sx={{ width: 320, justifySelf: 'end' }}>
+
         <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
         <Select
           labelId="ideas-select-label"

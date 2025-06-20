@@ -35,7 +35,7 @@ export const WeightingSelector: React.FC<Props> = ({
   kombinationen = [],
   onUpdate,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const gewichtungLabels = [
@@ -152,27 +152,72 @@ export const WeightingSelector: React.FC<Props> = ({
               </TableRow>
               <TableRow>
                 <TableCell colSpan={hasCategory ? 4 : 3} sx={{ p: 0 }}>
-                  <Collapse in={expandedId === kombi.id} timeout="auto" unmountOnExit>
-                    <Box sx={{ p: 2 }}>
-                      {(kombi.formel || kombi.einheit || kombi.richtung) && (
-                        <Typography>
-                          {kombi.formel || ''}
-                          {kombi.einheit ? ` ${kombi.einheit}` : ''}
-                          {kombi.richtung && (
-                            <> {' '}
-                              {kombi.richtung}{' '}
-                              {(() => {
-                                const dir = kombi.richtung.toLowerCase();
-                                if (['high', 'hoch'].includes(dir)) return `(${t('higherIsBetter')})`;
-                                if (['low', 'niedrig'].includes(dir)) return `(${t('lowerIsBetter')})`;
-                                return '';
-                              })()}
-                            </>
-                          )}
-                        </Typography>
-                      )}
-                    </Box>
-                  </Collapse>
+                 <Collapse in={expandedId === kombi.id} timeout="auto" unmountOnExit>
+  <Box sx={{ p: 2 }}>
+    {(() => {
+      // Korrigierte Deklaration:
+      const formula = kombi.formel || "";
+      const description = kombi[`#t_${i18n.language}#3`] || "";
+      const unit = kombi.einheit || kombi.Result_Unit || "";
+      const direction = kombi.richtung || kombi.Direction || "";
+
+      if (!formula && !unit && !direction && !description) return null;
+
+      // Wenn die wichtigsten Daten da sind, zeige die Tabelle
+      if (formula || unit || direction) {
+        const directionText = (() => {
+          const dir = String(direction).toLowerCase();
+          if (["high", "hoch"].includes(dir)) return t("higherIsBetter");
+          if (["low", "niedrig"].includes(dir)) return t("lowerIsBetter");
+          return "";
+        })();
+
+        return (
+          <Table
+            size="small"
+            sx={{
+              mt: 1,
+              border: 1,
+              borderColor: "divider",
+              borderRadius: 1,
+              '& td, & th': { borderColor: 'divider' },
+            }}
+          >
+            <TableHead>
+              <TableRow sx={{ bgcolor: "action.hover" }}>
+                <TableCell>{t("formula")}</TableCell>
+                <TableCell>{t("resultUnit")}</TableCell>
+                <TableCell>{t("evaluationDirection")}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>{formula}</TableCell>
+                <TableCell>{unit}</TableCell>
+                <TableCell>
+                  {direction}
+                  {directionText && ` – ${directionText}`}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        );
+      }
+
+      // Wenn nur Beschreibung da ist (und nichts anderes)
+      if (description) {
+        return (
+          <Typography>
+            {description}
+          </Typography>
+        );
+      }
+
+      return null;
+    })()}
+  </Box>
+</Collapse>
+
                 </TableCell>
               </TableRow>
             </React.Fragment>
