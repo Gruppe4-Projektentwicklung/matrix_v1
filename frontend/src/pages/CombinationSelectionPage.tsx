@@ -7,6 +7,7 @@ import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { Box, Button, Paper, Typography } from '@mui/material';
+import { PageContainer } from '../components/PageContainer';
 
 interface Props {
   gewichtungen: any[];
@@ -40,7 +41,8 @@ export const CombinationSelectionPage = ({
     }
   }, [navigate]);
   return (
-    <Box>
+    <PageContainer>
+      <Box>
       <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <ResetButton />
@@ -80,6 +82,7 @@ export const CombinationSelectionPage = ({
       </Paper>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
 
-    </Box>
+      </Box>
+    </PageContainer>
   );
 };

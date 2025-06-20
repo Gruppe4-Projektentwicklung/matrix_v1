@@ -7,6 +7,7 @@ import { logEvent } from '../api/logEvent';
 import { StatistikForm } from '../components/StatistikForm';
 import { SaveRunSuccess } from '../components/SaveRunSuccess';
 import { Box, Button, Typography } from '@mui/material';
+import { PageContainer } from '../components/PageContainer';
 
 import type { BewertungsLaufPayload, UserData, SaveRunResponse } from '../api/saveRun';
 
@@ -64,7 +65,8 @@ export const PersonalDataPage = ({
   };
 
   return (
-    <Box textAlign="center">
+    <PageContainer>
+      <Box textAlign="center">
       {tester ? (
         <Typography mb={3}>{t('appTesterMode')}</Typography>
       ) : (
@@ -107,6 +109,6 @@ export const PersonalDataPage = ({
           {t('next')}
         </Button>
       </Box>
-    </Box>
+    </PageContainer>
   );
 };

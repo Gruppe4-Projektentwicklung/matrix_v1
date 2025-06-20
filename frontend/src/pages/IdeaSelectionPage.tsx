@@ -6,6 +6,7 @@ import { ResetButton } from '../components/ResetButton';
 import { hasSessionStarted, getSessionId, setPageStatus } from '../utils/session';
 import { logEvent } from '../api/logEvent';
 import { Box, Button, Paper, Typography } from '@mui/material';
+import { PageContainer } from '../components/PageContainer';
 
 interface Props {
   ideen: any[];
@@ -23,7 +24,8 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
     }
   }, [navigate]);
   return (
-    <Box>
+    <PageContainer>
+      <Box>
       <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <ResetButton />
@@ -52,6 +54,7 @@ export const IdeaSelectionPage = ({ ideen, sprache, onIdeenUpdate }: Props) => {
         </Typography>
       </Paper>
       <IdeenSelector ideen={ideen} sprache={sprache} onUpdate={onIdeenUpdate} />
-    </Box>
+      </Box>
+    </PageContainer>
   );
 };
