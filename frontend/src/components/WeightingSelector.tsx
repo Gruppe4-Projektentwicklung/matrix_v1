@@ -155,11 +155,50 @@ export const WeightingSelector: React.FC<Props> = ({
                   <Collapse in={expandedId === kombi.id} timeout="auto" unmountOnExit>
                     <Box sx={{ p: 2 }}>
                       {(() => {
+                        const formula =
                         const description =
                           kombi[`#t_${i18n.language}#3`] || kombi.formel || "";
                         const unit = kombi.einheit || kombi.Result_Unit || "";
                         const direction = kombi.richtung || kombi.Direction || "";
 
+                        if (!formula && !unit && !direction) return null;
+
+                        const directionText = (() => {
+                          const dir = String(direction).toLowerCase();
+                          if (["high", "hoch"].includes(dir)) return t("higherIsBetter");
+                          if (["low", "niedrig"].includes(dir)) return t("lowerIsBetter");
+                          return "";
+                        })();
+
+                        return (
+                          <Table
+                            size="small"
+                            sx={{
+                              mt: 1,
+                              border: 1,
+                              borderColor: "divider",
+                              borderRadius: 1,
+                              '& td, & th': { borderColor: 'divider' },
+                            }}
+                          >
+                            <TableHead>
+                              <TableRow sx={{ bgcolor: "action.hover" }}>
+                                <TableCell>{t("formula")}</TableCell>
+                                <TableCell>{t("resultUnit")}</TableCell>
+                                <TableCell>{t("evaluationDirection")}</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell>{formula}</TableCell>
+                                <TableCell>{unit}</TableCell>
+                                <TableCell>
+                                  {direction}
+                                  {directionText && ` – ${directionText}`}
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
                         if (!description && !unit && !direction) return null;
 
                         return (
