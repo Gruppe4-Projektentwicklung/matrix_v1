@@ -140,13 +140,13 @@ export const Ranking = ({ eintraege, kombinationen }: Props) => {
                                       : t("higherIsBetter");
                                   const val =
                                     typeof wert === "number"
-                                      ? wert.toFixed(3)
+                                      ? Number(wert).toFixed(3)
                                       : wert;
                                   return (
                                     <TableRow key={kombi}>
                                       <TableCell>{info?.name || kombi}</TableCell>
                                       <TableCell>
-                                        {info?.formel ? `${info.formel}: ` : ""}
+                                        {info?.formel ? `${info.formel} ` : ""}
                                         {val}
                                         {info?.einheit ? ` ${info.einheit}` : ""}
                                         {info?.richtung && ` ${dirText}`}
