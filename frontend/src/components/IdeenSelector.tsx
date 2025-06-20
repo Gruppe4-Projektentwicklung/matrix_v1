@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import IconButton from "@mui/material/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 type Idee = {
   id: string;
@@ -60,33 +63,42 @@ export const IdeenSelector: React.FC<Props> = ({
         return (
           <div
             key={idee.id}
-            className={`border rounded-xl p-4 shadow-sm ${idee.aktiv ? 'bg-white' : 'bg-gray-100 text-gray-500'}`}
+            className={`border rounded-xl p-4 shadow-sm ${
+              idee.aktiv ? "bg-white" : "bg-gray-100 text-gray-500"
+            }`}
           >
-            <div className="flex justify-between items-center">
+            <div className="grid grid-cols-[auto_auto_1fr_auto] gap-4 items-start">
+              <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  checked={!!idee.aktiv}
+                  onChange={() => toggleActive(idee.id)}
+                  className="mr-1 mt-1"
+                />
+                <span className="text-sm">
+                  {idee.aktiv ? t("active") : t("disabled")}
+                </span>
+              </div>
+              <div className="text-xs text-gray-500 mt-1">{kategorie}</div>
               <div>
                 <h2 className="font-semibold text-lg">{name}</h2>
-                <p className="text-sm text-gray-700">{beschreibung}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {t("category")}: {kategorie}
-                </p>
+                <p className="text-sm text-gray-700 mt-1">{beschreibung}</p>
               </div>
-              <div className="flex flex-col items-end space-y-1">
-                <label className="text-sm">
-                  <input
-                    type="checkbox"
-                    checked={!!idee.aktiv}
-                    onChange={() => toggleActive(idee.id)}
-                    className="mr-1"
-                  />
-                  {idee.aktiv ? t("active") : t("disabled")}
-                </label>
-                <button
+              <div className="flex justify-end">
+                <IconButton
                   onClick={() => toggleExpand(idee.id)}
-                  className="text-blue-600 text-sm underline"
-                  type="button"
+                  color="primary"
+                  size="small"
+                  aria-label={
+                    expandedId === idee.id ? t("hideAttributes") : t("showAttributes")
+                  }
                 >
-                  {expandedId === idee.id ? t("hideAttributes") : t("showAttributes")}
-                </button>
+                  {expandedId === idee.id ? (
+                    <VisibilityOffIcon fontSize="inherit" />
+                  ) : (
+                    <VisibilityIcon fontSize="inherit" />
+                  )}
+                </IconButton>
               </div>
             </div>
 
