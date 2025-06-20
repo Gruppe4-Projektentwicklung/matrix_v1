@@ -188,11 +188,7 @@ export const StatistikForm: React.FC<Props> = ({
     "jobDoctor",
   ];
 
-  const jobRoleOptions =
-    jobRoleOptionsByIndustry[brancheOption as keyof typeof jobRoleOptionsByIndustry] ||
-    defaultJobRoleOptions;
-
-  const [alter, setAlter] = useState("");
+   const [alter, setAlter] = useState("");
   const [geschlecht, setGeschlecht] = useState("");
   const [brancheOption, setBrancheOption] = useState("");
   const [branche, setBranche] = useState("");
@@ -200,6 +196,10 @@ export const StatistikForm: React.FC<Props> = ({
   const [berufsrolle, setBerufsrolle] = useState("");
   const [sending, setSending] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
+
+  const jobRoleOptions =
+    jobRoleOptionsByIndustry[brancheOption as keyof typeof jobRoleOptionsByIndustry] ||
+    defaultJobRoleOptions;
 
   const isValidAge = (value: string) => {
     const num = Number(value);
