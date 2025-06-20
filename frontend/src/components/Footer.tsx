@@ -14,18 +14,20 @@ export const Footer: React.FC = () => {
   }, []);
 
   return (
-    <footer className="text-sm py-4 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
-      <div className="flex items-center">
-        <p className="mb-2 sm:mb-0 sm:mr-2">{t('footerText')}</p>
-        <Link to="/impressum" className="text-blue-600 underline mr-2">
+    <footer className="text-sm py-4 flex flex-col sm:flex-row items-center justify-center">
+      <div className="flex items-center space-x-2 sm:space-x-4">
+        <p className="mb-2 sm:mb-0">
+          {t('footerText')} {new Date().getFullYear()}
+        </p>
+        <Link to="/impressum" className="text-blue-600 underline">
           {t('footerImpressum')}
         </Link>
+        {runCount !== null && (
+          <span className="text-xs text-gray-600">
+            {t('calculationCounter', { count: runCount })}
+          </span>
+        )}
       </div>
-      {runCount !== null && (
-        <div className="mt-2 sm:mt-0 sm:ml-auto text-xs text-gray-600">
-          {t('calculationCounter', { count: runCount })}
-        </div>
-      )}
     </footer>
   );
 };
