@@ -128,8 +128,11 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
 
 return (
   <div>
-    <div className="flex items-start space-x-4">
-      <FormControl fullWidth size="small" sx={{ flexGrow: 1 }}>
+    <div
+      className="grid items-start gap-x-6"
+      style={{ gridTemplateColumns: '320px auto' }}
+    >
+      <FormControl size="small" sx={{ width: 320 }}>
         <InputLabel id="kombis-select-label">
           {t("selectCombinationCollection")}
         </InputLabel>
