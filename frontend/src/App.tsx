@@ -332,9 +332,6 @@ function App() {
       <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Typography variant="h6" color="inherit" sx={{ mr: 2 }}>
-              Bewertungsmatrix
-            </Typography>
             <Typography
               variant="caption"
               sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
@@ -354,6 +351,14 @@ function App() {
                 label={<Typography variant="caption">Dev2 mode</Typography>}
               />
             )}
+          </Box>
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+            <Typography
+              variant="h6"
+              sx={{ color: '#fff', textTransform: 'uppercase' }}
+            >
+              Bewertungsmatrix
+            </Typography>
           </Box>
           <Select
             id="lang-select"
