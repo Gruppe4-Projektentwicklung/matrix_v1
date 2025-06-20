@@ -149,7 +149,7 @@ return (
           ))}
         </Select>
       </FormControl>
-      <div className="flex flex-col space-y-2">
+      <div className="flex items-center space-x-2">
         <Button
           variant="contained"
           component="label"
