@@ -128,7 +128,7 @@ export const CollectionSelectorIdeas: React.FC<Props> = ({
   };
 
   return (
-    <div className="mb-4 max-w-xs">
+    <div className="mb-6 max-w-xs">
       <FormControl fullWidth size="small">
         <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
         <Select
