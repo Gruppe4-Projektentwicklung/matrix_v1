@@ -336,83 +336,87 @@ function App() {
 
   return (
     <div className="min-h-screen w-full bg-gray-200 text-gray-900 font-inter flex flex-col items-center pb-10">
-      <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
-        <Toolbar
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: '1fr auto 1fr',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box component="img" src="/logo.svg" alt="Logo" sx={{ height: 32 }} />
-            <Typography
-              variant="caption"
-              sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
-            >
-              Session ID: {sessionId}
-            </Typography>
-            {location.pathname === '/' && devConfig.dataSaveStatus === 'on' && (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    checked={dev2Mode}
-                    onChange={(e) => setDev2Mode(e.target.checked)}
-                    color="default"
-                  />
-                }
-                label={<Typography variant="caption">Dev2 mode</Typography>}
-              />
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 1,
-            }}
-          >
-            <img
-              src="/vite.svg"
-              alt={t('appName')}
-              style={{ height: 32, cursor: 'pointer' }}
-              onClick={handleHeaderReset}
-            />
-            <Typography
-              variant="h6"
-              sx={{ color: '#fff', textTransform: 'uppercase', cursor: 'pointer' }}
-              onClick={handleHeaderReset}
-            >
-              {t('appName')}
-            </Typography>
-
-          <Typography
-            variant="h6"
-            sx={{ color: '#fff', textTransform: 'uppercase', textAlign: 'center' }}
-          >
-            Bewertungsmatrix
-          </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Select
-              id="lang-select"
+    <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
+  <Toolbar
+    sx={{
+      display: 'grid',
+      gridTemplateColumns: '1fr auto 1fr',
+      alignItems: 'center',
+      gap: 2,
+    }}
+  >
+    {/* Linke Seite */}
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box component="img" src="/logo.svg" alt="Logo" sx={{ height: 32 }} />
+      <Typography
+        variant="caption"
+        sx={{ bgcolor: 'primary.light', px: 1, py: 0.5, borderRadius: 1 }}
+      >
+        Session ID: {sessionId}
+      </Typography>
+      {location.pathname === '/' && devConfig.dataSaveStatus === 'on' && (
+        <FormControlLabel
+          control={
+            <Checkbox
               size="small"
-              value={language}
-              onChange={handleLanguageChange}
-              sx={{ bgcolor: 'background.paper', minWidth: 80 }}
-            >
-              <MenuItem value="de">Deutsch</MenuItem>
-              <MenuItem value="en">English</MenuItem>
-              <MenuItem value="fr">Français</MenuItem>
-            </Select>
+              checked={dev2Mode}
+              onChange={(e) => setDev2Mode(e.target.checked)}
+              color="default"
+            />
+          }
+          label={<Typography variant="caption">Dev2 mode</Typography>}
+        />
+      )}
+    </Box>
 
-          </Box>
-        </Toolbar>
-      </AppBar>
+    {/* Mitte */}
+    <Box
+      sx={{
+        flexGrow: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 1,
+      }}
+    >
+      <img
+        src="/vite.svg"
+        alt={t('appName')}
+        style={{ height: 32, cursor: 'pointer' }}
+        onClick={handleHeaderReset}
+      />
+      <Typography
+        variant="h6"
+        sx={{ color: '#fff', textTransform: 'uppercase', cursor: 'pointer' }}
+        onClick={handleHeaderReset}
+      >
+        {t('appName')}
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{ color: '#fff', textTransform: 'uppercase', textAlign: 'center' }}
+      >
+        Bewertungsmatrix
+      </Typography>
+    </Box>
+
+    {/* Rechte Seite */}
+    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Select
+        id="lang-select"
+        size="small"
+        value={language}
+        onChange={handleLanguageChange}
+        sx={{ bgcolor: 'background.paper', minWidth: 80 }}
+      >
+        <MenuItem value="de">Deutsch</MenuItem>
+        <MenuItem value="en">English</MenuItem>
+        <MenuItem value="fr">Français</MenuItem>
+      </Select>
+    </Box>
+  </Toolbar>
+</AppBar>
+
 
       {dev2Mode && devConfig.dataSaveStatus === 'on' && <DevStatusBar />}
 
