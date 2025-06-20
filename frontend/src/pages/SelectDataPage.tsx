@@ -77,8 +77,10 @@ export const SelectDataPage = ({
 
         <Divider sx={{ my: 6, width: '100%' }} />
 
-        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mt-6">
-          <p className="text-sm text-gray-700 text-center">
+
+        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mt-6 flex items-center justify-center">
+          <p className="text-sm text-gray-700 w-full" style={{ textAlign: 'justify' }}>
+
             {t('selectDataInfo')}
           </p>
         </div>

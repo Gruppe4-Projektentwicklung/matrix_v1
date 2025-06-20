@@ -131,9 +131,15 @@ return (
   <div>
     <div
       className="grid items-center"
-      style={{ gridTemplateColumns: '320px auto', columnGap: '1.5cm' }}
+
+      style={{
+        gridTemplateColumns: '1fr 1fr',
+        columnGap: '1.5cm',
+        width: '100%',
+      }}
     >
-      <FormControl size="small" sx={{ width: 320 }}>
+      <FormControl size="small" sx={{ width: 320, justifySelf: 'end' }}>
+
         <InputLabel id="ideas-select-label">{t("selectCollection")}</InputLabel>
         <Select
           labelId="ideas-select-label"
@@ -151,7 +157,7 @@ return (
           ))}
         </Select>
       </FormControl>
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4" style={{ justifySelf: 'start' }}>
         <Button
           variant="contained"
           component="label"
