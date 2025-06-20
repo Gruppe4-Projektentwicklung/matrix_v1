@@ -79,6 +79,13 @@ class Config:
         return self.config["Dateien"]["upload_dir"]
 
     @property
+    def attribute_description_file(self):
+        return self.config["Dateien"].get(
+            "attribute_description_file",
+            "uploads/attributdescription/CW25_AttributDescrition.xlsx",
+        )
+
+    @property
     def template_dir(self):
         # Pfad relativ zur Projektstruktur (z. B. "templates" → ../templates)
         raw_path = self.config["Dateien"]["templatedir"]
