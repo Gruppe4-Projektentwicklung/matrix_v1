@@ -66,50 +66,52 @@ export const PersonalDataPage = ({
 
   return (
     <PageContainer>
-      <Box textAlign="center">
-      {tester ? (
-        <Typography mb={3}>{t('appTesterMode')}</Typography>
-      ) : (
-        <>
-          {formOpen && (
-            <Box mb={3} display="flex" justifyContent="center">
-              <StatistikForm
-                open={true}
-                inline
-                tester={tester}
-                payload={payload}
-                onSaveSuccess={handleSaveSuccess}
-                onUserDataSaved={onUserDataSaved}
-              />
-            </Box>
-          )}
-          {!formOpen && saved && (
-            <SaveRunSuccess
-              open={true}
-              inline
-              message={saveMessage}
-              runId={saveRunId}
-              isTester={tester}
-              onEdit={() => {
-                setFormOpen(true);
-                setSaved(false);
-              }}
-            />
-          )}
-        </>
-      )}
-           <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <ResetButton />
-          <Button variant="outlined" onClick={() => navigate('/combinations')}>
-            {t('back')}
+      <Box>
+        <Box sx={{ mt: 4, mb: 3, display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <ResetButton />
+            <Button variant="outlined" onClick={() => navigate('/combinations')}>
+              {t('back')}
+            </Button>
+          </Box>
+          <Button variant="contained" onClick={handleNext}>
+            {t('next')}
           </Button>
         </Box>
-        <Button variant="contained" onClick={handleNext}>
-          {t('next')}
-        </Button>
+        <Box textAlign="center">
+          {tester ? (
+            <Typography mb={3}>{t('appTesterMode')}</Typography>
+          ) : (
+            <>
+              {formOpen && (
+                <Box mb={3} display="flex" justifyContent="center">
+                  <StatistikForm
+                    open={true}
+                    inline
+                    tester={tester}
+                    payload={payload}
+                    onSaveSuccess={handleSaveSuccess}
+                    onUserDataSaved={onUserDataSaved}
+                  />
+                </Box>
+              )}
+              {!formOpen && saved && (
+                <SaveRunSuccess
+                  open={true}
+                  inline
+                  message={saveMessage}
+                  runId={saveRunId}
+                  isTester={tester}
+                  onEdit={() => {
+                    setFormOpen(true);
+                    setSaved(false);
+                  }}
+                />
+              )}
+            </>
+          )}
+        </Box>
       </Box>
-    </Box> {/* <---- DAS FEHLTE! */}
     </PageContainer>
   );
 };
