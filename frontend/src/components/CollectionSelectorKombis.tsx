@@ -50,11 +50,12 @@ export const CollectionSelectorKombis: React.FC<Props> = ({
       .then((data) => {
         if (data.files && data.files.length > 0) {
           setEigeneSammlungen(data.files);
-          if (!data.files.includes(auswahl)) {
-            const neueAuswahl = data.default || data.files[0];
-            setAuswahl(neueAuswahl);
-            onSammlungChange(neueAuswahl);
-          }
+          const neueAuswahl =
+            data.default && data.files.includes(data.default)
+              ? data.default
+              : data.files[0];
+          setAuswahl(neueAuswahl);
+          onSammlungChange(neueAuswahl);
         }
       })
       .catch((err) => {
