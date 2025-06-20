@@ -22,7 +22,7 @@ export const ImpressumPage: React.FC = () => (
         E-Mail: <a href="mailto:gregor.kordowich@study.thws.de" className="text-blue-600 underline">gregor.kordowich@study.thws.de</a>
       </Typography>
 
-      <Divider />
+      <Divider sx={{ my: 2 }} />
 
       <Typography fontWeight="bold">Gruppenzugehörigkeit:</Typography>
       <Typography component="div">
@@ -32,14 +32,14 @@ export const ImpressumPage: React.FC = () => (
         Studiengang Bauingenieurwesen
       </Typography>
 
-      <Divider />
+      <Divider sx={{ my: 2 }} />
 
       <Typography fontWeight="bold">Verantwortlich gemäß § 55 Abs. 2 RStV:</Typography>
       <Typography component="div">
         Gregor Kordowich, c/o THWS, Röntgenring 8, 97070 Würzburg
       </Typography>
 
-      <Divider />
+      <Divider sx={{ my: 2 }} />
 
       <Box className="p-4 bg-gray-100 rounded" component="div">
         <Typography fontWeight="bold" mb={1}>Hinweis:</Typography>
@@ -48,7 +48,7 @@ export const ImpressumPage: React.FC = () => (
         </Typography>
       </Box>
 
-      <Divider />
+      <Divider sx={{ my: 2 }} />
 
       <Typography component="div">
         Alle Angaben und Ergebnisse, die durch die Nutzung der Ideen-Bewertungs-Matrix erzeugt werden, dienen ausschließlich zu Studien- und Demonstrationszwecken. Es wird keine Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen und Berechnungsergebnisse übernommen.
