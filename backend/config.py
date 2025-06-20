@@ -3,10 +3,23 @@ import os
 from pathlib import Path
 
 class Config:
-    def __init__(self, filepath="matrixconfig.ini"):
+    def __init__(self, filepath=None):
+        """Load configuration from ``matrixconfig.ini``.
+
+        If ``filepath`` is not provided, the config file is expected next to this
+        module. This ensures the file is found regardless of the current working
+        directory when the backend is started.
+        """
+        if filepath is None:
+            filepath = Path(__file__).parent / "matrixconfig.ini"
+        else:
+            filepath = Path(filepath)
+
         self.config = configparser.ConfigParser()
-        if not os.path.exists(filepath):
-            raise FileNotFoundError(f"Konfigurationsdatei {filepath} nicht gefunden.")
+        if not filepath.exists():
+            raise FileNotFoundError(
+                f"Konfigurationsdatei {filepath} nicht gefunden."
+            )
         self.config.read(filepath)
         self._validate()
 
@@ -134,6 +147,10 @@ class Config:
     @property
     def show_tester_checkbox(self):
         return self.testerbutton_enabled
+
+    @property
+    def show_dev2_checkbox(self):
+        return self._feature("dev2_checkbox")
 
     @property
     def log_level(self):

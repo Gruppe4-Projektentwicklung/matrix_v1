@@ -52,6 +52,7 @@ function App() {
   const [datenfreigabe, setDatenfreigabe] = useState<"offen" | "anonym" | "keine">("offen");
   const [showRoundOptions, setShowRoundOptions] = useState(true);
   const [showTesterOption, setShowTesterOption] = useState(true);
+  const [showDev2Option, setShowDev2Option] = useState(false);
   const [loadingScreenDuration, setLoadingScreenDuration] = useState(0.8);
   const [gewichtungen, setGewichtungen] = useState<any[]>([]);
   const [rankingEintraege, setRankingEintraege] = useState<any[]>([]);
@@ -80,6 +81,13 @@ function App() {
         }
         if (typeof data.show_tester_checkbox === "boolean") {
           setShowTesterOption(data.show_tester_checkbox);
+        }
+        if (typeof data.show_dev2_checkbox === "boolean") {
+          setShowDev2Option(data.show_dev2_checkbox);
+          if (!data.show_dev2_checkbox) {
+            setDev2Mode(false);
+            sessionStorage.setItem('dev2mode', 'false');
+          }
         }
         if (typeof data.loadingscreen_duration === "number") {
           setLoadingScreenDuration(data.loadingscreen_duration);
@@ -420,7 +428,7 @@ function App() {
       >
         Session ID: {sessionId}
       </Typography>
-      {location.pathname === '/' && devConfig.dataSaveStatus === 'on' && (
+      {location.pathname === '/' && showDev2Option && (
         <FormControlLabel
           control={
             <Checkbox
@@ -483,7 +491,7 @@ function App() {
 </AppBar>
 
 
-      {dev2Mode && devConfig.dataSaveStatus === 'on' && <DevStatusBar />}
+      {dev2Mode && showDev2Option && devConfig.dataSaveStatus === 'on' && <DevStatusBar />}
 
       <Container sx={{ flexGrow: 1, bgcolor: 'background.paper', py: 2 }} maxWidth="lg">
         <Routes>
