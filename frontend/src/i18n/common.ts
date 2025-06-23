@@ -30,7 +30,7 @@ const common = {
 
         optionsTitle: "Bewertungsoptionen",
         ideaSelectionTitle: "Ideenauswahl",
-        selectIdeasInfo: "Hier k\u00f6nnen Sie Ideen f\u00fcr die Berechnung aktivieren oder deaktivieren.",
+        selectIdeasInfo: "Übersicht: Ihre Ideensammlung.<br />Auf dieser Seite sehen Sie alle Ideen, die aktuell in Ihrer Ideensammlung enthalten sind.<br /><br />Was können Sie hier tun?<br />Prüfen Sie, ob alle Ideen vollständig und korrekt übernommen wurden.<br />Kontrollieren Sie Namen, Beschreibungen und Attribute jeder Idee.<br />Einzelne Ideen können Sie gezielt ein- oder ausschalten – deaktivierte Ideen werden nicht in die Bewertung einbezogen.<br />Ergänzen oder bearbeiten Sie Angaben, falls Sie Fehler oder Lücken entdecken (sofern dies im Tool möglich ist).<br />Über das Info-Symbol erhalten Sie ggf. weitere Details oder Beschreibungen zu jeder Idee.<br /><br />Hinweis: Die Qualität der folgenden Bewertung hängt maßgeblich von der Vollständigkeit und Korrektheit dieser Angaben ab. Nutzen Sie diese Übersicht, um Ihre Datengrundlage zu optimieren!<br /><br />Sobald Sie mit der Ideensammlung zufrieden sind, gehen Sie zum nächsten Schritt und wählen die Bewertungskriterien aus."
         optionConsiderRound1: "Runde 1 berücksichtigen",
         optionConsiderRound2: "Runde 2 berücksichtigen",
         optionAppTester: "App-Tester (kein Logging, keine Datenabfrage)",
@@ -245,7 +245,7 @@ const common = {
 
         optionsTitle: "Evaluation options",
         ideaSelectionTitle: "Idea selection",
-        selectIdeasInfo: "Enable or disable ideas for the calculation.",
+        selectIdeasInfo: "Overview: Your idea collection.<br />On this page you can see all ideas currently contained in your collection.<br /><br />What can you do here?<br />Check that all ideas were imported completely and correctly.<br />Verify the name, description and attributes of each idea.<br />You can activate or deactivate individual ideas – deactivated ideas will not be included in the evaluation.<br />Add or edit information if you notice errors or gaps, where possible in the tool.<br />The info icon provides additional details or descriptions for each idea.<br /><br />Note: The quality of the subsequent evaluation depends largely on the completeness and correctness of these details. Use this overview to optimise your data set.<br /><br />Once you are satisfied with the idea collection, proceed to the next step and choose the evaluation criteria."
         optionConsiderRound1: "Consider round 1",
         optionConsiderRound2: "Consider round 2",
         optionAppTester: "App tester (no logging, no data collection)",
@@ -459,7 +459,7 @@ const common = {
 
         optionsTitle: "Options d'évaluation",
         ideaSelectionTitle: "Sélection d'idées",
-        selectIdeasInfo: "Activez ou désactivez des idées pour le calcul.",
+        selectIdeasInfo: "Vue d'ensemble : votre collecte d'idées.<br />Sur cette page, vous voyez toutes les idées actuellement présentes dans votre collecte.<br /><br />Que pouvez-vous faire ici ?<br />Vérifiez que toutes les idées ont été importées correctement et intégralement.<br />Contrôlez le nom, la description et les attributs de chaque idée.<br />Vous pouvez activer ou désactiver chaque idée – les idées désactivées ne seront pas prises en compte dans l'évaluation.<br />Complétez ou modifiez les informations si vous découvrez des erreurs ou des lacunes, dans la mesure où cela est possible dans l'outil.<br />L'icône d'information vous fournit des détails ou descriptions supplémentaires pour chaque idée.<br /><br />Remarque : la qualité de l'évaluation suivante dépend essentiellement de l'exhaustivité et de l'exactitude de ces informations. Utilisez cette vue d'ensemble pour optimiser votre base de données.<br /><br />Une fois satisfait de la collecte d'idées, passez à l'étape suivante et choisissez les critères d'évaluation."
         optionConsiderRound1: "Prenez en compte le tour 1",
         optionConsiderRound2: "Prenez en compte le tour 2",
         optionAppTester: "Testeur d'app (pas de journalisation, pas de collecte de données)",
