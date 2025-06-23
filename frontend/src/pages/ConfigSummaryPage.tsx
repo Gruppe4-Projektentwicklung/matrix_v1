@@ -126,13 +126,12 @@ export const ConfigSummaryPage = ({
       </Typography>
 
       <Typography
+        component="div"
         mb={2}
         textAlign="center"
         color="text.secondary"
-        sx={{ whiteSpace: 'pre-line' }}
-      >
-        {t('summaryDescription')}
-      </Typography>
+        dangerouslySetInnerHTML={{ __html: t('summaryDescription') }}
+      />
       <Table size="small" sx={{ mb: 4 }}>
         <TableBody>
           <TableRow>
