@@ -79,10 +79,10 @@ export const SelectDataPage = ({
 
 
         <div className="bg-[#f8fafc] p-6 rounded-xl shadow mt-6 flex items-center justify-center max-w-prose mx-auto">
-
-          <p className="text-sm text-gray-700" style={{ textAlign: 'center' }}>
-            {t('selectDataInfo')}
-          </p>
+          <p
+            className="text-sm text-gray-700 text-left"
+            dangerouslySetInnerHTML={{ __html: t('selectDataInfo') }}
+          />
         </div>
       </Box>
       </Box>
