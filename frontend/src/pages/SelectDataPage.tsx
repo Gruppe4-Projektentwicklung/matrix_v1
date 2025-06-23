@@ -87,6 +87,16 @@ export const SelectDataPage = ({
 
 
         <div className="bg-[#f8fafc] p-6 rounded-xl shadow mt-6 flex flex-col items-center justify-center max-w-prose mx-auto">
+
+          <Button
+            variant="outlined"
+            sx={{ px: 1.5, py: 0.5, mb: 2, mt: 1, whiteSpace: 'nowrap' }}
+            onClick={handleInstructionDownload}
+            size="small"
+          >
+            {t('downloadInstructions')}
+          </Button>
+
           <p className="text-sm text-gray-700" style={{ textAlign: 'center' }}>
             {t('selectDataInfo')}
           </p>
