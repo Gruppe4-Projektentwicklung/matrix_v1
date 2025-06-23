@@ -124,6 +124,9 @@ export const ConfigSummaryPage = ({
       <Typography variant="h5" mb={2} fontWeight="bold">
         {t('summary')}
       </Typography>
+      <Typography mb={2} textAlign="center" color="text.secondary">
+        {t('summaryDescription')}
+      </Typography>
       <Table size="small" sx={{ mb: 4 }}>
         <TableBody>
           <TableRow>
