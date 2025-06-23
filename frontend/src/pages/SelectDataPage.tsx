@@ -97,12 +97,11 @@ export const SelectDataPage = ({
             {t('downloadInstructions')}
           </Button>
 
-          <p className="text-sm text-gray-700" style={{ textAlign: 'center' }}>
-            {t('selectDataInfo')}
-          </p>
-          <Button variant="outlined" sx={{ mt: 2 }} onClick={handleInstructionDownload} size="small">
-            {t('downloadInstructions')}
-          </Button>
+          <p
+            className="text-sm text-gray-700"
+            style={{ textAlign: 'center' }}
+            dangerouslySetInnerHTML={{ __html: t('selectDataInfo') }}
+          />
         </div>
       </Box>
       </Box>
