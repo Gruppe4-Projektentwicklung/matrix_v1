@@ -30,7 +30,7 @@ const common = {
 
         optionsTitle: "Bewertungsoptionen",
         ideaSelectionTitle: "Ideenauswahl",
-        selectIdeasInfo: "Hier k\u00f6nnen Sie Ideen f\u00fcr die Berechnung aktivieren oder deaktivieren.",
+        selectIdeasInfo: "\u00dcbersicht: Ihre Ideensammlung. Auf dieser Seite sehen Sie alle Ideen, die aktuell in Ihrer Ideensammlung enthalten sind. Was k\u00f6nnen Sie hier tun? Pr\u00fcfen Sie, ob alle Ideen vollst\u00e4ndig und korrekt \u00fcbernommen wurden. Kontrollieren Sie Namen, Beschreibungen und Attribute jeder Idee. Einzelne Ideen k\u00f6nnen Sie gezielt ein- oder ausschalten \u2013 deaktivierte Ideen werden nicht in die Bewertung einbezogen. Erg\u00e4nzen oder bearbeiten Sie Angaben, falls Sie Fehler oder L\u00fccken entdecken (sofern dies im Tool m\u00f6glich ist). \u00dcber das Info-Symbol erhalten Sie ggf. weitere Details oder Beschreibungen zu jeder Idee. Hinweis: Die Qualit\u00e4t der folgenden Bewertung h\u00e4ngt ma\u00dfgeblich von der Vollst\u00e4ndigkeit und Korrektheit dieser Angaben ab. Nutzen Sie diese \u00dcbersicht, um Ihre Datengrundlage zu optimieren! Sobald Sie mit der Ideensammlung zufrieden sind, gehen Sie zum n\u00e4chsten Schritt und w\u00e4hlen die Bewertungskriterien aus.",
         optionConsiderRound1: "Runde 1 berücksichtigen",
         optionConsiderRound2: "Runde 2 berücksichtigen",
         optionAppTester: "App-Tester (kein Logging, keine Datenabfrage)",
@@ -38,12 +38,15 @@ const common = {
         optionDataReleaseOpen: "Bitte geben Sie Ihre Daten ein (anonym)",
         optionDataReleaseAnonym: "Nur Ihr Nutzungsverhalten wird gespeichert",
         optionDataReleaseNone: "Es werden keine Daten gespeichert",
+
         selectWeightsInfo: "Bitte Gewichtung der Kombinationen auswählen.",
-        introText: "Mit diesem Tool können Sie Ideen bewerten und kombinieren.",
+        introText: "<p>Willkommen auf der Bewertungsmatrix!</p><p>Mit dieser Webanwendung können Sie unterschiedlichste Ideen oder Projekte schnell, flexibel und nachvollziehbar bewerten und vergleichen. Sie laden einfach Ihre Ideensammlung hoch (oder nutzen unsere Vorlage), legen eigene Bewertungskriterien und Gewichtungen fest und erhalten direkt eine transparente, verständliche Auswertung als Ranking und Diagramm.</p><p><strong>Was erwartet Sie?</strong></p><ul><li>Eigene Ideen oder Vorlagen importieren</li><li>Individuelle Bewertungskriterien festlegen und gewichten</li><li>Alle Berechnungen nachvollziehen und Ergebnisse exportieren</li><li>Flexible Anpassung an verschiedenste Themen und Fragestellungen</li><li>Intuitive Bedienung: keine IT-Kenntnisse notwendig</li></ul><p>Sie werden Schritt für Schritt durch den Prozess geführt:</p><ol><li>Auswahl und Import der Ideensammlung</li><li>Auswahl und Gewichtung der Bewertungskriterien</li><li>Start der Bewertung und Einsicht der Ergebnisse</li><li>Exportmöglichkeiten und Detailauswertung</li></ol><p>Klicken Sie auf \u201eStart\u201c, um zu beginnen \u2013 oder informieren Sie sich \u00fcber Hilfe und Beispiele oben im Men\u00fc.</p><p>Viel Erfolg mit der Bewertungsmatrix!</p>",
+
         fieldsRequired: "Bitte alle Felder ausfüllen.",
         invalidAge: "Bitte ein realistisches Alter eingeben (10-120).",
         masterDataSelectionTitle: "Stammdaten Auswahl",
-        selectDataInfo: "Wichtiger Hinweis zum Vorgehen:<br /><br />Das folgende Vorgehen gilt sowohl f\u00fcr die Ideensammlung als auch f\u00fcr die Kombinationsliste. Beide Dateien k\u00f6nnen auf die gleiche Weise vorbereitet, gepr\u00fcft und importiert werden.<br /><br />Schritt 1: Datei ausw\u00e4hlen oder importieren<br />Auf dieser Seite w\u00e4hlen Sie, mit welchen Dateien Sie arbeiten m\u00f6chten:<br /><br />Beispieldatei nutzen: Starten Sie mit einer bereitgestellten Beispielsammlung oder Kombinationsliste.<br /><br />Eigene Datei nutzen:<br />Laden Sie sich zuerst die offizielle Vorlage (Template) f\u00fcr die Ideensammlung und/oder die Kombinationsliste \u00fcber den Button \u201eVorlage herunterladen\u201c herunter.<br />F\u00fcllen Sie die Vorlage(n) mit Ihren eigenen Daten aus. Nutzen Sie dabei die ausf\u00fchrliche Anleitung zu den Tabellen (ebenfalls als PDF zum Download verf\u00fcgbar), um die Struktur korrekt einzuhalten.<br />Laden Sie Ihre ausgef\u00fcllte(n) Datei(en) anschlie\u00dfend wieder hier hoch.<br /><br />Wichtig: Nach dem Upload wird jede Datei automatisch gepr\u00fcft. Nur Dateien, die exakt dem vorgegebenen Aufbau entsprechen, k\u00f6nnen verarbeitet werden. Falls das Format abweicht, erhalten Sie eine Fehlermeldung und Ihre Datei kann nicht gelesen werden.<br /><br />Hinweis: Ihre Daten werden nur f\u00fcr die aktuelle Sitzung verwendet und nicht dauerhaft gespeichert.<br /><br />Hinweise zur Tabellenstruktur und h\u00e4ufige Fehlerquellen:<br />Damit Ihre Datei korrekt verarbeitet werden kann, beachten Sie bitte Folgendes:<br /><br />Jede Idee ben\u00f6tigt eine eindeutige ID (#id#), einen Namen (#t#1), eine Beschreibung (#t#2) und mindestens ein Attribut (z.\u202fB. #-#1).<br />Attribute werden eindeutig mit IDs wie #-#1, #-#2 usw. bezeichnet. Die Einheit zu jedem Attribut steht in einer eigenen Spalte (#+#1, #+#2 ...).<br />F\u00fcr komplexe Auswertungen k\u00f6nnen Sie eine zus\u00e4tzliche Datei mit Attribut-Kombinationen (z.\u202fB. Formeln wie #-#4/#-#8) anlegen.<br />Jede Spalte mit Attribut oder Kriterium ben\u00f6tigt eine eigene, eindeutige ID. Achten Sie darauf, keine IDs zu doppeln oder zu vertauschen.<br />In Attribut-Spalten d\u00fcrfen nur numerische Werte stehen.<br /><br />Typische Fehlerquellen:<br />Falsche oder fehlende Spaltenbezeichnungen / IDs<br />Doppelt vergebene oder vertauschte IDs<br />Nicht-numerische Werte in Attribut-Spalten<br />Leere oder nicht ausgef\u00fcllte Pflichtspalten<br /><br />Tipp: Arbeiten Sie immer auf Basis der bereitgestellten Vorlage und orientieren Sie sich Schritt f\u00fcr Schritt an der herunterladbaren Anleitung. So vermeiden Sie typische Fehler!<br /><br />Weitere Details und Beispiele finden Sie in der Hilfedatei \u201eAnleitung zu den Tabellen\u201c.",
+
+        selectDataInfo: "<b>Wichtiger Hinweis zum Vorgehen</b><br />Das folgende Vorgehen gilt sowohl für die Ideensammlung als auch für die Kombinationsliste. Beide Dateien können auf die gleiche Weise vorbereitet, geprüft und importiert werden.<br /><br /><b>Schritt 1: Datei auswählen oder importieren</b><br />Auf dieser Seite wählen Sie, mit welchen Dateien Sie arbeiten möchten:<br /><br /><b>Beispieldatei nutzen:</b> Starten Sie mit einer bereitgestellten Beispielsammlung oder Kombinationsliste.<br /><br /><b>Eigene Datei nutzen:</b><br />Laden Sie sich zuerst die offizielle Vorlage (Template) für die Ideensammlung und/oder die Kombinationsliste über den Button „Vorlage herunterladen“ herunter.<br />Füllen Sie die Vorlage(n) mit Ihren eigenen Daten aus. Nutzen Sie dabei die ausführliche Anleitung zu den Tabellen (ebenfalls als PDF zum Download verfügbar), um die Struktur korrekt einzuhalten.<br />Laden Sie Ihre ausgefüllte(n) Datei(en) anschließend wieder hier hoch.<br /><br /><b>Wichtig:</b> Nach dem Upload wird jede Datei automatisch geprüft. Nur Dateien, die exakt dem vorgegebenen Aufbau entsprechen, können verarbeitet werden. Falls das Format abweicht, erhalten Sie eine Fehlermeldung und Ihre Datei kann nicht gelesen werden.<br /><br /><b>Hinweis:</b> Ihre Daten werden nur für die aktuelle Sitzung verwendet und nicht dauerhaft gespeichert.<br /><br /><b>Hinweise zur Tabellenstruktur und häufige Fehlerquellen</b><br />Damit Ihre Datei korrekt verarbeitet werden kann, beachten Sie bitte Folgendes:<br />Jede Idee benötigt eine eindeutige ID (#id#), einen Namen (#t#1), eine Beschreibung (#t#2) und mindestens ein Attribut (z. B. #-#1).<br />Attribute werden eindeutig mit IDs wie #-#1, #-#2 usw. bezeichnet. Die Einheit zu jedem Attribut steht in einer eigenen Spalte (#+#1, #+#2 ...).<br />Für komplexe Auswertungen können Sie eine zusätzliche Datei mit Attribut-Kombinationen (z. B. Formeln wie #-#4/#-#8) anlegen.<br />Jede Spalte mit Attribut oder Kriterium benötigt eine eigene, eindeutige ID. Achten Sie darauf, keine IDs zu doppeln oder zu vertauschen.<br />In Attribut-Spalten dürfen nur numerische Werte stehen.<br /><br /><b>Typische Fehlerquellen:</b><br />Falsche oder fehlende Spaltenbezeichnungen / IDs<br />Doppelt vergebene oder vertauschte IDs<br />Nicht-numerische Werte in Attribut-Spalten<br />Leere oder nicht ausgefüllte Pflichtspalten<br /><br /><b>Tipp:</b> Arbeiten Sie immer auf Basis der bereitgestellten Vorlage und orientieren Sie sich Schritt für Schritt an der herunterladbaren Anleitung. So vermeiden Sie typische Fehler!<br /><br />Weitere Details und Beispiele finden Sie in der Hilfedatei „Anleitung zu den Tabellen“.",
 
         resetWarning: "Warnung! Durch Zur\u00fccksetzen werden alle eingegebenen Daten gel\u00f6scht. Zur\u00fccksetzen oder abbrechen?",
 
@@ -55,6 +58,7 @@ const common = {
         ideaCollectionName: "Ideensammlung",
         combinationCollectionName: "Kombinationssammlung",
         personalDataSummary: "Pers\u00f6nliche Daten",
+        summaryDescription: "Bevor Sie die Bewertung starten, sehen Sie hier noch einmal alle Ihre Eingaben im \u00dcberblick. Pr\u00fcfen Sie, ob Ihre Ideensammlung, die gew\u00e4hlten Kombinationen und deren Gewichtungen korrekt sind. Falls Ihnen noch Fehler oder fehlende Angaben auffallen, k\u00f6nnen Sie einfach zur\u00fcckgehen und \u00c4nderungen vornehmen. Wichtig: Sobald Sie auf \u201eErgebnisse anzeigen\u201c klicken, ist eine \u00c4nderung Ihrer Eingaben nicht mehr m\u00f6glich. Sie k\u00f6nnen dann nur noch alles zur\u00fccksetzen und den Prozess von vorne beginnen. Mit Klick auf \u201eBerechnen\u201c starten Sie die Auswertung. Erst wenn die Berechnung abgeschlossen ist, erscheint der Button \u201eErgebnisse anzeigen\u201c. Nehmen Sie sich einen Moment Zeit f\u00fcr die Kontrolle \u2013 so stellen Sie sicher, dass Ihre Auswertung auf den richtigen Daten basiert!",
 
         noIdeasLoaded: "Keine Ideen geladen.",
         noDescription: "Keine Beschreibung",
@@ -188,6 +192,7 @@ const common = {
         downloadKombiTemplate: "Kombinations-Vorlage herunterladen",
         selectCombinationCollection: "Kombinationssammlung auswählen",
         downloadCombinationTemplate: "Kombinationsvorlage herunterladen",
+        downloadInstructions: "Anleitung herunterladen",
 
         uploadError: "Upload fehlgeschlagen",
         uploadnotvalid: "Hochgeladene Datei muss der Struktur der Vorlage entsprechen.",
@@ -245,7 +250,7 @@ const common = {
 
         optionsTitle: "Evaluation options",
         ideaSelectionTitle: "Idea selection",
-        selectIdeasInfo: "Enable or disable ideas for the calculation.",
+        selectIdeasInfo: "Overview: Your idea collection. On this page you can see all ideas currently contained in your collection. What can you do here? Check that all ideas were imported completely and correctly. Verify the name, description and attributes of each idea. You can activate or deactivate individual ideas \u2013 deactivated ideas will not be included in the evaluation. Add or edit information if you notice errors or gaps, where possible in the tool. The info icon provides additional details or descriptions for each idea. Note: The quality of the subsequent evaluation depends largely on the completeness and correctness of these details. Use this overview to optimise your data set. Once you are satisfied with the idea collection, proceed to the next step and choose the evaluation criteria.",
         optionConsiderRound1: "Consider round 1",
         optionConsiderRound2: "Consider round 2",
         optionAppTester: "App tester (no logging, no data collection)",
@@ -254,30 +259,13 @@ const common = {
         optionDataReleaseAnonym: "Only your usage behavior will be saved",
         optionDataReleaseNone: "No data will be saved",
         selectWeightsInfo: "Please select the weights of the combinations.",
-        introText: "This tool lets you rate and combine ideas.",
+        introText: "<p>Welcome to the evaluation matrix!</p><p>With this web application you can quickly, flexibly and transparently evaluate and compare a wide variety of ideas or projects. Simply upload your idea collection (or use our template), define your own evaluation criteria and weightings, and you will immediately receive a clear ranking and diagram.</p><p><strong>What awaits you?</strong></p><ul><li>Import your own ideas or templates</li><li>Define and weight individual evaluation criteria</li><li>Understand every calculation and export the results</li><li>Flexible adaptation to a wide range of topics and questions</li><li>Intuitive to use: no IT knowledge required</li></ul><p>You will be guided through the process step by step:</p><ol><li>Select and import your idea collection</li><li>Choose and weight the evaluation criteria</li><li>Start the evaluation and view the results</li><li>Export options and detailed analysis</li></ol><p>Click \u201cStart\u201d to begin \u2013 or check out help and examples in the menu above.</p><p>Good luck with the evaluation matrix!</p>",
+
         fieldsRequired: "Please fill in all fields.",
         invalidAge: "Please enter a realistic age (10-120).",
         masterDataSelectionTitle: "Master data selection",
-        selectDataInfo:
-          "Important note on how to proceed:<br /><br />" +
-          "The following procedure applies to both the idea collection and the combination list. Both files can be prepared, checked and imported in the same way.<br /><br />" +
-          "Step 1: Select or import a file<br />On this page you choose which files you want to work with:<br /><br />" +
-          "Use sample file: Start with a provided sample collection or combination list.<br /><br />" +
-          "Use your own file:<br />" +
-          "First download the official template for the idea collection and/or the combination list via the \"Download template\" button.<br />" +
-          "Fill in the template(s) with your own data. Use the detailed instructions for the tables (also available as a PDF download) to ensure the correct structure.<br />" +
-          "Then upload your completed file(s) here again.<br /><br />" +
-          "Important: After the upload each file is automatically checked. Only files that exactly match the specified structure can be processed. If the format differs, you will receive an error message and your file cannot be read.<br /><br />" +
-          "Note: Your data is only used for the current session and is not stored permanently.<br /><br />" +
-          "Notes on the table structure and common sources of error:<br />To ensure that your file can be processed correctly, please note the following:<br /><br />" +
-          "Each idea needs a unique ID (#id#), a name (#t#1), a description (#t#2) and at least one attribute (e.g. #-#1).<br />" +
-          "Attributes are uniquely designated with IDs such as #-#1, #-#2, etc. The unit for each attribute is in its own column (#+#1, #+#2 ...).<br />" +
-          "For complex evaluations you can create an additional file with attribute combinations (e.g. formulas like #-#4/#-#8).<br />" +
-          "Each column containing an attribute or criterion requires its own unique ID. Make sure not to duplicate or mix up IDs.<br />" +
-          "Only numeric values are allowed in attribute columns.<br /><br />" +
-          "Typical sources of error:<br />Incorrect or missing column labels / IDs<br />Duplicated or mixed-up IDs<br />Non-numeric values in attribute columns<br />Empty or unfilled mandatory columns<br /><br />" +
-          "Tip: Always work using the provided template and follow the downloadable instructions step by step. This way you avoid typical mistakes!<br /><br />" +
-          "Further details and examples can be found in the help file \"Instructions for the tables\".",
+
+        selectDataInfo: "<b>Important Instructions</b><br />The following procedure applies to both the idea list and the combination list. Both files can be prepared, checked and imported in the same way.<br /><br /><b>Step 1: Select or import a file</b><br />On this page you choose which files you want to work with:<br /><br /><b>Use sample file:</b> Start with a provided sample collection or combination list.<br /><br /><b>Use your own file:</b><br />First download the official template for the idea list and/or combination list via the “Download template” button.<br />Fill the template(s) with your own data. Use the detailed table guide (also available as a PDF) to ensure the structure is correct.<br />Then upload your completed file(s) here.<br /><br /><b>Important:</b> After upload each file is checked automatically. Only files that match the required structure can be processed. If the format differs you will receive an error message and your file cannot be read.<br /><br /><b>Note:</b> Your data is only used for the current session and is not stored permanently.<br /><br /><b>Notes on the table structure and common sources of error</b><br />To ensure your file can be processed correctly, please note:<br />Each idea needs a unique ID (#id#), a name (#t#1), a description (#t#2) and at least one attribute (e.g. #-#1).<br />Attributes are identified with IDs such as #-#1, #-#2 etc. The unit for each attribute is in its own column (#+#1, #+#2 ...).<br />For complex evaluations you can create an additional file with attribute combinations (e.g. formulas like #-#4/#-#8).<br />Each attribute or criterion column requires its own unique ID. Be sure not to duplicate or swap IDs.<br />Only numerical values are allowed in attribute columns.<br /><br /><b>Typical errors:</b><br />Wrong or missing column labels / IDs<br />Duplicate or swapped IDs<br />Non-numeric values in attribute columns<br />Empty or unfilled mandatory columns<br /><br /><b>Tip:</b> Always work with the provided template and follow the downloadable guide step by step to avoid common mistakes.<br /><br />Further details and examples can be found in the help file “Guide to the tables”.",
         resetWarning: "Warning! Resetting will remove all entered data. Reset or cancel?",
 
         currentIdeaCollection: "Current idea collection",
@@ -288,6 +276,7 @@ const common = {
         ideaCollectionName: "Idea list",
         combinationCollectionName: "Combination list",
         personalDataSummary: "Personal data",
+        summaryDescription: "Before starting the evaluation, you can review all your entries here at a glance. Check that your idea collection, the selected combinations and their weightings are correct. If you notice any errors or missing information, you can simply go back and make changes. Important: Once you click \"Show results\", you can no longer change your entries. You can then only reset everything and start the process from scratch. By clicking \"Calculate\" you start the evaluation. Only when the calculation is complete does the \"Show results\" button appear. Take a moment to check \u2013 this ensures that your evaluation is based on the correct data!",
 
         noIdeasLoaded: "No ideas loaded.",
         noDescription: "No description",
@@ -421,6 +410,7 @@ const common = {
         downloadKombiTemplate: "Download combination template",
         selectCombinationCollection: "Select combination collection",
         downloadCombinationTemplate: "Download combination template",
+        downloadInstructions: "Download instructions",
 
         uploadError: "Upload failed",
         uploadnotvalid: "Uploaded file must match the template structure.",
@@ -478,7 +468,7 @@ const common = {
 
         optionsTitle: "Options d'évaluation",
         ideaSelectionTitle: "Sélection d'idées",
-        selectIdeasInfo: "Activez ou désactivez des idées pour le calcul.",
+        selectIdeasInfo: "Vue d'ensemble : votre collecte d'idées. Sur cette page, vous voyez toutes les idées actuellement présentes dans votre collecte. Que pouvez-vous faire ici ? Vérifiez que toutes les idées ont été importées correctement et intégralement. Contrôlez le nom, la description et les attributs de chaque idée. Vous pouvez activer ou désactiver chaque idée \u2013 les idées désactivées ne seront pas prises en compte dans l'évaluation. Complétez ou modifiez les informations si vous découvrez des erreurs ou des lacunes, dans la mesure où cela est possible dans l'outil. L'icône d'information vous fournit des détails ou descriptions supplémentaires pour chaque idée. Remarque : la qualité de l'évaluation suivante dépend essentiellement de l'exhaustivité et de l'exactitude de ces informations. Utilisez cette vue d'ensemble pour optimiser votre base de données. Une fois satisfait de la collecte d'idées, passez à l'étape suivante et choisissez les critères d'évaluation.",
         optionConsiderRound1: "Prenez en compte le tour 1",
         optionConsiderRound2: "Prenez en compte le tour 2",
         optionAppTester: "Testeur d'app (pas de journalisation, pas de collecte de données)",
@@ -486,31 +476,16 @@ const common = {
         optionDataReleaseOpen: "Veuillez entrer vos données (anonymes)",
         optionDataReleaseAnonym: "Seul votre comportement d'utilisation sera enregistré",
         optionDataReleaseNone: "Aucune donnée ne sera enregistrée",
-        selectWeightsInfo: "Veuillez choisir la pondération des combinaisons.",
-        introText: "Cet outil vous permet d'évaluer et de combiner des idées.",
+
+        selectWeightsInfo: "Aperçu des combinaisons : ici, vous définissez quelles combinaisons d'attributs comptent dans votre évaluation – et surtout leur importance. L'essentiel en premier : attribuez une priorité (pondération) à chaque combinaison. Ce qui compte le plus obtient la pondération la plus élevée – vous dirigez ainsi directement le focus de l'évaluation. Autres possibilités : activez ou désactivez des combinaisons individuelles – seules celles sélectionnées seront prises en compte lors de l'évaluation. Grâce à l'icône d'information, vous trouverez au besoin plus d'explications sur chaque combinaison. Astuce : avec la pondération, vous orientez votre évaluation. Réfléchissez bien aux combinaisons qui doivent compter le plus ! Une fois satisfait, passez directement à l'étape suivante.",
+        introText: "<p>Bienvenue sur la matrice d'évaluation !</p><p>Cette application web vous permet d'évaluer et de comparer rapidement, de manière flexible et transparente, toutes sortes d'idées ou de projets. Téléchargez simplement votre collection d'idées (ou utilisez notre modèle), définissez vos propres critères d'évaluation et leurs pondérations et obtenez immédiatement une analyse claire sous forme de classement et de diagramme.</p><p><strong>Que vous offre l'application&nbsp;?</strong></p><ul><li>Importer vos propres idées ou modèles</li><li>Définir et pondérer des critères d'évaluation individuels</li><li>Comprendre tous les calculs et exporter les résultats</li><li>Adaptation flexible à différents thèmes et questions</li><li>Utilisation intuitive&nbsp;: aucune connaissance informatique requise</li></ul><p>Vous êtes guidé pas à pas dans le processus&nbsp;:</p><ol><li>Sélection et importation de la collection d'idées</li><li>Sélection et pondération des critères d'évaluation</li><li>Lancement de l'évaluation et consultation des résultats</li><li>Possibilités d'exportation et analyse détaillée</li></ol><p>Cliquez sur \u00ab&nbsp;Start&nbsp;\u00bb pour commencer \u2013 ou consultez l\u2019aide et les exemples dans le menu ci-dessus.</p><p>Bonne chance avec la matrice d'évaluation&nbsp;!</p>",
         fieldsRequired: "Veuillez remplir tous les champs.",
         invalidAge: "Veuillez entrer un âge réaliste (10-120).",
         masterDataSelectionTitle: "Sélection des données de base",
-        selectDataInfo:
-          "Note importante sur la procédure:<br /><br />" +
-          "La procédure suivante s’applique à la fois à la collection d’idées et à la liste de combinaisons. Les deux fichiers peuvent être préparés, vérifiés et importés de la même manière.<br /><br />" +
-          "Étape 1 : Sélectionner ou importer un fichier<br />Sur cette page, vous choisissez avec quels fichiers vous souhaitez travailler:<br /><br />" +
-          "Utiliser un fichier d’exemple : commencez avec une collection d’idées ou une liste de combinaisons fournies.<br /><br />" +
-          "Utiliser votre propre fichier:<br />" +
-          "Téléchargez d’abord le modèle officiel pour la collection d’idées et/ou la liste de combinaisons via le bouton « Télécharger le modèle ».<br />" +
-          "Remplissez le(s) modèle(s) avec vos propres données. Utilisez les instructions détaillées (également disponibles en PDF) pour respecter la structure correcte.<br />" +
-          "Téléversez ensuite ici votre/vos fichier(s) complété(s).<br /><br />" +
-          "Important : Après le téléversement, chaque fichier est automatiquement vérifié. Seuls les fichiers correspondant exactement à la structure spécifiée peuvent être traités. Si le format diffère, vous recevrez un message d’erreur et votre fichier ne pourra pas être lu.<br /><br />" +
-          "Remarque : vos données ne sont utilisées que pendant la session en cours et ne sont pas stockées de façon permanente.<br /><br />" +
-          "Remarques sur la structure des tableaux et sources d’erreurs fréquentes:<br />Pour que votre fichier soit traité correctement, veuillez respecter les points suivants:<br /><br />" +
-          "Chaque idée nécessite un identifiant unique (#id#), un nom (#t#1), une description (#t#2) et au moins un attribut (par ex. #-#1).<br />" +
-          "Les attributs sont identifiés de manière unique par des IDs tels que #-#1, #-#2, etc. L’unité de chaque attribut figure dans une colonne distincte (#+#1, #+#2 ...).<br />" +
-          "Pour des évaluations complexes, vous pouvez créer un fichier supplémentaire avec des combinaisons d’attributs (par ex. des formules comme #-#4/#-#8).<br />" +
-          "Chaque colonne comportant un attribut ou un critère nécessite son propre ID unique. Veillez à ne pas dupliquer ou inverser des IDs.<br />" +
-          "Les colonnes d’attributs ne doivent contenir que des valeurs numériques.<br /><br />" +
-          "Sources d’erreurs typiques:<br />Étiquetages ou IDs de colonnes incorrects ou manquants<br />IDs attribués en double ou inversés<br />Valeurs non numériques dans les colonnes d’attributs<br />Colonnes obligatoires vides ou non remplies<br /><br />" +
-          "Conseil : travaillez toujours sur la base du modèle fourni et suivez pas à pas les instructions téléchargeables. Vous éviterez ainsi les erreurs courantes !<br /><br />" +
-          "Vous trouverez d’autres détails et exemples dans le fichier d’aide « Instructions concernant les tableaux ».",
+
+        
+        selectDataInfo: "<b>Consignes importantes</b><br />La procédure suivante s'applique à la fois à la liste d'idées et à la liste de combinaisons. Les deux fichiers peuvent être préparés, vérifiés et importés de la même manière.<br /><br /><b>Étape 1 : Sélectionner ou importer un fichier</b><br />Sur cette page, choisissez avec quels fichiers vous souhaitez travailler :<br /><br /><b>Utiliser un fichier exemple :</b> Commencez avec une collection ou une liste de combinaisons fournie.<br /><br /><b>Utiliser votre propre fichier :</b><br />Commencez par télécharger le modèle officiel pour la liste d'idées et/ou la liste de combinaisons à l'aide du bouton « Télécharger le modèle ».<br />Remplissez le ou les modèles avec vos propres données. Utilisez le guide détaillé des tableaux (également disponible en PDF) pour respecter correctement la structure.<br />Téléversez ensuite ici votre ou vos fichiers complétés.<br /><br /><b>Important :</b> Après le téléversement, chaque fichier est automatiquement vérifié. Seuls les fichiers respectant exactement la structure prescrite peuvent être traités. Si le format diffère, un message d'erreur apparaîtra et votre fichier ne pourra pas être lu.<br /><br /><b>Remarque :</b> Vos données ne sont utilisées que pour la session en cours et ne sont pas enregistrées de façon permanente.<br /><br /><b>Remarques sur la structure du tableau et sources d'erreur fréquentes</b><br />Pour que votre fichier soit traité correctement, veuillez noter :<br />Chaque idée a besoin d'un ID unique (#id#), d'un nom (#t#1), d'une description (#t#2) et d'au moins un attribut (par ex. #-#1).<br />Les attributs sont identifiés par des IDs tels que #-#1, #-#2, etc. L'unité de chaque attribut se trouve dans une colonne séparée (#+#1, #+#2 ...).<br />Pour des évaluations complexes, vous pouvez créer un fichier supplémentaire contenant des combinaisons d'attributs (par ex. des formules comme #-#4/#-#8).<br />Chaque colonne d'attribut ou de critère nécessite un ID unique. Veillez à ne pas dupliquer ou échanger les IDs.<br />Seules des valeurs numériques sont autorisées dans les colonnes d'attributs.<br /><br /><b>Erreurs typiques :</b><br />Étiquettes ou IDs de colonnes erronées ou manquantes<br />IDs dupliqués ou échangés<br />Valeurs non numériques dans les colonnes d'attributs<br />Colonnes obligatoires vides ou non remplies<br /><br /><b>Astuce :</b> Travaillez toujours sur la base du modèle fourni et suivez pas à pas le guide téléchargeable pour éviter les erreurs courantes.<br /><br />Vous trouverez plus de détails et des exemples dans le fichier d'aide « Guide des tableaux ».",
+
         resetWarning: "Attention! La r\u00e9initialisation supprimera toutes les donn\u00e9es saisies. R\u00e9initialiser ou annuler?",
 
         currentIdeaCollection: "Collection d'idées actuelle",
@@ -521,6 +496,7 @@ const common = {
         ideaCollectionName: "Liste d'idées",
         combinationCollectionName: "Liste de combinaisons",
         personalDataSummary: "Données personnelles",
+        summaryDescription: "Avant de lancer l'évaluation, vous voyez ici un aperçu de toutes vos saisies. Vérifiez que votre collecte d'idées, les combinaisons choisies et leurs pondérations sont correctes. Si vous repérez des erreurs ou des informations manquantes, vous pouvez simplement revenir en arrière et les corriger. Important : Dès que vous cliquez sur \u00ab Afficher les résultats \u00bb, il n'est plus possible de modifier vos saisies. Vous ne pouvez alors que tout réinitialiser et recommencer le processus depuis le début. En cliquant sur \u00ab Calculer \u00bb, vous lancez l'évaluation. Ce n'est qu'à la fin du calcul que le bouton \u00ab Afficher les résultats \u00bb apparaît. Prenez un moment pour vérifier \u2013 vous vous assurez ainsi que votre évaluation repose sur les bonnes données !",
 
         noIdeasLoaded: "Aucune idée chargée.",
         noDescription: "Pas de description",
@@ -656,6 +632,7 @@ const common = {
         downloadKombiTemplate: "Téléchargez le modèle de combinaison",
         selectCombinationCollection: "Sélectionnez une collection de combinaisons",
         downloadCombinationTemplate: "Téléchargez le modèle de combinaison",
+        downloadInstructions: "Télécharger les instructions",
 
         uploadError: "Échec du téléchargement",
         uploadnotvalid: "Le fichier téléchargé doit respecter la structure du modèle.",

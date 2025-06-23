@@ -378,6 +378,33 @@ async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), l
     )
 
 
+# ---- Download Instructions ----
+@app.get("/download_instruction")
+async def download_instruction(lang: str = Query("de")):
+    import os
+
+    configparser_ = configparser.ConfigParser()
+    configparser_.read("matrixconfig.ini")
+
+    templatedir = configparser_["Dateien"].get("pathInstructionData", "templates")
+
+    if lang == "de":
+        filename = configparser_["Dateien"].get("InstructionDownloadDe", "AnleitungTabellen.pdf")
+    elif lang == "en":
+        filename = configparser_["Dateien"].get("InstructionDownloadEn", "InstructionTables.pdf")
+    elif lang == "fr":
+        filename = configparser_["Dateien"].get("InstructionDownloadFr", "InstructionTableau.pdf")
+    else:
+        filename = configparser_["Dateien"].get("InstructionDownloadDe", "AnleitungTabellen.pdf")
+
+    filepath = os.path.abspath(os.path.join(templatedir, filename))
+
+    if not os.path.isfile(filepath):
+        raise HTTPException(status_code=404, detail=t("file_not_found", lang))
+
+    return FileResponse(path=filepath, media_type="application/pdf", filename=filename)
+
+
 # ---- Bewertungslauf speichern ----
 STORAGE_FOLDER = Path(__file__).parent.parent / "storage" / "runs"
 STORAGE_FOLDER.mkdir(parents=True, exist_ok=True)
