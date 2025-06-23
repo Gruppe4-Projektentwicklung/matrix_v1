@@ -124,7 +124,13 @@ export const ConfigSummaryPage = ({
       <Typography variant="h5" mb={2} fontWeight="bold">
         {t('summary')}
       </Typography>
-      <Typography mb={2} textAlign="center" color="text.secondary">
+
+      <Typography
+        mb={2}
+        textAlign="center"
+        color="text.secondary"
+        sx={{ whiteSpace: 'pre-line' }}
+      >
         {t('summaryDescription')}
       </Typography>
       <Table size="small" sx={{ mb: 4 }}>
