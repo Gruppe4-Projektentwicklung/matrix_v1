@@ -23,9 +23,12 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
     <Typography variant="h4" component="h1" mb={4} color="primary">
       {t('title')}
     </Typography>
-    <Typography mb={3} color="text.secondary">
-      {t('introText')}
-    </Typography>
+    <Typography
+      component="div"
+      mb={3}
+      color="text.secondary"
+      dangerouslySetInnerHTML={{ __html: t('introText') }}
+    />
     <Box mt={4} display="flex" justifyContent="center">
       <Button variant="contained" color="primary" onClick={handleStart}>
         {t('start')}
