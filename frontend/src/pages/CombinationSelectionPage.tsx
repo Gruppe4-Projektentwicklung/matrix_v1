@@ -76,9 +76,13 @@ export const CombinationSelectionPage = ({
           showRoundOptions={showRoundOptions}
           showTesterOption={showTesterOption}
         />
-        <Typography mt={2} textAlign="center" color="text.secondary">
-          {t('selectWeightsInfo')}
-        </Typography>
+        <Typography
+          mt={2}
+          textAlign="center"
+          color="text.secondary"
+          component="div"
+          dangerouslySetInnerHTML={{ __html: t('selectWeightsInfo') }}
+        />
       </Box>
       <WeightingSelector kombinationen={gewichtungen} onUpdate={onGewichtungenUpdate} />
 
