@@ -191,6 +191,7 @@ const common = {
         downloadKombiTemplate: "Kombinations-Vorlage herunterladen",
         selectCombinationCollection: "Kombinationssammlung auswählen",
         downloadCombinationTemplate: "Kombinationsvorlage herunterladen",
+        downloadInstructions: "Anleitung herunterladen",
 
         uploadError: "Upload fehlgeschlagen",
         uploadnotvalid: "Hochgeladene Datei muss der Struktur der Vorlage entsprechen.",
@@ -407,6 +408,7 @@ const common = {
         downloadKombiTemplate: "Download combination template",
         selectCombinationCollection: "Select combination collection",
         downloadCombinationTemplate: "Download combination template",
+        downloadInstructions: "Download instructions",
 
         uploadError: "Upload failed",
         uploadnotvalid: "Uploaded file must match the template structure.",
@@ -624,6 +626,7 @@ const common = {
         downloadKombiTemplate: "Téléchargez le modèle de combinaison",
         selectCombinationCollection: "Sélectionnez une collection de combinaisons",
         downloadCombinationTemplate: "Téléchargez le modèle de combinaison",
+        downloadInstructions: "Télécharger les instructions",
 
         uploadError: "Échec du téléchargement",
         uploadnotvalid: "Le fichier téléchargé doit respecter la structure du modèle.",
