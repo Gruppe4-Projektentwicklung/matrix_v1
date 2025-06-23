@@ -43,7 +43,7 @@ const common = {
         fieldsRequired: "Bitte alle Felder ausfüllen.",
         invalidAge: "Bitte ein realistisches Alter eingeben (10-120).",
         masterDataSelectionTitle: "Stammdaten Auswahl",
-        selectDataInfo: "Hier kann eine Beschreibung dieser Seite stehen, wie eigene Dateien hochgeladen werden und worauf zu achten ist.",
+        selectDataInfo: "Wichtiger Hinweis zum Vorgehen:<br /><br />Das folgende Vorgehen gilt sowohl f\u00fcr die Ideensammlung als auch f\u00fcr die Kombinationsliste. Beide Dateien k\u00f6nnen auf die gleiche Weise vorbereitet, gepr\u00fcft und importiert werden.<br /><br />Schritt 1: Datei ausw\u00e4hlen oder importieren<br />Auf dieser Seite w\u00e4hlen Sie, mit welchen Dateien Sie arbeiten m\u00f6chten:<br /><br />Beispieldatei nutzen: Starten Sie mit einer bereitgestellten Beispielsammlung oder Kombinationsliste.<br /><br />Eigene Datei nutzen:<br />Laden Sie sich zuerst die offizielle Vorlage (Template) f\u00fcr die Ideensammlung und/oder die Kombinationsliste \u00fcber den Button \u201eVorlage herunterladen\u201c herunter.<br />F\u00fcllen Sie die Vorlage(n) mit Ihren eigenen Daten aus. Nutzen Sie dabei die ausf\u00fchrliche Anleitung zu den Tabellen (ebenfalls als PDF zum Download verf\u00fcgbar), um die Struktur korrekt einzuhalten.<br />Laden Sie Ihre ausgef\u00fcllte(n) Datei(en) anschlie\u00dfend wieder hier hoch.<br /><br />Wichtig: Nach dem Upload wird jede Datei automatisch gepr\u00fcft. Nur Dateien, die exakt dem vorgegebenen Aufbau entsprechen, k\u00f6nnen verarbeitet werden. Falls das Format abweicht, erhalten Sie eine Fehlermeldung und Ihre Datei kann nicht gelesen werden.<br /><br />Hinweis: Ihre Daten werden nur f\u00fcr die aktuelle Sitzung verwendet und nicht dauerhaft gespeichert.<br /><br />Hinweise zur Tabellenstruktur und h\u00e4ufige Fehlerquellen:<br />Damit Ihre Datei korrekt verarbeitet werden kann, beachten Sie bitte Folgendes:<br /><br />Jede Idee ben\u00f6tigt eine eindeutige ID (#id#), einen Namen (#t#1), eine Beschreibung (#t#2) und mindestens ein Attribut (z.\u202fB. #-#1).<br />Attribute werden eindeutig mit IDs wie #-#1, #-#2 usw. bezeichnet. Die Einheit zu jedem Attribut steht in einer eigenen Spalte (#+#1, #+#2 ...).<br />F\u00fcr komplexe Auswertungen k\u00f6nnen Sie eine zus\u00e4tzliche Datei mit Attribut-Kombinationen (z.\u202fB. Formeln wie #-#4/#-#8) anlegen.<br />Jede Spalte mit Attribut oder Kriterium ben\u00f6tigt eine eigene, eindeutige ID. Achten Sie darauf, keine IDs zu doppeln oder zu vertauschen.<br />In Attribut-Spalten d\u00fcrfen nur numerische Werte stehen.<br /><br />Typische Fehlerquellen:<br />Falsche oder fehlende Spaltenbezeichnungen / IDs<br />Doppelt vergebene oder vertauschte IDs<br />Nicht-numerische Werte in Attribut-Spalten<br />Leere oder nicht ausgef\u00fcllte Pflichtspalten<br /><br />Tipp: Arbeiten Sie immer auf Basis der bereitgestellten Vorlage und orientieren Sie sich Schritt f\u00fcr Schritt an der herunterladbaren Anleitung. So vermeiden Sie typische Fehler!<br /><br />Weitere Details und Beispiele finden Sie in der Hilfedatei \u201eAnleitung zu den Tabellen\u201c.",
 
         resetWarning: "Warnung! Durch Zur\u00fccksetzen werden alle eingegebenen Daten gel\u00f6scht. Zur\u00fccksetzen oder abbrechen?",
 
@@ -258,7 +258,26 @@ const common = {
         fieldsRequired: "Please fill in all fields.",
         invalidAge: "Please enter a realistic age (10-120).",
         masterDataSelectionTitle: "Master data selection",
-        selectDataInfo: "Here you can add a description of this page, how to upload your own files and what to pay attention to.",
+        selectDataInfo:
+          "Important note on how to proceed:<br /><br />" +
+          "The following procedure applies to both the idea collection and the combination list. Both files can be prepared, checked and imported in the same way.<br /><br />" +
+          "Step 1: Select or import a file<br />On this page you choose which files you want to work with:<br /><br />" +
+          "Use sample file: Start with a provided sample collection or combination list.<br /><br />" +
+          "Use your own file:<br />" +
+          "First download the official template for the idea collection and/or the combination list via the \"Download template\" button.<br />" +
+          "Fill in the template(s) with your own data. Use the detailed instructions for the tables (also available as a PDF download) to ensure the correct structure.<br />" +
+          "Then upload your completed file(s) here again.<br /><br />" +
+          "Important: After the upload each file is automatically checked. Only files that exactly match the specified structure can be processed. If the format differs, you will receive an error message and your file cannot be read.<br /><br />" +
+          "Note: Your data is only used for the current session and is not stored permanently.<br /><br />" +
+          "Notes on the table structure and common sources of error:<br />To ensure that your file can be processed correctly, please note the following:<br /><br />" +
+          "Each idea needs a unique ID (#id#), a name (#t#1), a description (#t#2) and at least one attribute (e.g. #-#1).<br />" +
+          "Attributes are uniquely designated with IDs such as #-#1, #-#2, etc. The unit for each attribute is in its own column (#+#1, #+#2 ...).<br />" +
+          "For complex evaluations you can create an additional file with attribute combinations (e.g. formulas like #-#4/#-#8).<br />" +
+          "Each column containing an attribute or criterion requires its own unique ID. Make sure not to duplicate or mix up IDs.<br />" +
+          "Only numeric values are allowed in attribute columns.<br /><br />" +
+          "Typical sources of error:<br />Incorrect or missing column labels / IDs<br />Duplicated or mixed-up IDs<br />Non-numeric values in attribute columns<br />Empty or unfilled mandatory columns<br /><br />" +
+          "Tip: Always work using the provided template and follow the downloadable instructions step by step. This way you avoid typical mistakes!<br /><br />" +
+          "Further details and examples can be found in the help file \"Instructions for the tables\".",
         resetWarning: "Warning! Resetting will remove all entered data. Reset or cancel?",
 
         currentIdeaCollection: "Current idea collection",
@@ -472,7 +491,26 @@ const common = {
         fieldsRequired: "Veuillez remplir tous les champs.",
         invalidAge: "Veuillez entrer un âge réaliste (10-120).",
         masterDataSelectionTitle: "Sélection des données de base",
-        selectDataInfo: "Vous pouvez ajouter ici une description de cette page, comment téléverser vos propres fichiers et ce à quoi il faut faire attention.",
+        selectDataInfo:
+          "Note importante sur la procédure:<br /><br />" +
+          "La procédure suivante s’applique à la fois à la collection d’idées et à la liste de combinaisons. Les deux fichiers peuvent être préparés, vérifiés et importés de la même manière.<br /><br />" +
+          "Étape 1 : Sélectionner ou importer un fichier<br />Sur cette page, vous choisissez avec quels fichiers vous souhaitez travailler:<br /><br />" +
+          "Utiliser un fichier d’exemple : commencez avec une collection d’idées ou une liste de combinaisons fournies.<br /><br />" +
+          "Utiliser votre propre fichier:<br />" +
+          "Téléchargez d’abord le modèle officiel pour la collection d’idées et/ou la liste de combinaisons via le bouton « Télécharger le modèle ».<br />" +
+          "Remplissez le(s) modèle(s) avec vos propres données. Utilisez les instructions détaillées (également disponibles en PDF) pour respecter la structure correcte.<br />" +
+          "Téléversez ensuite ici votre/vos fichier(s) complété(s).<br /><br />" +
+          "Important : Après le téléversement, chaque fichier est automatiquement vérifié. Seuls les fichiers correspondant exactement à la structure spécifiée peuvent être traités. Si le format diffère, vous recevrez un message d’erreur et votre fichier ne pourra pas être lu.<br /><br />" +
+          "Remarque : vos données ne sont utilisées que pendant la session en cours et ne sont pas stockées de façon permanente.<br /><br />" +
+          "Remarques sur la structure des tableaux et sources d’erreurs fréquentes:<br />Pour que votre fichier soit traité correctement, veuillez respecter les points suivants:<br /><br />" +
+          "Chaque idée nécessite un identifiant unique (#id#), un nom (#t#1), une description (#t#2) et au moins un attribut (par ex. #-#1).<br />" +
+          "Les attributs sont identifiés de manière unique par des IDs tels que #-#1, #-#2, etc. L’unité de chaque attribut figure dans une colonne distincte (#+#1, #+#2 ...).<br />" +
+          "Pour des évaluations complexes, vous pouvez créer un fichier supplémentaire avec des combinaisons d’attributs (par ex. des formules comme #-#4/#-#8).<br />" +
+          "Chaque colonne comportant un attribut ou un critère nécessite son propre ID unique. Veillez à ne pas dupliquer ou inverser des IDs.<br />" +
+          "Les colonnes d’attributs ne doivent contenir que des valeurs numériques.<br /><br />" +
+          "Sources d’erreurs typiques:<br />Étiquetages ou IDs de colonnes incorrects ou manquants<br />IDs attribués en double ou inversés<br />Valeurs non numériques dans les colonnes d’attributs<br />Colonnes obligatoires vides ou non remplies<br /><br />" +
+          "Conseil : travaillez toujours sur la base du modèle fourni et suivez pas à pas les instructions téléchargeables. Vous éviterez ainsi les erreurs courantes !<br /><br />" +
+          "Vous trouverez d’autres détails et exemples dans le fichier d’aide « Instructions concernant les tableaux ».",
         resetWarning: "Attention! La r\u00e9initialisation supprimera toutes les donn\u00e9es saisies. R\u00e9initialiser ou annuler?",
 
         currentIdeaCollection: "Collection d'idées actuelle",
