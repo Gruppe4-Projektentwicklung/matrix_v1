@@ -33,6 +33,7 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
       component="div"
       mb={3}
       color="text.secondary"
+
       sx={{ textAlign: 'left' }}
       dangerouslySetInnerHTML={{ __html: t('introText') }}
     />
