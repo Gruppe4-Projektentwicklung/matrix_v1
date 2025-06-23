@@ -57,6 +57,7 @@ const common = {
         ideaCollectionName: "Ideensammlung",
         combinationCollectionName: "Kombinationssammlung",
         personalDataSummary: "Pers\u00f6nliche Daten",
+        summaryDescription: "Bevor Sie die Bewertung starten, sehen Sie hier noch einmal alle Ihre Eingaben im \u00dcberblick. Pr\u00fcfen Sie, ob Ihre Ideensammlung, die gew\u00e4hlten Kombinationen und deren Gewichtungen korrekt sind. Falls Ihnen noch Fehler oder fehlende Angaben auffallen, k\u00f6nnen Sie einfach zur\u00fcckgehen und \u00c4nderungen vornehmen. Wichtig: Sobald Sie auf \u201eErgebnisse anzeigen\u201c klicken, ist eine \u00c4nderung Ihrer Eingaben nicht mehr m\u00f6glich. Sie k\u00f6nnen dann nur noch alles zur\u00fccksetzen und den Prozess von vorne beginnen. Mit Klick auf \u201eBerechnen\u201c starten Sie die Auswertung. Erst wenn die Berechnung abgeschlossen ist, erscheint der Button \u201eErgebnisse anzeigen\u201c. Nehmen Sie sich einen Moment Zeit f\u00fcr die Kontrolle \u2013 so stellen Sie sicher, dass Ihre Auswertung auf den richtigen Daten basiert!",
 
         noIdeasLoaded: "Keine Ideen geladen.",
         noDescription: "Keine Beschreibung",
@@ -272,6 +273,7 @@ const common = {
         ideaCollectionName: "Idea list",
         combinationCollectionName: "Combination list",
         personalDataSummary: "Personal data",
+        summaryDescription: "Before starting the evaluation, you can review all your entries here at a glance. Check that your idea collection, the selected combinations and their weightings are correct. If you notice any errors or missing information, you can simply go back and make changes. Important: Once you click \"Show results\", you can no longer change your entries. You can then only reset everything and start the process from scratch. By clicking \"Calculate\" you start the evaluation. Only when the calculation is complete does the \"Show results\" button appear. Take a moment to check \u2013 this ensures that your evaluation is based on the correct data!",
 
         noIdeasLoaded: "No ideas loaded.",
         noDescription: "No description",
@@ -486,6 +488,7 @@ const common = {
         ideaCollectionName: "Liste d'idées",
         combinationCollectionName: "Liste de combinaisons",
         personalDataSummary: "Données personnelles",
+        summaryDescription: "Avant de lancer l'évaluation, vous voyez ici un aperçu de toutes vos saisies. Vérifiez que votre collecte d'idées, les combinaisons choisies et leurs pondérations sont correctes. Si vous repérez des erreurs ou des informations manquantes, vous pouvez simplement revenir en arrière et les corriger. Important : Dès que vous cliquez sur \u00ab Afficher les résultats \u00bb, il n'est plus possible de modifier vos saisies. Vous ne pouvez alors que tout réinitialiser et recommencer le processus depuis le début. En cliquant sur \u00ab Calculer \u00bb, vous lancez l'évaluation. Ce n'est qu'à la fin du calcul que le bouton \u00ab Afficher les résultats \u00bb apparaît. Prenez un moment pour vérifier \u2013 vous vous assurez ainsi que votre évaluation repose sur les bonnes données !",
 
         noIdeasLoaded: "Aucune idée chargée.",
         noDescription: "Pas de description",
