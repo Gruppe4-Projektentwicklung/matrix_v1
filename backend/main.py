@@ -28,7 +28,7 @@ valid_kombi_template = Path(config.valid_kombi_template).resolve()
 origins = [
     "https://reliable-pudding-2fdba3.netlify.app",
     "https://matrix.gruppe4-projektentwicklung.de",
-    "https://matrix-v1-backend.onrender.com"
+    "https://matrix-v1-backend.onrender.com",
     "http://localhost:3000",
     "http://localhost:5173",
 ]
