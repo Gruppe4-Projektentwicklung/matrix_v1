@@ -19,17 +19,29 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
     navigate('/select-data');
   };
   return (
-  <PageContainer className="min-h-[60vh] my-6 text-center">
-    <Typography variant="h4" component="h1" mb={4} color="primary">
-      {t('title')}
-    </Typography>
-    <Typography mb={3} color="text.secondary">
-      {t('introText')}
-    </Typography>
-    <Box mt={4} display="flex" justifyContent="center">
-      <Button variant="contained" color="primary" onClick={handleStart}>
-        {t('start')}
-      </Button>
+  <PageContainer className="min-h-[60vh] my-6">
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Typography
+        variant="h4"
+        component="h1"
+        mb={4}
+        color="primary"
+        align="center"
+      >
+        {t('title')}
+      </Typography>
+      <Typography
+        component="div"
+        mb={3}
+        color="text.secondary"
+        sx={{ textAlign: 'left' }}
+        dangerouslySetInnerHTML={{ __html: t('introText') }}
+      />
+      <Box mt={4} display="flex" justifyContent="center">
+        <Button variant="contained" color="primary" onClick={handleStart}>
+          {t('start')}
+        </Button>
+      </Box>
     </Box>
   </PageContainer>
 );
