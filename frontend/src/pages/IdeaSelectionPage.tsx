@@ -50,9 +50,13 @@ export const IdeaSelectionPage = ({ ideen, sprache, attributeMeta, onIdeenUpdate
         <Typography variant="h6" textAlign="center">
           {t('ideaSelectionTitle')}
         </Typography>
-        <Typography mt={2} textAlign="center" color="text.secondary">
-          {t('selectIdeasInfo')}
-        </Typography>
+        <Typography
+          mt={2}
+          textAlign="center"
+          color="text.secondary"
+          component="div"
+          dangerouslySetInnerHTML={{ __html: t('selectIdeasInfo') }}
+        />
       </Paper>
       <IdeenSelector ideen={ideen} sprache={sprache} attributeMeta={attributeMeta} onUpdate={onIdeenUpdate} />
       </Box>
