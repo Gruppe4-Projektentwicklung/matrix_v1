@@ -30,6 +30,7 @@ const common = {
 
         optionsTitle: "Bewertungsoptionen",
         ideaSelectionTitle: "Ideenauswahl",
+
         selectIdeasInfo: "\u00dcbersicht: Ihre Ideensammlung. Auf dieser Seite sehen Sie alle Ideen, die aktuell in Ihrer Ideensammlung enthalten sind. Was k\u00f6nnen Sie hier tun? Pr\u00fcfen Sie, ob alle Ideen vollst\u00e4ndig und korrekt \u00fcbernommen wurden. Kontrollieren Sie Namen, Beschreibungen und Attribute jeder Idee. Einzelne Ideen k\u00f6nnen Sie gezielt ein- oder ausschalten \u2013 deaktivierte Ideen werden nicht in die Bewertung einbezogen. Erg\u00e4nzen oder bearbeiten Sie Angaben, falls Sie Fehler oder L\u00fccken entdecken (sofern dies im Tool m\u00f6glich ist). \u00dcber das Info-Symbol erhalten Sie ggf. weitere Details oder Beschreibungen zu jeder Idee. Hinweis: Die Qualit\u00e4t der folgenden Bewertung h\u00e4ngt ma\u00dfgeblich von der Vollst\u00e4ndigkeit und Korrektheit dieser Angaben ab. Nutzen Sie diese \u00dcbersicht, um Ihre Datengrundlage zu optimieren! Sobald Sie mit der Ideensammlung zufrieden sind, gehen Sie zum n\u00e4chsten Schritt und w\u00e4hlen die Bewertungskriterien aus.",
         optionConsiderRound1: "Runde 1 berücksichtigen",
         optionConsiderRound2: "Runde 2 berücksichtigen",
@@ -250,7 +251,9 @@ const common = {
 
         optionsTitle: "Evaluation options",
         ideaSelectionTitle: "Idea selection",
+
         selectIdeasInfo: "Overview: Your idea collection. On this page you can see all ideas currently contained in your collection. What can you do here? Check that all ideas were imported completely and correctly. Verify the name, description and attributes of each idea. You can activate or deactivate individual ideas \u2013 deactivated ideas will not be included in the evaluation. Add or edit information if you notice errors or gaps, where possible in the tool. The info icon provides additional details or descriptions for each idea. Note: The quality of the subsequent evaluation depends largely on the completeness and correctness of these details. Use this overview to optimise your data set. Once you are satisfied with the idea collection, proceed to the next step and choose the evaluation criteria.",
+
         optionConsiderRound1: "Consider round 1",
         optionConsiderRound2: "Consider round 2",
         optionAppTester: "App tester (no logging, no data collection)",
@@ -468,6 +471,7 @@ const common = {
 
         optionsTitle: "Options d'évaluation",
         ideaSelectionTitle: "Sélection d'idées",
+
         selectIdeasInfo: "Vue d'ensemble : votre collecte d'idées. Sur cette page, vous voyez toutes les idées actuellement présentes dans votre collecte. Que pouvez-vous faire ici ? Vérifiez que toutes les idées ont été importées correctement et intégralement. Contrôlez le nom, la description et les attributs de chaque idée. Vous pouvez activer ou désactiver chaque idée \u2013 les idées désactivées ne seront pas prises en compte dans l'évaluation. Complétez ou modifiez les informations si vous découvrez des erreurs ou des lacunes, dans la mesure où cela est possible dans l'outil. L'icône d'information vous fournit des détails ou descriptions supplémentaires pour chaque idée. Remarque : la qualité de l'évaluation suivante dépend essentiellement de l'exhaustivité et de l'exactitude de ces informations. Utilisez cette vue d'ensemble pour optimiser votre base de données. Une fois satisfait de la collecte d'idées, passez à l'étape suivante et choisissez les critères d'évaluation.",
         optionConsiderRound1: "Prenez en compte le tour 1",
         optionConsiderRound2: "Prenez en compte le tour 2",
