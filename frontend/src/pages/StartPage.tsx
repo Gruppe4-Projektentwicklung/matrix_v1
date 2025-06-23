@@ -20,6 +20,7 @@ export const StartPage = ({ dev2Mode, onStart }: Props) => {
   };
   return (
   <PageContainer className="min-h-[60vh] my-6">
+
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Typography
         variant="h4"

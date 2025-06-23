@@ -28,7 +28,7 @@ valid_kombi_template = Path(config.valid_kombi_template).resolve()
 origins = [
     "https://reliable-pudding-2fdba3.netlify.app",
     "https://matrix.gruppe4-projektentwicklung.de",
-    "https://matrix-v1-backend.onrender.com"
+    "https://matrix-v1-backend.onrender.com",
     "http://localhost:3000",
     "http://localhost:5173",
 ]
@@ -376,6 +376,33 @@ async def download_template(type: str = Query(..., pattern="^(ideen|kombi)$"), l
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         filename=templatefile
     )
+
+
+# ---- Download Instructions ----
+@app.get("/download_instruction")
+async def download_instruction(lang: str = Query("de")):
+    import os
+
+    configparser_ = configparser.ConfigParser()
+    configparser_.read("matrixconfig.ini")
+
+    templatedir = configparser_["Dateien"].get("pathInstructionData", "templates")
+
+    if lang == "de":
+        filename = configparser_["Dateien"].get("InstructionDownloadDe", "AnleitungTabellen.pdf")
+    elif lang == "en":
+        filename = configparser_["Dateien"].get("InstructionDownloadEn", "InstructionTables.pdf")
+    elif lang == "fr":
+        filename = configparser_["Dateien"].get("InstructionDownloadFr", "InstructionTableau.pdf")
+    else:
+        filename = configparser_["Dateien"].get("InstructionDownloadDe", "AnleitungTabellen.pdf")
+
+    filepath = os.path.abspath(os.path.join(templatedir, filename))
+
+    if not os.path.isfile(filepath):
+        raise HTTPException(status_code=404, detail=t("file_not_found", lang))
+
+    return FileResponse(path=filepath, media_type="application/pdf", filename=filename)
 
 
 # ---- Bewertungslauf speichern ----

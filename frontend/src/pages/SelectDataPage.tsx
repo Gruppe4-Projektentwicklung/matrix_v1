@@ -26,7 +26,8 @@ export const SelectDataPage = ({
   onIdeenUpload,
   onKombiUpload,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const backendUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +43,13 @@ export const SelectDataPage = ({
     });
     setPageStatus('select-data', 'ok');
     navigate('/ideas');
+  };
+
+  const handleInstructionDownload = () => {
+    window.open(
+      `${backendUrl}/download_instruction?lang=${i18n.language}`,
+      '_blank',
+    );
   };
 
   return (
@@ -78,11 +86,22 @@ export const SelectDataPage = ({
         <Divider sx={{ my: 6, width: '100%' }} />
 
 
-        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mt-6 flex items-center justify-center max-w-prose mx-auto">
+        <div className="bg-[#f8fafc] p-6 rounded-xl shadow mt-6 flex flex-col items-center justify-center max-w-prose mx-auto">
 
-          <p className="text-sm text-gray-700" style={{ textAlign: 'center' }}>
-            {t('selectDataInfo')}
-          </p>
+          <Button
+            variant="outlined"
+            sx={{ px: 1.5, py: 0.5, mb: 2, mt: 1, whiteSpace: 'nowrap' }}
+            onClick={handleInstructionDownload}
+            size="small"
+          >
+            {t('downloadInstructions')}
+          </Button>
+
+          <p
+            className="text-sm text-gray-700"
+            style={{ textAlign: 'center' }}
+            dangerouslySetInnerHTML={{ __html: t('selectDataInfo') }}
+          />
         </div>
       </Box>
       </Box>
