@@ -78,7 +78,7 @@ export const CombinationSelectionPage = ({
         />
         <Typography
           mt={2}
-          textAlign="center"
+          textAlign="left"
           color="text.secondary"
           component="div"
           dangerouslySetInnerHTML={{ __html: t('selectWeightsInfo') }}
