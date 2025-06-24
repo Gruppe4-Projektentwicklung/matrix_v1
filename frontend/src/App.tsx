@@ -68,7 +68,7 @@ function App() {
 
   // Default file names should mirror the backend configuration
   // (see backend/matrixconfig.ini -> default_ideen / default_kombi)
-  const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("standard_ideen.xlsx");
+  const [aktuelleIdeensammlung, setAktuelleIdeensammlung] = useState("CW26_idea_list.xlsx");
   const [aktuelleKombiSammlung, setAktuelleKombiSammlung] = useState("CW25_combi_list.xlsx");
 
   // Backend-Feature-Flags laden
