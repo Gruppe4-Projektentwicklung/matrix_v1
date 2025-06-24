@@ -286,7 +286,7 @@ const common = {
         combinationCollectionName: "Combination list",
         personalDataSummary: "Personal data",
 
-        summaryDescription: "Before starting the evaluation, you can review all your entries here at a glance. Check that your idea collection, the selected combinations and their weightings are correct. If you notice any errors or missing information, you can simply go back and make changes. Important: Once you click \"Show results\", you can no longer change your entries. You can then only reset everything and start the process from scratch. By clicking \"Calculate\" you start the evaluation. Only when the calculation is complete does the \"Show results\" button appear. Take a moment to check \u2013 this ensures that your evaluation is based on the correct data!",
+        summaryDescription: "<strong>Overview before starting</strong><br/>Check that your <strong>idea collection</strong>, <strong>combinations</strong> and <strong>weightings</strong> are correct.<br/>You can go back to fix any mistakes.<br/><br/><strong>Important:</strong> After clicking <strong>\"Show results\"</strong> you cannot make any changes. Use <strong>\"Calculate\"</strong> to start the evaluation. Only once it has finished will the <strong>\"Show results\"</strong> button appear.<br/><br/>Take your time \u2013 this ensures that your evaluation is based on the right data!",
 
 
         noIdeasLoaded: "No ideas loaded.",
@@ -513,7 +513,7 @@ const common = {
         combinationCollectionName: "Liste de combinaisons",
         personalDataSummary: "Données personnelles",
 
-        summaryDescription: "Avant de lancer l'évaluation, vous voyez ici un aperçu de toutes vos saisies. Vérifiez que votre collecte d'idées, les combinaisons choisies et leurs pondérations sont correctes. Si vous repérez des erreurs ou des informations manquantes, vous pouvez simplement revenir en arrière et les corriger. Important : Dès que vous cliquez sur \u00ab Afficher les résultats \u00bb, il n'est plus possible de modifier vos saisies. Vous ne pouvez alors que tout réinitialiser et recommencer le processus depuis le début. En cliquant sur \u00ab Calculer \u00bb, vous lancez l'évaluation. Ce n'est qu'à la fin du calcul que le bouton \u00ab Afficher les résultats \u00bb apparaît. Prenez un moment pour vérifier \u2013 vous vous assurez ainsi que votre évaluation repose sur les bonnes données !",
+        summaryDescription: "<strong>Vue d'ensemble avant le démarrage</strong><br/>Vérifiez que votre <strong>collecte d'idées</strong>, les <strong>combinaisons</strong> choisies et leurs <strong>pondérations</strong> sont correctes.<br/>Si vous constatez des erreurs, revenez en arrière pour les corriger.<br/><br/><strong>Important :</strong> Après avoir cliqué sur <strong>\u00ab Afficher les résultats \u00bb</strong>, aucune modification n'est possible. En cliquant sur <strong>\u00ab Calculer \u00bb</strong>, vous lancez l'évaluation. Ce n'est qu'à la fin du calcul que le bouton <strong>\u00ab Afficher les résultats \u00bb</strong> apparaît.<br/><br/>Prenez votre temps \u2013 vous vous assurez ainsi que votre évaluation repose sur les bonnes données !",
 
         noIdeasLoaded: "Aucune idée chargée.",
         noDescription: "Pas de description",
